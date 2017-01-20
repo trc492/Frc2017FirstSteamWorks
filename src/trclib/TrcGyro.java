@@ -173,8 +173,8 @@ public abstract class TrcGyro extends TrcSensor<TrcGyro.DataType>
     public static final int GYRO_CONVERT_TO_CARTESIAN   = (1 << 4);
 
     private final String instanceName;
-    private TrcDataIntegrator integrator = null;
-    private TrcCardinalConverter cardinalConverter = null;
+    private TrcDataIntegrator<DataType> integrator = null;
+    private TrcCardinalConverter<DataType> cardinalConverter = null;
     private int xIndex = -1;
     private int yIndex = -1;
     private int zIndex = -1;
