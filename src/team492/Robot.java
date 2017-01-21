@@ -77,11 +77,11 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     public TrcPidDrive pidDrive;
 
     //
-    // Define our subsystems for Auto and TeleOp modes.
+    // Vision target subsystem.
     //
 
     //
-    // Vision target subsystem.
+    // Define our subsystems for Auto and TeleOp modes.
     //
 
     //

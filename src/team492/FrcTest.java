@@ -22,6 +22,8 @@
 
 package team492;
 
+import org.opencv.core.Rect;
+
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import hallib.HalDashboard;
 import trclib.TrcEvent;
@@ -40,7 +42,8 @@ public class FrcTest extends FrcTeleOp
         Y_TIMED_DRIVE,
         X_DISTANCE_DRIVE,
         Y_DISTANCE_DRIVE,
-        TURN
+        TURN,
+        FACE_DETECTION
     }   //enum TestMode
 
     private enum State
@@ -56,6 +59,7 @@ public class FrcTest extends FrcTeleOp
 
     private CmdTimedDrive timedDriveCommand = null;
     private CmdPidDrive pidDriveCommand = null;
+    private FaceDetection faceDetection = null;
 
     private TestMode testMode = TestMode.SENSORS_TEST;
     private int motorIndex = 0;
@@ -79,6 +83,7 @@ public class FrcTest extends FrcTeleOp
         testChooser.addObject("X Drive for 20 ft", TestMode.X_DISTANCE_DRIVE);
         testChooser.addObject("Y Drive for 20 ft", TestMode.Y_DISTANCE_DRIVE);
         testChooser.addObject("Turn 360", TestMode.TURN);
+        testChooser.addObject("Face detection", TestMode.FACE_DETECTION);
         HalDashboard.putData("Robot Tests", testChooser);
      }   //FrcTest
 
@@ -117,12 +122,30 @@ public class FrcTest extends FrcTeleOp
                 pidDriveCommand = new CmdPidDrive(robot, 0.0, 0.0, 0.0, 360.0);
                 break;
 
+            case FACE_DETECTION:
+                faceDetection = new FaceDetection();
+                faceDetection.setEnabled(true);
+                break;
+
             default:
                 break;
         }
 
         sm.start(State.START);
     }   //startMode
+
+    @Override
+    public void stopMode()
+    {
+        //
+        // Call TeleOp stopMode.
+        //
+        super.stopMode();
+        if (faceDetection != null)
+        {
+            faceDetection.setEnabled(false);
+        }
+    }   //stopMode
 
     //
     // Must override TeleOp so it doesn't fight with us.
@@ -195,6 +218,15 @@ public class FrcTest extends FrcTeleOp
                     {
                         robot.gyroTurnPidCtrl.printPidInfo(robot.tracer);
                     }
+                }
+                break;
+
+            case FACE_DETECTION:
+                Rect[] faceRects = faceDetection.getFaceRects();
+                for (int i = 0; i < faceRects.length && 9 + i < HalDashboard.MAX_NUM_TEXTLINES; i++)
+                {
+                    robot.dashboard.displayPrintf(9 + i, "[%d] x=%3d,y=%3d,w=%3d,h=%3d",
+                        faceRects[i].x, faceRects[i].y, faceRects[i].width, faceRects[i].height);
                 }
                 break;
         }

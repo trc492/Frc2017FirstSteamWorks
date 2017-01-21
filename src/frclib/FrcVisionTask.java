@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Titan Robotics Club (http://www.titanrobotics.com)
+ * Copyright (c) 2017 Titan Robotics Club (http://www.titanrobotics.com)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,7 +20,7 @@
  * SOFTWARE.
  */
 
-package trclib;
+package frclib;
 
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfRect;
@@ -29,15 +29,18 @@ import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 
+import trclib.TrcDbgTrace;
+import trclib.TrcUtil;
+
 /**
- * This class implements a platform independent vision thread. It grabs a frame from the video source, calls the
- * provided object detector to process the frame and overlays rectangles on the detected objects in the image.
- * This class is to be extended by a platform dependent vision processor who will provide the video input and
- * output. 
+ * This class implements a platform independent vision task. When enabled, it grabs a frame from the video source,
+ * calls the provided object detector to process the frame and overlays rectangles on the detected objects in the
+ * image. This class is to be extended by a platform dependent vision processor who will provide the video input
+ * and output. 
  */
-public abstract class TrcVision implements Runnable
+public class FrcVisionTask implements Runnable
 {
-    private static final String moduleName = "TrcVision";
+    private static final String moduleName = "FrcVisionTask";
     private static final boolean debugEnabled = false;
     private static final boolean tracingEnabled = false;
     private static final TrcDbgTrace.TraceLevel traceLevel = TrcDbgTrace.TraceLevel.API;
@@ -47,19 +50,27 @@ public abstract class TrcVision implements Runnable
     private static final boolean visionPerfEnabled = true;
 
     /**
-     * This method is called to grab a frame from the video input.
-     *
-     * @param frame specifies the frame buffer to hold the captured image.
-     * @return true if frame is successfully captured, false otherwise.
+     * This interface provides methods to access the camera to grab video frames and also video output for rendering
+     * the resulting image.
      */
-    public abstract boolean grabFrame(Mat frame);
+    public interface VideoDevice
+    {
+        /**
+         * This method is called to grab a frame from the video input.
+         *
+         * @param frame specifies the frame buffer to hold the captured image.
+         * @return true if frame is successfully captured, false otherwise.
+         */
+        boolean grabFrame(Mat frame);
 
-    /**
-     * This method is called to render a frame to the video output.
-     * 
-     * @param frame specifies the frame to be rendered to the video output.
-     */
-    public abstract void putFrame(Mat frame);
+        /**
+         * This method is called to render a frame to the video output.
+         * 
+         * @param frame specifies the frame to be rendered to the video output.
+         */
+        void putFrame(Mat frame);
+
+    }   //interface VideoDevice
 
     /**
      * This interface provides a method to process a video frame to detect objects.
@@ -74,11 +85,14 @@ public abstract class TrcVision implements Runnable
          * @return true if detected objects, false otherwise.
          */
         boolean detectObjects(Mat image, MatOfRect objRects);
+
     }   //interface ObjectDetector
 
+    private VideoDevice videoDevice;
     private ObjectDetector objectDetector;
     private Mat image;
     private MatOfRect objRects;
+    private MatOfRect targets;
     private long totalTime = 0;
     private long totalFrames = 0;
 
@@ -94,21 +108,23 @@ public abstract class TrcVision implements Runnable
      *
      * @param objectDetector specifies the object detector.
      */
-    public TrcVision(ObjectDetector objectDetector)
-    {
+    public FrcVisionTask(VideoDevice videoDevice, ObjectDetector objectDetector)
+   {
         if (debugEnabled)
         {
             dbgTrace = new TrcDbgTrace(moduleName, tracingEnabled, traceLevel, msgLevel);
         }
 
+        this.videoDevice = videoDevice;
         this.objectDetector = objectDetector;
         image = new Mat();
         objRects = new MatOfRect();
+        targets = null;
         monitor = new Object();
         visionThread = new Thread(this, "VisionTask");
         visionThread.setDaemon(true);
         visionThread.start();
-    }   //TrcVision
+    }   //FrcVisionTask
 
     /**
      * This method enables/disables the vision processing task.
@@ -198,7 +214,45 @@ public abstract class TrcVision implements Runnable
         }
 
         return processingInterval;
-    }   //getProcessingPeriod
+    }   //getProcessingInterval
+
+    /**
+     * This method returns the array of rectangles of the detected object. If nothing found, it returns null.
+     *
+     * @return array of rectangles of detected objects, null if nothing found.
+     */
+    public Rect[] getObjectRects()
+    {
+        final String funcName = "getObjectRects";
+        Rect[] rects = null;
+
+        if (debugEnabled)
+        {
+            dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.API);
+        }
+
+        synchronized(monitor)
+        {
+            if (!taskEnabled && objRects == null)
+            {
+                oneShotEnabled = true;
+                monitor.notify();
+            }
+            rects = targets == null? null: targets.toArray();
+            targets = null;
+        }
+
+        if (debugEnabled)
+        {
+            dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.API);
+        }
+
+        return rects;
+    }   //getObjectRects
+
+    //
+    // Implements Runnable interface.
+    //
 
     /**
      * This method runs the vision processing task.
@@ -248,7 +302,7 @@ public abstract class TrcVision implements Runnable
         //
         // Grab a frame from the camera and put it in the source mat. If there is an error notify the output.
         //
-        if (grabFrame(image))
+        if (videoDevice.grabFrame(image))
         {
             //
             // Capture an image and subject it for object detection. The object detector produces an array of
@@ -276,7 +330,13 @@ public abstract class TrcVision implements Runnable
                     image, new Point(rect.x, rect.y), new Point(rect.x + rect.width, rect.y + rect.height),
                     new Scalar(0, 255, 0));
             }
-            putFrame(image);
+            videoDevice.putFrame(image);
+
+            synchronized(monitor)
+            {
+                oneShotEnabled = false;
+                targets = objRects;
+            }
         }
 
         if (debugEnabled)
@@ -285,4 +345,4 @@ public abstract class TrcVision implements Runnable
         }
     }   //processImage
 
-}   //class TrcVision
+}   //class FrcVisionTask
