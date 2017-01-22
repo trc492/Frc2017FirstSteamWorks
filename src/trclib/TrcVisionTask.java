@@ -20,17 +20,7 @@
  * SOFTWARE.
  */
 
-package frclib;
-
-import org.opencv.core.Mat;
-import org.opencv.core.MatOfRect;
-import org.opencv.core.Point;
-import org.opencv.core.Rect;
-import org.opencv.core.Scalar;
-import org.opencv.imgproc.Imgproc;
-
-import trclib.TrcDbgTrace;
-import trclib.TrcUtil;
+package trclib;
 
 /**
  * This class implements a platform independent vision task. When enabled, it grabs a frame from the video source,
@@ -38,9 +28,9 @@ import trclib.TrcUtil;
  * image. This class is to be extended by a platform dependent vision processor who will provide the video input
  * and output. 
  */
-public class FrcVisionTask implements Runnable
+public class TrcVisionTask<I, O> implements Runnable
 {
-    private static final String moduleName = "FrcVisionTask";
+    private static final String moduleName = "TrcVisionTask";
     private static final boolean debugEnabled = false;
     private static final boolean tracingEnabled = false;
     private static final TrcDbgTrace.TraceLevel traceLevel = TrcDbgTrace.TraceLevel.API;
@@ -50,49 +40,42 @@ public class FrcVisionTask implements Runnable
     private static final boolean visionPerfEnabled = true;
 
     /**
-     * This interface provides methods to access the camera to grab video frames and also video output for rendering
-     * the resulting image.
+     * This interface provides methods to grab image from the video input, render image to video output and detect
+     * objects from the acquired image.
      */
-    public interface VideoDevice
+    public interface VisionProcessor<I, O>
     {
         /**
-         * This method is called to grab a frame from the video input.
+         * This method is called to grab an image frame from the video input.
          *
-         * @param frame specifies the frame buffer to hold the captured image.
+         * @param image specifies the frame buffer to hold the captured image.
          * @return true if frame is successfully captured, false otherwise.
          */
-        boolean grabFrame(Mat frame);
+        boolean grabFrame(I image);
 
         /**
-         * This method is called to render a frame to the video output.
+         * This method is called to render an image to the video output and overlay detected objects on top of it.
          * 
-         * @param frame specifies the frame to be rendered to the video output.
+         * @param image specifies the frame to be rendered to the video output.
+         * @param detectedObjects specifies the detected objects.
          */
-        void putFrame(Mat frame);
+        void putFrame(I image, O detectedObjects);
 
-    }   //interface VideoDevice
-
-    /**
-     * This interface provides a method to process a video frame to detect objects.
-     */
-    public interface ObjectDetector
-    {
         /**
-         * This method is called to detect objects in the provided video frame.
+         * This method is called to detect objects in the acquired image frame.
          *
-         * @param image specified the image to be processed.
-         * @param objRects specifies the object rectangle array to hold the detected objects.
+         * @param image specifies the image to be processed.
+         * @param detectedObjects specifies the object rectangle array to hold the detected objects.
          * @return true if detected objects, false otherwise.
          */
-        boolean detectObjects(Mat image, MatOfRect objRects);
+        boolean detectObjects(I image, O detectedObjects);
 
-    }   //interface ObjectDetector
+    }   //interface VisionProcessor
 
-    private VideoDevice videoDevice;
-    private ObjectDetector objectDetector;
-    private Mat image;
-    private MatOfRect objRects;
-    private MatOfRect targets;
+    private VisionProcessor<I, O> visionProcessor;
+    private I image;
+    private O detectedObjects;
+    private O targets;
     private long totalTime = 0;
     private long totalFrames = 0;
 
@@ -106,25 +89,26 @@ public class FrcVisionTask implements Runnable
     /**
      * Constructor: Create an instance of the object.
      *
-     * @param objectDetector specifies the object detector.
+     * @param visionProcessor specifies the vision processor object.
+     * @param imageBuffer specifies the buffer to hold video image.
+     * @param detectedObjectsBuffer specifies the buffer to hold the detected objects.
      */
-    public FrcVisionTask(VideoDevice videoDevice, ObjectDetector objectDetector)
-   {
+    public TrcVisionTask(VisionProcessor<I, O> visionProcessor, I imageBuffer, O detectedObjectsBuffer)
+    {
         if (debugEnabled)
         {
             dbgTrace = new TrcDbgTrace(moduleName, tracingEnabled, traceLevel, msgLevel);
         }
 
-        this.videoDevice = videoDevice;
-        this.objectDetector = objectDetector;
-        image = new Mat();
-        objRects = new MatOfRect();
+        this.visionProcessor = visionProcessor;
+        this.image = imageBuffer;
+        this.detectedObjects = detectedObjectsBuffer;
         targets = null;
         monitor = new Object();
         visionThread = new Thread(this, "VisionTask");
         visionThread.setDaemon(true);
         visionThread.start();
-    }   //FrcVisionTask
+    }   //TrcVisionTask
 
     /**
      * This method enables/disables the vision processing task.
@@ -217,14 +201,14 @@ public class FrcVisionTask implements Runnable
     }   //getProcessingInterval
 
     /**
-     * This method returns the array of rectangles of the detected object. If nothing found, it returns null.
+     * This method returns the detected objects. If nothing found, it returns null.
      *
-     * @return array of rectangles of detected objects, null if nothing found.
+     * @return detected objects, null if nothing found.
      */
-    public Rect[] getObjectRects()
+    public O getTargets()
     {
-        final String funcName = "getObjectRects";
-        Rect[] rects = null;
+        final String funcName = "getObjects";
+        O newTargets = null;
 
         if (debugEnabled)
         {
@@ -233,12 +217,12 @@ public class FrcVisionTask implements Runnable
 
         synchronized(monitor)
         {
-            if (!taskEnabled && objRects == null)
+            if (!taskEnabled && targets == null)
             {
                 oneShotEnabled = true;
                 monitor.notify();
             }
-            rects = targets == null? null: targets.toArray();
+            newTargets = targets;
             targets = null;
         }
 
@@ -247,8 +231,8 @@ public class FrcVisionTask implements Runnable
             dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.API);
         }
 
-        return rects;
-    }   //getObjectRects
+        return newTargets;
+    }   //getTargets
 
     //
     // Implements Runnable interface.
@@ -299,17 +283,15 @@ public class FrcVisionTask implements Runnable
         {
             dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.TASK);
         }
-        //
-        // Grab a frame from the camera and put it in the source mat. If there is an error notify the output.
-        //
-        if (videoDevice.grabFrame(image))
+
+        if (visionProcessor.grabFrame(image))
         {
             //
             // Capture an image and subject it for object detection. The object detector produces an array of
             // rectangles representing objects detected.
             //
             startTime = TrcUtil.getCurrentTimeMillis();
-            objectDetector.detectObjects(image, objRects);
+            visionProcessor.detectObjects(image, detectedObjects);
             elapsedTime = TrcUtil.getCurrentTimeMillis() - startTime;
             totalTime += elapsedTime;
             totalFrames++;
@@ -317,25 +299,13 @@ public class FrcVisionTask implements Runnable
             {
                 dbgTrace.traceInfo(funcName, "Average processing time = %.3f msec", (double)totalTime/totalFrames);
             }
-            //
-            // Overlay a rectangle on each detected object.
-            //
-            Rect[] rects = objRects.toArray();
-            for (Rect rect: rects)
-            {
-                //
-                // Draw a rectangle around the detected object.
-                //
-                Imgproc.rectangle(
-                    image, new Point(rect.x, rect.y), new Point(rect.x + rect.width, rect.y + rect.height),
-                    new Scalar(0, 255, 0));
-            }
-            videoDevice.putFrame(image);
+
+            visionProcessor.putFrame(image, detectedObjects);
 
             synchronized(monitor)
             {
                 oneShotEnabled = false;
-                targets = objRects;
+                targets = detectedObjects;
             }
         }
 
@@ -345,4 +315,4 @@ public class FrcVisionTask implements Runnable
         }
     }   //processImage
 
-}   //class FrcVisionTask
+}   //class TrcVisionTask

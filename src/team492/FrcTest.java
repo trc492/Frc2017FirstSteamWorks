@@ -24,7 +24,9 @@ package team492;
 
 import org.opencv.core.Rect;
 
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import frclib.FrcFaceDetector;
 import hallib.HalDashboard;
 import trclib.TrcEvent;
 import trclib.TrcStateMachine;
@@ -59,7 +61,7 @@ public class FrcTest extends FrcTeleOp
 
     private CmdTimedDrive timedDriveCommand = null;
     private CmdPidDrive pidDriveCommand = null;
-    private FaceDetection faceDetection = null;
+    private FrcFaceDetector faceDetector = null;
 
     private TestMode testMode = TestMode.SENSORS_TEST;
     private int motorIndex = 0;
@@ -123,8 +125,9 @@ public class FrcTest extends FrcTeleOp
                 break;
 
             case FACE_DETECTION:
-                faceDetection = new FaceDetection();
-                faceDetection.setEnabled(true);
+                CameraServer.getInstance().startAutomaticCapture().setResolution(640, 480);
+                faceDetector = new FrcFaceDetector("FaceDetector", "cascade-files/haarcascade_frontalface_alt.xml");
+                faceDetector.setEnabled(true);
                 break;
 
             default:
@@ -141,9 +144,9 @@ public class FrcTest extends FrcTeleOp
         // Call TeleOp stopMode.
         //
         super.stopMode();
-        if (faceDetection != null)
+        if (faceDetector != null)
         {
-            faceDetection.setEnabled(false);
+            faceDetector.setEnabled(false);
         }
     }   //stopMode
 
@@ -222,7 +225,7 @@ public class FrcTest extends FrcTeleOp
                 break;
 
             case FACE_DETECTION:
-                Rect[] faceRects = faceDetection.getFaceRects();
+                Rect[] faceRects = faceDetector.getFaceRects();
                 for (int i = 0; i < faceRects.length && 9 + i < HalDashboard.MAX_NUM_TEXTLINES; i++)
                 {
                     robot.dashboard.displayPrintf(9 + i, "[%d] x=%3d,y=%3d,w=%3d,h=%3d",

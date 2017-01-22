@@ -24,11 +24,12 @@ package frclib;
 
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfRect;
+import org.opencv.core.Rect;
 import org.opencv.objdetect.CascadeClassifier;
 
 import trclib.TrcDbgTrace;
 
-public class FrcFaceDetector implements FrcVisionTask.ObjectDetector
+public class FrcFaceDetector extends FrcOpenCVDetector
 {
     private static final String moduleName = "FrcFaceDetector";
     private static final boolean debugEnabled = false;
@@ -37,20 +38,21 @@ public class FrcFaceDetector implements FrcVisionTask.ObjectDetector
     private static final TrcDbgTrace.MsgLevel msgLevel = TrcDbgTrace.MsgLevel.INFO;
     private TrcDbgTrace dbgTrace = null;
 
-    private final String instanceName;
     private CascadeClassifier faceDetector;
+    private Rect[] faceRects = null;
 
     /**
      * Constructor: Create an instance of the object.
      */
     public FrcFaceDetector(final String instanceName, final String classifierPath)
     {
+        super(instanceName);
+
         if (debugEnabled)
         {
             dbgTrace = new TrcDbgTrace(moduleName, tracingEnabled, traceLevel, msgLevel);
         }
 
-        this.instanceName = instanceName;
         faceDetector = new CascadeClassifier(classifierPath);
         if (faceDetector.empty())
         {
@@ -59,41 +61,59 @@ public class FrcFaceDetector implements FrcVisionTask.ObjectDetector
     }   //FrcFaceDetector
 
     /**
-     * This method returns the instance name.
+     * This method returns an array of rectangles of last detected faces.
      *
-     * @return instance name.
+     * @return array of rectangle of last detected faces.
      */
-    public String toString()
+    public Rect[] getFaceRects()
     {
-        return instanceName;
-    }   //toString
+        final String funcName = "getFaceRects";
+
+        if (debugEnabled)
+        {
+            dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.API);
+            dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.API);
+        }
+
+        return faceRects;
+    }   //getFaceRects
 
     //
-    // Implements the FrcVision.ObjectDetector interface.
+    // Implements the FrcVisionTask.VisionProcesor interface.
     //
 
     /**
-     * This method is called to detect objects in the provided video frame.
+     * This method is called to detect objects in the image frame.
      *
-     * @param image specified the image to be processed.
-     * @param objRects specifies the object rectangle array to hold the detected objects.
+     * @param image specifies the image to be processed.
+     * @param detectedObjects specifies the object rectangle array to hold the detected objects.
      * @return true if detected objects, false otherwise.
      */
-    public boolean detectObjects(Mat image, MatOfRect objRects)
+    @Override
+    public boolean detectObjects(Mat image, MatOfRect detectedObjects)
     {
-        final String funcName = "detectObjects";
-
-        faceDetector.detectMultiScale(image, objRects);
-        boolean found = !objRects.empty();
+        final String funcName = "detectedObjects";
+        boolean found = false;
 
         if (debugEnabled)
         {
             dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.CALLBK, "image=%s,objRects=%s",
-                image.toString(), objRects.toString());
+                image.toString(), detectedObjects.toString());
+        }
+
+        faceDetector.detectMultiScale(image, detectedObjects);
+        if (!detectedObjects.empty())
+        {
+            faceRects = detectedObjects.toArray();
+            found = true;
+        }
+
+        if (debugEnabled)
+        {
             dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.CALLBK, "=%s", Boolean.toString(found));
         }
 
         return found;
-    }   //detectObjects
+    }   //detectedObjects
 
 }   //class FrcFaceDetector
