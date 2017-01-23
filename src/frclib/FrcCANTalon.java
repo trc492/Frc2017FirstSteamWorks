@@ -45,6 +45,7 @@ public class FrcCANTalon extends TrcMotor
     /**
      * Constructor: Create an instance of the object.
      *
+     * @param instanceName specifies the instance name.
      * @param deviceNumber specifies the CAN ID of the device.
      * @param controlPeriodMs specifies the period in msec to send the CAN control frame.
      *                        Period is bounded to 1 msec to 95 msec.
@@ -53,9 +54,9 @@ public class FrcCANTalon extends TrcMotor
      *                       required to specify, however, this could be used to minimize the
      *                       time between robot-enable and talon-motor-drive.
      */
-    public FrcCANTalon(int deviceNumber, int controlPeriodMs, int enablePeriodMs)
+    public FrcCANTalon(final String instanceName, int deviceNumber, int controlPeriodMs, int enablePeriodMs)
     {
-        super(moduleName + deviceNumber);
+        super(moduleName + "." + instanceName);
         motor = new CANTalon(deviceNumber, controlPeriodMs, enablePeriodMs);
         resetPosition();
     }   //FrcCANTalon
@@ -63,13 +64,14 @@ public class FrcCANTalon extends TrcMotor
     /**
      * Constructor: Create an instance of the object.
      *
+     * @param instanceName specifies the instance name.
      * @param deviceNumber specifies the CAN ID of the device.
      * @param controlPeriodMs specifies the period in msec to send the CAN control frame.
      *                        Period is bounded to 1 msec to 95 msec.
      */
-    public FrcCANTalon(int deviceNumber, int controlPeriodMs)
+    public FrcCANTalon(final String instanceName, int deviceNumber, int controlPeriodMs)
     {
-        super(moduleName + deviceNumber);
+        super(moduleName + "." + instanceName);
         motor = new CANTalon(deviceNumber, controlPeriodMs);
         resetPosition();
     }   //FrcCANTalon
@@ -77,11 +79,12 @@ public class FrcCANTalon extends TrcMotor
     /**
      * Constructor: Create an instance of the object.
      *
+     * @param instanceName specifies the instance name.
      * @param deviceNumber specifies the CAN ID of the device.
      */
-    public FrcCANTalon(int deviceNumber)
+    public FrcCANTalon(final String instanceName, int deviceNumber)
     {
-        super(moduleName + deviceNumber);
+        super(moduleName + "." + instanceName);
         motor = new CANTalon(deviceNumber);
         resetPosition();
     }   //FrcCANTalon

@@ -124,10 +124,10 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         //
         // DriveBase subsystem.
         //
-        leftFrontWheel = new FrcCANTalon(RobotInfo.CANID_LEFTFRONTWHEEL);
-        leftRearWheel = new FrcCANTalon(RobotInfo.CANID_LEFTREARWHEEL);
-        rightFrontWheel = new FrcCANTalon(RobotInfo.CANID_RIGHTFRONTWHEEL);
-        rightRearWheel = new FrcCANTalon(RobotInfo.CANID_RIGHTREARWHEEL);
+        leftFrontWheel = new FrcCANTalon("LeftFrontWheel", RobotInfo.CANID_LEFTFRONTWHEEL);
+        leftRearWheel = new FrcCANTalon("LeftRearWheel", RobotInfo.CANID_LEFTREARWHEEL);
+        rightFrontWheel = new FrcCANTalon("RightFrontWheel", RobotInfo.CANID_RIGHTFRONTWHEEL);
+        rightRearWheel = new FrcCANTalon("RightRearWheel", RobotInfo.CANID_RIGHTREARWHEEL);
 
         //
         // Initialize each drive motor controller.
