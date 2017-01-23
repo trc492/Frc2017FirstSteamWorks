@@ -30,6 +30,8 @@ public class FrcAuto implements TrcRobot.RobotMode
 {
     public enum AutoMode
     {
+        AUTOMODE_TIMED_DRIVE,
+        AUTOMODE_PID_DRIVE,
         AUTOMODE_NONE
     }
 
@@ -43,6 +45,8 @@ public class FrcAuto implements TrcRobot.RobotMode
 
         autoChooser = new SendableChooser<>();
         autoChooser.addDefault("No autonomous", AutoMode.AUTOMODE_NONE);
+        autoChooser.addDefault("Timed drive", AutoMode.AUTOMODE_TIMED_DRIVE);
+        autoChooser.addDefault("PID drive", AutoMode.AUTOMODE_PID_DRIVE);
         HalDashboard.putData("Autonomous Strategies", autoChooser);
      }   //FtcAuto
 
@@ -54,9 +58,26 @@ public class FrcAuto implements TrcRobot.RobotMode
     {
         robot.driveBase.resetPosition();
 
+        double delay = 0.0;
+        double driveTime = 0.0;
+        double xDrivePower = 0.0;
+        double yDrivePower = 0.0;
+        double turnPower = 0.0;
+        double xDistance = 0.0;
+        double yDistance = 0.0;
+        double heading = 0.0;
+
         AutoMode selectedAutoMode = autoChooser.getSelected();
         switch (selectedAutoMode)
         {
+            case AUTOMODE_TIMED_DRIVE:
+                autoCommand = new CmdTimedDrive(robot, delay, driveTime, xDrivePower, yDrivePower, turnPower);
+                break;
+
+            case AUTOMODE_PID_DRIVE:
+                autoCommand = new CmdPidDrive(robot, delay, xDistance, yDistance, heading);
+                break;
+
             default:
             case AUTOMODE_NONE:
                 autoCommand = null;

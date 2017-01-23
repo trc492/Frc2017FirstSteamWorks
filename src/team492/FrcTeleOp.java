@@ -146,28 +146,11 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
                 case FrcJoystick.LOGITECH_BUTTON3:
                     break;
 
-                /*
-                case FrcJoystick.LOGITECH_BUTTON3:
-                    if (pressed)
-                    {
-                        driveMode = DriveMode.MECANUM_MODE;
-                    }
-                    break;
-                    
                 case FrcJoystick.LOGITECH_BUTTON4:
-                    if (pressed)
-                    {
-                        driveMode = DriveMode.TANK_MODE;
-                    }
                     break;
 
                 case FrcJoystick.LOGITECH_BUTTON5:
-                    if (pressed)
-                    {
-                        driveMode = DriveMode.ARCADE_MODE;
-                    }
                     break;
-                    */
 
                 case FrcJoystick.LOGITECH_BUTTON6:
                     break;
@@ -186,6 +169,9 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
 
                 case FrcJoystick.LOGITECH_BUTTON11:
                     break;
+
+                case FrcJoystick.LOGITECH_BUTTON12:
+                    break;
             }
         }
         else if (joystick == rightDriveStick)
@@ -196,10 +182,28 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
                     slowDriveOverride = pressed;
                     break;
 
+                case FrcJoystick.SIDEWINDER_BUTTON2:
+                    break;
+
+                case FrcJoystick.SIDEWINDER_BUTTON3:
+                    break;
+
+                case FrcJoystick.SIDEWINDER_BUTTON4:
+                    break;
+
+                case FrcJoystick.SIDEWINDER_BUTTON5:
+                    break;
+
                 case FrcJoystick.SIDEWINDER_BUTTON6:
                     break;
 
+                case FrcJoystick.SIDEWINDER_BUTTON7:
+                    break;
+
                 case FrcJoystick.SIDEWINDER_BUTTON8:
+                    break;
+
+                case FrcJoystick.SIDEWINDER_BUTTON9:
                     break;
             }
         }
@@ -238,6 +242,9 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
                     break;
 
                 case FrcJoystick.LOGITECH_BUTTON11:
+                    break;
+
+                case FrcJoystick.LOGITECH_BUTTON12:
                     break;
             }
         }

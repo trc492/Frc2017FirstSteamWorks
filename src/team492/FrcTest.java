@@ -188,11 +188,10 @@ public class FrcTest extends FrcTeleOp
                 double rfEnc = robot.rightFrontWheel.getPosition();
                 double lrEnc = robot.leftRearWheel.getPosition();
                 double rrEnc = robot.rightRearWheel.getPosition();
-                robot.dashboard.displayPrintf(9, "Timed Drive:");
-                robot.dashboard.displayPrintf(10, "Enc:lf=%.0f,rf=%.0f", lfEnc, rfEnc);
-                robot.dashboard.displayPrintf(11, "Enc:lr=%.0f,rr=%.0f", lrEnc, rrEnc);
-                robot.dashboard.displayPrintf(12, "average=%f", (lfEnc + rfEnc + lrEnc + rrEnc)/4.0);
-                robot.dashboard.displayPrintf(13, "xPos=%.1f,yPos=%.1f,heading=%.1f",
+                robot.dashboard.displayPrintf(9, "Enc:lf=%.0f,rf=%.0f", lfEnc, rfEnc);
+                robot.dashboard.displayPrintf(10, "Enc:lr=%.0f,rr=%.0f", lrEnc, rrEnc);
+                robot.dashboard.displayPrintf(11, "average=%f", (lfEnc + rfEnc + lrEnc + rrEnc)/4.0);
+                robot.dashboard.displayPrintf(12, "xPos=%.1f,yPos=%.1f,heading=%.1f",
                     robot.driveBase.getXPosition(), robot.driveBase.getYPosition(), robot.driveBase.getHeading());
                 timedDriveCommand.cmdPeriodic(elapsedTime);
                 break;
@@ -242,7 +241,13 @@ public class FrcTest extends FrcTeleOp
      */
     private void doSensorsTest()
     {
-        
+        robot.dashboard.displayPrintf(9, "DriveBase: lf=%.0f, rf=%.0f, lr=%.0f, rr=%.0f",
+            robot.leftFrontWheel.getPosition(), robot.rightFrontWheel.getPosition(),
+            robot.leftRearWheel.getPosition(), robot.rightRearWheel.getPosition());
+        robot.dashboard.displayPrintf(10, "DriveBase: X=%.1f, Y=%.1f, Heading=%.1f",
+            robot.driveBase.getXPosition(), robot.driveBase.getYPosition(), robot.driveBase.getHeading());
+        robot.dashboard.displayPrintf(11, "Gyro: Rate=%.3f, Heading=%.1f",
+            robot.gyro.getZRotationRate().value, robot.gyro.getZHeading().value);
     }   //doSensorsTest
 
     /**

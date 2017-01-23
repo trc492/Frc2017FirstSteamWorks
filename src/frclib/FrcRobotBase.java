@@ -368,12 +368,8 @@ public abstract class FrcRobotBase extends RobotBase
 
             if (dashboardEnabled)
             {
-                dashboard.displayPrintf(
-                        0,
-                        "[%3d:%06.3f] %s",
-                        (int)(modeElapsedTime/60),
-                        modeElapsedTime%60,
-                        currMode.toString());
+                dashboard.displayPrintf(0, "[%3d:%06.3f] %s",
+                    (int)(modeElapsedTime/60), modeElapsedTime%60, currMode.toString());
             }
         }
     }   //startCompetition

@@ -55,12 +55,13 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     public HalDashboard dashboard = HalDashboard.getInstance();
     public TrcDbgTrace tracer = FrcRobotBase.getGlobalTracer();
     public double targetHeading = 0.0;
+
     private double nextUpdateTime = TrcUtil.getCurrentTime();
 
     //
     // Sensors.
     //
-    private FrcGyro gyro;
+    public FrcGyro gyro;
 
     //
     // DriveBase subsystem.
@@ -155,6 +156,8 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         // Initialize DriveBase subsystem.
         //
         driveBase = new TrcDriveBase(leftFrontWheel, leftRearWheel, rightFrontWheel, rightRearWheel, gyro);
+        driveBase.setXPositionScale(RobotInfo.ENCODER_X_INCHES_PER_COUNT);
+        driveBase.setYPositionScale(RobotInfo.ENCODER_Y_INCHES_PER_COUNT);
 
         //
         // Create PID controllers for DriveBase PID drive.
@@ -163,12 +166,10 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
             "encoderXPidCtrl",
             RobotInfo.ENCODER_X_KP, RobotInfo.ENCODER_X_KI, RobotInfo.ENCODER_X_KD, RobotInfo.ENCODER_X_KF,
             RobotInfo.ENCODER_X_TOLERANCE, RobotInfo.ENCODER_X_SETTLING, this);
-        encoderXPidCtrl.setAbsoluteSetPoint(true);
         encoderYPidCtrl = new TrcPidController(
             "encoderYPidCtrl",
             RobotInfo.ENCODER_Y_KP, RobotInfo.ENCODER_Y_KI, RobotInfo.ENCODER_Y_KD, RobotInfo.ENCODER_Y_KF,
             RobotInfo.ENCODER_Y_TOLERANCE, RobotInfo.ENCODER_Y_SETTLING, this);
-        encoderYPidCtrl.setAbsoluteSetPoint(true);
         gyroTurnPidCtrl = new TrcPidController(
             "gyroTurnPidCtrl",
             RobotInfo.GYRO_TURN_KP, RobotInfo.GYRO_TURN_KI, RobotInfo.GYRO_TURN_KD, RobotInfo.GYRO_TURN_KF,
@@ -206,9 +207,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
                     leftFrontWheel.getPosition(), rightFrontWheel.getPosition(),
                     leftRearWheel.getPosition(), rightRearWheel.getPosition());
                 dashboard.displayPrintf(2, "DriveBase: X=%.1f, Y=%.1f, Heading=%.1f",
-                    driveBase.getXPosition()*RobotInfo.DRIVEBASE_X_SCALE,
-                    driveBase.getYPosition()*RobotInfo.DRIVEBASE_Y_SCALE,
-                    driveBase.getHeading());
+                    driveBase.getXPosition(), driveBase.getYPosition(), driveBase.getHeading());
 
                 if (debugPidDrive)
                 {
@@ -241,11 +240,11 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
 
         if (pidCtrl == encoderXPidCtrl)
         {
-            value = driveBase.getXPosition()*RobotInfo.DRIVEBASE_X_SCALE;
+            value = driveBase.getXPosition();
         }
         else if (pidCtrl == encoderYPidCtrl)
         {
-            value = driveBase.getYPosition()*RobotInfo.DRIVEBASE_Y_SCALE;
+            value = driveBase.getYPosition();
         }
         else if (pidCtrl == gyroTurnPidCtrl && gyro != null)
         {
