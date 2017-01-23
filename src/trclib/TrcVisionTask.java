@@ -121,7 +121,8 @@ public class TrcVisionTask<I, O> implements Runnable
 
     private VisionProcessor<I, O> visionProcessor;
     private I image;
-    private O detectedObjects;
+    private O[] detectedObjectsBuffers;
+    private int bufferIndex = 0;
     private long totalTime = 0;
     private long totalFrames = 0;
     private long processingInterval = 50;   // in msec
@@ -133,9 +134,9 @@ public class TrcVisionTask<I, O> implements Runnable
      *
      * @param visionProcessor specifies the vision processor object.
      * @param imageBuffer specifies the buffer to hold video image.
-     * @param detectedObjectsBuffer specifies the buffer to hold the detected objects.
+     * @param detectedObjectsBuffers specifies an array of buffers to hold the detected objects.
      */
-    public TrcVisionTask(VisionProcessor<I, O> visionProcessor, I imageBuffer, O detectedObjectsBuffer)
+    public TrcVisionTask(VisionProcessor<I, O> visionProcessor, I imageBuffer, O[] detectedObjectsBuffers)
     {
         if (debugEnabled)
         {
@@ -144,7 +145,7 @@ public class TrcVisionTask<I, O> implements Runnable
 
         this.visionProcessor = visionProcessor;
         this.image = imageBuffer;
-        this.detectedObjects = detectedObjectsBuffer;
+        this.detectedObjectsBuffers = detectedObjectsBuffers;
 
         visionThread = new Thread(this, "VisionTask");
         visionThread.setDaemon(true);
@@ -292,7 +293,7 @@ public class TrcVisionTask<I, O> implements Runnable
             // rectangles representing objects detected.
             //
             startTime = TrcUtil.getCurrentTimeMillis();
-            visionProcessor.detectObjects(image, detectedObjects);
+            visionProcessor.detectObjects(image, detectedObjectsBuffers[bufferIndex]);
             elapsedTime = TrcUtil.getCurrentTimeMillis() - startTime;
             totalTime += elapsedTime;
             totalFrames++;
@@ -301,9 +302,13 @@ public class TrcVisionTask<I, O> implements Runnable
                 dbgTrace.traceInfo(funcName, "Average processing time = %.3f msec", (double)totalTime/totalFrames);
             }
 
-            visionProcessor.putFrame(image, detectedObjects);
+            visionProcessor.putFrame(image, detectedObjectsBuffers[bufferIndex]);
 
-            taskState.setTargets(detectedObjects);
+            taskState.setTargets(detectedObjectsBuffers[bufferIndex]);
+            //
+            // Switch to the next buffer so that we won't clobber the info while the client is accessing it.
+            //
+            bufferIndex = (bufferIndex + 1)%detectedObjectsBuffers.length;
         }
 
         if (debugEnabled)

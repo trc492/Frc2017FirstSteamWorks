@@ -44,11 +44,13 @@ public abstract class FrcOpenCVDetector implements TrcVisionTask.VisionProcessor
     private static final TrcDbgTrace.MsgLevel msgLevel = TrcDbgTrace.MsgLevel.INFO;
     private TrcDbgTrace dbgTrace = null;
 
+    private static final int NUM_OBJECT_BUFFERS = 2;
+
     private final String instanceName;
     private CvSink videoIn;
     private CvSource videoOut;
     private Mat image;
-    private MatOfRect detectedObjects;
+    private MatOfRect[] detectedObjectsBuffers;
     private TrcVisionTask<Mat, MatOfRect> visionTask;
 
     /**
@@ -68,8 +70,12 @@ public abstract class FrcOpenCVDetector implements TrcVisionTask.VisionProcessor
         videoOut = CameraServer.getInstance().putVideo("Rectangle", 640, 480);
 
         image = new Mat();
-        detectedObjects = new MatOfRect();
-        visionTask = new TrcVisionTask<>(this, image, detectedObjects);
+        detectedObjectsBuffers = new MatOfRect[NUM_OBJECT_BUFFERS];
+        for (int i = 0; i < detectedObjectsBuffers.length; i++)
+        {
+            detectedObjectsBuffers[i] = new MatOfRect();
+        }
+        visionTask = new TrcVisionTask<>(this, image, detectedObjectsBuffers);
     }   //FrcOpenCVDetector
 
     /**
