@@ -148,7 +148,7 @@ public class TrcVisionTask<I, O> implements Runnable
         this.detectedObjectsBuffers = detectedObjectsBuffers;
 
         visionThread = new Thread(this, "VisionTask");
-        visionThread.setDaemon(true);
+//        visionThread.setDaemon(true);
         visionThread.start();
     }   //TrcVisionTask
 

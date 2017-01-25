@@ -225,10 +225,13 @@ public class FrcTest extends FrcTeleOp
 
             case FACE_DETECTION:
                 Rect[] faceRects = faceDetector.getFaceRects();
-                for (int i = 0; i < faceRects.length && 9 + i < HalDashboard.MAX_NUM_TEXTLINES; i++)
+                if (faceRects != null)
                 {
-                    robot.dashboard.displayPrintf(9 + i, "[%d] x=%3d,y=%3d,w=%3d,h=%3d",
-                        faceRects[i].x, faceRects[i].y, faceRects[i].width, faceRects[i].height);
+                    for (int i = 0; i < faceRects.length && 9 + i < HalDashboard.MAX_NUM_TEXTLINES; i++)
+                    {
+                        robot.dashboard.displayPrintf(9 + i, "[%d] x=%3d,y=%3d,w=%3d,h=%3d",
+                            faceRects[i].x, faceRects[i].y, faceRects[i].width, faceRects[i].height);
+                    }
                 }
                 break;
         }
