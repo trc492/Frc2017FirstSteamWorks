@@ -39,19 +39,21 @@ import trclib.TrcTaskMgr;
 import trclib.TrcUtil;
 
 /**
- *  This class defines and implements the FrcRobotBase object. The FrcRobotBase
- *  object implements a cooperative multitasking robot. Different subsystems
- *  register themselves as CoopTasks. FrcRobotBase uses the TaskMgr to task
- *  switch between different subsystem tasks at various points in the robot
- *  loop. This basically simulates a cooperative multitasking scheduler that
- *  task switches between them in different modes.
+ * This class defines and implements the FrcRobotBase object. The FrcRobotBase object implements a cooperative
+ * multitasking robot. Different subsystems register themselves as CoopTasks. FrcRobotBase uses the TaskMgr to
+ * task switch between different subsystem tasks at various points in the robot loop. This basically simulates
+ * a cooperative multitasking scheduler that task switches between them in different modes.
  */
 public abstract class FrcRobotBase extends RobotBase
 {
     private static final String moduleName = "FrcRobotBase";
-    private static final boolean debugEnabled = false;
-    private static final boolean dashboardEnabled = true;
+    private static final boolean debugEnabled = true;
+    private static final boolean tracingEnabled = true;
+    private static final TrcDbgTrace.TraceLevel traceLevel = TrcDbgTrace.TraceLevel.API;
+    private static final TrcDbgTrace.MsgLevel msgLevel = TrcDbgTrace.MsgLevel.INFO;
     private TrcDbgTrace dbgTrace = null;
+
+    private static final boolean dashboardEnabled = true;
     private static TrcDbgTrace globalTracer = null;
 
     /**
@@ -72,17 +74,15 @@ public abstract class FrcRobotBase extends RobotBase
     private static double modeElapsedTime = 0.0;
 
     /**
-     * Constructor.
+     * Constructor: Create an instance of the object.
+     *
+     * @param progName specifies the program name.
      */
     public FrcRobotBase(final String progName)
     {
         if (debugEnabled)
         {
-            dbgTrace = new TrcDbgTrace(
-                    moduleName,
-                    false,
-                    TrcDbgTrace.TraceLevel.API,
-                    TrcDbgTrace.MsgLevel.INFO);
+            dbgTrace = new TrcDbgTrace(moduleName, tracingEnabled, traceLevel, msgLevel);
         }
 
         FrcRobotBase.instance = this;
@@ -90,36 +90,71 @@ public abstract class FrcRobotBase extends RobotBase
         dashboard.clearDisplay();
     }   //FrcRobotBase
 
+    /**
+     * This method returns the saved instance. This is a static method. So other class can get to this class instance
+     * by calling getInstance(). This is very useful for other classes that need to access the public fields and
+     * methods.
+     *
+     * @return save instance of this class.
+     */
     public static FrcRobotBase getInstance()
     {
         return instance;
     }   //getInstance
-    
+
+    /**
+     * This method returns a global debug trace object for tracing OpMode code. If it doesn't exist yet, one is
+     * created. This is an easy way to quickly get some debug output without a whole lot of setup overhead as the
+     * full module-based debug tracing.
+     *
+     * @return global opMode trace object.
+     */
     public static TrcDbgTrace getGlobalTracer()
     {
         if (globalTracer == null)
         {
-            globalTracer = new TrcDbgTrace(
-                    moduleName,
-                    false,
-                    TrcDbgTrace.TraceLevel.API,
-                    TrcDbgTrace.MsgLevel.INFO);
+            globalTracer = new TrcDbgTrace(moduleName, false, TrcDbgTrace.TraceLevel.API, TrcDbgTrace.MsgLevel.INFO);
         }
 
         return globalTracer;
     }   //getGlobalTracer
 
+    /**
+     * This method sets the global tracer configuration. The OpMode trace object was created with default
+     * configuration of disabled method tracing, method tracing level is set to API and message trace level
+     * set to INFO. Call this method if you want to change the configuration.
+     *
+     * @param traceEnabled specifies true if enabling method tracing.
+     * @param traceLevel specifies the method tracing level.
+     * @param msgLevel specifies the message tracing level.
+     */
+    public static void setGlobalTracerConfig(
+            boolean traceEnabled, TrcDbgTrace.TraceLevel traceLevel, TrcDbgTrace.MsgLevel msgLevel)
+    {
+        globalTracer.setDbgTraceConfig(traceEnabled, traceLevel, msgLevel);
+    }   //setGlobalTracerConfig
+
+    /**
+     * This method returns the elapsed time since the robot mode starts. This is the elapsed time after
+     * RobotMode.startMode() is called.
+     *
+     * @return robot mode elapsed time in seconds.
+     */
     public static double getModeElapsedTime()
     {
         modeElapsedTime = TrcUtil.getCurrentTime() - modeStartTime;
         return modeElapsedTime;
     }   //getModeElapsedTime
-    
-    public void setupRobotModes(
-            RobotMode teleOpMode,
-            RobotMode autoMode,
-            RobotMode testMode,
-            RobotMode disabledMode)
+
+    /**
+     * This method is called by the subclass to set up various robot mode objects.
+     *
+     * @param teleOpMode specifies the TeleOp mode object.
+     * @param autoMode specifies the Autonomous mode object.
+     * @param testMode specifies the Test mode object.
+     * @param disabledMode specifies the Disabled mode object.
+     */
+    public void setupRobotModes(RobotMode teleOpMode, RobotMode autoMode, RobotMode testMode, RobotMode disabledMode)
     {
         this.teleOpMode = teleOpMode;
         this.autoMode = autoMode;
@@ -128,33 +163,29 @@ public abstract class FrcRobotBase extends RobotBase
     }   //setupRobotModes
 
     /**
-     * Start a competition.
-     * This specific StartCompetition() implements "main loop" behavior like
-     * that of the FRC control system in 2008 and earlier, with a primary
-     * (slow) loop that is called periodically, and a "fast loop" (a.k.a.
-     * "spin loop") that is called as fast as possible with no delay between
-     * calls. This code needs to track the order of the field starting to
-     * ensure that everything happens in the right order. Repeatedly run the
-     * correct method, either Autonomous or TeleOp when the robot is
-     * enabled. After running the correct method, wait for some state to
-     * change, either the other mode starts or the robot is disabled. Then go
-     * back and wait for the robot to be enabled again.
+     * Start the competition match. This specific startCompetition() implements "main loop" behavior like that of
+     * the FRC control system in 2008 and earlier, with a primary (slow) loop that is called periodically, and a
+     * "fast loop" (a.k.a. "spin loop") that is called as fast as possible with no delay between calls. This code
+     * needs to track the order of the modes starting to ensure that everything happens in the right order. Repeatedly
+     * run the correct method, either Autonomous or TeleOp when the robot is enabled. After running the correct method,
+     * wait for some state to change, either the other mode starts or the robot is disabled. Then go back and wait for
+     * the robot to be enabled again.
      */
     public void startCompetition()
     {
         final String funcName = "startCompetition";
 
         System.out.printf(
-                HalDbgLog.ESC_PREFIX + HalDbgLog.SGR_FG_BLACK +
-                HalDbgLog.ESC_SEP + HalDbgLog.SGR_BG_WHITE +
-                HalDbgLog.ESC_SUFFIX +
-                "\n****************************************\n" +
-                "Host Name: %s\n" +
-                "  Program: %s\n"+
-//                " Compiled: %s, %s" +
-                "\n****************************************\n" +
-                HalDbgLog.ESC_NORMAL,
-                getHostName(), progName);
+            HalDbgLog.ESC_PREFIX + HalDbgLog.SGR_FG_BLACK +
+            HalDbgLog.ESC_SEP + HalDbgLog.SGR_BG_WHITE +
+            HalDbgLog.ESC_SUFFIX +
+            "\n****************************************\n" +
+            "Host Name: %s\n" +
+            "  Program: %s\n"+
+//            " Compiled: %s, %s" +
+            "\n****************************************\n" +
+            HalDbgLog.ESC_NORMAL,
+            getHostName(), progName);
 
         HAL.report(tResourceType.kResourceType_Framework, tInstances.kFramework_Iterative);
 
@@ -176,6 +207,7 @@ public abstract class FrcRobotBase extends RobotBase
         while (true)
         {
             prevMode = currMode;
+
             //
             // Determine the current run mode.
             //
@@ -207,24 +239,21 @@ public abstract class FrcRobotBase extends RobotBase
                 //
                 if (debugEnabled)
                 {
-                    dbgTrace.traceInfo(
-                            funcName,
-                            "Mode Transition: %s->%s.",
-                            prevMode.toString(), currMode.toString());
+                    dbgTrace.traceInfo(funcName, "Mode Transition: %s->%s.", prevMode.toString(), currMode.toString());
                 }
+
                 //
                 // Execute all stop tasks for previous mode.
                 //
                 if (prevMode != RunMode.INVALID_MODE)
                 {
-                    taskMgr.executeTaskType(
-                            TrcTaskMgr.TaskType.STOP_TASK, prevMode);
+                    taskMgr.executeTaskType(TrcTaskMgr.TaskType.STOP_TASK, prevMode);
                 }
+
                 //
                 // Stop previous mode.
                 // 
-                if (prevMode == RunMode.DISABLED_MODE &&
-                    disabledMode != null)
+                if (prevMode == RunMode.DISABLED_MODE && disabledMode != null)
                 {
                     disabledMode.stopMode();
                 }
@@ -240,6 +269,7 @@ public abstract class FrcRobotBase extends RobotBase
                 {
                     teleOpMode.stopMode();
                 }
+
                 //
                 // Start current mode.
                 //
@@ -276,13 +306,13 @@ public abstract class FrcRobotBase extends RobotBase
                         teleOpMode.startMode();
                     }
                 }
+
                 //
                 // Execute all start tasks for current mode.
                 //
                 if (currMode != RunMode.INVALID_MODE)
                 {
-                    taskMgr.executeTaskType(
-                            TrcTaskMgr.TaskType.START_TASK, currMode);
+                    taskMgr.executeTaskType(TrcTaskMgr.TaskType.START_TASK, currMode);
                 }
             }
 
@@ -293,11 +323,10 @@ public abstract class FrcRobotBase extends RobotBase
                 // Run periodic mode.
                 //
                 double timeSliceStart = Timer.getFPGATimestamp();
-                taskMgr.executeTaskType(
-                        TrcTaskMgr.TaskType.PREPERIODIC_TASK, currMode);
+                taskMgr.executeTaskType(TrcTaskMgr.TaskType.PREPERIODIC_TASK, currMode);
                 if (currMode == RunMode.DISABLED_MODE)
                 {
-                    HAL.observeUserProgramStarting();
+                    HAL.observeUserProgramDisabled();
                     if (disabledMode != null)
                     {
                         disabledMode.runPeriodic(modeElapsedTime);
@@ -327,26 +356,30 @@ public abstract class FrcRobotBase extends RobotBase
                         teleOpMode.runPeriodic(modeElapsedTime);
                     }
                 }
-                taskMgr.executeTaskType(
-                        TrcTaskMgr.TaskType.POSTPERIODIC_TASK, currMode);
-                double timeSliceUsed =
-                        Timer.getFPGATimestamp() - timeSliceStart;
+
+                //
+                // Run post periodic tasks.
+                //
+                taskMgr.executeTaskType(TrcTaskMgr.TaskType.POSTPERIODIC_TASK, currMode);
+
+                //
+                // Do house keeping statistics.
+                //
+                double timeSliceUsed = Timer.getFPGATimestamp() - timeSliceStart;
                 if (debugEnabled)
                 {
                     if (timeSliceUsed > timesliceThreshold)
                     {
-                        dbgTrace.traceWarn(
-                                funcName,
-                                "%s takes too long (%5.3fs)\n",
-                                currMode.toString(), timeSliceUsed);
+                        dbgTrace.traceWarn(funcName, "%s takes too long (%5.3fs)\n",
+                            currMode.toString(), timeSliceUsed);
                     }
                 }
             }
+
             //
             // Run continuous mode.
             //
-            taskMgr.executeTaskType(
-                    TrcTaskMgr.TaskType.PRECONTINUOUS_TASK, currMode);
+            taskMgr.executeTaskType(TrcTaskMgr.TaskType.PRECONTINUOUS_TASK, currMode);
             if (currMode == RunMode.DISABLED_MODE && disabledMode != null)
             {
                 disabledMode.runContinuous(modeElapsedTime);
@@ -363,8 +396,7 @@ public abstract class FrcRobotBase extends RobotBase
             {
                 teleOpMode.runContinuous(modeElapsedTime);
             }
-            taskMgr.executeTaskType(
-                    TrcTaskMgr.TaskType.POSTCONTINUOUS_TASK, currMode);
+            taskMgr.executeTaskType(TrcTaskMgr.TaskType.POSTCONTINUOUS_TASK, currMode);
 
             if (dashboardEnabled)
             {
@@ -374,9 +406,15 @@ public abstract class FrcRobotBase extends RobotBase
         }
     }   //startCompetition
 
+    /**
+     * This method returns the host name of the RobotRIO.
+     *
+     * @return host name.
+     */
     private String getHostName()
     {
         String hostName = null;
+
         try
         {
             byte[] buff = new byte[256];
@@ -389,13 +427,13 @@ public abstract class FrcRobotBase extends RobotBase
         {
             e.printStackTrace();
         }
+
         return hostName;
     }   //getHostName
 
     /**
-     * Determine if the appropriate next periodic function should be called.
-     * Call the periodic functions whenever a packet is received from the
-     * Driver Station or about every 20 msec.
+     * Determine if the appropriate next periodic function should be called. Call the periodic functions whenever
+     * a packet is received from the Driver Station or about every 20 msec.
      */
     private boolean nextPeriodReady()
     {
