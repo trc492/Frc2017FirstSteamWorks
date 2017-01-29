@@ -137,10 +137,10 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         rightFrontWheel.setInverted(true);
         rightRearWheel.setInverted(true);
 
-        leftFrontWheel.motor.enableLimitSwitch(false, false);
-        leftRearWheel.motor.enableLimitSwitch(false, false);
-        rightFrontWheel.motor.enableLimitSwitch(false, false);
-        rightRearWheel.motor.enableLimitSwitch(false, false);
+        leftFrontWheel.enableLimitSwitch(false, false);
+        leftRearWheel.enableLimitSwitch(false, false);
+        rightFrontWheel.enableLimitSwitch(false, false);
+        rightRearWheel.enableLimitSwitch(false, false);
 
         leftFrontWheel.setPositionSensorInverted(true);
         leftRearWheel.setPositionSensorInverted(true);

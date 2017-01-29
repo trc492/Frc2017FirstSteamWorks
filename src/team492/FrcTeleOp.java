@@ -66,16 +66,18 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
     // Implements TrcRobot.RunMode interface.
     //
 
+    @Override
     public void startMode()
     {
-        robot.driveBase.resetPosition();
     }   //startMode
 
+    @Override
     public void stopMode()
     {
         robot.driveBase.stop();
     }   //stopMode
 
+    @Override
     public void runPeriodic(double elapsedTime)
     {
         //
@@ -123,6 +125,7 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
         robot.updateDashboard();
     }   //runPeriodic
 
+    @Override
     public void runContinuous(double elapsedTime)
     {
     }   //runContinuous
@@ -131,6 +134,7 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
     // Implements TrcJoystick.ButtonHandler.
     //
 
+    @Override
     public void joystickButtonEvent(FrcJoystick joystick, int button, boolean pressed)
     {
         if (joystick == leftDriveStick)

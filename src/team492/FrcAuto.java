@@ -54,6 +54,7 @@ public class FrcAuto implements TrcRobot.RobotMode
     // Implements TrcRobot.RunMode.
     //
 
+    @Override
     public void startMode()
     {
         robot.driveBase.resetPosition();
@@ -85,15 +86,18 @@ public class FrcAuto implements TrcRobot.RobotMode
         }
     }   //startMode
 
+    @Override
     public void stopMode()
     {
         robot.driveBase.stop();
     }   //stopMode
 
+    @Override
     public void runPeriodic(double elapsedTime)
     {
     }   //runPeriodic
 
+    @Override
     public void runContinuous(double elapsedTime)
     {
         if (autoCommand != null)

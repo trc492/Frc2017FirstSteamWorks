@@ -27,7 +27,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SpeedController;
 import trclib.TrcDbgTrace;
-import trclib.TrcMotor;
+import trclib.TrcMotorController;
 import trclib.TrcUtil;
 
 /**
@@ -48,8 +48,8 @@ public class HalRobotDrive extends RobotDrive
     private static double MOTOR_MAX_VALUE = 1.0;
     private static double MOTOR_MIN_VALUE = -1.0;
 
-    private void commonInit(TrcMotor frontLeftMotor, TrcMotor rearLeftMotor,
-                            TrcMotor frontRightMotor, TrcMotor rearRightMotor)
+    private void commonInit(TrcMotorController frontLeftMotor, TrcMotorController rearLeftMotor,
+                            TrcMotorController frontRightMotor, TrcMotorController rearRightMotor)
     {
         if (debugEnabled)
         {
@@ -69,14 +69,14 @@ public class HalRobotDrive extends RobotDrive
         commonInit(null, null, null, null);
     }   //HalRobotDrive
 
-    public HalRobotDrive(TrcMotor leftMotor, TrcMotor rightMotor)
+    public HalRobotDrive(TrcMotorController leftMotor, TrcMotorController rightMotor)
     {
         super((SpeedController)leftMotor, (SpeedController)rightMotor);
         commonInit(null, leftMotor, null, rightMotor);
     }   //HalRobotDrive
 
-    public HalRobotDrive(TrcMotor frontLeftMotor, TrcMotor rearLeftMotor,
-                         TrcMotor frontRightMotor, TrcMotor rearRightMotor)
+    public HalRobotDrive(TrcMotorController frontLeftMotor, TrcMotorController rearLeftMotor,
+                         TrcMotorController frontRightMotor, TrcMotorController rearRightMotor)
     {
         super((SpeedController)frontLeftMotor,
               (SpeedController)rearLeftMotor,
@@ -85,8 +85,9 @@ public class HalRobotDrive extends RobotDrive
         commonInit(frontLeftMotor, rearLeftMotor, frontRightMotor, rearRightMotor);
     }   //HalRobotDrive
 
-    public HalRobotDrive(TrcMotor frontLeftMotor, TrcMotor midLeftMotor, TrcMotor rearLeftMotor,
-                         TrcMotor frontRightMotor, TrcMotor midRightMotor, TrcMotor rearRightMotor)
+    public HalRobotDrive(
+        TrcMotorController frontLeftMotor, TrcMotorController midLeftMotor, TrcMotorController rearLeftMotor,
+        TrcMotorController frontRightMotor, TrcMotorController midRightMotor, TrcMotorController rearRightMotor)
     {
         super((SpeedController)frontLeftMotor, (SpeedController)rearLeftMotor,
               (SpeedController)frontRightMotor, (SpeedController)rearRightMotor);
