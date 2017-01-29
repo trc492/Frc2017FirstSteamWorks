@@ -388,9 +388,6 @@ public class TrcVisionTask<I, O> implements Runnable
             {
                 dbgTrace.traceInfo(funcName, "Average processing time = %.3f msec", (double)totalTime/totalFrames);
             }
-
-            visionProcessor.putFrame(image, detectedObjectsBuffers[bufferIndex]);
-
             taskState.setTargets(detectedObjectsBuffers[bufferIndex]);
             //
             // Switch to the next buffer so that we won't clobber the info while the client is accessing it.

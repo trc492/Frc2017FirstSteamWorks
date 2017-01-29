@@ -91,7 +91,10 @@ public class HalRobotDrive extends RobotDrive
     {
         super((SpeedController)frontLeftMotor, (SpeedController)rearLeftMotor,
               (SpeedController)frontRightMotor, (SpeedController)rearRightMotor);
-        throw new UnsupportedOperationException("6-wheel drive is not supported.");
+        if (midLeftMotor != null || midRightMotor != null)
+        {
+            throw new UnsupportedOperationException("6-wheel drive is not supported.");
+        }
     }   //HalRobotDrive
 
     /**

@@ -25,6 +25,7 @@ package team492;
 import com.ctre.CANTalon.FeedbackDevice;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.CameraServer;
 import frclib.FrcCANTalon;
 import frclib.FrcGyro;
 import frclib.FrcRobotBase;
@@ -45,6 +46,8 @@ import trclib.TrcUtil;
  */
 public class Robot extends FrcRobotBase implements TrcPidController.PidInput
 {
+    public static final boolean USE_VISION_TARGET = true;
+
     private static final String programName = "FirstSteamWorks";
     private static final String moduleName = "Robot";
 
@@ -61,7 +64,12 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     //
     // Sensors.
     //
-    public FrcGyro gyro;
+    public FrcGyro gyro = null;
+
+    //
+    // VisionTarget subsystem.
+    //
+    public VisionTarget visionTarget = null;
 
     //
     // DriveBase subsystem.
@@ -76,10 +84,6 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     public TrcPidController encoderYPidCtrl;
     public TrcPidController gyroTurnPidCtrl;
     public TrcPidDrive pidDrive;
-
-    //
-    // Vision target subsystem.
-    //
 
     //
     // Define our subsystems for Auto and TeleOp modes.
@@ -109,17 +113,23 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         //
         // Sensors.
         //
-        try
-        {
-            gyro = new FrcGyro("ADXRS450", new ADXRS450_Gyro());
-        }
-        catch (NullPointerException e)
-        {
-            gyro = null;
-        }
+//        try
+//        {
+//            gyro = new FrcGyro("ADXRS450", new ADXRS450_Gyro());
+//        }
+//        catch (NullPointerException e)
+//        {
+//            gyro = null;
+//        }
+
         //
-        // Camera for streaming.
+        // VisionTarget subsystem.
         //
+        if (USE_VISION_TARGET)
+        {
+            CameraServer.getInstance().startAutomaticCapture().setResolution(640, 480);
+            visionTarget = new VisionTarget("GearTarget");
+        }
 
         //
         // DriveBase subsystem.
