@@ -40,6 +40,8 @@ public class FrcFaceDetector extends FrcOpenCVDetector
 
     private CascadeClassifier faceDetector;
     private Rect[] faceRects = null;
+    private Mat image = null;
+    private MatOfRect detectedFaces = null;
 
     /**
      * Constructor: Create an instance of the object.
@@ -78,6 +80,17 @@ public class FrcFaceDetector extends FrcOpenCVDetector
         return faceRects;
     }   //getFaceRects
 
+    /**
+     * This method update the video stream with the detected faces overlay on the image as rectangles.
+     */
+    public void putFrame()
+    {
+        if (image != null && detectedFaces != null)
+        {
+            super.putFrame(image, detectedFaces);
+        }
+    }   //putFrame
+
     //
     // Implements the FrcVisionTask.VisionProcesor interface.
     //
@@ -107,6 +120,9 @@ public class FrcFaceDetector extends FrcOpenCVDetector
             faceRects = detectedObjects.toArray();
             found = true;
         }
+
+        this.image = image;
+        this.detectedFaces = detectedObjects;
 
         if (debugEnabled)
         {

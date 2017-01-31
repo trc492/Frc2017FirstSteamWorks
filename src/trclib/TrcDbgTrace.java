@@ -22,6 +22,10 @@
 
 package trclib;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
+
 import hallib.HalDbgLog;
 
 /**
@@ -90,6 +94,7 @@ public class TrcDbgTrace
     private TraceLevel traceLevel;
     private MsgLevel msgLevel;
     private double nextTraceTime;
+    private PrintStream traceLog = null;
 
     /**
      * Constructor: Create an instance of the object.
@@ -105,6 +110,41 @@ public class TrcDbgTrace
         setDbgTraceConfig(traceEnabled, traceLevel, msgLevel);
         this.nextTraceTime = TrcUtil.getCurrentTime();
     }   //TrcDbgTrace
+
+    /**
+     * This method opens a file for writing all the trace messages to it.
+     *
+     * @param traceLogName specifies the trace log file name.
+     * @return true if log file is successfully opened, false if it failed.
+     */
+    public boolean openTraceLog(String traceLogName)
+    {
+        boolean success = true;
+
+        try
+        {
+            traceLog = new PrintStream(new File(traceLogName));
+        }
+        catch (FileNotFoundException e)
+        {
+            traceLog = null;
+            success = false;
+        }
+
+        return success;
+    }   //openTraceLog
+
+    /**
+     * This method closes the trace log file.
+     */
+    public void closeTraceLog()
+    {
+        if (traceLog != null)
+        {
+            traceLog.close();
+            traceLog = null;
+        }
+    }   //closeTraceLog
 
     /**
      * This method sets the trace level, message level of the debug tracer. It can also enables/disables function
@@ -282,7 +322,13 @@ public class TrcDbgTrace
             if (currTime >= nextTraceTime)
             {
                 nextTraceTime = currTime + traceInterval;
-                HalDbgLog.msg(level, msgPrefix(funcName, level) + String.format(format, args) + "\n");
+                String msg = msgPrefix(funcName, level) + String.format(format, args) + "\n";
+                HalDbgLog.msg(level, msg);
+                if (traceLog != null)
+                {
+                    traceLog.print(msg);
+                    traceLog.flush();
+                }
             }
         }
     }   //traceMsg
