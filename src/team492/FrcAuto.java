@@ -22,12 +22,17 @@
 
 package team492;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import hallib.HalDashboard;
 import trclib.TrcRobot;
 
 public class FrcAuto implements TrcRobot.RobotMode
 {
+    private static final boolean USE_TRACELOG = true;
+
     public enum AutoMode
     {
         AUTOMODE_TIMED_DRIVE,
@@ -57,8 +62,6 @@ public class FrcAuto implements TrcRobot.RobotMode
     @Override
     public void startMode()
     {
-        robot.driveBase.resetPosition();
-
         double delay = 0.0;
         double driveTime = 0.0;
         double xDrivePower = 0.0;
@@ -67,7 +70,17 @@ public class FrcAuto implements TrcRobot.RobotMode
         double xDistance = 0.0;
         double yDistance = 0.0;
         double heading = 0.0;
+        Date now = new Date();
 
+        if (USE_TRACELOG)
+        {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_hh:mm");
+            robot.tracer.openTraceLog(dateFormat.format(now) + ".log");
+        }
+
+        robot.tracer.traceInfo(robot.programName, "%s: ***** Starting autonomous *****", now.toString());
+
+        robot.driveBase.resetPosition();
         AutoMode selectedAutoMode = autoChooser.getSelected();
         switch (selectedAutoMode)
         {
@@ -90,6 +103,10 @@ public class FrcAuto implements TrcRobot.RobotMode
     public void stopMode()
     {
         robot.driveBase.stop();
+        if (USE_TRACELOG)
+        {
+            robot.tracer.closeTraceLog();
+        }
     }   //stopMode
 
     @Override

@@ -22,7 +22,11 @@
 
 package team492;
 
+import org.opencv.core.Rect;
+
 import frclib.FrcJoystick;
+import frclib.FrcRobotBase;
+import trclib.TrcDbgTrace;
 import trclib.TrcRobot;
 
 public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
@@ -45,6 +49,7 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
 
     private boolean slowDriveOverride = false;
     private DriveMode driveMode = DriveMode.MECANUM_MODE;
+    private boolean faceDetectorEnabled = false;
 
     public FrcTeleOp(Robot robot)
     {
@@ -122,6 +127,21 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
                 break;
         }
 
+        if (faceDetectorEnabled)
+        {
+            Rect[] faceRects = robot.faceDetector.getFaceRects();
+            if (faceRects != null)
+            {
+                TrcDbgTrace tracer = FrcRobotBase.getGlobalTracer();
+                for (int i = 0; i < faceRects.length; i++)
+                {
+                    tracer.traceInfo("FaceRect", "%02d: x=%d, y=%d, width=%d, height=%d",
+                        i, faceRects[i].x, faceRects[i].y, faceRects[i].width, faceRects[i].height);
+                }
+                robot.faceDetector.putFrame();
+            }
+        }
+
         robot.updateDashboard();
     }   //runPeriodic
 
@@ -151,9 +171,25 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
                     break;
 
                 case FrcJoystick.LOGITECH_BUTTON4:
+                    if (pressed)
+                    {
+                        robot.pneumatic1.extend();
+                    }
+                    else
+                    {
+                        robot.pneumatic1.retract();
+                    }
                     break;
 
                 case FrcJoystick.LOGITECH_BUTTON5:
+                    if (pressed)
+                    {
+                        robot.pneumatic2.extend();
+                    }
+                    else
+                    {
+                        robot.pneumatic2.retract();
+                    }
                     break;
 
                 case FrcJoystick.LOGITECH_BUTTON6:
@@ -169,6 +205,11 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
                     break;
 
                 case FrcJoystick.LOGITECH_BUTTON10:
+                    if (robot.faceDetector != null && pressed)
+                    {
+                        faceDetectorEnabled = !faceDetectorEnabled;
+                        robot.faceDetector.setEnabled(faceDetectorEnabled);
+                    }
                     break;
 
                 case FrcJoystick.LOGITECH_BUTTON11:

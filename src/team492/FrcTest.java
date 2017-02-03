@@ -24,9 +24,8 @@ package team492;
 
 import org.opencv.core.Rect;
 
-import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import frclib.FrcFaceDetector;
 import hallib.HalDashboard;
 import trclib.TrcEvent;
 import trclib.TrcStateMachine;
@@ -45,6 +44,7 @@ public class FrcTest extends FrcTeleOp
         X_DISTANCE_DRIVE,
         Y_DISTANCE_DRIVE,
         TURN,
+        LIVE_WINDOW,
         FACE_DETECTION
     }   //enum TestMode
 
@@ -61,7 +61,6 @@ public class FrcTest extends FrcTeleOp
 
     private CmdTimedDrive timedDriveCommand = null;
     private CmdPidDrive pidDriveCommand = null;
-    private FrcFaceDetector faceDetector = null;
 
     private TestMode testMode = TestMode.SENSORS_TEST;
     private int motorIndex = 0;
@@ -102,6 +101,7 @@ public class FrcTest extends FrcTeleOp
         super.startMode();
         testMode = testChooser.getSelected();
 
+        boolean liveWindowEnabled = false;
         switch (testMode)
         {
             case X_TIMED_DRIVE:
@@ -124,16 +124,22 @@ public class FrcTest extends FrcTeleOp
                 pidDriveCommand = new CmdPidDrive(robot, 0.0, 0.0, 0.0, 360.0);
                 break;
 
+            case LIVE_WINDOW:
+                liveWindowEnabled = true;
+                break;
+
             case FACE_DETECTION:
-                CameraServer.getInstance().startAutomaticCapture().setResolution(640, 480);
-                faceDetector = new FrcFaceDetector("FaceDetector", "cascade-files/haarcascade_frontalface_alt.xml");
-                faceDetector.setEnabled(true);
+                if (robot.faceDetector !=  null)
+                {
+                    robot.faceDetector.setEnabled(true);
+                }
                 break;
 
             default:
                 break;
         }
 
+        LiveWindow.setEnabled(liveWindowEnabled);
         sm.start(State.START);
     }   //startMode
 
@@ -144,9 +150,9 @@ public class FrcTest extends FrcTeleOp
         // Call TeleOp stopMode.
         //
         super.stopMode();
-        if (faceDetector != null)
+        if (robot.faceDetector != null)
         {
-            faceDetector.setEnabled(false);
+            robot.faceDetector.setEnabled(false);
         }
     }   //stopMode
 
@@ -156,14 +162,43 @@ public class FrcTest extends FrcTeleOp
     @Override
     public void runPeriodic(double elapsedTime)
     {
-        //
-        // Allow TeleOp to run so we can control the robot in sensors test mode.
-        //
-        if (testMode == TestMode.SENSORS_TEST)
+        switch (testMode)
         {
-            super.runPeriodic(elapsedTime);
+            case SENSORS_TEST:
+                //
+                // Allow TeleOp to run so we can control the robot in sensors test mode.
+                //
+                super.runPeriodic(elapsedTime);
+                doSensorsTest();
+                break;
+
+            case DRIVE_MOTORS_TEST:
+                doDriveMotorsTest();
+                break;
+
+            case LIVE_WINDOW:
+                LiveWindow.run();
+                break;
+
+            case FACE_DETECTION:
+                if (robot.faceDetector != null)
+                {
+                    Rect[] faceRects = robot.faceDetector.getFaceRects();
+                    if (faceRects != null)
+                    {
+                        for (int i = 0; i < faceRects.length && 9 + i < HalDashboard.MAX_NUM_TEXTLINES; i++)
+                        {
+                            robot.dashboard.displayPrintf(9 + i, "[%d] x=%3d,y=%3d,w=%3d,h=%3d",
+                                faceRects[i].x, faceRects[i].y, faceRects[i].width, faceRects[i].height);
+                        }
+                        robot.faceDetector.putFrame();
+                    }
+                }
+                break;
+
+            default:
+                break;
         }
-//        LiveWindow.run();
     }   //runPeriodic
 
     @Override
@@ -174,14 +209,6 @@ public class FrcTest extends FrcTeleOp
 
         switch (testMode)
         {
-            case SENSORS_TEST:
-                doSensorsTest();
-                break;
-
-            case DRIVE_MOTORS_TEST:
-                doDriveMotorsTest();
-                break;
-
             case X_TIMED_DRIVE:
             case Y_TIMED_DRIVE:
                 double lfEnc = robot.leftFrontWheel.getPosition();
@@ -223,16 +250,7 @@ public class FrcTest extends FrcTeleOp
                 }
                 break;
 
-            case FACE_DETECTION:
-                Rect[] faceRects = faceDetector.getFaceRects();
-                if (faceRects != null)
-                {
-                    for (int i = 0; i < faceRects.length && 9 + i < HalDashboard.MAX_NUM_TEXTLINES; i++)
-                    {
-                        robot.dashboard.displayPrintf(9 + i, "[%d] x=%3d,y=%3d,w=%3d,h=%3d",
-                            faceRects[i].x, faceRects[i].y, faceRects[i].width, faceRects[i].height);
-                    }
-                }
+            default:
                 break;
         }
     }   //runContinuous

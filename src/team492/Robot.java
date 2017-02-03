@@ -25,9 +25,13 @@ package team492;
 import com.ctre.CANTalon.FeedbackDevice;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.DigitalInput;
 import frclib.FrcCANTalon;
+import frclib.FrcFaceDetector;
 import frclib.FrcGyro;
+import frclib.FrcPneumatic;
 import frclib.FrcRobotBase;
 import hallib.HalDashboard;
 import trclib.TrcDbgTrace;
@@ -46,10 +50,11 @@ import trclib.TrcUtil;
  */
 public class Robot extends FrcRobotBase implements TrcPidController.PidInput
 {
-    public static final boolean USE_VISION_TARGET = true;
+    public static final boolean USE_VISION_TARGET = false;
+    public static final boolean USE_FACE_DETECTOR = true;
 
-    private static final String programName = "FirstSteamWorks";
-    private static final String moduleName = "Robot";
+    public static final String programName = "FirstSteamWorks";
+    public static final String moduleName = "Robot";
 
     private static final boolean debugDriveBase = false;
     private static final boolean debugPidDrive = false;
@@ -65,11 +70,14 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     // Sensors.
     //
     public FrcGyro gyro = null;
+    public AnalogInput pixyCamera = null;
+    public DigitalInput objectDetected = null;
 
     //
     // VisionTarget subsystem.
     //
     public VisionTarget visionTarget = null;
+    public FrcFaceDetector faceDetector = null;
 
     //
     // DriveBase subsystem.
@@ -88,6 +96,8 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     //
     // Define our subsystems for Auto and TeleOp modes.
     //
+    public FrcPneumatic pneumatic1;
+    public FrcPneumatic pneumatic2;
 
     //
     // Robot Modes.
@@ -122,6 +132,9 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
 //            gyro = null;
 //        }
 
+        pixyCamera = new AnalogInput(1);
+        objectDetected = new DigitalInput(9);
+
         //
         // VisionTarget subsystem.
         //
@@ -129,6 +142,12 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         {
             CameraServer.getInstance().startAutomaticCapture().setResolution(640, 480);
             visionTarget = new VisionTarget("GearTarget");
+        }
+        else if (USE_FACE_DETECTOR)
+        {
+            CameraServer.getInstance().startAutomaticCapture().setResolution(640, 480);
+            faceDetector = new FrcFaceDetector(
+                "FrontalFace", "/home/lvuser/cascade-files/haarcascade_frontalface_alt.xml");
         }
 
         //
@@ -187,6 +206,9 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         gyroTurnPidCtrl.setAbsoluteSetPoint(true);
         pidDrive = new TrcPidDrive("pidDrive", driveBase, encoderXPidCtrl, encoderYPidCtrl, gyroTurnPidCtrl);
 
+        pneumatic1 = new FrcPneumatic("Test1", RobotInfo.CANID_PCM1, 0, 1);
+        pneumatic2 = new FrcPneumatic("Test2", RobotInfo.CANID_PCM1, 2, 3);
+
         //
         // Robot Modes.
         //
@@ -207,6 +229,11 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
             //
             // Sensor info.
             //
+            if (objectDetected.get())
+            {
+                double voltage = pixyCamera.getVoltage();
+                dashboard.displayPrintf(1, "Pixy: %.3f (%.3f)", (voltage - 1.65)/3.3, voltage);
+            }
 
             if (debugDriveBase)
             {
