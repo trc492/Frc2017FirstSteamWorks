@@ -78,7 +78,7 @@ public class FrcAuto implements TrcRobot.RobotMode
             robot.tracer.openTraceLog(dateFormat.format(now) + ".log");
         }
 
-        robot.tracer.traceInfo(robot.programName, "%s: ***** Starting autonomous *****", now.toString());
+        robot.tracer.traceInfo(Robot.programName, "%s: ***** Starting autonomous *****", now.toString());
 
         robot.driveBase.resetPosition();
         AutoMode selectedAutoMode = autoChooser.getSelected();
