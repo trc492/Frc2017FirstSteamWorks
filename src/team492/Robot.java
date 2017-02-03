@@ -100,7 +100,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     // Define our subsystems for Auto and TeleOp modes.
     //
     // Testing pneumatics.
-    public FrcPneumatic pneumatic1;
+    public FrcPneumatic mailbox;
     public FrcPneumatic pneumatic2;
 
     //
@@ -212,10 +212,12 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
             RobotInfo.GYRO_TURN_TOLERANCE, RobotInfo.GYRO_TURN_SETTLING, this);
         gyroTurnPidCtrl.setAbsoluteSetPoint(true);
         pidDrive = new TrcPidDrive("pidDrive", driveBase, encoderXPidCtrl, encoderYPidCtrl, gyroTurnPidCtrl);
-
+        
+        mailbox = new FrcPneumatic("Mailbox", RobotInfo.CANID_PCM1, RobotInfo.MAILBOX_EXTEND, RobotInfo.MAILBOX_RETRACT);
+        
         if (TEST_PNEUMATICS)
         {
-            pneumatic1 = new FrcPneumatic("Test1", RobotInfo.CANID_PCM1, 0, 1);
+            
             pneumatic2 = new FrcPneumatic("Test2", RobotInfo.CANID_PCM1, 2, 3);
         }
 
