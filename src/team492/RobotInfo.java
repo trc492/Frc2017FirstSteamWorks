@@ -50,9 +50,6 @@ public class RobotInfo
     public static final int CANID_PDP                       = 16;
     public static final int CANID_PCM1                      = 17;
     public static final int CANID_PCM2                      = 18;
-    public static final int MAILBOX_EXTEND					= 0;
-    public static final int MAILBOX_RETRACT					= 1;
-    
 
     //
     // Relay channels.
@@ -62,6 +59,8 @@ public class RobotInfo
     //
     // Solenoid channels.
     //
+    public static final int SOL_MAILBOX_EXTEND              = 0;
+    public static final int SOL_MAILBOX_RETRACT             = 1;
 
     //
     // Miscellaneous sensors and devices.

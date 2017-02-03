@@ -171,31 +171,17 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
                     break;
 
                 case FrcJoystick.LOGITECH_BUTTON4:
-                    
-                    
-                        if (pressed)
-                        {
-                            robot.mailbox.extend();
-                        }
-                        else
-                        {
-                            robot.mailbox.retract();
-                        }
-                    
+                    if (pressed)
+                    {
+                        robot.mailbox.extend();
+                    }
+                    else
+                    {
+                        robot.mailbox.retract();
+                    }
                     break;
 
                 case FrcJoystick.LOGITECH_BUTTON5:
-                    if (Robot.TEST_PNEUMATICS)
-                    {
-                        if (pressed)
-                        {
-                            robot.pneumatic2.extend();//this opens the gearpusher thus allowing the gear to be deposited on to the peg
-                        }
-                        else
-                        {
-                            robot.pneumatic2.retract();//this closes the gearpusher thus allowing for the gears rest in the mailbox
-                        }
-                    }
                     break;
 
                 case FrcJoystick.LOGITECH_BUTTON6:
