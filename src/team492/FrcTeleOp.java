@@ -171,24 +171,30 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
                     break;
 
                 case FrcJoystick.LOGITECH_BUTTON4:
-                    if (pressed)
+                    if (Robot.TEST_PNEUMATICS)
                     {
-                        robot.pneumatic1.extend();
-                    }
-                    else
-                    {
-                        robot.pneumatic1.retract();
+                        if (pressed)
+                        {
+                            robot.pneumatic1.extend();
+                        }
+                        else
+                        {
+                            robot.pneumatic1.retract();
+                        }
                     }
                     break;
 
                 case FrcJoystick.LOGITECH_BUTTON5:
-                    if (pressed)
+                    if (Robot.TEST_PNEUMATICS)
                     {
-                        robot.pneumatic2.extend();
-                    }
-                    else
-                    {
-                        robot.pneumatic2.retract();
+                        if (pressed)
+                        {
+                            robot.pneumatic2.extend();
+                        }
+                        else
+                        {
+                            robot.pneumatic2.retract();
+                        }
                     }
                     break;
 

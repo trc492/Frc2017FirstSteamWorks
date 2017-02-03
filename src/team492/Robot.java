@@ -50,14 +50,16 @@ import trclib.TrcUtil;
  */
 public class Robot extends FrcRobotBase implements TrcPidController.PidInput
 {
-    public static final boolean USE_VISION_TARGET = false;
-    public static final boolean USE_FACE_DETECTOR = true;
-
     public static final String programName = "FirstSteamWorks";
     public static final String moduleName = "Robot";
 
-    private static final boolean debugDriveBase = false;
-    private static final boolean debugPidDrive = false;
+    public static final boolean USE_VISION_TARGET = false;
+    public static final boolean USE_FACE_DETECTOR = false;
+    public static final boolean TEST_PIXY_CAMERA = true;
+    public static final boolean TEST_PNEUMATICS = true;
+
+    private static final boolean DEBUG_DRIVE_BASE = false;
+    private static final boolean DEBUG_PID_DRIVE = false;
     private static final double DASHBOARD_UPDATE_INTERVAL = 0.1;
 
     public HalDashboard dashboard = HalDashboard.getInstance();
@@ -70,6 +72,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     // Sensors.
     //
     public FrcGyro gyro = null;
+    // Testing pixy camera.
     public AnalogInput pixyCamera = null;
     public DigitalInput objectDetected = null;
 
@@ -96,6 +99,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     //
     // Define our subsystems for Auto and TeleOp modes.
     //
+    // Testing pneumatics.
     public FrcPneumatic pneumatic1;
     public FrcPneumatic pneumatic2;
 
@@ -132,8 +136,11 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
 //            gyro = null;
 //        }
 
-        pixyCamera = new AnalogInput(1);
-        objectDetected = new DigitalInput(9);
+        if (TEST_PIXY_CAMERA)
+        {
+            pixyCamera = new AnalogInput(1);
+            objectDetected = new DigitalInput(9);
+        }
 
         //
         // VisionTarget subsystem.
@@ -206,8 +213,11 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         gyroTurnPidCtrl.setAbsoluteSetPoint(true);
         pidDrive = new TrcPidDrive("pidDrive", driveBase, encoderXPidCtrl, encoderYPidCtrl, gyroTurnPidCtrl);
 
-        pneumatic1 = new FrcPneumatic("Test1", RobotInfo.CANID_PCM1, 0, 1);
-        pneumatic2 = new FrcPneumatic("Test2", RobotInfo.CANID_PCM1, 2, 3);
+        if (TEST_PNEUMATICS)
+        {
+            pneumatic1 = new FrcPneumatic("Test1", RobotInfo.CANID_PCM1, 0, 1);
+            pneumatic2 = new FrcPneumatic("Test2", RobotInfo.CANID_PCM1, 2, 3);
+        }
 
         //
         // Robot Modes.
@@ -229,13 +239,16 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
             //
             // Sensor info.
             //
-            if (objectDetected.get())
+            if (TEST_PIXY_CAMERA)
             {
-                double voltage = pixyCamera.getVoltage();
-                dashboard.displayPrintf(1, "Pixy: %.3f (%.3f)", (voltage - 1.65)/3.3, voltage);
+                if (objectDetected.get())
+                {
+                    double voltage = pixyCamera.getVoltage();
+                    dashboard.displayPrintf(1, "Pixy: %.3f (%.3f)", (voltage - 1.65)/3.3, voltage);
+                }
             }
 
-            if (debugDriveBase)
+            if (DEBUG_DRIVE_BASE)
             {
                 //
                 // DriveBase debug info.
@@ -246,7 +259,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
                 dashboard.displayPrintf(2, "DriveBase: X=%.1f, Y=%.1f, Heading=%.1f",
                     driveBase.getXPosition(), driveBase.getYPosition(), driveBase.getHeading());
 
-                if (debugPidDrive)
+                if (DEBUG_PID_DRIVE)
                 {
                     encoderXPidCtrl.displayPidInfo(3);
                     encoderYPidCtrl.displayPidInfo(5);
