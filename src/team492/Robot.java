@@ -56,6 +56,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     public static final boolean USE_VISION_TARGET = false;
     public static final boolean USE_FACE_DETECTOR = false;
     public static final boolean TEST_PIXY_CAMERA = true;
+    public static final boolean USE_PIXY_VISION = true;
 
     private static final boolean DEBUG_DRIVE_BASE = false;
     private static final boolean DEBUG_PID_DRIVE = false;
@@ -80,6 +81,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     //
     public VisionTarget visionTarget = null;
     public FrcFaceDetector faceDetector = null;
+    public PixyVision pixyVision = null;
 
     //
     // DriveBase subsystem.
@@ -137,6 +139,11 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         {
             pixyCamera = new AnalogInput(1);
             objectDetected = new DigitalInput(9);
+        }
+        
+        if (USE_PIXY_VISION)
+        {
+        	pixyVision = new PixyVision("PixyCamera");
         }
 
         //
