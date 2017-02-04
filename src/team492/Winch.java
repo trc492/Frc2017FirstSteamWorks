@@ -6,7 +6,8 @@ import trclib.TrcDigitalTrigger;
 
 public class Winch
 {
-    private FrcPneumatic winchmotor, proxsensor;
+    private FrcPneumatic winchmotor;
+    boolean proxsensor;
     
     
     
@@ -19,8 +20,8 @@ public class Winch
     }
     
     public void close(){
-        if boolean proxsensor{
-            
+        if(proxsensor){
+            winchmotor
         }
     }
 }

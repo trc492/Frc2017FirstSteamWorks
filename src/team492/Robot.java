@@ -102,6 +102,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     //
     public FrcPneumatic mailbox;
 
+    public FrcCANTalon winch;
     //
     // Robot Modes.
     //
@@ -219,6 +220,10 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
 
         mailbox = new FrcPneumatic(
             "Mailbox", RobotInfo.CANID_PCM1, RobotInfo.SOL_MAILBOX_EXTEND, RobotInfo.SOL_MAILBOX_RETRACT);
+        
+        winch = new FrcCANTalon("Winch", RobotInfo.CANID_WINCH);
+            
+    
 
         //
         // Robot Modes.
