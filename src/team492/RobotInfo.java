@@ -100,5 +100,6 @@ public class RobotInfo
     public static final double DRIVE_SLOW_XSCALE = 3.0;
     public static final double DRIVE_SLOW_YSCALE = 3.0;
     public static final double DRIVE_SLOW_TURNSCALE = 3.0;
+    public static final int CANID_WINCH = 0;
 
 } // class RobotInfo
