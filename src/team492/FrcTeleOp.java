@@ -8,8 +8,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -33,10 +33,8 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
 {
     private enum DriveMode
     {
-        MECANUM_MODE,
-        ARCADE_MODE,
-        TANK_MODE
-    }   //enum DriveMode
+        MECANUM_MODE, ARCADE_MODE, TANK_MODE
+    } // enum DriveMode
 
     protected Robot robot;
 
@@ -46,10 +44,24 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
     private FrcJoystick leftDriveStick;
     private FrcJoystick rightDriveStick;
     private FrcJoystick operatorStick;
+    
+    private GearPickup gearPickup;
 
     private boolean slowDriveOverride = false;
     private DriveMode driveMode = DriveMode.MECANUM_MODE;
     private boolean faceDetectorEnabled = false;
+    
+    
+    /*
+     * Button 6 on operator switched to Gear Pickup mode.
+     * In gear pickup mode, operator forward is to lower arm, operator back is to lift arm.
+     * Also, in gear pickup mode, trigger is to open the claw, and releasing trigger closes it.
+     * 
+     * Button 7 so operator switches to Winch mode.
+     * In winch mode, trigger is to start rotating winch, releasing trigger stops the rotation.
+     * Button 11 switches rotation to make winch go down.
+     * Button 10 switches rotation to make winch go up.
+     */
 
     public FrcTeleOp(Robot robot)
     {
@@ -65,7 +77,9 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
 
         operatorStick = new FrcJoystick("operatorStick", RobotInfo.JSPORT_OPERATORSTICK, this);
         operatorStick.setYInverted(true);
-    }   //FrcTeleOp
+        
+        gearPickup = new GearPickup();
+    } // FrcTeleOp
 
     //
     // Implements TrcRobot.RunMode interface.
@@ -74,13 +88,13 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
     @Override
     public void startMode()
     {
-    }   //startMode
+    } // startMode
 
     @Override
     public void stopMode()
     {
         robot.driveBase.stop();
-    }   //stopMode
+    } // stopMode
 
     @Override
     public void runPeriodic(double elapsedTime)
@@ -135,25 +149,45 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
                 TrcDbgTrace tracer = FrcRobotBase.getGlobalTracer();
                 for (int i = 0; i < faceRects.length; i++)
                 {
-                    tracer.traceInfo("FaceRect", "%02d: x=%d, y=%d, width=%d, height=%d",
-                        i, faceRects[i].x, faceRects[i].y, faceRects[i].width, faceRects[i].height);
+                    tracer.traceInfo("FaceRect", "%02d: x=%d, y=%d, width=%d, height=%d", i, faceRects[i].x,
+                        faceRects[i].y, faceRects[i].width, faceRects[i].height);
                 }
                 robot.faceDetector.putFrame();
             }
         }
 
         robot.updateDashboard();
-    }   //runPeriodic
+        
+        if(mode != null){
+            if(mode == Mode.GEAR_PICKUP){
+                if(operatorStick.getYWithDeadband(true) > 0){
+                    gearPickup.lowerArm();
+                }
+                else if(operatorStick.getYWithDeadband(true) < 0){
+                    gearPickup.liftArm();
+                }   
+            }
+        }
+    } // runPeriodic
 
     @Override
     public void runContinuous(double elapsedTime)
     {
-    }   //runContinuous
+    } // runContinuous
 
     //
     // Implements TrcJoystick.ButtonHandler.
     //
-
+    private Mode mode = null;
+    public static enum Mode{
+        GEAR_PICKUP,WINCH
+    }
+    
+    private WinchDirection direction = WinchDirection.UP;
+    
+    public static enum WinchDirection{
+        UP,DOWN
+    }
     @Override
     public void joystickButtonEvent(FrcJoystick joystick, int button, boolean pressed)
     {
@@ -163,7 +197,7 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
             {
                 case FrcJoystick.LOGITECH_TRIGGER:
                     break;
-    
+
                 case FrcJoystick.LOGITECH_BUTTON2:
                     break;
 
@@ -171,14 +205,6 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
                     break;
 
                 case FrcJoystick.LOGITECH_BUTTON4:
-                    if (pressed)
-                    {
-                        robot.mailbox.extend();
-                    }
-                    else
-                    {
-                        robot.mailbox.retract();
-                    }
                     break;
 
                 case FrcJoystick.LOGITECH_BUTTON5:
@@ -210,8 +236,7 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
                 case FrcJoystick.LOGITECH_BUTTON12:
                     break;
             }
-        }
-        else if (joystick == rightDriveStick)
+        } else if (joystick == rightDriveStick)
         {
             switch (button)
             {
@@ -243,12 +268,27 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
                 case FrcJoystick.SIDEWINDER_BUTTON9:
                     break;
             }
-        }
-        else if (joystick == operatorStick)
+        } else if (joystick == operatorStick)
         {
             switch (button)
             {
                 case FrcJoystick.LOGITECH_TRIGGER:
+                    if(mode == Mode.GEAR_PICKUP){
+                        if(pressed) gearPickup.openClaw();
+                        else gearPickup.closeClaw();
+                    }
+                    else if(mode == Mode.WINCH){
+                        if(pressed){
+                            if(direction == WinchDirection.UP){
+                                //winch up
+                            }
+                            else if(direction == WinchDirection.DOWN){
+                                //winch down
+                            }
+                        }else{
+                            //stop rotating winch
+                        }                   
+                    }
                     break;
 
                 case FrcJoystick.LOGITECH_BUTTON2:
@@ -264,27 +304,38 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
                     break;
 
                 case FrcJoystick.LOGITECH_BUTTON6:
+                    mode = Mode.GEAR_PICKUP;
                     break;
 
                 case FrcJoystick.LOGITECH_BUTTON7:
+                    mode = Mode.WINCH;
                     break;
 
                 case FrcJoystick.LOGITECH_BUTTON8:
+                    if (pressed)
+                    {
+                        robot.mailbox.extend();
+                    } else
+                    {
+                        robot.mailbox.retract();
+                    }
                     break;
 
                 case FrcJoystick.LOGITECH_BUTTON9:
                     break;
 
                 case FrcJoystick.LOGITECH_BUTTON10:
+                    direction = WinchDirection.UP;
                     break;
 
                 case FrcJoystick.LOGITECH_BUTTON11:
+                    direction = WinchDirection.DOWN;
                     break;
 
                 case FrcJoystick.LOGITECH_BUTTON12:
                     break;
             }
         }
-    }   //joystickButtonEvent
+    } // joystickButtonEvent
 
-}   //class FrcTeleOp
+} // class FrcTeleOp
