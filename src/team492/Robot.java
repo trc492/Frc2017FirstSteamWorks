@@ -25,9 +25,7 @@ package team492;
 import com.ctre.CANTalon.FeedbackDevice;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.CameraServer;
-import edu.wpi.first.wpilibj.DigitalInput;
 import frclib.FrcCANTalon;
 import frclib.FrcFaceDetector;
 import frclib.FrcGyro;
@@ -55,7 +53,6 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
 
     public static final boolean USE_VISION_TARGET = false;
     public static final boolean USE_FACE_DETECTOR = false;
-    public static final boolean TEST_PIXY_CAMERA = true;
     public static final boolean USE_PIXY_VISION = true;
 
     private static final boolean DEBUG_DRIVE_BASE = false;
@@ -72,9 +69,6 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     // Sensors.
     //
     public FrcGyro gyro = null;
-    // Testing pixy camera.
-    public AnalogInput pixyCamera = null;
-    public DigitalInput objectDetected = null;
 
     //
     // VisionTarget subsystem.
@@ -102,7 +96,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     //
     public FrcPneumatic mailbox;
 
-    public FrcCANTalon winch;
+    public FrcCANTalon winch;   // MTS: Why? You already have a winch class?!
     //
     // Robot Modes.
     //
@@ -136,15 +130,9 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
 //            gyro = null;
 //        }
 
-        if (TEST_PIXY_CAMERA)
-        {
-            pixyCamera = new AnalogInput(1);
-            objectDetected = new DigitalInput(9);
-        }
-        
         if (USE_PIXY_VISION)
         {
-        	pixyVision = new PixyVision("PixyCamera");
+            pixyVision = new PixyVision("PixyCamera");  //MTS: Don't really need instanceName.
         }
 
         //
@@ -218,12 +206,13 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         gyroTurnPidCtrl.setAbsoluteSetPoint(true);
         pidDrive = new TrcPidDrive("pidDrive", driveBase, encoderXPidCtrl, encoderYPidCtrl, gyroTurnPidCtrl);
 
+        //
+        // Create other subsystems.
+        //
         mailbox = new FrcPneumatic(
             "Mailbox", RobotInfo.CANID_PCM1, RobotInfo.SOL_MAILBOX_EXTEND, RobotInfo.SOL_MAILBOX_RETRACT);
-        
-        winch = new FrcCANTalon("Winch", RobotInfo.CANID_WINCH);
-            
-    
+
+        winch = new FrcCANTalon("Winch", RobotInfo.CANID_WINCH);    //MTS: You already have a winch class?!
 
         //
         // Robot Modes.
@@ -245,13 +234,11 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
             //
             // Sensor info.
             //
-            if (TEST_PIXY_CAMERA)
+            if (pixyVision != null && pixyVision.isTargetDetected())
             {
-                if (objectDetected.get())
-                {
-                    double voltage = pixyCamera.getVoltage();
-                    dashboard.displayPrintf(1, "Pixy: %.3f (%.3f)", (voltage - 1.65)/3.3, voltage);
-                }
+                dashboard.displayPrintf(1, "Pixy: %.3f", pixyVision.getTargetPosition());
+//                double voltage = pixyCamera.getVoltage();
+//                dashboard.displayPrintf(1, "Pixy: %.3f (%.3f)", (voltage - 1.65)/3.3, voltage);
             }
 
             if (DEBUG_DRIVE_BASE)

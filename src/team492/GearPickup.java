@@ -8,8 +8,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -30,21 +30,19 @@ public class GearPickup
 
     /**
      * Initialize the GearPickup class.
-     * 
-     * @param claw
-     *            FrcPneumatic controlling the claw on this subsystem.
-     * @param arm
-     *            FrcPneumatic controlling the arm on this subsystem.
      */
     public GearPickup()
     {
-        
-        this.claw = new FrcPneumatic("GearPickupClaw",RobotInfo.CANID_PCM1,RobotInfo.SOL_GEARPICKUP_CLAW_EXTEND,RobotInfo.SOL_GEARPICKUP_CLAW_RETRACT);
-        this.arm = new FrcPneumatic("GearPickupArm",RobotInfo.CANID_PCM1,RobotInfo.SOL_GEARPICKUP_ARM_EXTEND,RobotInfo.SOL_GEARPICKUP_ARM_RETRACT);
+        this.claw = new FrcPneumatic(
+            "GearPickupClaw", RobotInfo.CANID_PCM1,
+            RobotInfo.SOL_GEARPICKUP_CLAW_EXTEND, RobotInfo.SOL_GEARPICKUP_CLAW_RETRACT);
+        this.arm = new FrcPneumatic(
+            "GearPickupArm", RobotInfo.CANID_PCM1,
+            RobotInfo.SOL_GEARPICKUP_ARM_EXTEND, RobotInfo.SOL_GEARPICKUP_ARM_RETRACT);
     }
 
     /**
-     * Open the claw
+     * Open the claw.
      */
     public void openClaw()
     {
@@ -60,9 +58,9 @@ public class GearPickup
     }
 
     /**
-     * Get whether the claw is opened or not
-     * 
-     * @return true if opened, false if not
+     * Get whether the claw is opened or not.
+     *
+     * @return true if opened, false if not.
      */
     public boolean isClawOpen()
     {
@@ -70,9 +68,9 @@ public class GearPickup
     }
 
     /**
+     * Set the state of the claw.
      * 
-     * @param up
-     *            If true, open the claw. If false, close it.
+     * @param open If true, open the claw. If false, close it.
      */
     public void setClawOpen(boolean open)
     {
@@ -99,9 +97,9 @@ public class GearPickup
     }
 
     /**
-     * 
-     * @param up
-     *            If true, lift the arm. Otherwise, lower.
+     * Set the state of the arm.
+     *
+     * @param up If true, lift the arm. Otherwise, lower.
      */
     public void setArmUp(boolean up)
     {
