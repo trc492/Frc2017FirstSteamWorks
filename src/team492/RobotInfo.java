@@ -60,12 +60,12 @@ public class RobotInfo
     //
     // Solenoid channels.
     //
-    public static final int SOL_MAILBOX_EXTEND                  = 0;
-    public static final int SOL_MAILBOX_RETRACT                 = 1;
-    public static final int SOL_GEARPICKUP_ARM_EXTEND           = 2;
-    public static final int SOL_GEARPICKUP_ARM_RETRACT          = 3;
-    public static final int SOL_GEARPICKUP_CLAW_EXTEND          = 4;
-    public static final int SOL_GEARPICKUP_CLAW_RETRACT         = 5;
+    public static final int SOL_GEARPICKUP_CLAW_RETRACT         = 0;
+    public static final int SOL_GEARPICKUP_CLAW_EXTEND          = 1;
+    public static final int SOL_GEARPICKUP_ARM_RETRACT          = 2;
+    public static final int SOL_GEARPICKUP_ARM_EXTEND           = 3;
+    public static final int SOL_MAILBOX_RETRACT                 = 4;
+    public static final int SOL_MAILBOX_EXTEND                  = 5;
 
     //
     // Miscellaneous sensors and devices.

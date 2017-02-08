@@ -29,6 +29,7 @@ import trclib.TrcDigitalTrigger;
 // MTS: Incomplete code!
 public class Winch
 {
+    /*
     private FrcPneumatic winchmotor;    //MTS: Why is this a pneumatic?
     boolean proxsensor;
     
@@ -47,4 +48,5 @@ public class Winch
             winchmotor
         }
     }
+    */
 }

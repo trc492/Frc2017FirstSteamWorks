@@ -26,6 +26,7 @@ import org.opencv.core.Rect;
 
 import frclib.FrcJoystick;
 import frclib.FrcRobotBase;
+import trclib.TrcBooleanState;
 import trclib.TrcDbgTrace;
 import trclib.TrcRobot;
 
@@ -63,7 +64,7 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
     private DriveMode driveMode = DriveMode.MECANUM_MODE;
     private boolean faceDetectorEnabled = false;
 
-    private GearPickup gearPickup;
+    private TrcBooleanState mailboxToggle;
 
     /*
      * Button 6 on operator switched to Gear Pickup mode.
@@ -94,7 +95,7 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
         operatorStick = new FrcJoystick("operatorStick", RobotInfo.JSPORT_OPERATORSTICK, this);
         operatorStick.setYInverted(true);
 
-        gearPickup = new GearPickup();
+        mailboxToggle = new TrcBooleanState("MailboxToggle", false);
     }   // FrcTeleOp
 
     //
@@ -174,6 +175,7 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
 
         robot.updateDashboard();
 
+        /*
         // MTS: why analog stick?
         if(mode != null)
         {
@@ -181,7 +183,7 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
             {
                 if(operatorStick.getYWithDeadband(true) > 0)
                 {
-                    gearPickup.lowerArm();
+                    robot.gearPickup.lowerArm();
                 }
                 else if(operatorStick.getYWithDeadband(true) < 0)
                 {
@@ -189,6 +191,7 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
                 }   
             }
         }
+        */
     }   // runPeriodic
 
     @Override
@@ -287,6 +290,19 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
             switch (button)
             {
                 case FrcJoystick.LOGITECH_TRIGGER:
+                    if (pressed)
+                    {
+                        mailboxToggle.toggleState();
+                        if (mailboxToggle.getState())
+                        {
+                            robot.mailbox.extend();
+                        }
+                        else
+                        {
+                            robot.mailbox.retract();
+                        }
+                    }
+                    /*
                     if(mode == Mode.GEAR_PICKUP)
                     {
                         if(pressed) gearPickup.openClaw();
@@ -310,18 +326,35 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
                             //stop rotating winch
                         }
                     }
+                    */
                     break;
 
                 case FrcJoystick.LOGITECH_BUTTON2:
+                    //
+                    // Arm down.
+                    //
+                    robot.gearPickup.lowerArm();
                     break;
 
                 case FrcJoystick.LOGITECH_BUTTON3:
+                    //
+                    // Arm up.
+                    //
+                    robot.gearPickup.liftArm();
                     break;
 
                 case FrcJoystick.LOGITECH_BUTTON4:
+                    //
+                    // Claw open.
+                    //
+                    robot.gearPickup.openClaw();
                     break;
 
                 case FrcJoystick.LOGITECH_BUTTON5:
+                    //
+                    // Claw close.
+                    //
+                    robot.gearPickup.closeClaw();
                     break;
 
                 case FrcJoystick.LOGITECH_BUTTON6:

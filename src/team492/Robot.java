@@ -95,6 +95,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     // Define our subsystems for Auto and TeleOp modes.
     //
     public FrcPneumatic mailbox;
+    public GearPickup gearPickup;
 
     public FrcCANTalon winch;   // MTS: Why? You already have a winch class?!
     //
@@ -211,6 +212,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         //
         mailbox = new FrcPneumatic(
             "Mailbox", RobotInfo.CANID_PCM1, RobotInfo.SOL_MAILBOX_EXTEND, RobotInfo.SOL_MAILBOX_RETRACT);
+        gearPickup = new GearPickup();
 
         winch = new FrcCANTalon("Winch", RobotInfo.CANID_WINCH);    //MTS: You already have a winch class?!
 

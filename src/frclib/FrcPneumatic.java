@@ -36,6 +36,9 @@ public class FrcPneumatic implements TrcTaskMgr.Task
 {
     private static final String moduleName = "FrcPneumatic";
     private static final boolean debugEnabled = false;
+    private static final boolean tracingEnabled = false;
+    private static final TrcDbgTrace.TraceLevel traceLevel = TrcDbgTrace.TraceLevel.API;
+    private static final TrcDbgTrace.MsgLevel msgLevel = TrcDbgTrace.MsgLevel.INFO;
     private TrcDbgTrace dbgTrace = null;
 
     public class SolenoidAction
@@ -67,11 +70,7 @@ public class FrcPneumatic implements TrcTaskMgr.Task
     {
         if (debugEnabled)
         {
-            dbgTrace = new TrcDbgTrace(
-                    moduleName + "." + instanceName,
-                    false,
-                    TrcDbgTrace.TraceLevel.API,
-                    TrcDbgTrace.MsgLevel.INFO);
+            dbgTrace = new TrcDbgTrace(moduleName + "." + instanceName, tracingEnabled, traceLevel, msgLevel);
         }
 
         this.instanceName = instanceName;
@@ -98,21 +97,14 @@ public class FrcPneumatic implements TrcTaskMgr.Task
         }
     }   //initPneumatic
 
-    public FrcPneumatic(
-            final String instanceName,
-            final int module,
-            final int channel)
+    public FrcPneumatic(final String instanceName, final int module, final int channel)
     {
         solenoids = new Solenoid[1];
         solenoids[0] = new Solenoid(module, channel);
         initPneumatic(instanceName);
     }   //FrcPneumatic
 
-    public FrcPneumatic(
-            final String instanceName,
-            final int module,
-            final int channel1,
-            final int channel2)
+    public FrcPneumatic(final String instanceName, final int module, final int channel1, final int channel2)
     {
         solenoids = new Solenoid[2];
         solenoids[0] = new Solenoid(module, channel1);
@@ -121,11 +113,7 @@ public class FrcPneumatic implements TrcTaskMgr.Task
     }   //FrcPneumatic
 
     public FrcPneumatic(
-            final String instanceName,
-            final int module,
-            final int channel1,
-            final int channel2,
-            final int channel3)
+        final String instanceName, final int module, final int channel1, final int channel2, final int channel3)
     {
         solenoids = new Solenoid[3];
         solenoids[0] = new Solenoid(module, channel1);
@@ -134,10 +122,7 @@ public class FrcPneumatic implements TrcTaskMgr.Task
         initPneumatic(instanceName);
     }   //FrcPneumatic
 
-    public FrcPneumatic(
-            final String instanceName,
-            final int module,
-            int[] channels)
+    public FrcPneumatic(final String instanceName, final int module, int[] channels)
     {
         solenoids = new Solenoid[channels.length];
         for (int i = 0; i < solenoids.length; i++)
@@ -152,10 +137,8 @@ public class FrcPneumatic implements TrcTaskMgr.Task
         final String funcName = "set";
         if (debugEnabled)
         {
-            dbgTrace.traceEnter(
-                    funcName, TrcDbgTrace.TraceLevel.API,
-                    "bitMask=%x,on=%s",
-                    bitMask, Boolean.toString(on));
+            dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.API, "bitMask=%x,on=%s",
+                bitMask, Boolean.toString(on));
         }
 
         cancel();
@@ -428,21 +411,23 @@ public class FrcPneumatic implements TrcTaskMgr.Task
         final String funcName = "isExtended";
         boolean state = false;
 
+        if (debugEnabled)
+        {
+            dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.API);
+        }
+
         if (solenoids.length <= 2)
         {
             state = solenoidState.getState();
         }
         else
         {
-            throw new UnsupportedOperationException(
-                    "Method supports only two-valve cylinders.");
+            throw new UnsupportedOperationException("Method supports only two-valve cylinders.");
         }
 
         if (debugEnabled)
         {
-            dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.API);
-            dbgTrace.traceExit(
-                    funcName, TrcDbgTrace.TraceLevel.API, "=%s", state);
+            dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.API, "=%s", state);
         }
 
         return state;
