@@ -158,6 +158,9 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
                 break;
         }
 
+        double winchPower = operatorStick.getYWithDeadband(true);
+        robot.winch.setPower(winchPower);
+
         if (faceDetectorEnabled)
         {
             Rect[] faceRects = robot.faceDetector.getFaceRects();
