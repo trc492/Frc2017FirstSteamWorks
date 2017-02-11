@@ -1,0 +1,97 @@
+<xml version="1.0">
+<dashboard>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.CameraServerViewer">
+		<location x="512" y="0"/>
+		<width>456</width>
+		<height>362</height>
+		<property name="Camera Choice" value=""/>
+	</static-widget>
+	<widget field="Drive Power" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="12" y="576"/>
+	</widget>
+	<widget field="Delay" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="50" y="532"/>
+	</widget>
+	<widget field="Turn Degrees" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="3" y="620"/>
+	</widget>
+	<widget field="Drive Time" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="19" y="554"/>
+	</widget>
+	<widget field="Autonomous Strategies" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
+		<location x="0" y="352"/>
+	</widget>
+	<widget field="15" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="330"/>
+		<width>512</width>
+	</widget>
+	<widget field="14" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="308"/>
+		<width>512</width>
+	</widget>
+	<widget field="13" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="286"/>
+		<width>512</width>
+	</widget>
+	<widget field="12" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="264"/>
+		<width>512</width>
+	</widget>
+	<widget field="11" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="242"/>
+		<width>512</width>
+	</widget>
+	<widget field="10" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="220"/>
+		<width>512</width>
+	</widget>
+	<widget field="Tests" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
+		<location x="240" y="352"/>
+	</widget>
+	<widget field="09" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="198"/>
+		<width>512</width>
+	</widget>
+	<widget field="08" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="176"/>
+		<width>512</width>
+	</widget>
+	<widget field="07" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="154"/>
+		<width>512</width>
+	</widget>
+	<widget field="06" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="132"/>
+		<width>512</width>
+	</widget>
+	<widget field="05" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="110"/>
+		<width>512</width>
+	</widget>
+	<widget field="Drive Distance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="598"/>
+	</widget>
+	<widget field="04" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="88"/>
+		<width>512</width>
+	</widget>
+	<widget field="03" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="66"/>
+		<width>512</width>
+	</widget>
+	<widget field="02" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="44"/>
+		<width>512</width>
+	</widget>
+	<widget field="01" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="22"/>
+		<width>512</width>
+	</widget>
+	<widget field="00" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="0"/>
+		<width>512</width>
+	</widget>
+</dashboard>
+<live-window>
+</live-window>
+</xml>

@@ -27,11 +27,14 @@ import com.ctre.CANTalon.FeedbackDevice;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.CameraServer;
 import frclib.FrcCANTalon;
+import frclib.FrcChoiceMenu;
 import frclib.FrcFaceDetector;
 import frclib.FrcGyro;
 import frclib.FrcPneumatic;
 import frclib.FrcRobotBase;
+import frclib.FrcValueMenu;
 import hallib.HalDashboard;
+import team492.FrcAuto.AutoStrategy;
 import trclib.TrcDbgTrace;
 import trclib.TrcDriveBase;
 import trclib.TrcPidController;
@@ -52,7 +55,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     public static final String moduleName = "Robot";
 
     public static final boolean USE_VISION_TARGET = false;
-    public static final boolean USE_FACE_DETECTOR = false;
+    public static final boolean USE_FACE_DETECTOR = true;
     public static final boolean USE_PIXY_VISION = true;
 
     private static final boolean DEBUG_DRIVE_BASE = false;
@@ -96,8 +99,19 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     //
     public FrcPneumatic mailbox;
     public GearPickup gearPickup;
+    public Winch winch;
 
-    public FrcCANTalon winch;   // MTS: Why? You already have a winch class?!
+    //
+    // Menus.
+    //
+    public FrcChoiceMenu<FrcTest.Test> testMenu;
+    public FrcChoiceMenu<FrcAuto.AutoStrategy> autoStrategyMenu;
+    public FrcValueMenu delayMenu;
+    public FrcValueMenu driveTimeMenu;
+    public FrcValueMenu drivePowerMenu;
+    public FrcValueMenu driveDistanceMenu;
+    public FrcValueMenu turnDegreesMenu;
+
     //
     // Robot Modes.
     //
@@ -133,7 +147,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
 
         if (USE_PIXY_VISION)
         {
-            pixyVision = new PixyVision("PixyCamera");  //MTS: Don't really need instanceName.
+            pixyVision = new PixyVision();
         }
 
         //
@@ -213,8 +227,35 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         mailbox = new FrcPneumatic(
             "Mailbox", RobotInfo.CANID_PCM1, RobotInfo.SOL_MAILBOX_EXTEND, RobotInfo.SOL_MAILBOX_RETRACT);
         gearPickup = new GearPickup();
+        winch = new Winch();
 
-        winch = new FrcCANTalon("Winch", RobotInfo.CANID_WINCH);    //MTS: You already have a winch class?!
+        //
+        // Create Menus.
+        //
+        testMenu = new FrcChoiceMenu<>("Tests");
+        autoStrategyMenu = new FrcChoiceMenu<>("Autonomous Strategies");
+        delayMenu = new FrcValueMenu("Delay", 0.0);
+        driveTimeMenu = new FrcValueMenu("Drive Time", 5.0);
+        drivePowerMenu = new FrcValueMenu("Drive Power", 0.2);
+        driveDistanceMenu = new FrcValueMenu("Drive Distance", 12.0);
+        turnDegreesMenu = new FrcValueMenu("Turn Degrees", 360.0);
+
+        testMenu.addChoice("Sensors Test", FrcTest.Test.SENSORS_TEST);
+        testMenu.addChoice("Drive Motors Test", FrcTest.Test.DRIVE_MOTORS_TEST);
+        testMenu.addChoice("X Timed Drive", FrcTest.Test.X_TIMED_DRIVE);
+        testMenu.addChoice("Y Timed Drive", FrcTest.Test.Y_TIMED_DRIVE);
+        testMenu.addChoice("X Distance Drive", FrcTest.Test.X_DISTANCE_DRIVE);
+        testMenu.addChoice("Y Distance Drive", FrcTest.Test.Y_DISTANCE_DRIVE);
+        testMenu.addChoice("Turn Degrees", FrcTest.Test.TURN_DEGREES);
+        testMenu.addChoice("Live Window", FrcTest.Test.LIVE_WINDOW);
+        testMenu.addChoice("Face Detection", FrcTest.Test.FACE_DETECTION);
+
+        autoStrategyMenu.addChoice("X Timed Drive", FrcAuto.AutoStrategy.X_TIMED_DRIVE);
+        autoStrategyMenu.addChoice("Y Timed Drive", FrcAuto.AutoStrategy.Y_TIMED_DRIVE);
+        autoStrategyMenu.addChoice("X Distance Drive", FrcAuto.AutoStrategy.X_DISTANCE_DRIVE);
+        autoStrategyMenu.addChoice("Y Distance Drive", FrcAuto.AutoStrategy.Y_DISTANCE_DRIVE);
+        autoStrategyMenu.addChoice("Turn Degrees", FrcAuto.AutoStrategy.TURN_DEGREES);
+        autoStrategyMenu.addChoice("Do Nothing", FrcAuto.AutoStrategy.DO_NOTHING);
 
         //
         // Robot Modes.

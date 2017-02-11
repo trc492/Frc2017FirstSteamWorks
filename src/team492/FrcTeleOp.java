@@ -32,18 +32,6 @@ import trclib.TrcRobot;
 
 public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
 {
-    public static enum Mode //MTS: why public? why static?
-    {
-        GEAR_PICKUP,
-        WINCH
-    }   // enum Mode
-
-    public static enum WinchDirection   //MTS: why public? why static?
-    {
-        UP,
-        DOWN
-    }   // enum WinchDirection
-
     private enum DriveMode
     {
         MECANUM_MODE,
@@ -65,20 +53,7 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
     private boolean faceDetectorEnabled = false;
 
     private TrcBooleanState mailboxToggle;
-
-    /*
-     * Button 6 on operator switched to Gear Pickup mode.
-     * In gear pickup mode, operator forward is to lower arm, operator back is to lift arm.
-     * Also, in gear pickup mode, trigger is to open the claw, and releasing trigger closes it.
-     * 
-     * Button 7 so operator switches to Winch mode.
-     * In winch mode, trigger is to start rotating winch, releasing trigger stops the rotation.
-     * Button 11 switches rotation to make winch go down.
-     * Button 10 switches rotation to make winch go up.
-     */
-    private Mode mode = null;   // MTS: Why mode? Should rename mode to something more specific, should set a default mode.
-    private WinchDirection direction = WinchDirection.UP;
-
+    private boolean driveInverted = false;
 
     public FrcTeleOp(Robot robot)
     {
@@ -129,7 +104,7 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
                     leftPower /= RobotInfo.DRIVE_SLOW_YSCALE;
                     rightPower /= RobotInfo.DRIVE_SLOW_YSCALE;
                 }
-                robot.driveBase.tankDrive(leftPower, rightPower);
+                robot.driveBase.tankDrive(leftPower, rightPower, driveInverted);
                 break;
 
             case ARCADE_MODE:
@@ -140,7 +115,7 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
                     drivePower /= RobotInfo.DRIVE_SLOW_YSCALE;
                     turnPower /= RobotInfo.DRIVE_SLOW_TURNSCALE;
                 }
-                robot.driveBase.arcadeDrive(drivePower, turnPower);
+                robot.driveBase.arcadeDrive(drivePower, turnPower, driveInverted);
                 break;
 
             default:
@@ -154,7 +129,7 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
                     y /= RobotInfo.DRIVE_SLOW_YSCALE;
                     rot /= RobotInfo.DRIVE_SLOW_TURNSCALE;
                 }
-                robot.driveBase.mecanumDrive_Cartesian(x, y, rot);
+                robot.driveBase.mecanumDrive_Cartesian(x, y, rot, driveInverted);
                 break;
         }
 
@@ -177,24 +152,6 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
         }
 
         robot.updateDashboard();
-
-        /*
-        // MTS: why analog stick?
-        if(mode != null)
-        {
-            if(mode == Mode.GEAR_PICKUP)
-            {
-                if(operatorStick.getYWithDeadband(true) > 0)
-                {
-                    robot.gearPickup.lowerArm();
-                }
-                else if(operatorStick.getYWithDeadband(true) < 0)
-                {
-                    gearPickup.liftArm();
-                }   
-            }
-        }
-        */
     }   // runPeriodic
 
     @Override
@@ -214,6 +171,7 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
             switch (button)
             {
                 case FrcJoystick.LOGITECH_TRIGGER:
+                    slowDriveOverride = pressed;
                     break;
 
                 case FrcJoystick.LOGITECH_BUTTON2:
@@ -260,7 +218,7 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
             switch (button)
             {
                 case FrcJoystick.SIDEWINDER_TRIGGER:
-                    slowDriveOverride = pressed;
+                    driveInverted = pressed;
                     break;
 
                 case FrcJoystick.SIDEWINDER_BUTTON2:
@@ -361,11 +319,9 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
                     break;
 
                 case FrcJoystick.LOGITECH_BUTTON6:
-                    mode = Mode.GEAR_PICKUP;        // MTS: should check pressed, what about feedback?
                     break;
 
                 case FrcJoystick.LOGITECH_BUTTON7:
-                    mode = Mode.WINCH;              // MTS: should check pressed, what about feedback?
                     break;
 
                 case FrcJoystick.LOGITECH_BUTTON8:
@@ -383,11 +339,9 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
                     break;
 
                 case FrcJoystick.LOGITECH_BUTTON10:
-                    direction = WinchDirection.UP;      // MTS: should check pressed, what about feedback?
                     break;
 
                 case FrcJoystick.LOGITECH_BUTTON11:
-                    direction = WinchDirection.DOWN;    // MTS: should check pressed, what about feedback?
                     break;
 
                 case FrcJoystick.LOGITECH_BUTTON12:

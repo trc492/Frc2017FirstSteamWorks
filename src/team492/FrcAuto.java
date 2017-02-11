@@ -25,35 +25,39 @@ package team492;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import hallib.HalDashboard;
+import frclib.FrcChoiceMenu;
+import frclib.FrcValueMenu;
 import trclib.TrcRobot;
 
 public class FrcAuto implements TrcRobot.RobotMode
 {
     private static final boolean USE_TRACELOG = true;
 
-    public enum AutoMode
+    public enum AutoStrategy
     {
-        AUTOMODE_TIMED_DRIVE,
-        AUTOMODE_PID_DRIVE,
-        AUTOMODE_NONE
+        X_TIMED_DRIVE,
+        Y_TIMED_DRIVE,
+        X_DISTANCE_DRIVE,
+        Y_DISTANCE_DRIVE,
+        TURN_DEGREES,
+        DO_NOTHING
     }
 
     private Robot robot;
-    private SendableChooser<AutoMode> autoChooser;
+
+    private AutoStrategy autoStrategy;
+    private double delay;
+    private double driveTime;
+    private double drivePower;
+    private double driveDistance;
+    private double turnDegrees;
+
     private TrcRobot.RobotCommand autoCommand;
 
     public FrcAuto(Robot robot)
     {
         this.robot = robot;
-
-        autoChooser = new SendableChooser<>();
-        autoChooser.addDefault("No autonomous", AutoMode.AUTOMODE_NONE);
-        autoChooser.addDefault("Timed drive", AutoMode.AUTOMODE_TIMED_DRIVE);
-        autoChooser.addDefault("PID drive", AutoMode.AUTOMODE_PID_DRIVE);
-        HalDashboard.putData("Autonomous Strategies", autoChooser);
-     }   //FtcAuto
+    }   //FtcAuto
 
     //
     // Implements TrcRobot.RunMode.
@@ -62,14 +66,13 @@ public class FrcAuto implements TrcRobot.RobotMode
     @Override
     public void startMode()
     {
-        double delay = 0.0;
-        double driveTime = 0.0;
-        double xDrivePower = 0.0;
-        double yDrivePower = 0.0;
-        double turnPower = 0.0;
-        double xDistance = 0.0;
-        double yDistance = 0.0;
-        double heading = 0.0;
+        autoStrategy = robot.autoStrategyMenu.getCurrentChoiceObject();
+        delay = robot.delayMenu.getCurrentValue();
+        driveTime = robot.driveTimeMenu.getCurrentValue();
+        drivePower = robot.drivePowerMenu.getCurrentValue();
+        driveDistance = robot.driveDistanceMenu.getCurrentValue()*12.0;
+        turnDegrees = robot.turnDegreesMenu.getCurrentValue();
+
         Date now = new Date();
 
         if (USE_TRACELOG)
@@ -81,19 +84,31 @@ public class FrcAuto implements TrcRobot.RobotMode
         robot.tracer.traceInfo(Robot.programName, "%s: ***** Starting autonomous *****", now.toString());
 
         robot.driveBase.resetPosition();
-        AutoMode selectedAutoMode = autoChooser.getSelected();
-        switch (selectedAutoMode)
+
+        switch (autoStrategy)
         {
-            case AUTOMODE_TIMED_DRIVE:
-                autoCommand = new CmdTimedDrive(robot, delay, driveTime, xDrivePower, yDrivePower, turnPower);
+            case X_TIMED_DRIVE:
+                autoCommand = new CmdTimedDrive(robot, delay, driveTime, drivePower, 0.0, 0.0);
                 break;
 
-            case AUTOMODE_PID_DRIVE:
-                autoCommand = new CmdPidDrive(robot, delay, xDistance, yDistance, heading);
+            case Y_TIMED_DRIVE:
+                autoCommand = new CmdTimedDrive(robot, delay, driveTime, 0.0, drivePower, 0.0);
+                break;
+
+            case X_DISTANCE_DRIVE:
+                autoCommand = new CmdPidDrive(robot, delay, driveDistance, 0.0, 0.0);
+                break;
+
+            case Y_DISTANCE_DRIVE:
+                autoCommand = new CmdPidDrive(robot, delay, 0.0, driveDistance, 0.0);
+                break;
+
+            case TURN_DEGREES:
+                autoCommand = new CmdPidDrive(robot, delay, 0.0, 0.0, turnDegrees);
                 break;
 
             default:
-            case AUTOMODE_NONE:
+            case DO_NOTHING:
                 autoCommand = null;
                 break;
         }

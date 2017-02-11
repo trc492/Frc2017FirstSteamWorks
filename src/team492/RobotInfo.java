@@ -36,8 +36,16 @@ public class RobotInfo
     public static final int JSPORT_OPERATORSTICK                = 2;
 
     //
-    // Digital Output ports.
+    // Analog Input ports.
     //
+    public static final int AIN_PNEUMATIC_PRESSURE              = 0;
+    public static final int AIN_PIXYCAM_OBJECT_POS              = 1;
+
+    //
+    // Digital Input ports.
+    //
+    public static final int DIN_PROXIMITY_SENSOR                = 0; 
+    public static final int DIN_PIXYCAM_OBJECTS_DETECTED        = 9;
 
     //
     // CAN IDs.
@@ -46,7 +54,8 @@ public class RobotInfo
     public static final int CANID_RIGHTFRONTWHEEL               = 4;    // 40A: Yellow
     public static final int CANID_LEFTREARWHEEL                 = 5;    // 40A: Green
     public static final int CANID_RIGHTREARWHEEL                = 6;    // 40A: Blue
-    public static final int CANID_WINCH                         = 8;    // MTS: Moved here and changed from 0.
+    public static final int CANID_SPARE                         = 7;    // 40A: Purple
+    public static final int CANID_WINCH                         = 8;    // 40A: Gray
 
     public static final int CANID_PDP                           = 16;
     public static final int CANID_PCM1                          = 17;
@@ -100,5 +109,15 @@ public class RobotInfo
     public static final double DRIVE_SLOW_XSCALE                = 3.0;
     public static final double DRIVE_SLOW_YSCALE                = 3.0;
     public static final double DRIVE_SLOW_TURNSCALE             = 3.0;
+
+    //
+    // Vision subsystem.
+    //
+    public static final double PIXYCAM_MID_VOLT                 = 3.3/2.0;  // in volts
+
+    //
+    // Winch subsystem.
+    //
+    public static final double WINCH_POWER_SCALE                = 3.0;
 
 }   // class RobotInfo

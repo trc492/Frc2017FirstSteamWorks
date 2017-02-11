@@ -22,31 +22,25 @@
 
 package team492;
 
-import frclib.FrcPneumatic;
-import edu.wpi.first.wpilibj.DigitalInput;
-import trclib.TrcDigitalTrigger;
+import frclib.FrcCANTalon;
 
-// MTS: Incomplete code!
 public class Winch
 {
-    /*
-    private FrcPneumatic winchmotor;    //MTS: Why is this a pneumatic?
-    boolean proxsensor;
-    
-    
-    
-    public void safety(){
-        
+    private FrcCANTalon motor;
+//    private DigitalInput proximitySensor;
+
+    public Winch()
+    {
+        motor = new FrcCANTalon("WinchMotor", RobotInfo.CANID_WINCH);
+//        proximitySensor = new DigitalInput(RobotInfo.DIN_PROXIMITY_SENSOR);
     }
     
-    public void climb(){
-        
+    public void setPower(double power)
+    {
+        double scale = 1.0; 
+//        if (proximitySensor.get())
+//            scale = RobotInfo.WINCH_POWER_SCALE;
+        motor.setPower(power / scale);
     }
-    
-    public void close(){
-        if(proxsensor){
-            winchmotor
-        }
-    }
-    */
-}
+  
+}   //class Winch

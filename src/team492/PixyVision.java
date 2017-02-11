@@ -27,15 +27,13 @@ import edu.wpi.first.wpilibj.DigitalInput;
 
 public class PixyVision
 {
-    private static final double Range = 1.65;   //MTS: by convention, use ALL-CAP. May want to move it to RobotInfo. May want to call it PIXY_MAX_VOLTAGE
+    private AnalogInput pixyCamera = null;
+    private DigitalInput objectDetected = null;
 
-    public AnalogInput pixyCamera = null;   // MTS: why public?
-    public DigitalInput objectDetected = null;  // MTS: why public?
-
-    public PixyVision(final String instanceName)    // MTS: If you are not using instanceName, don't declare it!
+    public PixyVision()
     {
-        pixyCamera = new AnalogInput(1);        // MTS: Create a constant in RobotInfo
-        objectDetected = new DigitalInput(9);   // MTS: Create a constant in RobotInfo
+        pixyCamera = new AnalogInput(RobotInfo.AIN_PIXYCAM_OBJECT_POS);
+        objectDetected = new DigitalInput(RobotInfo.DIN_PIXYCAM_OBJECTS_DETECTED);
     }
 
     public boolean isTargetDetected()
@@ -46,6 +44,6 @@ public class PixyVision
     public double getTargetPosition()
     {
         double voltage = pixyCamera.getVoltage();
-        return (voltage - Range) / Range;   //MTS: Wrong equation!
+        return (voltage - RobotInfo.PIXYCAM_MID_VOLT) / RobotInfo.PIXYCAM_MID_VOLT;
     }
 }

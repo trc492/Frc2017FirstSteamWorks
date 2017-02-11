@@ -26,8 +26,12 @@ import org.opencv.core.Rect;
 
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import frclib.FrcChoiceMenu;
+import frclib.FrcValueMenu;
 import hallib.HalDashboard;
+import team492.FrcAuto.AutoStrategy;
 import trclib.TrcEvent;
+import trclib.TrcRobot;
 import trclib.TrcStateMachine;
 import trclib.TrcTimer;
 
@@ -35,7 +39,7 @@ public class FrcTest extends FrcTeleOp
 {
     private static final String moduleName = "FrcTest";
 
-    public enum TestMode
+    public enum Test
     {
         SENSORS_TEST,
         DRIVE_MOTORS_TEST,
@@ -43,10 +47,10 @@ public class FrcTest extends FrcTeleOp
         Y_TIMED_DRIVE,
         X_DISTANCE_DRIVE,
         Y_DISTANCE_DRIVE,
-        TURN,
+        TURN_DEGREES,
         LIVE_WINDOW,
         FACE_DETECTION
-    }   //enum TestMode
+    }   //enum Test
 
     private enum State
     {
@@ -57,12 +61,18 @@ public class FrcTest extends FrcTeleOp
     private TrcEvent event;
     private TrcTimer timer;
     private TrcStateMachine<State> sm;
-    private SendableChooser<TestMode> testChooser;
+
+    private Test test;
+    private double driveTime;
+    private double drivePower;
+    private double driveDistance;
+    private double turnDegrees;
+
+    private TrcRobot.RobotCommand autoCommand;
 
     private CmdTimedDrive timedDriveCommand = null;
     private CmdPidDrive pidDriveCommand = null;
 
-    private TestMode testMode = TestMode.SENSORS_TEST;
     private int motorIndex = 0;
 
     public FrcTest(Robot robot)
@@ -75,17 +85,6 @@ public class FrcTest extends FrcTeleOp
         event = new TrcEvent(moduleName);
         timer = new TrcTimer(moduleName);
         sm = new TrcStateMachine<>(moduleName);
-
-        testChooser = new SendableChooser<>();
-        testChooser.addDefault("Sensors test", TestMode.SENSORS_TEST);
-        testChooser.addObject("Drive motors test", TestMode.DRIVE_MOTORS_TEST);
-        testChooser.addObject("X Drive for 8 sec", TestMode.X_TIMED_DRIVE);
-        testChooser.addObject("Y Drive for 8 sec", TestMode.Y_TIMED_DRIVE);
-        testChooser.addObject("X Drive for 20 ft", TestMode.X_DISTANCE_DRIVE);
-        testChooser.addObject("Y Drive for 20 ft", TestMode.Y_DISTANCE_DRIVE);
-        testChooser.addObject("Turn 360", TestMode.TURN);
-        testChooser.addObject("Face detection", TestMode.FACE_DETECTION);
-        HalDashboard.putData("Robot Tests", testChooser);
      }   //FrcTest
 
     //
@@ -99,29 +98,34 @@ public class FrcTest extends FrcTeleOp
         // Call TeleOp startMode.
         //
         super.startMode();
-        testMode = testChooser.getSelected();
+
+        test = robot.testMenu.getCurrentChoiceObject();
+        driveTime = robot.driveTimeMenu.getCurrentValue();
+        drivePower = robot.drivePowerMenu.getCurrentValue();
+        driveDistance = robot.driveDistanceMenu.getCurrentValue()*12.0;
+        turnDegrees = robot.turnDegreesMenu.getCurrentValue();
 
         boolean liveWindowEnabled = false;
-        switch (testMode)
+        switch (test)
         {
             case X_TIMED_DRIVE:
-                timedDriveCommand = new CmdTimedDrive(robot, 0.0, 8.0, 0.2, 0.0, 0.0);
+                timedDriveCommand = new CmdTimedDrive(robot, 0.0, driveTime, drivePower, 0.0, 0.0);
                 break;
 
             case Y_TIMED_DRIVE:
-                timedDriveCommand = new CmdTimedDrive(robot, 0.0, 8.0, 0.0, 0.2, 0.0);
+                timedDriveCommand = new CmdTimedDrive(robot, 0.0, driveTime, 0.0, drivePower, 0.0);
                 break;
 
             case X_DISTANCE_DRIVE:
-                pidDriveCommand = new CmdPidDrive(robot, 0.0, 20.0*12.0, 0.0, 0.0);
+                pidDriveCommand = new CmdPidDrive(robot, 0.0, driveDistance, 0.0, 0.0);
                 break;
 
             case Y_DISTANCE_DRIVE:
-                pidDriveCommand = new CmdPidDrive(robot, 0.0, 0.0, 20.0*12.0, 0.0);
+                pidDriveCommand = new CmdPidDrive(robot, 0.0, 0.0, driveDistance, 0.0);
                 break;
 
-            case TURN:
-                pidDriveCommand = new CmdPidDrive(robot, 0.0, 0.0, 0.0, 360.0);
+            case TURN_DEGREES:
+                pidDriveCommand = new CmdPidDrive(robot, 0.0, 0.0, 0.0, turnDegrees);
                 break;
 
             case LIVE_WINDOW:
@@ -162,7 +166,7 @@ public class FrcTest extends FrcTeleOp
     @Override
     public void runPeriodic(double elapsedTime)
     {
-        switch (testMode)
+        switch (test)
         {
             case SENSORS_TEST:
                 //
@@ -205,9 +209,9 @@ public class FrcTest extends FrcTeleOp
     public void runContinuous(double elapsedTime)
     {
         State state = sm.getState();
-        robot.dashboard.displayPrintf(8, "%s: %s", testMode.toString(), state != null? state.toString(): "STOPPED!");
+        robot.dashboard.displayPrintf(8, "%s: %s", test.toString(), state != null? state.toString(): "STOPPED!");
 
-        switch (testMode)
+        switch (test)
         {
             case X_TIMED_DRIVE:
             case Y_TIMED_DRIVE:
@@ -225,7 +229,7 @@ public class FrcTest extends FrcTeleOp
 
             case X_DISTANCE_DRIVE:
             case Y_DISTANCE_DRIVE:
-            case TURN:
+            case TURN_DEGREES:
                 robot.dashboard.displayPrintf(9, "xPos=%.1f,yPos=%.1f,heading=%.1f",
                     robot.getInput(robot.encoderXPidCtrl), robot.getInput(robot.encoderYPidCtrl),
                     robot.getInput(robot.gyroTurnPidCtrl));
@@ -235,15 +239,15 @@ public class FrcTest extends FrcTeleOp
 
                 if (!pidDriveCommand.cmdPeriodic(elapsedTime))
                 {
-                    if (testMode == TestMode.X_DISTANCE_DRIVE)
+                    if (test == Test.X_DISTANCE_DRIVE)
                     {
                         robot.encoderXPidCtrl.printPidInfo(robot.tracer);
                     }
-                    else if (testMode == TestMode.Y_DISTANCE_DRIVE)
+                    else if (test == Test.Y_DISTANCE_DRIVE)
                     {
                         robot.encoderYPidCtrl.printPidInfo(robot.tracer);
                     }
-                    else if (testMode == TestMode.TURN)
+                    else if (test == Test.TURN_DEGREES)
                     {
                         robot.gyroTurnPidCtrl.printPidInfo(robot.tracer);
                     }
