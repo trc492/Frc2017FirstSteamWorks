@@ -43,20 +43,18 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
     private Robot robot;
     private double delay;
     private double extendTime;
-    private double xDistance;
-    private double yDistance;
+    private double backupDistance;
     private double heading;
     private TrcEvent event;
     private TrcTimer timer;
     private TrcStateMachine<State> sm;
 
-    CmdVisionGearDeploy(Robot robot, double delay, double extendTime, double xDistance, double yDistance, double heading)
+    CmdVisionGearDeploy(Robot robot, double delay, double extendTime, double backupDistance, double heading)
     {
         this.robot = robot;
         this.delay = delay;
         this.extendTime = extendTime;
-        this.xDistance = xDistance;
-        this.yDistance = yDistance;
+        this.backupDistance = backupDistance;
         this.heading = heading;
         event = new TrcEvent(moduleName);
         timer = new TrcTimer(moduleName);
@@ -102,15 +100,13 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
                 case ALIGN_WITH_TARGET:
                     //
                     // Position robot at target.
+                	//
                 	boolean aligned = false;
-                    //
                 	while(!aligned)
             		{
 	                	double pos = robot.pixyVision.getTargetPosition();
-	                    robot.pidDrive.setTarget(xDistance, yDistance, heading, false, event);
             		}
                 	
-                    robot.pidDrive.setTarget(xDistance, yDistance, heading, false, event);
                     sm.waitForSingleEvent(event, State.DEPLOY_GEAR);
                     break;
                     
@@ -126,7 +122,7 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
                     //
                     // Backup from axle.
                     //
-                    robot.pidDrive.setTarget(0.0, 12.0, 0.0, false, event);
+                    robot.pidDrive.setTarget(0.0, backupDistance, 0.0, false, event);
                     sm.waitForSingleEvent(event, State.DONE);
                     break;
 
@@ -140,21 +136,6 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
                     break;
             }
             robot.traceStateInfo(elapsedTime, state.toString());
-        }
-
-        if (robot.pidDrive.isActive())
-        {
-            if (xDistance != 0.0)
-            {
-                robot.encoderXPidCtrl.printPidInfo(robot.tracer);
-            }
-
-            if (yDistance != 0.0)
-            {
-                robot.encoderYPidCtrl.printPidInfo(robot.tracer);
-            }
-
-            robot.gyroTurnPidCtrl.printPidInfo(robot.tracer);
         }
 
         return done;
