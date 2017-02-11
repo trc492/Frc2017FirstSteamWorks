@@ -25,13 +25,8 @@ package team492;
 import org.opencv.core.Rect;
 
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import frclib.FrcChoiceMenu;
-import frclib.FrcValueMenu;
 import hallib.HalDashboard;
-import team492.FrcAuto.AutoStrategy;
 import trclib.TrcEvent;
-import trclib.TrcRobot;
 import trclib.TrcStateMachine;
 import trclib.TrcTimer;
 
@@ -67,8 +62,6 @@ public class FrcTest extends FrcTeleOp
     private double drivePower;
     private double driveDistance;
     private double turnDegrees;
-
-    private TrcRobot.RobotCommand autoCommand;
 
     private CmdTimedDrive timedDriveCommand = null;
     private CmdPidDrive pidDriveCommand = null;

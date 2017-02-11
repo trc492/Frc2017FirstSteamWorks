@@ -34,7 +34,6 @@ import frclib.FrcPneumatic;
 import frclib.FrcRobotBase;
 import frclib.FrcValueMenu;
 import hallib.HalDashboard;
-import team492.FrcAuto.AutoStrategy;
 import trclib.TrcDbgTrace;
 import trclib.TrcDriveBase;
 import trclib.TrcPidController;
@@ -136,15 +135,8 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         //
         // Sensors.
         //
-//        try
-//        {
-//            gyro = new FrcGyro("ADXRS450", new ADXRS450_Gyro());
-//        }
-//        catch (NullPointerException e)
-//        {
-//            gyro = null;
-//        }
-
+        gyro = new FrcGyro("ADXRS450", new ADXRS450_Gyro());
+//        GyroTest testGyro = new GyroTest(SPI.Port.kOnboardCS0);
         if (USE_PIXY_VISION)
         {
             pixyVision = new PixyVision();
@@ -199,7 +191,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         //
         // Initialize DriveBase subsystem.
         //
-        driveBase = new TrcDriveBase(leftFrontWheel, leftRearWheel, rightFrontWheel, rightRearWheel, gyro);
+        driveBase = new TrcDriveBase(leftFrontWheel, leftRearWheel, rightFrontWheel, rightRearWheel);//, gyro);
         driveBase.setXPositionScale(RobotInfo.ENCODER_X_INCHES_PER_COUNT);
         driveBase.setYPositionScale(RobotInfo.ENCODER_Y_INCHES_PER_COUNT);
 

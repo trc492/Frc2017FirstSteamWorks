@@ -25,8 +25,7 @@ package team492;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import frclib.FrcChoiceMenu;
-import frclib.FrcValueMenu;
+import hallib.HalDashboard;
 import trclib.TrcRobot;
 
 public class FrcAuto implements TrcRobot.RobotMode
@@ -66,6 +65,7 @@ public class FrcAuto implements TrcRobot.RobotMode
     @Override
     public void startMode()
     {
+        HalDashboard.getInstance().clearDisplay();
         autoStrategy = robot.autoStrategyMenu.getCurrentChoiceObject();
         delay = robot.delayMenu.getCurrentValue();
         driveTime = robot.driveTimeMenu.getCurrentValue();

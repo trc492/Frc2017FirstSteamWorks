@@ -50,9 +50,9 @@ public class TrcThread<T> implements Runnable
      */
     private class TaskState
     {
-        private boolean taskTerminated;
-        private boolean taskEnabled;
-        private boolean oneShotEnabled;
+        private volatile boolean taskTerminated;
+        private volatile boolean taskEnabled;
+        private volatile boolean oneShotEnabled;
         private T data;
 
         /**
@@ -329,7 +329,7 @@ public class TrcThread<T> implements Runnable
     @Override
     public void run()
     {
-        while (!taskState.isTaskTerminated())
+        while (!Thread.interrupted() && !taskState.isTaskTerminated())
         {
             long startTime = TrcUtil.getCurrentTimeMillis();
 

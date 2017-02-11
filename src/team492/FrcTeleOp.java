@@ -26,6 +26,7 @@ import org.opencv.core.Rect;
 
 import frclib.FrcJoystick;
 import frclib.FrcRobotBase;
+import hallib.HalDashboard;
 import trclib.TrcBooleanState;
 import trclib.TrcDbgTrace;
 import trclib.TrcRobot;
@@ -80,6 +81,7 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
     @Override
     public void startMode()
     {
+        HalDashboard.getInstance().clearDisplay();
     }   // startMode
 
     @Override
