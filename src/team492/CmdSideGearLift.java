@@ -24,7 +24,7 @@ package team492;
 
 import java.util.Arrays;
 
-import team492.CmdMidGearLift.State;
+//MTS: import team492.CmdMidGearLift.State;
 import trclib.TrcEvent;
 import trclib.TrcRobot;
 import trclib.TrcStateMachine;
@@ -66,7 +66,8 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
         this.angleToAirship = angleToAirship;
         this.baselineToAirship = baselineToAirship;
         this.baselineToNeutral = baselineToNeutral;
-        visionDeploy = new CmdVisionGearDeploy(robot);
+        //MTS: Need to change to final parameters.
+        visionDeploy = new CmdVisionGearDeploy(robot, baselineToNeutral, baselineToNeutral, baselineToNeutral, baselineToNeutral);
         event = new TrcEvent(moduleName);
         timer = new TrcTimer(moduleName);
         sm = new TrcStateMachine<>(moduleName);
