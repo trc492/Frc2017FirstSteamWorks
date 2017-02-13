@@ -136,7 +136,6 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         // Sensors.
         //
         gyro = new FrcGyro("ADXRS450", new ADXRS450_Gyro());
-//        GyroTest testGyro = new GyroTest(SPI.Port.kOnboardCS0);
         if (USE_PIXY_VISION)
         {
             pixyVision = new PixyVision();

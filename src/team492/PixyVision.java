@@ -24,16 +24,27 @@ package team492;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Relay;
+import edu.wpi.first.wpilibj.Relay.Direction;
+import edu.wpi.first.wpilibj.Relay.Value;
 
 public class PixyVision
 {
     private AnalogInput pixyCamera = null;
     private DigitalInput objectDetected = null;
+    private Relay ringLightPower = null;
 
     public PixyVision()
     {
         pixyCamera = new AnalogInput(RobotInfo.AIN_PIXYCAM_OBJECT_POS);
         objectDetected = new DigitalInput(RobotInfo.DIN_PIXYCAM_OBJECTS_DETECTED);
+        ringLightPower = new Relay(RobotInfo.RELAY_RINGLIGHT_POWER);
+        ringLightPower.setDirection(Direction.kForward);
+    }
+
+    public void setRingLightOn(boolean on)
+    {
+        ringLightPower.set(on? Value.kOn: Value.kOff);
     }
 
     public boolean isTargetDetected()

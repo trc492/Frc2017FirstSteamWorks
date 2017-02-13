@@ -120,6 +120,10 @@ public class FrcFaceDetector extends FrcOpenCVDetector
             faceRects = detectedObjects.toArray();
             found = true;
         }
+        else
+        {
+            faceRects = null;
+        }
 
         this.image = image;
         this.detectedFaces = detectedObjects;

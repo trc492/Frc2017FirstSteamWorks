@@ -25,10 +25,8 @@ package team492;
 import org.opencv.core.Rect;
 
 import frclib.FrcJoystick;
-import frclib.FrcRobotBase;
 import hallib.HalDashboard;
 import trclib.TrcBooleanState;
-import trclib.TrcDbgTrace;
 import trclib.TrcRobot;
 
 public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
@@ -55,6 +53,7 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
 
     private TrcBooleanState mailboxToggle;
     private boolean driveInverted = false;
+    private boolean ringLightOn = false;
 
     public FrcTeleOp(Robot robot)
     {
@@ -143,10 +142,9 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
             Rect[] faceRects = robot.faceDetector.getFaceRects();
             if (faceRects != null)
             {
-                TrcDbgTrace tracer = FrcRobotBase.getGlobalTracer();
                 for (int i = 0; i < faceRects.length; i++)
                 {
-                    tracer.traceInfo("FaceRect", "%02d: x=%d, y=%d, width=%d, height=%d",
+                    robot.tracer.traceInfo("FaceRect", "%02d: x=%d, y=%d, width=%d, height=%d",
                         i, faceRects[i].x, faceRects[i].y, faceRects[i].width, faceRects[i].height);
                 }
                 robot.faceDetector.putFrame();
@@ -209,6 +207,12 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
                     break;
 
                 case FrcJoystick.LOGITECH_BUTTON11:
+                    if (pressed)
+                    {
+                        ringLightOn = !ringLightOn;
+                        robot.pixyVision.setRingLightOn(ringLightOn);
+                        System.out.printf("SetRingLightOn %s\n", Boolean.toString(ringLightOn));
+                    }
                     break;
 
                 case FrcJoystick.LOGITECH_BUTTON12:
