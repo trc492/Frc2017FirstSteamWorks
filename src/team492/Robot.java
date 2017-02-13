@@ -153,7 +153,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         {
             CameraServer.getInstance().startAutomaticCapture().setResolution(640, 480);
             faceDetector = new FrcFaceDetector(
-                "FrontalFace", "/home/lvuser/cascade-files/haarcascade_frontalface_alt.xml");
+                "FaceDetector", "/home/lvuser/cascade-files/haarcascade_frontalface_alt.xml");
         }
 
         //

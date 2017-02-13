@@ -39,12 +39,15 @@ public class FrcFaceDetector extends FrcOpenCVDetector
     private TrcDbgTrace dbgTrace = null;
 
     private CascadeClassifier faceDetector;
-    private Rect[] faceRects = null;
-    private Mat image = null;
+    private volatile Rect[] faceRects = null;
+    private volatile Mat image = null;
     private MatOfRect detectedFaces = null;
 
     /**
      * Constructor: Create an instance of the object.
+     *
+     * @param instanceName specifies the instance name.
+     * @param classifierPath specifies the file path for the classifier.
      */
     public FrcFaceDetector(final String instanceName, final String classifierPath)
     {

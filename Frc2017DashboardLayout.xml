@@ -4,7 +4,7 @@
 		<location x="512" y="0"/>
 		<width>456</width>
 		<height>362</height>
-		<property name="Camera Choice" value=""/>
+		<property name="Camera Choice" value="FaceDetector"/>
 	</static-widget>
 	<widget field="Drive Power" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="12" y="576"/>

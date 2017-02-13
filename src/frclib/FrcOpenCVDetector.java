@@ -58,7 +58,7 @@ public abstract class FrcOpenCVDetector implements TrcVisionTask.VisionProcessor
      *
      * @param instanceName specifies the instance name.
      */
-    public FrcOpenCVDetector(String instanceName)
+    public FrcOpenCVDetector(final String instanceName)
     {
         if (debugEnabled)
         {
@@ -67,7 +67,7 @@ public abstract class FrcOpenCVDetector implements TrcVisionTask.VisionProcessor
 
         this.instanceName = instanceName;
         videoIn = CameraServer.getInstance().getVideo();
-        videoOut = CameraServer.getInstance().putVideo("Rectangle", 640, 480);
+        videoOut = CameraServer.getInstance().putVideo(instanceName, 640, 480);
 
         image = new Mat();
         detectedObjectsBuffers = new MatOfRect[NUM_OBJECT_BUFFERS];
