@@ -25,6 +25,7 @@ package frclib;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfRect;
 import org.opencv.core.Rect;
+import org.opencv.core.Scalar;
 import org.opencv.objdetect.CascadeClassifier;
 
 import trclib.TrcDbgTrace;
@@ -48,10 +49,13 @@ public class FrcFaceDetector extends FrcOpenCVDetector
      *
      * @param instanceName specifies the instance name.
      * @param classifierPath specifies the file path for the classifier.
+     * @param videoOutWidth specifies the width of the video output stream.
+     * @param videoOutHeight specifies the height of the video output stream.
      */
-    public FrcFaceDetector(final String instanceName, final String classifierPath)
+    public FrcFaceDetector(
+        final String instanceName, final String classifierPath, int videoOutWidth, int videoOutHeight)
     {
-        super(instanceName);
+        super(instanceName, videoOutWidth, videoOutHeight);
 
         if (debugEnabled)
         {
@@ -85,12 +89,26 @@ public class FrcFaceDetector extends FrcOpenCVDetector
 
     /**
      * This method update the video stream with the detected faces overlay on the image as rectangles.
+     *
+     * @param color specifies the color of the rectangle outline overlay onto the detected objects.
+     * @param thickness specifies the thickness of the rectangle outline.
+     */
+    public void putFrame(Scalar color, int thickness)
+    {
+        if (image != null && detectedFaces != null)
+        {
+            super.putFrame(image, detectedFaces, color, thickness);
+        }
+    }   //putFrame
+
+    /**
+     * This method update the video stream with the detected faces overlay on the image as rectangles.
      */
     public void putFrame()
     {
         if (image != null && detectedFaces != null)
         {
-            super.putFrame(image, detectedFaces);
+            super.putFrame(image, detectedFaces, new Scalar(0, 255, 0), 0);
         }
     }   //putFrame
 

@@ -35,7 +35,7 @@ import org.opencv.imgproc.Imgproc;
 import trclib.TrcDbgTrace;
 import trclib.TrcVisionTask;
 
-public abstract class FrcOpenCVDetector implements TrcVisionTask.VisionProcessor<Mat, MatOfRect>
+public abstract class FrcOpenCVDetector implements TrcVisionTask.VisionProcessor<Mat, MatOfRect, Scalar>
 {
     private static final String moduleName = "FrcOpenCVDetector";
     private static final boolean debugEnabled = false;
@@ -51,14 +51,16 @@ public abstract class FrcOpenCVDetector implements TrcVisionTask.VisionProcessor
     private CvSource videoOut;
     private Mat image;
     private MatOfRect[] detectedObjectsBuffers;
-    private TrcVisionTask<Mat, MatOfRect> visionTask;
+    private TrcVisionTask<Mat, MatOfRect, Scalar> visionTask;
 
     /**
      * Constructor: Create an instance of the object.
      *
      * @param instanceName specifies the instance name.
+     * @param videoOutWidth specifies the width of the video output stream.
+     * @param videoOutHeight specifies the height of the video output stream.
      */
-    public FrcOpenCVDetector(final String instanceName)
+    public FrcOpenCVDetector(final String instanceName, int videoOutWidth, int videoOutHeight)
     {
         if (debugEnabled)
         {
@@ -67,7 +69,7 @@ public abstract class FrcOpenCVDetector implements TrcVisionTask.VisionProcessor
 
         this.instanceName = instanceName;
         videoIn = CameraServer.getInstance().getVideo();
-        videoOut = CameraServer.getInstance().putVideo(instanceName, 640, 480);
+        videoOut = CameraServer.getInstance().putVideo(instanceName, videoOutWidth, videoOutHeight);
 
         image = new Mat();
         detectedObjectsBuffers = new MatOfRect[NUM_OBJECT_BUFFERS];
@@ -128,12 +130,14 @@ public abstract class FrcOpenCVDetector implements TrcVisionTask.VisionProcessor
 
     /**
      * This method is called to render an image to the video output and overlay detected objects on top of it.
-     * 
+     *
      * @param image specifies the frame to be rendered to the video output.
      * @param detectedObjects specifies the detected objects.
+     * @param color specifies the color of the rectangle outline.
+     * @param thickness specifies the thickness of the rectangle outline.
      */
     @Override
-    public void putFrame(Mat image, MatOfRect detectedObjects)
+    public void putFrame(Mat image, MatOfRect detectedObjects, Scalar color, int thickness)
     {
         //
         // Overlay a rectangle on each detected object.
@@ -145,7 +149,7 @@ public abstract class FrcOpenCVDetector implements TrcVisionTask.VisionProcessor
             // Draw a rectangle around the detected object.
             //
             Imgproc.rectangle(
-                image, new Point(r.x, r.y), new Point(r.x + r.width, r.y + r.height), new Scalar(0, 255, 0));
+                image, new Point(r.x, r.y), new Point(r.x + r.width, r.y + r.height), color, thickness);
         }
 
         videoOut.putFrame(image);

@@ -31,7 +31,7 @@ package trclib;
  * @param <I> specifies the type of the image frame buffer.
  * @param <O>specifies the type of the detected objects.
  */
-public class TrcVisionTask<I, O> extends TrcThread<O> implements TrcThread.PeriodicTask
+public class TrcVisionTask<I, O, C> extends TrcThread<O> implements TrcThread.PeriodicTask
 {
     private static final String moduleName = "TrcVisionTask";
     private static final boolean debugEnabled = false;
@@ -50,7 +50,7 @@ public class TrcVisionTask<I, O> extends TrcThread<O> implements TrcThread.Perio
      * @param <I> specifies the type of the image frame buffer.
      * @param <O> specifies the type of the detected objects.
      */
-    public interface VisionProcessor<I, O>
+    public interface VisionProcessor<I, O, C>
     {
         /**
          * This method is called to grab an image frame from the video input.
@@ -66,7 +66,7 @@ public class TrcVisionTask<I, O> extends TrcThread<O> implements TrcThread.Perio
          * @param image specifies the frame to be rendered to the video output.
          * @param detectedObjects specifies the detected objects.
          */
-        void putFrame(I image, O detectedObjects);
+        void putFrame(I image, O detectedObjects, C color, int thickness);
 
         /**
          * This method is called to detect objects in the acquired image frame.
@@ -79,7 +79,7 @@ public class TrcVisionTask<I, O> extends TrcThread<O> implements TrcThread.Perio
 
     }   //interface VisionProcessor
 
-    private VisionProcessor<I, O> visionProcessor;
+    private VisionProcessor<I, O, C> visionProcessor;
     private I image;
     private O[] detectedObjectsBuffers;
     private int bufferIndex = 0;
@@ -93,7 +93,7 @@ public class TrcVisionTask<I, O> extends TrcThread<O> implements TrcThread.Perio
      * @param imageBuffer specifies the buffer to hold video image.
      * @param detectedObjectsBuffers specifies an array of buffers to hold the detected objects.
      */
-    public TrcVisionTask(VisionProcessor<I, O> visionProcessor, I imageBuffer, O[] detectedObjectsBuffers)
+    public TrcVisionTask(VisionProcessor<I, O, C> visionProcessor, I imageBuffer, O[] detectedObjectsBuffers)
     {
         super("VisionTask", null);
 

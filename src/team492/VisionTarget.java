@@ -34,7 +34,7 @@ public class VisionTarget extends FrcOpenCVDetector
 
     public VisionTarget(final String instanceName)
     {
-        super(instanceName);
+        super(instanceName, 640, 480);
     }
 
     public Rect[] getObjectRects()
