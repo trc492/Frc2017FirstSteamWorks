@@ -22,6 +22,8 @@
 
 package trclib;
 
+import frclib.FrcRobotBase;
+
 /**
  * This class implements a platform independent vision task. When enabled, it grabs a frame from the video source,
  * calls the provided object detector to process the frame and overlays rectangles on the detected objects in the
@@ -39,6 +41,7 @@ public class TrcVisionTask<I, O, C> extends TrcThread<O> implements TrcThread.Pe
     private static final TrcDbgTrace.TraceLevel traceLevel = TrcDbgTrace.TraceLevel.API;
     private static final TrcDbgTrace.MsgLevel msgLevel = TrcDbgTrace.MsgLevel.INFO;
     private TrcDbgTrace dbgTrace = null;
+    private TrcDbgTrace tracer = null;
 
     private static final boolean visionPerfEnabled = true;
     private static final long DEF_PROCESSING_INTERVAL = 50;     //in msec
@@ -85,6 +88,7 @@ public class TrcVisionTask<I, O, C> extends TrcThread<O> implements TrcThread.Pe
     private int bufferIndex = 0;
     private long totalTime = 0;
     private long totalFrames = 0;
+    private double taskStartTime = 0.0;
 
     /**
      * Constructor: Create an instance of the object.
@@ -102,12 +106,34 @@ public class TrcVisionTask<I, O, C> extends TrcThread<O> implements TrcThread.Pe
             dbgTrace = new TrcDbgTrace(moduleName, tracingEnabled, traceLevel, msgLevel);
         }
 
+        if (visionPerfEnabled)
+        {
+            tracer = FrcRobotBase.getGlobalTracer();
+        }
+
         this.visionProcessor = visionProcessor;
         this.image = imageBuffer;
         this.detectedObjectsBuffers = detectedObjectsBuffers;
         setPeriodicTask(this);
         setProcessingInterval(DEF_PROCESSING_INTERVAL);
     }   //TrcVisionTask
+
+    /**
+     * This method enables/disables the vision task. As long as the task is enabled, it will continue to
+     * acquire/process data.
+     *
+     * @param enabled specifies true to enable periodic task, false to disable.
+     */
+    public void setTaskEnabled(boolean enabled)
+    {
+        super.setTaskEnabled(enabled);
+        if (enabled)
+        {
+            totalTime = 0;
+            totalFrames = 0;
+            taskStartTime = TrcUtil.getCurrentTime();
+        }
+    }   //setTaskEnabled
 
     //
     // Implements TrcThread.PeriodicTask interface.
@@ -139,9 +165,10 @@ public class TrcVisionTask<I, O, C> extends TrcThread<O> implements TrcThread.Pe
             elapsedTime = TrcUtil.getCurrentTimeMillis() - startTime;
             totalTime += elapsedTime;
             totalFrames++;
-            if (visionPerfEnabled && dbgTrace != null)
+            if (visionPerfEnabled && tracer != null)
             {
-                dbgTrace.traceInfo(funcName, "Average processing time = %.3f msec", (double)totalTime/totalFrames);
+                tracer.traceInfo(funcName, "Average processing time = %.3f msec, Frame rate = %.1f",
+                    (double)totalTime/totalFrames, totalFrames/(TrcUtil.getCurrentTime() - taskStartTime));
             }
             setData(detectedObjectsBuffers[bufferIndex]);
             //

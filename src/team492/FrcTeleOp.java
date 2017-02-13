@@ -140,15 +140,15 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
         if (faceDetectorEnabled)
         {
             Rect[] faceRects = robot.faceDetector.getFaceRects();
-            if (faceRects != null)
-            {
+//            if (faceRects != null)
+//            {
 //                for (int i = 0; i < faceRects.length; i++)
 //                {
 //                    robot.tracer.traceInfo("FaceRect", "%02d: x=%d, y=%d, width=%d, height=%d",
 //                        i, faceRects[i].x, faceRects[i].y, faceRects[i].width, faceRects[i].height);
 //                }
-                robot.faceDetector.putFrame();
-            }
+//            }
+            robot.faceDetector.putFrame();
         }
 
         robot.updateDashboard();
