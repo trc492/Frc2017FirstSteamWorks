@@ -44,7 +44,8 @@ public class FrcFaceDetector extends FrcOpenCVDetector
     private CascadeClassifier faceDetector;
     private volatile Rect[] faceRects = null;
     private volatile Mat image = null;
-    private MatOfRect detectedFaces = null;
+    private volatile MatOfRect detectedFaces = null;
+    private boolean videoOutEnabled = false;
 
     /**
      * Constructor: Create an instance of the object.
@@ -114,6 +115,16 @@ public class FrcFaceDetector extends FrcOpenCVDetector
         }
     }   //putFrame
 
+    /**
+     * This method enables/disables the video out stream.
+     *
+     * @param enabled specifies true to enable video out stream, false to disable.
+     */
+    public void setVideoOutEnabled(boolean enabled)
+    {
+        videoOutEnabled = enabled;
+    }   //setVideoOutEnabled
+
     //
     // Implements the FrcVisionTask.VisionProcesor interface.
     //
@@ -146,6 +157,11 @@ public class FrcFaceDetector extends FrcOpenCVDetector
         else
         {
             faceRects = null;
+        }
+
+        if (videoOutEnabled)
+        {
+            putFrame();
         }
 
         this.image = image;

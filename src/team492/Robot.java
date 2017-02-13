@@ -22,6 +22,8 @@
 
 package team492;
 
+import org.opencv.core.Rect;
+
 import com.ctre.CANTalon.FeedbackDevice;
 
 import edu.wpi.cscore.CvSink;
@@ -62,6 +64,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
 
     private static final boolean DEBUG_DRIVE_BASE = false;
     private static final boolean DEBUG_PID_DRIVE = false;
+    private static final boolean DEBUG_FACE_DETECTION = false;
     private static final double DASHBOARD_UPDATE_INTERVAL = 0.1;
 
     public HalDashboard dashboard = HalDashboard.getInstance();
@@ -80,6 +83,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     //
     public VisionTarget visionTarget = null;
     public FrcFaceDetector faceDetector = null;
+    public boolean faceDetectorEnabled = false;
     public PixyVision pixyVision = null;
 
     //
@@ -312,15 +316,30 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
                 HalDashboard.putNumber("DriveBase.Y", driveBase.getYPosition());
                 HalDashboard.putNumber("DriveBase.Heading", driveBase.getHeading());
             }
+
+            if (DEBUG_FACE_DETECTION)
+            {
+                if (faceDetectorEnabled)
+                {
+                    Rect[] faceRects = faceDetector.getFaceRects();
+                    if (faceRects != null)
+                    {
+                        for (int i = 0; i < faceRects.length; i++)
+                        {
+                            tracer.traceInfo("FaceRect", "%02d: x=%d, y=%d, width=%d, height=%d",
+                                i, faceRects[i].x, faceRects[i].y, faceRects[i].width, faceRects[i].height);
+                        }
+                    }
+                }
+            }
         }
     }   //updateDashboard
 
     public void traceStateInfo(double elapsedTime, String stateName)
     {
-        tracer.traceInfo(
-                moduleName, "[%5.3f] %10s: xPos=%6.2f,yPos=%6.2f,heading=%6.1f/%6.1f",
-                elapsedTime, stateName,
-                driveBase.getXPosition(), driveBase.getYPosition(), driveBase.getHeading(), targetHeading);
+        tracer.traceInfo(moduleName, "[%5.3f] %10s: xPos=%6.2f,yPos=%6.2f,heading=%6.1f/%6.1f",
+            elapsedTime, stateName, driveBase.getXPosition(), driveBase.getYPosition(), driveBase.getHeading(),
+            targetHeading);
     }   //traceStateInfo
 
     //

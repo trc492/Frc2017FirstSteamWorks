@@ -22,8 +22,6 @@
 
 package team492;
 
-import org.opencv.core.Rect;
-
 import frclib.FrcJoystick;
 import hallib.HalDashboard;
 import trclib.TrcBooleanState;
@@ -49,7 +47,6 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
 
     private boolean slowDriveOverride = false;
     private DriveMode driveMode = DriveMode.MECANUM_MODE;
-    private boolean faceDetectorEnabled = false;
 
     private TrcBooleanState mailboxToggle;
     private boolean driveInverted = false;
@@ -137,20 +134,6 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
         double winchPower = operatorStick.getYWithDeadband(true);
         robot.winch.setPower(winchPower);
 
-        if (faceDetectorEnabled)
-        {
-            Rect[] faceRects = robot.faceDetector.getFaceRects();
-//            if (faceRects != null)
-//            {
-//                for (int i = 0; i < faceRects.length; i++)
-//                {
-//                    robot.tracer.traceInfo("FaceRect", "%02d: x=%d, y=%d, width=%d, height=%d",
-//                        i, faceRects[i].x, faceRects[i].y, faceRects[i].width, faceRects[i].height);
-//                }
-//            }
-            robot.faceDetector.putFrame();
-        }
-
         robot.updateDashboard();
     }   // runPeriodic
 
@@ -203,8 +186,9 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
                 case FrcJoystick.LOGITECH_BUTTON10:
                     if (robot.faceDetector != null && pressed)
                     {
-                        faceDetectorEnabled = !faceDetectorEnabled;
-                        robot.faceDetector.setEnabled(faceDetectorEnabled);
+                        robot.faceDetectorEnabled = !robot.faceDetectorEnabled;
+                        robot.faceDetector.setEnabled(robot.faceDetectorEnabled);
+                        robot.faceDetector.setVideoOutEnabled(robot.faceDetectorEnabled);
                     }
                     break;
 
