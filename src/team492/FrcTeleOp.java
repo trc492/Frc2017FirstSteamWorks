@@ -142,11 +142,11 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
             Rect[] faceRects = robot.faceDetector.getFaceRects();
             if (faceRects != null)
             {
-                for (int i = 0; i < faceRects.length; i++)
-                {
-                    robot.tracer.traceInfo("FaceRect", "%02d: x=%d, y=%d, width=%d, height=%d",
-                        i, faceRects[i].x, faceRects[i].y, faceRects[i].width, faceRects[i].height);
-                }
+//                for (int i = 0; i < faceRects.length; i++)
+//                {
+//                    robot.tracer.traceInfo("FaceRect", "%02d: x=%d, y=%d, width=%d, height=%d",
+//                        i, faceRects[i].x, faceRects[i].y, faceRects[i].width, faceRects[i].height);
+//                }
                 robot.faceDetector.putFrame();
             }
         }
@@ -166,6 +166,8 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
     @Override
     public void joystickButtonEvent(FrcJoystick joystick, int button, boolean pressed)
     {
+//        robot.tracer.traceInfo("TeleOp", "%s: button=0x%04x, pressed=%s",
+//            joystick.toString(), button, Boolean.toString(pressed));
         if (joystick == leftDriveStick)
         {
             switch (button)
@@ -211,7 +213,6 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
                     {
                         ringLightOn = !ringLightOn;
                         robot.pixyVision.setRingLightOn(ringLightOn);
-                        System.out.printf("SetRingLightOn %s\n", Boolean.toString(ringLightOn));
                     }
                     break;
 
@@ -269,31 +270,6 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
                             robot.mailbox.retract();
                         }
                     }
-                    /*
-                    if(mode == Mode.GEAR_PICKUP)
-                    {
-                        if(pressed) gearPickup.openClaw();
-                        else gearPickup.closeClaw();
-                    }
-                    else if(mode == Mode.WINCH)
-                    {
-                        if(pressed)
-                        {
-                            if(direction == WinchDirection.UP)
-                            {
-                                //winch up
-                            }
-                            else if(direction == WinchDirection.DOWN)
-                            {
-                                //winch down
-                            }
-                        }
-                        else
-                        {
-                            //stop rotating winch
-                        }
-                    }
-                    */
                     break;
 
                 case FrcJoystick.LOGITECH_BUTTON2:

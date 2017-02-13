@@ -24,7 +24,6 @@ package frclib;
 
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
-import edu.wpi.first.wpilibj.CameraServer;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfRect;
 import org.opencv.core.Point;
@@ -57,10 +56,10 @@ public abstract class FrcOpenCVDetector implements TrcVisionTask.VisionProcessor
      * Constructor: Create an instance of the object.
      *
      * @param instanceName specifies the instance name.
-     * @param videoOutWidth specifies the width of the video output stream.
-     * @param videoOutHeight specifies the height of the video output stream.
+     * @param videoIn specifies the video input stream.
+     * @param videoOut specifies the video output stream.
      */
-    public FrcOpenCVDetector(final String instanceName, int videoOutWidth, int videoOutHeight)
+    public FrcOpenCVDetector(final String instanceName, CvSink videoIn, CvSource videoOut)
     {
         if (debugEnabled)
         {
@@ -68,8 +67,8 @@ public abstract class FrcOpenCVDetector implements TrcVisionTask.VisionProcessor
         }
 
         this.instanceName = instanceName;
-        videoIn = CameraServer.getInstance().getVideo();
-        videoOut = CameraServer.getInstance().putVideo(instanceName, videoOutWidth, videoOutHeight);
+        this.videoIn = videoIn;
+        this.videoOut = videoOut;
 
         image = new Mat();
         detectedObjectsBuffers = new MatOfRect[NUM_OBJECT_BUFFERS];
@@ -125,7 +124,14 @@ public abstract class FrcOpenCVDetector implements TrcVisionTask.VisionProcessor
     @Override
     public boolean grabFrame(Mat image)
     {
-        return videoIn.grabFrame(image) != 0;
+        boolean success = false;
+
+        synchronized(image)
+        {
+            success = videoIn.grabFrame(image) != 0;
+        }
+
+        return success;
     }   //grabFrame
 
     /**
@@ -142,17 +148,20 @@ public abstract class FrcOpenCVDetector implements TrcVisionTask.VisionProcessor
         //
         // Overlay a rectangle on each detected object.
         //
-        Rect[] rects = detectedObjects.toArray();
-        for (Rect r: rects)
+        synchronized(image)
         {
-            //
-            // Draw a rectangle around the detected object.
-            //
-            Imgproc.rectangle(
-                image, new Point(r.x, r.y), new Point(r.x + r.width, r.y + r.height), color, thickness);
-        }
+            Rect[] rects = detectedObjects.toArray();
+            for (Rect r: rects)
+            {
+                //
+                // Draw a rectangle around the detected object.
+                //
+                Imgproc.rectangle(
+                    image, new Point(r.x, r.y), new Point(r.x + r.width, r.y + r.height), color, thickness);
+            }
 
-        videoOut.putFrame(image);
+            videoOut.putFrame(image);
+        }
     }   //putFrame
 
 }   //class FrcOpenCVDetector

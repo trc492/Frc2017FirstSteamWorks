@@ -24,6 +24,9 @@ package team492;
 
 import com.ctre.CANTalon.FeedbackDevice;
 
+import edu.wpi.cscore.CvSink;
+import edu.wpi.cscore.CvSource;
+import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.CameraServer;
 import frclib.FrcCANTalon;
@@ -146,14 +149,27 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         //
         if (USE_VISION_TARGET)
         {
-            CameraServer.getInstance().startAutomaticCapture().setResolution(640, 480);
-            visionTarget = new VisionTarget("GearTarget");
+            UsbCamera cam0 = CameraServer.getInstance().startAutomaticCapture("cam0", 0);
+            cam0.setResolution(RobotInfo.CAM_WIDTH, RobotInfo.CAM_HEIGHT);
+            cam0.setFPS(RobotInfo.CAM_FRAME_RATE);
+            cam0.setBrightness(RobotInfo.CAM_BRIGHTNESS);
+            CvSink videoIn = CameraServer.getInstance().getVideo(cam0);
+            CvSource videoOut =
+                CameraServer.getInstance().putVideo("VisionTarget", RobotInfo.CAM_WIDTH, RobotInfo.CAM_HEIGHT);
+
+            visionTarget = new VisionTarget("VisionTarget", videoIn, videoOut);
         }
         else if (USE_FACE_DETECTOR)
         {
-            CameraServer.getInstance().startAutomaticCapture().setResolution(640, 480);
+            UsbCamera cam0 = CameraServer.getInstance().startAutomaticCapture("cam0", 0);
+            cam0.setResolution(RobotInfo.CAM_WIDTH, RobotInfo.CAM_HEIGHT);
+            cam0.setFPS(RobotInfo.CAM_FRAME_RATE);
+            CvSink videoIn = CameraServer.getInstance().getVideo(cam0);
+            CvSource videoOut =
+                CameraServer.getInstance().putVideo("FaceDetector", RobotInfo.CAM_WIDTH, RobotInfo.CAM_HEIGHT);
+
             faceDetector = new FrcFaceDetector(
-                "FaceDetector", "/home/lvuser/cascade-files/haarcascade_frontalface_alt.xml", 640, 480);
+                "FaceDetector", "/home/lvuser/cascade-files/haarcascade_frontalface_alt.xml", videoIn, videoOut);
         }
 
         //

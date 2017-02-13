@@ -79,6 +79,10 @@ public class RobotInfo
     //
     // Miscellaneous sensors and devices.
     //
+    public static final int CAM_WIDTH                           = 320;
+    public static final int CAM_HEIGHT                          = 240;
+    public static final int CAM_FRAME_RATE                      = 15;
+    public static final int CAM_BRIGHTNESS                      = 10;
 
     //
     // DriveBase subsystem.

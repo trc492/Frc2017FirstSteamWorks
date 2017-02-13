@@ -28,6 +28,8 @@ import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.objdetect.CascadeClassifier;
 
+import edu.wpi.cscore.CvSink;
+import edu.wpi.cscore.CvSource;
 import trclib.TrcDbgTrace;
 
 public class FrcFaceDetector extends FrcOpenCVDetector
@@ -49,13 +51,13 @@ public class FrcFaceDetector extends FrcOpenCVDetector
      *
      * @param instanceName specifies the instance name.
      * @param classifierPath specifies the file path for the classifier.
-     * @param videoOutWidth specifies the width of the video output stream.
-     * @param videoOutHeight specifies the height of the video output stream.
+     * @param videoIn specifies the video input stream.
+     * @param videoOut specifies the video output stream.
      */
     public FrcFaceDetector(
-        final String instanceName, final String classifierPath, int videoOutWidth, int videoOutHeight)
+        final String instanceName, final String classifierPath, CvSink videoIn, CvSource videoOut)
     {
-        super(instanceName, videoOutWidth, videoOutHeight);
+        super(instanceName, videoIn, videoOut);
 
         if (debugEnabled)
         {

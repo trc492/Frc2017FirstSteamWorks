@@ -26,15 +26,17 @@ import org.opencv.core.Mat;
 import org.opencv.core.MatOfRect;
 import org.opencv.core.Rect;
 
+import edu.wpi.cscore.CvSink;
+import edu.wpi.cscore.CvSource;
 import frclib.FrcOpenCVDetector;
 
 public class VisionTarget extends FrcOpenCVDetector
 {
     private Rect[] objRects = null;
 
-    public VisionTarget(final String instanceName)
+    public VisionTarget(final String instanceName, CvSink videoIn, CvSource videoOut)
     {
-        super(instanceName, 640, 480);
+        super(instanceName, videoIn, videoOut);
     }
 
     public Rect[] getObjectRects()
