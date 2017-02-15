@@ -76,12 +76,12 @@ public class FrcAuto implements TrcRobot.RobotMode
     {
         this.robot = robot;
         //
-        // Create menus.
+        // Create Autonomous Mode specific menus.
         //
         autoStrategyMenu = new FrcChoiceMenu<>("Autonomous Strategies");
         delayMenu = new FrcValueMenu("Delay", 0.0);
         //
-        // Populate choice menus.
+        // Populate Autonomous Mode menus.
         //
         autoStrategyMenu.addChoice("X Timed Drive", FrcAuto.AutoStrategy.X_TIMED_DRIVE);
         autoStrategyMenu.addChoice("Y Timed Drive", FrcAuto.AutoStrategy.Y_TIMED_DRIVE);
@@ -116,7 +116,7 @@ public class FrcAuto implements TrcRobot.RobotMode
         if (USE_TRACELOG)
         {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_hh-mm", Locale.US);
-            String logFilePath = "/home/lvuser/" + matchType.toString();
+            String logFilePath = "/home/lvuser/tracelog/" + matchType.toString();
 
             if (matchType != MatchType.PRACTICE) logFilePath += matchNumber;
             logFilePath += "_" + dateFormat.format(now) + ".log";

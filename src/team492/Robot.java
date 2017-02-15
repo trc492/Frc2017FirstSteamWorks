@@ -115,7 +115,6 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     //
     public FrcChoiceMenu<FrcAuto.MatchType> matchTypeMenu;
     public FrcValueMenu matchNumberMenu;
-    public FrcChoiceMenu<FrcTest.Test> testMenu;
     public FrcValueMenu driveTimeMenu;
     public FrcValueMenu drivePowerMenu;
     public FrcValueMenu driveDistanceMenu;
@@ -160,7 +159,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
             UsbCamera cam0 = CameraServer.getInstance().startAutomaticCapture("cam0", 0);
             cam0.setResolution(RobotInfo.CAM_WIDTH, RobotInfo.CAM_HEIGHT);
             cam0.setFPS(RobotInfo.CAM_FRAME_RATE);
-            cam0.setBrightness(RobotInfo.CAM_BRIGHTNESS);
+//            cam0.setBrightness(RobotInfo.CAM_BRIGHTNESS);
             CvSink videoIn = CameraServer.getInstance().getVideo(cam0);
             CvSource videoOut =
                 CameraServer.getInstance().putVideo("VisionTarget", RobotInfo.CAM_WIDTH, RobotInfo.CAM_HEIGHT);
@@ -247,30 +246,25 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         winch = new Winch();
 
         //
-        // Create Menus.
+        // Create Global Menus (can be used in all modes).
         //
         matchTypeMenu = new FrcChoiceMenu<>("Match type:");
         matchNumberMenu = new FrcValueMenu("Match number:", 0.0);
-        testMenu = new FrcChoiceMenu<>("Tests");
+        //
+        // The following value menus are shared between Autonomous and Test modes.
+        //
         driveTimeMenu = new FrcValueMenu("Drive Time", 5.0);
         drivePowerMenu = new FrcValueMenu("Drive Power", 0.2);
         driveDistanceMenu = new FrcValueMenu("Drive Distance", 12.0);
         turnDegreesMenu = new FrcValueMenu("Turn Degrees", 360.0);
 
+        //
+        // Populate Global Menus.
+        //
         matchTypeMenu.addChoice("Test", FrcAuto.MatchType.PRACTICE);
         matchTypeMenu.addChoice("Qualifying", FrcAuto.MatchType.QUALIFYING);
         matchTypeMenu.addChoice("Semi-final", FrcAuto.MatchType.SEMI_FINAL);
         matchTypeMenu.addChoice("Final", FrcAuto.MatchType.FINAL);
-
-        testMenu.addChoice("Sensors Test", FrcTest.Test.SENSORS_TEST);
-        testMenu.addChoice("Drive Motors Test", FrcTest.Test.DRIVE_MOTORS_TEST);
-        testMenu.addChoice("X Timed Drive", FrcTest.Test.X_TIMED_DRIVE);
-        testMenu.addChoice("Y Timed Drive", FrcTest.Test.Y_TIMED_DRIVE);
-        testMenu.addChoice("X Distance Drive", FrcTest.Test.X_DISTANCE_DRIVE);
-        testMenu.addChoice("Y Distance Drive", FrcTest.Test.Y_DISTANCE_DRIVE);
-        testMenu.addChoice("Turn Degrees", FrcTest.Test.TURN_DEGREES);
-        testMenu.addChoice("Live Window", FrcTest.Test.LIVE_WINDOW);
-        testMenu.addChoice("Face Detection", FrcTest.Test.FACE_DETECTION);
 
         //
         // Robot Modes.

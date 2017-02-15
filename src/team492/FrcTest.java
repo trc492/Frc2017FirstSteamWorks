@@ -22,10 +22,8 @@
 
 package team492;
 
-import org.opencv.core.Rect;
-
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import hallib.HalDashboard;
+import frclib.FrcChoiceMenu;
 import trclib.TrcEvent;
 import trclib.TrcStateMachine;
 import trclib.TrcTimer;
@@ -43,8 +41,7 @@ public class FrcTest extends FrcTeleOp
         X_DISTANCE_DRIVE,
         Y_DISTANCE_DRIVE,
         TURN_DEGREES,
-        LIVE_WINDOW,
-        FACE_DETECTION
+        LIVE_WINDOW
     }   //enum Test
 
     private enum State
@@ -57,6 +54,10 @@ public class FrcTest extends FrcTeleOp
     private TrcTimer timer;
     private TrcStateMachine<State> sm;
 
+    //
+    // Test choice menu.
+    //
+    private FrcChoiceMenu<Test> testMenu;
     private Test test;
     private double driveTime;
     private double drivePower;
@@ -78,6 +79,18 @@ public class FrcTest extends FrcTeleOp
         event = new TrcEvent(moduleName);
         timer = new TrcTimer(moduleName);
         sm = new TrcStateMachine<>(moduleName);
+        //
+        // Create and populate Test Mode specific menus.
+        //
+        testMenu = new FrcChoiceMenu<>("Tests");
+        testMenu.addChoice("Sensors Test", FrcTest.Test.SENSORS_TEST);
+        testMenu.addChoice("Drive Motors Test", FrcTest.Test.DRIVE_MOTORS_TEST);
+        testMenu.addChoice("X Timed Drive", FrcTest.Test.X_TIMED_DRIVE);
+        testMenu.addChoice("Y Timed Drive", FrcTest.Test.Y_TIMED_DRIVE);
+        testMenu.addChoice("X Distance Drive", FrcTest.Test.X_DISTANCE_DRIVE);
+        testMenu.addChoice("Y Distance Drive", FrcTest.Test.Y_DISTANCE_DRIVE);
+        testMenu.addChoice("Turn Degrees", FrcTest.Test.TURN_DEGREES);
+        testMenu.addChoice("Live Window", FrcTest.Test.LIVE_WINDOW);
      }   //FrcTest
 
     //
@@ -92,7 +105,10 @@ public class FrcTest extends FrcTeleOp
         //
         super.startMode();
 
-        test = robot.testMenu.getCurrentChoiceObject();
+        //
+        // Retrieve menu choice values.
+        //
+        test = testMenu.getCurrentChoiceObject();
         driveTime = robot.driveTimeMenu.getCurrentValue();
         drivePower = robot.drivePowerMenu.getCurrentValue();
         driveDistance = robot.driveDistanceMenu.getCurrentValue()*12.0;
@@ -125,13 +141,6 @@ public class FrcTest extends FrcTeleOp
                 liveWindowEnabled = true;
                 break;
 
-            case FACE_DETECTION:
-                if (robot.faceDetector !=  null)
-                {
-                    robot.faceDetector.setEnabled(true);
-                }
-                break;
-
             default:
                 break;
         }
@@ -147,10 +156,6 @@ public class FrcTest extends FrcTeleOp
         // Call TeleOp stopMode.
         //
         super.stopMode();
-        if (robot.faceDetector != null)
-        {
-            robot.faceDetector.setEnabled(false);
-        }
     }   //stopMode
 
     //
@@ -175,22 +180,6 @@ public class FrcTest extends FrcTeleOp
 
             case LIVE_WINDOW:
                 LiveWindow.run();
-                break;
-
-            case FACE_DETECTION:
-                if (robot.faceDetector != null)
-                {
-                    Rect[] faceRects = robot.faceDetector.getFaceRects();
-                    if (faceRects != null)
-                    {
-                        for (int i = 0; i < faceRects.length && 9 + i < HalDashboard.MAX_NUM_TEXTLINES; i++)
-                        {
-                            robot.dashboard.displayPrintf(9 + i, "[%d] x=%3d,y=%3d,w=%3d,h=%3d",
-                                faceRects[i].x, faceRects[i].y, faceRects[i].width, faceRects[i].height);
-                        }
-                        robot.faceDetector.putFrame();
-                    }
-                }
                 break;
 
             default:
