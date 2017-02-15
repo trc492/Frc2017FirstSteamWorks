@@ -25,7 +25,6 @@ package frclib;
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
 import org.opencv.core.Mat;
-import org.opencv.core.MatOfRect;
 import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
@@ -34,7 +33,7 @@ import org.opencv.imgproc.Imgproc;
 import trclib.TrcDbgTrace;
 import trclib.TrcVisionTask;
 
-public abstract class FrcOpenCVDetector implements TrcVisionTask.VisionProcessor<Mat, MatOfRect, Scalar>
+public abstract class FrcOpenCVDetector<O> implements TrcVisionTask.VisionProcessor<O>
 {
     private static final String moduleName = "FrcOpenCVDetector";
     private static final boolean debugEnabled = false;
@@ -43,14 +42,12 @@ public abstract class FrcOpenCVDetector implements TrcVisionTask.VisionProcessor
     private static final TrcDbgTrace.MsgLevel msgLevel = TrcDbgTrace.MsgLevel.INFO;
     private TrcDbgTrace dbgTrace = null;
 
-    private static final int NUM_OBJECT_BUFFERS = 2;
-
     private final String instanceName;
     private CvSink videoIn;
     private CvSource videoOut;
     private Mat image;
-    private MatOfRect[] detectedObjectsBuffers;
-    private TrcVisionTask<Mat, MatOfRect, Scalar> visionTask;
+    private O[] detectedObjectBuffers = null;
+    private TrcVisionTask<O> visionTask;
 
     /**
      * Constructor: Create an instance of the object.
@@ -71,12 +68,6 @@ public abstract class FrcOpenCVDetector implements TrcVisionTask.VisionProcessor
         this.videoOut = videoOut;
 
         image = new Mat();
-        detectedObjectsBuffers = new MatOfRect[NUM_OBJECT_BUFFERS];
-        for (int i = 0; i < detectedObjectsBuffers.length; i++)
-        {
-            detectedObjectsBuffers[i] = new MatOfRect();
-        }
-        visionTask = new TrcVisionTask<>(this, image, detectedObjectsBuffers);
     }   //FrcOpenCVDetector
 
     /**
@@ -90,6 +81,16 @@ public abstract class FrcOpenCVDetector implements TrcVisionTask.VisionProcessor
     }   //toString
 
     /**
+     * This method provides the detected objects buffer array.
+     *
+     * @param detectedObjectBuffers specifies the array of detected object buffers.
+     */
+    public void setDetectedObjectBuffers(O[] detectedObjectBuffers)
+    {
+        this.detectedObjectBuffers = detectedObjectBuffers;
+    }   //setDetectedObjectBuffers
+
+    /**
      * This method enables/disables the vision processing task.
      *
      * @param enabled specifies true to enable vision task, false to disable.
@@ -101,6 +102,11 @@ public abstract class FrcOpenCVDetector implements TrcVisionTask.VisionProcessor
         if (debugEnabled)
         {
             dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.API, "enabled=%s", Boolean.toString(enabled));
+        }
+
+        if (visionTask == null)
+        {
+            visionTask = new TrcVisionTask<>(this, image, detectedObjectBuffers);
         }
 
         visionTask.setTaskEnabled(enabled);
@@ -126,7 +132,7 @@ public abstract class FrcOpenCVDetector implements TrcVisionTask.VisionProcessor
     {
         boolean success = false;
 
-        synchronized(image)
+        synchronized (image)
         {
             success = videoIn.grabFrame(image) != 0;
         }
@@ -138,26 +144,28 @@ public abstract class FrcOpenCVDetector implements TrcVisionTask.VisionProcessor
      * This method is called to render an image to the video output and overlay detected objects on top of it.
      *
      * @param image specifies the frame to be rendered to the video output.
-     * @param detectedObjects specifies the detected objects.
+     * @param detectedObjectRects specifies the detected object rectangles.
      * @param color specifies the color of the rectangle outline.
      * @param thickness specifies the thickness of the rectangle outline.
      */
     @Override
-    public void putFrame(Mat image, MatOfRect detectedObjects, Scalar color, int thickness)
+    public void putFrame(Mat image, Rect[] detectedObjectRects, Scalar color, int thickness)
     {
         //
         // Overlay a rectangle on each detected object.
         //
-        synchronized(image)
+        synchronized (image)
         {
-            Rect[] rects = detectedObjects.toArray();
-            for (Rect r: rects)
+            if (detectedObjectRects != null)
             {
-                //
-                // Draw a rectangle around the detected object.
-                //
-                Imgproc.rectangle(
-                    image, new Point(r.x, r.y), new Point(r.x + r.width, r.y + r.height), color, thickness);
+                for (Rect r: detectedObjectRects)
+                {
+                    //
+                    // Draw a rectangle around the detected object.
+                    //
+                    Imgproc.rectangle(
+                        image, new Point(r.x, r.y), new Point(r.x + r.width, r.y + r.height), color, thickness);
+                }
             }
 
             videoOut.putFrame(image);

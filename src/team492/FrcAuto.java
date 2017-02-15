@@ -24,13 +24,24 @@ package team492;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
+import frclib.FrcChoiceMenu;
+import frclib.FrcValueMenu;
 import hallib.HalDashboard;
 import trclib.TrcRobot;
 
 public class FrcAuto implements TrcRobot.RobotMode
 {
-    private static final boolean USE_TRACELOG = true;
+    private static final boolean USE_TRACELOG = false;
+
+    public enum MatchType
+    {
+        PRACTICE,
+        QUALIFYING,
+        SEMI_FINAL,
+        FINAL
+    }   //enum MatchType
 
     public enum AutoStrategy
     {
@@ -40,10 +51,18 @@ public class FrcAuto implements TrcRobot.RobotMode
         Y_DISTANCE_DRIVE,
         TURN_DEGREES,
         DO_NOTHING
-    }
+    }   //enum AutoStrategy
 
     private Robot robot;
 
+    //
+    // Menus.
+    //
+    private FrcChoiceMenu<FrcAuto.AutoStrategy> autoStrategyMenu;
+    private FrcValueMenu delayMenu;
+
+    private MatchType matchType = MatchType.PRACTICE;
+    private int matchNumber = 0;
     private AutoStrategy autoStrategy;
     private double delay;
     private double driveTime;
@@ -56,7 +75,21 @@ public class FrcAuto implements TrcRobot.RobotMode
     public FrcAuto(Robot robot)
     {
         this.robot = robot;
-    }   //FtcAuto
+        //
+        // Create menus.
+        //
+        autoStrategyMenu = new FrcChoiceMenu<>("Autonomous Strategies");
+        delayMenu = new FrcValueMenu("Delay", 0.0);
+        //
+        // Populate choice menus.
+        //
+        autoStrategyMenu.addChoice("X Timed Drive", FrcAuto.AutoStrategy.X_TIMED_DRIVE);
+        autoStrategyMenu.addChoice("Y Timed Drive", FrcAuto.AutoStrategy.Y_TIMED_DRIVE);
+        autoStrategyMenu.addChoice("X Distance Drive", FrcAuto.AutoStrategy.X_DISTANCE_DRIVE);
+        autoStrategyMenu.addChoice("Y Distance Drive", FrcAuto.AutoStrategy.Y_DISTANCE_DRIVE);
+        autoStrategyMenu.addChoice("Turn Degrees", FrcAuto.AutoStrategy.TURN_DEGREES);
+        autoStrategyMenu.addChoice("Do Nothing", FrcAuto.AutoStrategy.DO_NOTHING);
+    }   //FrcAuto
 
     //
     // Implements TrcRobot.RunMode.
@@ -66,8 +99,13 @@ public class FrcAuto implements TrcRobot.RobotMode
     public void startMode()
     {
         HalDashboard.getInstance().clearDisplay();
-        autoStrategy = robot.autoStrategyMenu.getCurrentChoiceObject();
-        delay = robot.delayMenu.getCurrentValue();
+        //
+        // Retrieve menu choice values.
+        //
+        matchType = robot.matchTypeMenu.getCurrentChoiceObject();
+        matchNumber = (int)robot.matchNumberMenu.getCurrentValue();
+        autoStrategy = autoStrategyMenu.getCurrentChoiceObject();
+        delay = delayMenu.getCurrentValue();
         driveTime = robot.driveTimeMenu.getCurrentValue();
         drivePower = robot.drivePowerMenu.getCurrentValue();
         driveDistance = robot.driveDistanceMenu.getCurrentValue()*12.0;
@@ -77,8 +115,12 @@ public class FrcAuto implements TrcRobot.RobotMode
 
         if (USE_TRACELOG)
         {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_hh:mm");
-            robot.tracer.openTraceLog(dateFormat.format(now) + ".log");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_hh-mm", Locale.US);
+            String logFilePath = "/home/lvuser/" + matchType.toString();
+
+            if (matchType != MatchType.PRACTICE) logFilePath += matchNumber;
+            logFilePath += "_" + dateFormat.format(now) + ".log";
+            robot.tracer.openTraceLog(logFilePath);
         }
 
         robot.tracer.traceInfo(Robot.programName, "%s: ***** Starting autonomous *****", now.toString());
@@ -138,4 +180,4 @@ public class FrcAuto implements TrcRobot.RobotMode
         }
     }   //runContinuous
 
-}   //class FtcAuto
+}   //class FrcAuto

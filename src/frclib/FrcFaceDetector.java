@@ -32,7 +32,7 @@ import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
 import trclib.TrcDbgTrace;
 
-public class FrcFaceDetector extends FrcOpenCVDetector
+public class FrcFaceDetector extends FrcOpenCVDetector<MatOfRect>
 {
     private static final String moduleName = "FrcFaceDetector";
     private static final boolean debugEnabled = false;
@@ -41,10 +41,12 @@ public class FrcFaceDetector extends FrcOpenCVDetector
     private static final TrcDbgTrace.MsgLevel msgLevel = TrcDbgTrace.MsgLevel.INFO;
     private TrcDbgTrace dbgTrace = null;
 
+    private static final int NUM_OBJECT_BUFFERS = 2;
+
+    private MatOfRect[] detectedFacesBuffers;
     private CascadeClassifier faceDetector;
     private volatile Rect[] faceRects = null;
     private volatile Mat image = null;
-    private volatile MatOfRect detectedFaces = null;
     private boolean videoOutEnabled = false;
 
     /**
@@ -64,6 +66,16 @@ public class FrcFaceDetector extends FrcOpenCVDetector
         {
             dbgTrace = new TrcDbgTrace(moduleName, tracingEnabled, traceLevel, msgLevel);
         }
+
+        //
+        // Preallocate MatOfRect since this is expensive to allocate.
+        //
+        detectedFacesBuffers = new MatOfRect[NUM_OBJECT_BUFFERS];
+        for (int i = 0; i < detectedFacesBuffers.length; i++)
+        {
+            detectedFacesBuffers[i] = new MatOfRect();
+        }
+        setDetectedObjectBuffers(detectedFacesBuffers);
 
         faceDetector = new CascadeClassifier(classifierPath);
         if (faceDetector.empty())
@@ -93,14 +105,14 @@ public class FrcFaceDetector extends FrcOpenCVDetector
     /**
      * This method update the video stream with the detected faces overlay on the image as rectangles.
      *
-     * @param color specifies the color of the rectangle outline overlay onto the detected objects.
+     * @param color specifies the color of the rectangle outline overlay onto the detected faces.
      * @param thickness specifies the thickness of the rectangle outline.
      */
     public void putFrame(Scalar color, int thickness)
     {
-        if (image != null && detectedFaces != null)
+        if (image != null)
         {
-            super.putFrame(image, detectedFaces, color, thickness);
+            super.putFrame(image, faceRects, color, thickness);
         }
     }   //putFrame
 
@@ -109,9 +121,9 @@ public class FrcFaceDetector extends FrcOpenCVDetector
      */
     public void putFrame()
     {
-        if (image != null && detectedFaces != null)
+        if (image != null)
         {
-            super.putFrame(image, detectedFaces, new Scalar(0, 255, 0), 0);
+            super.putFrame(image, faceRects, new Scalar(0, 255, 0), 0);
         }
     }   //putFrame
 
@@ -133,14 +145,15 @@ public class FrcFaceDetector extends FrcOpenCVDetector
      * This method is called to detect objects in the image frame.
      *
      * @param image specifies the image to be processed.
+     * @param detectedTargets specifies the preallocated buffer to hold the detected targets.
      * @param detectedObjects specifies the object rectangle array to hold the detected objects.
-     * @return true if detected objects, false otherwise.
+     * @return detected objects, null if none detected.
      */
     @Override
-    public boolean detectObjects(Mat image, MatOfRect detectedObjects)
+    public MatOfRect detectObjects(Mat image, MatOfRect detectedObjects)
     {
         final String funcName = "detectedObjects";
-        boolean found = false;
+        MatOfRect detected = null;
 
         if (debugEnabled)
         {
@@ -152,7 +165,7 @@ public class FrcFaceDetector extends FrcOpenCVDetector
         if (!detectedObjects.empty())
         {
             faceRects = detectedObjects.toArray();
-            found = true;
+            detected = detectedObjects;
         }
         else
         {
@@ -165,14 +178,13 @@ public class FrcFaceDetector extends FrcOpenCVDetector
         }
 
         this.image = image;
-        this.detectedFaces = detectedObjects;
 
         if (debugEnabled)
         {
-            dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.CALLBK, "=%s", Boolean.toString(found));
+            dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.CALLBK, "=%s", Boolean.toString(detected != null));
         }
 
-        return found;
+        return detected;
     }   //detectedObjects
 
 }   //class FrcFaceDetector

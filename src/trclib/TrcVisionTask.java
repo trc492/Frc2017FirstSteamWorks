@@ -22,6 +22,10 @@
 
 package trclib;
 
+import org.opencv.core.Mat;
+import org.opencv.core.Rect;
+import org.opencv.core.Scalar;
+
 import frclib.FrcRobotBase;
 
 /**
@@ -30,10 +34,9 @@ import frclib.FrcRobotBase;
  * image. This class is to be extended by a platform dependent vision processor who will provide the video input
  * and output. 
  *
- * @param <I> specifies the type of the image frame buffer.
  * @param <O>specifies the type of the detected objects.
  */
-public class TrcVisionTask<I, O, C> extends TrcThread<O> implements TrcThread.PeriodicTask
+public class TrcVisionTask<O> extends TrcThread<O> implements TrcThread.PeriodicTask
 {
     private static final String moduleName = "TrcVisionTask";
     private static final boolean debugEnabled = false;
@@ -49,11 +52,8 @@ public class TrcVisionTask<I, O, C> extends TrcThread<O> implements TrcThread.Pe
     /**
      * This interface provides methods to grab image from the video input, render image to video output and detect
      * objects from the acquired image.
-     *
-     * @param <I> specifies the type of the image frame buffer.
-     * @param <O> specifies the type of the detected objects.
      */
-    public interface VisionProcessor<I, O, C>
+    public interface VisionProcessor<O>
     {
         /**
          * This method is called to grab an image frame from the video input.
@@ -61,29 +61,32 @@ public class TrcVisionTask<I, O, C> extends TrcThread<O> implements TrcThread.Pe
          * @param image specifies the frame buffer to hold the captured image.
          * @return true if frame is successfully captured, false otherwise.
          */
-        boolean grabFrame(I image);
+        boolean grabFrame(Mat image);
 
         /**
          * This method is called to render an image to the video output and overlay detected objects on top of it.
-         * 
+         *
          * @param image specifies the frame to be rendered to the video output.
-         * @param detectedObjects specifies the detected objects.
+         * @param detectedObjectRects specifies the detected object rectangles.
+         * @param color specifies the color of the rectangles to render on the video output stream.
+         * @param thickness specifies the thickness of the rectangles to render on the video output stream.
          */
-        void putFrame(I image, O detectedObjects, C color, int thickness);
+        void putFrame(Mat image, Rect[] detectedObjectRects, Scalar color, int thickness);
 
         /**
          * This method is called to detect objects in the acquired image frame.
          *
          * @param image specifies the image to be processed.
-         * @param detectedObjects specifies the object rectangle array to hold the detected objects.
-         * @return true if detected objects, false otherwise.
+         * @param detectedTargets specifies the preallocated buffer to hold the detected targets, can be null if no
+         *        preallocated buffer required.
+         * @return detected objects, null if none detected.
          */
-        boolean detectObjects(I image, O detectedObjects);
+        O detectObjects(Mat image, O detectedObjects);
 
     }   //interface VisionProcessor
 
-    private VisionProcessor<I, O, C> visionProcessor;
-    private I image;
+    private VisionProcessor<O> visionProcessor;
+    private Mat image;
     private O[] detectedObjectsBuffers;
     private int bufferIndex = 0;
     private long totalTime = 0;
@@ -97,7 +100,7 @@ public class TrcVisionTask<I, O, C> extends TrcThread<O> implements TrcThread.Pe
      * @param imageBuffer specifies the buffer to hold video image.
      * @param detectedObjectsBuffers specifies an array of buffers to hold the detected objects.
      */
-    public TrcVisionTask(VisionProcessor<I, O, C> visionProcessor, I imageBuffer, O[] detectedObjectsBuffers)
+    public TrcVisionTask(VisionProcessor<O> visionProcessor, Mat imageBuffer, O[] detectedObjectsBuffers)
     {
         super("VisionTask", null);
 
@@ -171,7 +174,8 @@ public class TrcVisionTask<I, O, C> extends TrcThread<O> implements TrcThread.Pe
             // rectangles representing objects detected.
             //
             startTime = TrcUtil.getCurrentTimeMillis();
-            visionProcessor.detectObjects(image, detectedObjectsBuffers[bufferIndex]);
+            visionProcessor.detectObjects(
+                image, detectedObjectsBuffers != null? detectedObjectsBuffers[bufferIndex]: null);
             elapsedTime = TrcUtil.getCurrentTimeMillis() - startTime;
             totalTime += elapsedTime;
             totalFrames++;
@@ -180,11 +184,15 @@ public class TrcVisionTask<I, O, C> extends TrcThread<O> implements TrcThread.Pe
                 tracer.traceInfo(funcName, "Average processing time = %.3f msec, Frame rate = %.1f",
                     (double)totalTime/totalFrames, totalFrames/(TrcUtil.getCurrentTime() - taskStartTime));
             }
-            setData(detectedObjectsBuffers[bufferIndex]);
-            //
-            // Switch to the next buffer so that we won't clobber the info while the client is accessing it.
-            //
-            bufferIndex = (bufferIndex + 1)%detectedObjectsBuffers.length;
+
+            if (detectedObjectsBuffers != null)
+            {
+                setData(detectedObjectsBuffers[bufferIndex]);
+                //
+                // Switch to the next buffer so that we won't clobber the info while the client is accessing it.
+                //
+                bufferIndex = (bufferIndex + 1)%detectedObjectsBuffers.length;
+            }
         }
 
         if (debugEnabled)

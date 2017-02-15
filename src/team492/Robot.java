@@ -39,6 +39,7 @@ import frclib.FrcGyro;
 import frclib.FrcPneumatic;
 import frclib.FrcRobotBase;
 import frclib.FrcValueMenu;
+import frclib.FrcVisionTarget;
 import hallib.HalDashboard;
 import trclib.TrcDbgTrace;
 import trclib.TrcDriveBase;
@@ -83,7 +84,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     //
     // VisionTarget subsystem.
     //
-    public VisionTarget visionTarget = null;
+    public FrcVisionTarget visionTarget = null;
     public FrcFaceDetector faceDetector = null;
     public boolean faceDetectorEnabled = false;
     public PixyVision pixyVision = null;
@@ -112,9 +113,9 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     //
     // Menus.
     //
+    public FrcChoiceMenu<FrcAuto.MatchType> matchTypeMenu;
+    public FrcValueMenu matchNumberMenu;
     public FrcChoiceMenu<FrcTest.Test> testMenu;
-    public FrcChoiceMenu<FrcAuto.AutoStrategy> autoStrategyMenu;
-    public FrcValueMenu delayMenu;
     public FrcValueMenu driveTimeMenu;
     public FrcValueMenu drivePowerMenu;
     public FrcValueMenu driveDistanceMenu;
@@ -164,7 +165,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
             CvSource videoOut =
                 CameraServer.getInstance().putVideo("VisionTarget", RobotInfo.CAM_WIDTH, RobotInfo.CAM_HEIGHT);
 
-            visionTarget = new VisionTarget("VisionTarget", videoIn, videoOut);
+            visionTarget = new FrcVisionTarget("VisionTarget", videoIn, videoOut, new GripPipeline());
         }
         else if (USE_FACE_DETECTOR)
         {
@@ -248,13 +249,18 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         //
         // Create Menus.
         //
+        matchTypeMenu = new FrcChoiceMenu<>("Match type:");
+        matchNumberMenu = new FrcValueMenu("Match number:", 0.0);
         testMenu = new FrcChoiceMenu<>("Tests");
-        autoStrategyMenu = new FrcChoiceMenu<>("Autonomous Strategies");
-        delayMenu = new FrcValueMenu("Delay", 0.0);
         driveTimeMenu = new FrcValueMenu("Drive Time", 5.0);
         drivePowerMenu = new FrcValueMenu("Drive Power", 0.2);
         driveDistanceMenu = new FrcValueMenu("Drive Distance", 12.0);
         turnDegreesMenu = new FrcValueMenu("Turn Degrees", 360.0);
+
+        matchTypeMenu.addChoice("Test", FrcAuto.MatchType.PRACTICE);
+        matchTypeMenu.addChoice("Qualifying", FrcAuto.MatchType.QUALIFYING);
+        matchTypeMenu.addChoice("Semi-final", FrcAuto.MatchType.SEMI_FINAL);
+        matchTypeMenu.addChoice("Final", FrcAuto.MatchType.FINAL);
 
         testMenu.addChoice("Sensors Test", FrcTest.Test.SENSORS_TEST);
         testMenu.addChoice("Drive Motors Test", FrcTest.Test.DRIVE_MOTORS_TEST);
@@ -265,13 +271,6 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         testMenu.addChoice("Turn Degrees", FrcTest.Test.TURN_DEGREES);
         testMenu.addChoice("Live Window", FrcTest.Test.LIVE_WINDOW);
         testMenu.addChoice("Face Detection", FrcTest.Test.FACE_DETECTION);
-
-        autoStrategyMenu.addChoice("X Timed Drive", FrcAuto.AutoStrategy.X_TIMED_DRIVE);
-        autoStrategyMenu.addChoice("Y Timed Drive", FrcAuto.AutoStrategy.Y_TIMED_DRIVE);
-        autoStrategyMenu.addChoice("X Distance Drive", FrcAuto.AutoStrategy.X_DISTANCE_DRIVE);
-        autoStrategyMenu.addChoice("Y Distance Drive", FrcAuto.AutoStrategy.Y_DISTANCE_DRIVE);
-        autoStrategyMenu.addChoice("Turn Degrees", FrcAuto.AutoStrategy.TURN_DEGREES);
-        autoStrategyMenu.addChoice("Do Nothing", FrcAuto.AutoStrategy.DO_NOTHING);
 
         //
         // Robot Modes.
