@@ -32,17 +32,30 @@ import frclib.FrcOpenCVDetector;
 
 public class VisionTarget extends FrcOpenCVDetector
 {
+    private CvSource videoOut;
     private Rect[] objRects = null;
+    private boolean videoOutEnabled = false;
 
     public VisionTarget(final String instanceName, CvSink videoIn, CvSource videoOut)
     {
         super(instanceName, videoIn, videoOut);
+        this.videoOut = videoOut;
     }
 
     public Rect[] getObjectRects()
     {
         return objRects;
     }   //getObjectRects
+
+    /**
+     * This method enables/disables the video out stream.
+     *
+     * @param enabled specifies true to enable video out stream, false to disable.
+     */
+    public void setVideoOutEnabled(boolean enabled)
+    {
+        videoOutEnabled = enabled;
+    }   //setVideoOutEnabled
 
     //
     // Implements the TrcVisionTask.VisionProcessor.detectObjects method.
@@ -70,6 +83,11 @@ public class VisionTarget extends FrcOpenCVDetector
         {
             objRects = detectedObjects.toArray();
             found = true;
+        }
+
+        if (videoOutEnabled)
+        {
+            videoOut.putFrame(image);
         }
 
         return found;

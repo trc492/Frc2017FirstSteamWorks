@@ -31,6 +31,7 @@ import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.CameraServer;
+import frclib.FrcAHRSGyro;
 import frclib.FrcCANTalon;
 import frclib.FrcChoiceMenu;
 import frclib.FrcFaceDetector;
@@ -58,9 +59,9 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     public static final String programName = "FirstSteamWorks";
     public static final String moduleName = "Robot";
 
-    public static final boolean USE_VISION_TARGET = false;
-    public static final boolean USE_FACE_DETECTOR = true;
-    public static final boolean USE_PIXY_VISION = true;
+    public static final boolean USE_VISION_TARGET = true;
+    public static final boolean USE_FACE_DETECTOR = false;
+    public static final boolean USE_PIXY_VISION = false;
 
     private static final boolean DEBUG_DRIVE_BASE = false;
     private static final boolean DEBUG_PID_DRIVE = false;
@@ -77,6 +78,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     // Sensors.
     //
     public FrcGyro gyro = null;
+    public FrcAHRSGyro ahrsGyro = null;
 
     //
     // VisionTarget subsystem.
@@ -143,6 +145,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         // Sensors.
         //
         gyro = new FrcGyro("ADXRS450", new ADXRS450_Gyro());
+//        ahrsGyro = new FrcAHRSGyro("AHRS", SPI.Port.kMXP);
         if (USE_PIXY_VISION)
         {
             pixyVision = new PixyVision();
@@ -175,6 +178,8 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
             faceDetector = new FrcFaceDetector(
                 "FaceDetector", "/home/lvuser/cascade-files/haarcascade_frontalface_alt.xml", videoIn, videoOut);
         }
+
+//        ahrs = new AHRS(SPI.Port.kMXP);
 
         //
         // DriveBase subsystem.
@@ -361,6 +366,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         else if (pidCtrl == gyroTurnPidCtrl && gyro != null)
         {
             value = gyro.getZHeading().value;
+//            value = ahrsGyro.getZHeading().value;
         }
 
         return value;

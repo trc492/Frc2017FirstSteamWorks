@@ -43,8 +43,8 @@ public class TrcVisionTask<I, O, C> extends TrcThread<O> implements TrcThread.Pe
     private TrcDbgTrace dbgTrace = null;
     private TrcDbgTrace tracer = null;
 
-    private static final boolean visionPerfEnabled = true;
     private static final long DEF_PROCESSING_INTERVAL = 50;     //in msec
+    private boolean perfReportEnabled = false;
 
     /**
      * This interface provides methods to grab image from the video input, render image to video output and detect
@@ -106,7 +106,7 @@ public class TrcVisionTask<I, O, C> extends TrcThread<O> implements TrcThread.Pe
             dbgTrace = new TrcDbgTrace(moduleName, tracingEnabled, traceLevel, msgLevel);
         }
 
-        if (visionPerfEnabled)
+        if (perfReportEnabled)
         {
             tracer = FrcRobotBase.getGlobalTracer();
         }
@@ -134,6 +134,16 @@ public class TrcVisionTask<I, O, C> extends TrcThread<O> implements TrcThread.Pe
             taskStartTime = TrcUtil.getCurrentTime();
         }
     }   //setTaskEnabled
+
+    /**
+     * This method enables/disables vision processing performance report.
+     *
+     * @param enabled specifies true to enable performance report, false to disable.
+     */
+    public void setPerfReportEnabled(boolean enabled)
+    {
+        perfReportEnabled = enabled;
+    }   //setPerfReportEnabled
 
     //
     // Implements TrcThread.PeriodicTask interface.
@@ -165,7 +175,7 @@ public class TrcVisionTask<I, O, C> extends TrcThread<O> implements TrcThread.Pe
             elapsedTime = TrcUtil.getCurrentTimeMillis() - startTime;
             totalTime += elapsedTime;
             totalFrames++;
-            if (visionPerfEnabled && tracer != null)
+            if (perfReportEnabled && tracer != null)
             {
                 tracer.traceInfo(funcName, "Average processing time = %.3f msec, Frame rate = %.1f",
                     (double)totalTime/totalFrames, totalFrames/(TrcUtil.getCurrentTime() - taskStartTime));
