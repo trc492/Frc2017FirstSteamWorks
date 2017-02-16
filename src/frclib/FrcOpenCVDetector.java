@@ -33,6 +33,12 @@ import org.opencv.imgproc.Imgproc;
 import trclib.TrcDbgTrace;
 import trclib.TrcVisionTask;
 
+/**
+ * This class implements a generic OpenCV detector. Typically, it is extended by a specific detector that provides
+ * the algorithm to process an image for detecting objects using OpenCV APIs.
+ *
+ * @param <O> specifies the type of the detected objects.
+ */
 public abstract class FrcOpenCVDetector<O> implements TrcVisionTask.VisionProcessor<O>
 {
     private static final String moduleName = "FrcOpenCVDetector";
@@ -81,14 +87,14 @@ public abstract class FrcOpenCVDetector<O> implements TrcVisionTask.VisionProces
     }   //toString
 
     /**
-     * This method provides the detected objects buffer array.
+     * This method provides the preallocated buffer array for storing detected objects.
      *
      * @param detectedObjectBuffers specifies the array of detected object buffers.
      */
-    public void setDetectedObjectBuffers(O[] detectedObjectBuffers)
+    public void setPreallocatedObjectBuffers(O[] detectedObjectBuffers)
     {
         this.detectedObjectBuffers = detectedObjectBuffers;
-    }   //setDetectedObjectBuffers
+    }   //setPreallocatedObjectBuffers
 
     /**
      * This method enables/disables the vision processing task.

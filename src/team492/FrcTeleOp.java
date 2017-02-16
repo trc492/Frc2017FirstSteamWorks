@@ -50,7 +50,6 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
 
     private TrcBooleanState mailboxToggle;
     private boolean driveInverted = false;
-    private boolean ringLightOn = false;
 
     public FrcTeleOp(Robot robot)
     {
@@ -184,19 +183,28 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
                     break;
 
                 case FrcJoystick.LOGITECH_BUTTON10:
-                    if (robot.faceDetector != null && pressed)
-                    {
-                        robot.faceDetectorEnabled = !robot.faceDetectorEnabled;
-                        robot.faceDetector.setEnabled(robot.faceDetectorEnabled);
-                        robot.faceDetector.setVideoOutEnabled(robot.faceDetectorEnabled);
-                    }
                     break;
 
                 case FrcJoystick.LOGITECH_BUTTON11:
                     if (pressed)
                     {
-                        ringLightOn = !ringLightOn;
-                        robot.pixyVision.setRingLightOn(ringLightOn);
+                        if (robot.visionTarget != null)
+                        {
+                            robot.visionTargetEnabled = !robot.visionTargetEnabled;
+                            robot.visionTarget.setEnabled(robot.visionTargetEnabled);
+                            robot.visionTarget.setVideoOutEnabled(robot.visionTargetEnabled);
+                        }
+                        else if (robot.faceDetector != null)
+                        {
+                            robot.faceDetectorEnabled = !robot.faceDetectorEnabled;
+                            robot.faceDetector.setEnabled(robot.faceDetectorEnabled);
+                            robot.faceDetector.setVideoOutEnabled(robot.faceDetectorEnabled);
+                        }
+                        else if (robot.pixyVision != null)
+                        {
+                            robot.pixyVisionEnabled = !robot.pixyVisionEnabled;
+                            robot.pixyVision.setRingLightOn(robot.pixyVisionEnabled);
+                        }
                     }
                     break;
 

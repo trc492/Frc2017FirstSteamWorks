@@ -39,7 +39,6 @@ import frclib.FrcGyro;
 import frclib.FrcPneumatic;
 import frclib.FrcRobotBase;
 import frclib.FrcValueMenu;
-import frclib.FrcVisionTarget;
 import hallib.HalDashboard;
 import trclib.TrcDbgTrace;
 import trclib.TrcDriveBase;
@@ -66,6 +65,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
 
     private static final boolean DEBUG_DRIVE_BASE = false;
     private static final boolean DEBUG_PID_DRIVE = false;
+    private static final boolean DEBUG_VISION_TARGET = false;
     private static final boolean DEBUG_FACE_DETECTION = false;
     private static final double DASHBOARD_UPDATE_INTERVAL = 0.1;
 
@@ -84,10 +84,12 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     //
     // VisionTarget subsystem.
     //
-    public FrcVisionTarget visionTarget = null;
+    public VisionTarget visionTarget = null;
+    public boolean visionTargetEnabled = false;
     public FrcFaceDetector faceDetector = null;
     public boolean faceDetectorEnabled = false;
     public PixyVision pixyVision = null;
+    public boolean pixyVisionEnabled = false;
 
     //
     // DriveBase subsystem.
@@ -146,10 +148,6 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         //
         gyro = new FrcGyro("ADXRS450", new ADXRS450_Gyro());
 //        ahrsGyro = new FrcAHRSGyro("AHRS", SPI.Port.kMXP);
-        if (USE_PIXY_VISION)
-        {
-            pixyVision = new PixyVision();
-        }
 
         //
         // VisionTarget subsystem.
@@ -164,7 +162,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
             CvSource videoOut =
                 CameraServer.getInstance().putVideo("VisionTarget", RobotInfo.CAM_WIDTH, RobotInfo.CAM_HEIGHT);
 
-            visionTarget = new FrcVisionTarget("VisionTarget", videoIn, videoOut, new GripPipeline());
+            visionTarget = new VisionTarget("VisionTarget", videoIn, videoOut);
         }
         else if (USE_FACE_DETECTOR)
         {
@@ -178,8 +176,10 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
             faceDetector = new FrcFaceDetector(
                 "FaceDetector", "/home/lvuser/cascade-files/haarcascade_frontalface_alt.xml", videoIn, videoOut);
         }
-
-//        ahrs = new AHRS(SPI.Port.kMXP);
+        else if (USE_PIXY_VISION)
+        {
+            pixyVision = new PixyVision();
+        }
 
         //
         // DriveBase subsystem.
@@ -313,6 +313,22 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
                 HalDashboard.putNumber("DriveBase.X", driveBase.getXPosition());
                 HalDashboard.putNumber("DriveBase.Y", driveBase.getYPosition());
                 HalDashboard.putNumber("DriveBase.Heading", driveBase.getHeading());
+            }
+
+            if (DEBUG_VISION_TARGET)
+            {
+                if (visionTargetEnabled)
+                {
+                    Rect[] targetRects = visionTarget.getTargetRects();
+                    if (targetRects != null)
+                    {
+                        for (int i = 0; i < targetRects.length; i++)
+                        {
+                            tracer.traceInfo("TargetRect", "%02d: x=%d, y=%d, width=%d, height=%d",
+                                i, targetRects[i].x, targetRects[i].y, targetRects[i].width, targetRects[i].height);
+                        }
+                    }
+                }
             }
 
             if (DEBUG_FACE_DETECTION)

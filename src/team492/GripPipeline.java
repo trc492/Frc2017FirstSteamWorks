@@ -42,7 +42,6 @@ public class GripPipeline
     private Mat hsvThresholdOutput = new Mat();
     private Mat cvErodeOutput = new Mat();
     private ArrayList<MatOfPoint> findContoursOutput = new ArrayList<MatOfPoint>();
-    private ArrayList<MatOfPoint> filterContoursOutput = new ArrayList<MatOfPoint>();
 
     static
     {
@@ -57,9 +56,9 @@ public class GripPipeline
     {
         // Step HSV_Threshold0:
         Mat hsvThresholdInput = source0;
-        double[] hsvThresholdHue = { 80.93525179856115, 180.0 };
-        double[] hsvThresholdSaturation = { 0.0, 255.0 };
-        double[] hsvThresholdValue = { 27.51798561151079, 255.0 };
+        double[] hsvThresholdHue = { 82.55395683453237, 101.21212121212119 };
+        double[] hsvThresholdSaturation = { 50.44964028776978, 255.0 };
+        double[] hsvThresholdValue = { 50.44964028776978, 255.0 };
         hsvThreshold(hsvThresholdInput, hsvThresholdHue, hsvThresholdSaturation, hsvThresholdValue, hsvThresholdOutput);
 
         // Step CV_erode0:
@@ -76,24 +75,6 @@ public class GripPipeline
         Mat findContoursInput = cvErodeOutput;
         boolean findContoursExternalOnly = false;
         findContours(findContoursInput, findContoursExternalOnly, findContoursOutput);
-
-        // Step Filter_Contours0:
-        ArrayList<MatOfPoint> filterContoursContours = findContoursOutput;
-        double filterContoursMinArea = 1000.0;
-        double filterContoursMinPerimeter = 100.0;
-        double filterContoursMinWidth = 10.0;
-        double filterContoursMaxWidth = 1000;
-        double filterContoursMinHeight = 50.0;
-        double filterContoursMaxHeight = 1000;
-        double[] filterContoursSolidity = { 0.0, 100 };
-        double filterContoursMaxVertices = 10000.0;
-        double filterContoursMinVertices = 0;
-        double filterContoursMinRatio = 0;
-        double filterContoursMaxRatio = 1000;
-        filterContours(filterContoursContours, filterContoursMinArea, filterContoursMinPerimeter,
-            filterContoursMinWidth, filterContoursMaxWidth, filterContoursMinHeight, filterContoursMaxHeight,
-            filterContoursSolidity, filterContoursMaxVertices, filterContoursMinVertices, filterContoursMinRatio,
-            filterContoursMaxRatio, filterContoursOutput);
 
     }
 
@@ -125,16 +106,6 @@ public class GripPipeline
     public ArrayList<MatOfPoint> findContoursOutput()
     {
         return findContoursOutput;
-    }
-
-    /**
-     * This method is a generated getter for the output of a Filter_Contours.
-     * 
-     * @return ArrayList<MatOfPoint> output from Filter_Contours.
-     */
-    public ArrayList<MatOfPoint> filterContoursOutput()
-    {
-        return filterContoursOutput;
     }
 
     /**
@@ -220,77 +191,6 @@ public class GripPipeline
         }
         int method = Imgproc.CHAIN_APPROX_SIMPLE;
         Imgproc.findContours(input, contours, hierarchy, mode, method);
-    }
-
-    /**
-     * Filters out contours that do not meet certain criteria.
-     * 
-     * @param inputContours
-     *            is the input list of contours
-     * @param output
-     *            is the the output list of contours
-     * @param minArea
-     *            is the minimum area of a contour that will be kept
-     * @param minPerimeter
-     *            is the minimum perimeter of a contour that will be kept
-     * @param minWidth
-     *            minimum width of a contour
-     * @param maxWidth
-     *            maximum width
-     * @param minHeight
-     *            minimum height
-     * @param maxHeight
-     *            maximimum height
-     * @param Solidity
-     *            the minimum and maximum solidity of a contour
-     * @param minVertexCount
-     *            minimum vertex Count of the contours
-     * @param maxVertexCount
-     *            maximum vertex Count
-     * @param minRatio
-     *            minimum ratio of width to height
-     * @param maxRatio
-     *            maximum ratio of width to height
-     */
-    private void filterContours(List<MatOfPoint> inputContours, double minArea, double minPerimeter, double minWidth,
-        double maxWidth, double minHeight, double maxHeight, double[] solidity, double maxVertexCount,
-        double minVertexCount, double minRatio, double maxRatio, List<MatOfPoint> output)
-    {
-        final MatOfInt hull = new MatOfInt();
-        output.clear();
-        // operation
-        for (int i = 0; i < inputContours.size(); i++)
-        {
-            final MatOfPoint contour = inputContours.get(i);
-            final Rect bb = Imgproc.boundingRect(contour);
-            if (bb.width < minWidth || bb.width > maxWidth)
-                continue;
-            if (bb.height < minHeight || bb.height > maxHeight)
-                continue;
-            final double area = Imgproc.contourArea(contour);
-            if (area < minArea)
-                continue;
-            if (Imgproc.arcLength(new MatOfPoint2f(contour.toArray()), true) < minPerimeter)
-                continue;
-            Imgproc.convexHull(contour, hull);
-            MatOfPoint mopHull = new MatOfPoint();
-            mopHull.create((int) hull.size().height, 1, CvType.CV_32SC2);
-            for (int j = 0; j < hull.size().height; j++)
-            {
-                int index = (int) hull.get(j, 0)[0];
-                double[] point = new double[] { contour.get(index, 0)[0], contour.get(index, 0)[1] };
-                mopHull.put(j, 0, point);
-            }
-            final double solid = 100 * area / Imgproc.contourArea(mopHull);
-            if (solid < solidity[0] || solid > solidity[1])
-                continue;
-            if (contour.rows() < minVertexCount || contour.rows() > maxVertexCount)
-                continue;
-            final double ratio = bb.width / (double) bb.height;
-            if (ratio < minRatio || ratio > maxRatio)
-                continue;
-            output.add(contour);
-        }
     }
 
 }   //class GripPipeline

@@ -32,6 +32,9 @@ import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
 import trclib.TrcDbgTrace;
 
+/**
+ * This class implements an OpenCV face detector using the provided classifier.
+ */
 public class FrcFaceDetector extends FrcOpenCVDetector<MatOfRect>
 {
     private static final String moduleName = "FrcFaceDetector";
@@ -75,7 +78,7 @@ public class FrcFaceDetector extends FrcOpenCVDetector<MatOfRect>
         {
             detectedFacesBuffers[i] = new MatOfRect();
         }
-        setDetectedObjectBuffers(detectedFacesBuffers);
+        setPreallocatedObjectBuffers(detectedFacesBuffers);
 
         faceDetector = new CascadeClassifier(classifierPath);
         if (faceDetector.empty())
@@ -134,6 +137,14 @@ public class FrcFaceDetector extends FrcOpenCVDetector<MatOfRect>
      */
     public void setVideoOutEnabled(boolean enabled)
     {
+        final String funcName = "setVideoOutEnabled";
+
+        if (debugEnabled)
+        {
+            dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.API, "enabled=%s", Boolean.toString(enabled));
+            dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.API);
+        }
+
         videoOutEnabled = enabled;
     }   //setVideoOutEnabled
 

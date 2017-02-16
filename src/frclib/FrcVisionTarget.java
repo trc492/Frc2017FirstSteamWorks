@@ -32,15 +32,36 @@ import org.opencv.imgproc.Imgproc;
 
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
-import team492.GripPipeline;
+import trclib.TrcDbgTrace;
 
 /**
- * This class implements a Vision Targeting system that uses a GRIP pipeline and OpenCV. It uses a separate vision
- * thread and will take care of thread synchronization so making the use of this class extremely simple.
+ * This class implements a Vision Targeting system that uses OpenCV. It uses a separate vision thread and will take
+ * care of thread synchronization so making the use of this class extremely simple. This class is intended to be
+ * inherited by another class that provides specific methods to process the image and to retrieve the results.
  */
-public class FrcVisionTarget extends FrcOpenCVDetector<ArrayList<MatOfPoint>>
+public abstract class FrcVisionTarget extends FrcOpenCVDetector<ArrayList<MatOfPoint>>
 {
-    private GripPipeline pipeline;
+    private static final String moduleName = "FrcVisionTarget";
+    private static final boolean debugEnabled = false;
+    private static final boolean tracingEnabled = false;
+    private static final TrcDbgTrace.TraceLevel traceLevel = TrcDbgTrace.TraceLevel.API;
+    private static final TrcDbgTrace.MsgLevel msgLevel = TrcDbgTrace.MsgLevel.INFO;
+    private TrcDbgTrace dbgTrace = null;
+
+    /**
+     * This method is called to process an image for detecting objects.
+     *
+     * @param image specifies the image to be processed.
+     */
+    public abstract void processImage(Mat image);
+
+    /**
+     * This method returns an array list of detected targets.
+     *
+     * @return detected targets.
+     */
+    public abstract ArrayList<MatOfPoint> getTargets();
+
     private volatile Mat image = null;
     private volatile Rect[] targetRects = null;
     private boolean videoOutEnabled = false;
@@ -52,10 +73,14 @@ public class FrcVisionTarget extends FrcOpenCVDetector<ArrayList<MatOfPoint>>
      * @param videoIn specifies the video input stream.
      * @param videoOut specifies the video output stream.
      */
-    public FrcVisionTarget(final String instanceName, CvSink videoIn, CvSource videoOut, GripPipeline pipeline)
+    public FrcVisionTarget(final String instanceName, CvSink videoIn, CvSource videoOut)
     {
         super(instanceName, videoIn, videoOut);
-        this.pipeline = pipeline;
+
+        if (debugEnabled)
+        {
+            dbgTrace = new TrcDbgTrace(moduleName, tracingEnabled, traceLevel, msgLevel);
+        }
     }   //FrcVisionTarget
 
     /**
@@ -65,6 +90,14 @@ public class FrcVisionTarget extends FrcOpenCVDetector<ArrayList<MatOfPoint>>
      */
     public Rect[] getTargetRects()
     {
+        final String funcName = "getTargetRects";
+
+        if (debugEnabled)
+        {
+            dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.API);
+            dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.API);
+        }
+
         return targetRects;
     }   //getObjectRects
 
@@ -100,6 +133,14 @@ public class FrcVisionTarget extends FrcOpenCVDetector<ArrayList<MatOfPoint>>
      */
     public void setVideoOutEnabled(boolean enabled)
     {
+        final String funcName = "setVideoOutEnabled";
+
+        if (debugEnabled)
+        {
+            dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.API, "enabled=%s", Boolean.toString(enabled));
+            dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.API);
+        }
+
         videoOutEnabled = enabled;
     }   //setVideoOutEnabled
 
@@ -122,8 +163,8 @@ public class FrcVisionTarget extends FrcOpenCVDetector<ArrayList<MatOfPoint>>
         //
         // Process the image to detect the objects we are looking for and put them into detectedObjects.
         //
-        pipeline.process(image);
-        detectedTargets = pipeline.filterContoursOutput();
+        processImage(image);
+        detectedTargets = getTargets();
         //
         // If we detected any objects, convert them into an array of rectangles.
         //
