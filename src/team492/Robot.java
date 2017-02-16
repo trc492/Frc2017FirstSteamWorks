@@ -26,6 +26,7 @@ import org.opencv.core.Rect;
 
 import com.ctre.CANTalon.FeedbackDevice;
 
+import edu.wpi.cscore.AxisCamera;
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
@@ -62,10 +63,11 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     public static final boolean USE_VISION_TARGET = true;
     public static final boolean USE_FACE_DETECTOR = false;
     public static final boolean USE_PIXY_VISION = false;
+    public static final boolean USE_USB_CAMERA = true;
 
     private static final boolean DEBUG_DRIVE_BASE = false;
     private static final boolean DEBUG_PID_DRIVE = false;
-    private static final boolean DEBUG_VISION_TARGET = false;
+    private static final boolean DEBUG_VISION_TARGET = true;
     private static final boolean DEBUG_FACE_DETECTION = false;
     private static final double DASHBOARD_UPDATE_INTERVAL = 0.1;
 
@@ -154,13 +156,24 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         //
         if (USE_VISION_TARGET)
         {
-            UsbCamera cam0 = CameraServer.getInstance().startAutomaticCapture("cam0", 0);
-            cam0.setResolution(RobotInfo.CAM_WIDTH, RobotInfo.CAM_HEIGHT);
-            cam0.setFPS(RobotInfo.CAM_FRAME_RATE);
-//            cam0.setBrightness(RobotInfo.CAM_BRIGHTNESS);
-            CvSink videoIn = CameraServer.getInstance().getVideo(cam0);
-            CvSource videoOut =
-                CameraServer.getInstance().putVideo("VisionTarget", RobotInfo.CAM_WIDTH, RobotInfo.CAM_HEIGHT);
+            CvSink videoIn;
+            CvSource videoOut;
+
+            if (USE_USB_CAMERA)
+            {
+                UsbCamera cam0 = CameraServer.getInstance().startAutomaticCapture("cam0", 0);
+                cam0.setResolution(RobotInfo.CAM_WIDTH, RobotInfo.CAM_HEIGHT);
+                cam0.setFPS(RobotInfo.CAM_FRAME_RATE);
+                cam0.setBrightness(RobotInfo.CAM_BRIGHTNESS);
+                videoIn = CameraServer.getInstance().getVideo(cam0);
+            }
+            else
+            {
+                AxisCamera axisCam = CameraServer.getInstance().addAxisCamera("axis-camera.local");
+                axisCam.setResolution(RobotInfo.CAM_WIDTH, RobotInfo.CAM_HEIGHT);
+                videoIn = CameraServer.getInstance().getVideo(axisCam);
+            }
+            videoOut = CameraServer.getInstance().putVideo("VisionTarget", RobotInfo.CAM_WIDTH, RobotInfo.CAM_HEIGHT);
 
             visionTarget = new VisionTarget("VisionTarget", videoIn, videoOut);
         }
@@ -320,6 +333,8 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
                 if (visionTargetEnabled)
                 {
                     Rect[] targetRects = visionTarget.getTargetRects();
+                    tracer.traceInfo("Robot", "Target is %s (%d)",
+                        targetRects == null? "not found": "found", targetRects == null? 0: targetRects.length);
                     if (targetRects != null)
                     {
                         for (int i = 0; i < targetRects.length; i++)

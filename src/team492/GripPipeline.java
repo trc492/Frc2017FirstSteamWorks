@@ -56,16 +56,16 @@ public class GripPipeline
     {
         // Step HSV_Threshold0:
         Mat hsvThresholdInput = source0;
-        double[] hsvThresholdHue = { 82.55395683453237, 101.21212121212119 };
-        double[] hsvThresholdSaturation = { 50.44964028776978, 255.0 };
-        double[] hsvThresholdValue = { 50.44964028776978, 255.0 };
+        double[] hsvThresholdHue = { 50.17985611510791, 99.69696969696967 };
+        double[] hsvThresholdSaturation = { 135.29676258992805, 255.0 };
+        double[] hsvThresholdValue = { 169.69424460431654, 255.0 };
         hsvThreshold(hsvThresholdInput, hsvThresholdHue, hsvThresholdSaturation, hsvThresholdValue, hsvThresholdOutput);
 
         // Step CV_erode0:
         Mat cvErodeSrc = hsvThresholdOutput;
         Mat cvErodeKernel = new Mat();
         Point cvErodeAnchor = new Point(-1, -1);
-        double cvErodeIterations = 5.0;
+        double cvErodeIterations = 10.0;
         int cvErodeBordertype = Core.BORDER_CONSTANT;
         Scalar cvErodeBordervalue = new Scalar(-1);
         cvErode(cvErodeSrc, cvErodeKernel, cvErodeAnchor, cvErodeIterations, cvErodeBordertype, cvErodeBordervalue,
