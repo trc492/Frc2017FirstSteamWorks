@@ -23,6 +23,7 @@
 package team492;
 
 import java.util.Arrays;
+import java.util.List;
 
 //MTS: import team492.CmdMidGearLift.State;
 import trclib.TrcEvent;
@@ -57,9 +58,11 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
     private TrcEvent event;
     private TrcTimer timer;
     private TrcStateMachine<State> sm;
+    private List<State> values;
 
-    CmdSideGearLift(Robot robot, double delay, double distanceToBaseline, double angleToAirship, double baselineToAirship, double baselineToNeutral)
+    CmdSideGearLift(final Robot robot,final double delay, final double distanceToBaseline, final double angleToAirship, final double baselineToAirship,final double baselineToNeutral)
     {
+    	values = Arrays.asList(State.values());
         this.robot = robot;
         this.delay = delay;
         this.distanceToBaseline = distanceToBaseline;
@@ -77,9 +80,8 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
     //
     // Implements the TrcRobot.RobotCommand interface.
     //
-
     private State getNextState(TrcStateMachine<State> sm){
-    	int index = Arrays.asList(State.values()).indexOf(sm.getState()) + 1;
+    	int index = values.indexOf(sm.getState()) + 1;
     	if(index != State.values().length){
     		return State.values()[index];    		
     	}
