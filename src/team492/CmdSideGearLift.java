@@ -22,9 +22,6 @@
 
 package team492;
 
-import java.util.Arrays;
-import java.util.List;
-
 //MTS: import team492.CmdMidGearLift.State;
 import trclib.TrcEvent;
 import trclib.TrcRobot;
@@ -46,7 +43,7 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
         DONE
     }   //enum State
 
-    private static final String moduleName = "CmdPidDrive";
+    private static final String moduleName = "CmdSideGearLift";
 
     private Robot robot;
     private double delay;
@@ -58,11 +55,9 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
     private TrcEvent event;
     private TrcTimer timer;
     private TrcStateMachine<State> sm;
-    private List<State> values;
 
     CmdSideGearLift(final Robot robot,final double delay, final double distanceToBaseline, final double angleToAirship, final double baselineToAirship,final double baselineToNeutral)
     {
-    	values = Arrays.asList(State.values());
         this.robot = robot;
         this.delay = delay;
         this.distanceToBaseline = distanceToBaseline;
@@ -80,15 +75,6 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
     //
     // Implements the TrcRobot.RobotCommand interface.
     //
-    private State getNextState(TrcStateMachine<State> sm){
-    	int index = values.indexOf(sm.getState()) + 1;
-    	if(index != State.values().length){
-    		return State.values()[index];    		
-    	}
-    	else{
-    		return sm.getState();
-    	}
-    }
     
     @Override
     public boolean cmdPeriodic(double elapsedTime)
@@ -112,12 +98,12 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
                     //
                     if (delay == 0.0)
                     {
-                        sm.setState(getNextState(sm));
+                        sm.setState(State.FORWARD1);
                     }
                     else
                     {
                         timer.set(delay, event);
-                        sm.waitForSingleEvent(event, getNextState(sm));
+                        sm.waitForSingleEvent(event, State.FORWARD1);
                     }
                     break;
 
@@ -126,38 +112,38 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
                     // Drive the set distance and heading.
                     //
                     robot.pidDrive.setTarget(distanceToBaseline, 0, false, event);
-                    sm.waitForSingleEvent(event, getNextState(sm));
+                    sm.waitForSingleEvent(event, State.TURN_TO_AIRSHIP);
                     break;
                     
                 case TURN_TO_AIRSHIP:
                 	robot.pidDrive.setTarget(0, angleToAirship, false, event);
-                	sm.waitForSingleEvent(event, getNextState(sm));
+                	sm.waitForSingleEvent(event, State.FORWARD2);
                 	break;
                 
                 case FORWARD2:
                 	robot.pidDrive.setTarget(baselineToAirship, 0, false, event);
-                	sm.waitForSingleEvent(event, getNextState(sm));
+                	sm.waitForSingleEvent(event, State.VISION_DEPLOY);
                 	break;
                 
                 case VISION_DEPLOY:
                 	if (visionDeploy.cmdPeriodic(elapsedTime)){
-                		sm.setState(getNextState(sm));
+                		sm.setState(State.BACK_UP);
                 	}
                 	break;
                 	
                 case BACK_UP:
                 	robot.pidDrive.setTarget(-baselineToAirship, 0, false, event);
-                	sm.waitForSingleEvent(event, getNextState(sm));
+                	sm.waitForSingleEvent(event, State.TURN_FORWARD);
                 	break;
                 	
                 case TURN_FORWARD:
                 	robot.pidDrive.setTarget(0, 0, false, event);
-                	sm.waitForSingleEvent(event, getNextState(sm));
+                	sm.waitForSingleEvent(event, State.GO_TO_NEUTRAL);
                 	break;
                 	
                 case GO_TO_NEUTRAL:
                 	robot.pidDrive.setTarget(baselineToNeutral, 9, false, event);
-                	sm.waitForSingleEvent(event, getNextState(sm));
+                	sm.waitForSingleEvent(event, State.DONE);
                 	break;
 
                 case DONE:
