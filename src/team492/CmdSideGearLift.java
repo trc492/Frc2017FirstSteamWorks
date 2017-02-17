@@ -65,7 +65,8 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
         this.baselineToAirship = baselineToAirship;
         this.baselineToNeutral = baselineToNeutral;
         //MTS: Need to change to final parameters.
-        visionDeploy = new CmdVisionGearDeploy(robot, baselineToNeutral, baselineToNeutral, baselineToNeutral, baselineToNeutral);
+        // visionDeploy = new CmdVisionGearDeploy(robot, baselineToNeutral, baselineToNeutral, baselineToNeutral, baselineToNeutral);
+        // TODO add proper instantiation of visionDeploy
         event = new TrcEvent(moduleName);
         timer = new TrcTimer(moduleName);
         sm = new TrcStateMachine<>(moduleName);

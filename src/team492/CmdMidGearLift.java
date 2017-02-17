@@ -62,9 +62,9 @@ class CmdMidGearLift implements TrcRobot.RobotCommand
         this.heading = 0.0;
 
         //MTS: Need to change to final parameters.
-        cmdVisionDeploy = new CmdVisionGearDeploy(
-            robot, sidewaysDistance, sidewaysDistance, sidewaysDistance, sidewaysDistance);
-
+        // cmdVisionDeploy = new CmdVisionGearDeploy(
+        //    robot, sidewaysDistance, sidewaysDistance, sidewaysDistance, sidewaysDistance);
+        // TODO add proper instantiation of cmdVisionDeploy
         event = new TrcEvent(moduleName);
         timer = new TrcTimer(moduleName);
         sm = new TrcStateMachine<>(moduleName);

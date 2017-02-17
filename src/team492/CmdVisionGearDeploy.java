@@ -22,6 +22,8 @@
 
 package team492;
 
+import org.opencv.core.Rect;
+
 import trclib.TrcEvent;
 import trclib.TrcRobot;
 import trclib.TrcStateMachine;
@@ -31,36 +33,42 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
 {
     private enum State
     {
-        DO_DELAY,
-        ALIGN_WITH_TARGET,
+        ALIGN_HORIZONTALLY,
+        ALIGN_DISTANCE,
         DEPLOY_GEAR,
         BACKUP,
         DONE
     }   //enum State
 
-    private static final String moduleName = "CmdPidDrive";
+    private static final String moduleName = "CmdVisionGearDeploy";
 
     private Robot robot;
-    private double delay;
     private double extendTime;
     private double backupDistance;
+    private double horizontalAlignmentThreshold;
+    private double distanceAlignmentThreshold;
     private double heading;
+    private double alignmentSensitivity;
     private TrcEvent event;
     private TrcTimer timer;
     private TrcStateMachine<State> sm;
 
-    CmdVisionGearDeploy(Robot robot, double delay, double extendTime, double backupDistance, double heading)
+    CmdVisionGearDeploy(Robot robot, double extendTime, double backupDistance, 
+    		double horizontalAlignmentThreshold, double distanceAlignmentThreshold,
+    		double alignmentSensitivity, double heading)
     {
         this.robot = robot;
-        this.delay = delay;
         this.extendTime = extendTime;
         this.backupDistance = backupDistance;
         this.heading = heading;
+        this.horizontalAlignmentThreshold = horizontalAlignmentThreshold;
+        this.distanceAlignmentThreshold = distanceAlignmentThreshold;
+        this.alignmentSensitivity = alignmentSensitivity;
         event = new TrcEvent(moduleName);
         timer = new TrcTimer(moduleName);
         sm = new TrcStateMachine<>(moduleName);
-        sm.start(State.DO_DELAY);
-    }   //CmdPidDrive
+        sm.start(State.ALIGN_HORIZONTALLY);
+    }   //CmdVisionGearDeploy
 
     //
     // Implements the TrcRobot.RobotCommand interface.
@@ -82,34 +90,26 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
 
             switch (state)
             {
-                case DO_DELAY:
-                    //
-                    // Do delay if any.
-                    //
-                    if (delay == 0.0)
-                    {
-                        sm.setState(State.ALIGN_WITH_TARGET);
-                    }
-                    else
-                    {
-                        timer.set(delay, event);
-                        sm.waitForSingleEvent(event, State.ALIGN_WITH_TARGET);
-                    }
-                    break;
-                    
-                case ALIGN_WITH_TARGET:
+            	
+                case ALIGN_HORIZONTALLY:
                     //
                     // Position robot at target.
-                	//
-                	boolean aligned = false;
-                	while(!aligned)
-            		{
-	                	double pos = robot.pixyVision.getTargetPosition();
-            		}
-                	
-                    sm.waitForSingleEvent(event, State.DEPLOY_GEAR);
+                	// get info from vision (m: alignment, n:distance)
+                	double midpoint = getHorizontalPosition();
+                	double screenMidpoint = 160;
+                	// TODO find screenMidpoint
+                	double errorMargin = Math.abs(midpoint - screenMidpoint);
+                	if(errorMargin > horizontalAlignmentThreshold)
+                	{ 
+                		// is aligned
+                		double strafeSpeed = Math.signum(errorMargin);
+                        robot.pidDrive.setTarget(0.0, backupDistance, 0.0, false, event);
+                	}
+                    sm.waitForSingleEvent(event, State.ALIGN_HORIZONTALLY);
                     break;
-                    
+                case ALIGN_DISTANCE:
+                    sm.waitForSingleEvent(event, State.DEPLOY_GEAR);
+                	break;
                 case DEPLOY_GEAR:
                     //
                     // Place gear on axle.
@@ -141,4 +141,11 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
         return done;
     }   //cmdPeriodic
 
+    private double getHorizontalPosition()
+    {
+    	Rect r = robot.visionTarget.getTargetRect();
+    	double midpoint = r.x + r.width / 2;
+    	return midpoint;
+    }
+    
 }   //class CmdPidDrive
