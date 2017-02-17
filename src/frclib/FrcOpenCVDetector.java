@@ -97,6 +97,25 @@ public abstract class FrcOpenCVDetector<O> implements TrcVisionTask.VisionProces
     }   //setPreallocatedObjectBuffers
 
     /**
+     * This method returns the state of the detector.
+     *
+     * @return true if the detector is enabled, false if disabled.
+     */
+    public boolean isEnabled()
+    {
+        final String funcName = "isEnabled";
+        boolean enabled = visionTask != null && visionTask.isTaskEnabled();
+
+        if (debugEnabled)
+        {
+            dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.API);
+            dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.API, "=%s", Boolean.toString(enabled));
+        }
+
+        return enabled;
+    }   //isEnabled
+
+    /**
      * This method enables/disables the vision processing task.
      *
      * @param enabled specifies true to enable vision task, false to disable.

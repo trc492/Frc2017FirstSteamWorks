@@ -23,21 +23,27 @@
 package team492;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
+import org.opencv.core.Rect;
 
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Relay.Direction;
 import edu.wpi.first.wpilibj.Relay.Value;
+import frclib.FrcRobotBase;
 import frclib.FrcVisionTarget;
+import trclib.TrcDbgTrace;
 
 public class VisionTarget extends FrcVisionTarget
 {
     private Relay ringLightPower;
     private GripPipeline pipeline;
+    private TrcDbgTrace tracer;
 
     public VisionTarget(final String instanceName, CvSink videoIn, CvSource videoOut)
     {
@@ -46,6 +52,7 @@ public class VisionTarget extends FrcVisionTarget
         ringLightPower = new Relay(RobotInfo.RELAY_RINGLIGHT_POWER);
         ringLightPower.setDirection(Direction.kForward);
         pipeline = new GripPipeline();
+        tracer = FrcRobotBase.getGlobalTracer();
     }   //VisionTarget
 
     public void setEnabled(boolean enabled)
@@ -53,6 +60,50 @@ public class VisionTarget extends FrcVisionTarget
         ringLightPower.set(enabled? Value.kOn: Value.kOff);
         super.setEnabled(enabled);
     }   //setEnabled
+
+    public Rect getTargetRect()
+    {
+        Rect targetRect = null;
+
+        if (isEnabled())
+        {
+            Rect[] objectRects = getObjectRects();
+
+            tracer.traceInfo("Robot", "%d object(s) found", objectRects != null? objectRects.length: 0);
+            if (objectRects != null && objectRects.length >= 2)
+            {
+                for (int i = 0; i < objectRects.length; i++)
+                {
+                    tracer.traceInfo("ObjectRect", "%02d: x=%d, y=%d, width=%d, height=%d",
+                        i, objectRects[i].x, objectRects[i].y, objectRects[i].width, objectRects[i].height);
+                }
+                //
+                // Sort the detected objects by area from largest to smallest.
+                //
+                Arrays.sort(
+                    objectRects,
+                    new Comparator<Rect>()
+                    {
+                        public int compare(Rect rect1, Rect rect2)
+                        {
+                            return rect2.width*rect2.height - rect1.width*rect1.height;
+                        }
+                    });
+
+                int targetRectX1 = Math.min(objectRects[0].x, objectRects[1].x);
+                int targetRectY1 = Math.min(objectRects[0].y, objectRects[1].y);
+                int targetRectX2 = Math.max(objectRects[0].x + objectRects[0].width,
+                                            objectRects[1].x + objectRects[1].width);
+                int targetRectY2 = Math.max(objectRects[0].y + objectRects[0].height,
+                                            objectRects[1].y + objectRects[1].height);
+                int targetRectWidth = targetRectX2 - targetRectX1;
+                int targetRectHeight = targetRectY2 - targetRectY1;
+                targetRect = new Rect(targetRectX1, targetRectY1, targetRectWidth, targetRectHeight);
+            }
+        }
+
+        return targetRect;
+    }   //getTargetRect
 
     //
     // Implements FrcVisionTarget abstract methods.
@@ -65,9 +116,9 @@ public class VisionTarget extends FrcVisionTarget
     }   //processImage
 
     @Override
-    public ArrayList<MatOfPoint> getTargets()
+    public ArrayList<MatOfPoint> getDetectedObjects()
     {
         return pipeline.findContoursOutput();
-    }   //getTargets
+    }   //getDetectedObjects
 
 }   //class VisionTarget

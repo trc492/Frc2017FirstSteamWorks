@@ -181,24 +181,19 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
                     {
                         if (robot.visionTarget != null)
                         {
-                            robot.visionTargetEnabled = false;
-                            robot.visionTarget.setVideoOutEnabled(robot.visionTargetEnabled);
-                            robot.visionTarget.setEnabled(robot.visionTargetEnabled);
-                            robot.tracer.traceInfo("TeleOp", "Vision Target enabled = %s.",
-                                Boolean.toString(robot.visionTargetEnabled));
+                            robot.visionTarget.setVideoOutEnabled(false);
+                            robot.visionTarget.setEnabled(false);
+                            robot.tracer.traceInfo("TeleOp", "Vision Target disabled!");
                         }
                         else if (robot.faceDetector != null)
                         {
-                            robot.faceDetectorEnabled = false;
-                            robot.faceDetector.setVideoOutEnabled(robot.faceDetectorEnabled);
-                            robot.faceDetector.setEnabled(robot.faceDetectorEnabled);
-                            robot.tracer.traceInfo("TeleOp", "Face Detector enabled = %s.",
-                                Boolean.toString(robot.faceDetectorEnabled));
+                            robot.faceDetector.setVideoOutEnabled(false);
+                            robot.faceDetector.setEnabled(false);
+                            robot.tracer.traceInfo("TeleOp", "Face Detector disabled!");
                         }
                         else if (robot.pixyVision != null)
                         {
-                            robot.pixyVisionEnabled = false;
-                            robot.pixyVision.setRingLightOn(robot.pixyVisionEnabled);
+                            robot.pixyVision.setRingLightOn(false);
                         }
                     }
                     break;
@@ -208,24 +203,19 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
                     {
                         if (robot.visionTarget != null)
                         {
-                            robot.visionTargetEnabled = true;
-                            robot.visionTarget.setEnabled(robot.visionTargetEnabled);
-                            robot.visionTarget.setVideoOutEnabled(robot.visionTargetEnabled);
-                            robot.tracer.traceInfo("TeleOp", "Vision Target enabled = %s.",
-                                Boolean.toString(robot.visionTargetEnabled));
+                            robot.visionTarget.setEnabled(true);
+                            robot.visionTarget.setVideoOutEnabled(true);
+                            robot.tracer.traceInfo("TeleOp", "Vision Target enabled!");
                         }
                         else if (robot.faceDetector != null)
                         {
-                            robot.faceDetectorEnabled = true;
-                            robot.faceDetector.setEnabled(robot.faceDetectorEnabled);
-                            robot.faceDetector.setVideoOutEnabled(robot.faceDetectorEnabled);
-                            robot.tracer.traceInfo("TeleOp", "Face Detector enabled = %s.",
-                                Boolean.toString(robot.faceDetectorEnabled));
+                            robot.faceDetector.setEnabled(true);
+                            robot.faceDetector.setVideoOutEnabled(true);
+                            robot.tracer.traceInfo("TeleOp", "Face Detector enabled!");
                         }
                         else if (robot.pixyVision != null)
                         {
-                            robot.pixyVisionEnabled = true;
-                            robot.pixyVision.setRingLightOn(robot.pixyVisionEnabled);
+                            robot.pixyVision.setRingLightOn(true);
                         }
                     }
                     break;

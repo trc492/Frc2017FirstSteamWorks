@@ -87,11 +87,8 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     // VisionTarget subsystem.
     //
     public VisionTarget visionTarget = null;
-    public boolean visionTargetEnabled = false;
     public FrcFaceDetector faceDetector = null;
-    public boolean faceDetectorEnabled = false;
     public PixyVision pixyVision = null;
-    public boolean pixyVisionEnabled = false;
 
     //
     // DriveBase subsystem.
@@ -302,8 +299,6 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
             if (pixyVision != null && pixyVision.isTargetDetected())
             {
                 dashboard.displayPrintf(1, "Pixy: %.3f", pixyVision.getTargetPosition());
-//                double voltage = pixyCamera.getVoltage();
-//                dashboard.displayPrintf(1, "Pixy: %.3f (%.3f)", (voltage - 1.65)/3.3, voltage);
             }
 
             if (DEBUG_DRIVE_BASE)
@@ -330,15 +325,17 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
 
             if (DEBUG_VISION_TARGET)
             {
-                if (visionTargetEnabled)
+                if (visionTarget != null && visionTarget.isEnabled())
                 {
-                    Rect[] targetRects = visionTarget.getTargetRects();
+                    Rect[] targetRects = visionTarget.getObjectRects();
                     tracer.traceInfo("Robot", "Target is %s (%d)",
                         targetRects == null? "not found": "found", targetRects == null? 0: targetRects.length);
                     if (targetRects != null)
                     {
                         for (int i = 0; i < targetRects.length; i++)
                         {
+                            dashboard.displayPrintf(1 + i, "x=%d, y=%d, width=%d, height=%d",
+                                targetRects[i].x, targetRects[i].y, targetRects[i].width, targetRects[i].height);
                             tracer.traceInfo("TargetRect", "%02d: x=%d, y=%d, width=%d, height=%d",
                                 i, targetRects[i].x, targetRects[i].y, targetRects[i].width, targetRects[i].height);
                         }
@@ -348,7 +345,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
 
             if (DEBUG_FACE_DETECTION)
             {
-                if (faceDetectorEnabled)
+                if (faceDetector != null && faceDetector.isEnabled())
                 {
                     Rect[] faceRects = faceDetector.getFaceRects();
                     if (faceRects != null)

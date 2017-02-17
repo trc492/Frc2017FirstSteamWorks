@@ -56,14 +56,14 @@ public abstract class FrcVisionTarget extends FrcOpenCVDetector<ArrayList<MatOfP
     public abstract void processImage(Mat image);
 
     /**
-     * This method returns an array list of detected targets.
+     * This method returns an array list of detected objects.
      *
-     * @return detected targets.
+     * @return array list of detected objects.
      */
-    public abstract ArrayList<MatOfPoint> getTargets();
+    public abstract ArrayList<MatOfPoint> getDetectedObjects();
 
     private volatile Mat image = null;
-    private volatile Rect[] targetRects = null;
+    private volatile Rect[] objectRects = null;
     private boolean videoOutEnabled = false;
 
     /**
@@ -84,13 +84,13 @@ public abstract class FrcVisionTarget extends FrcOpenCVDetector<ArrayList<MatOfP
     }   //FrcVisionTarget
 
     /**
-     * This method returns an array of rectangles of last detected targets.
+     * This method returns an array of rectangles of last detected objects.
      *
-     * @return array of rectangle of last detected targets.
+     * @return array of rectangle of last detected objects.
      */
-    public Rect[] getTargetRects()
+    public Rect[] getObjectRects()
     {
-        final String funcName = "getTargetRects";
+        final String funcName = "getObjectRects";
 
         if (debugEnabled)
         {
@@ -98,7 +98,7 @@ public abstract class FrcVisionTarget extends FrcOpenCVDetector<ArrayList<MatOfP
             dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.API);
         }
 
-        return targetRects;
+        return objectRects;
     }   //getObjectRects
 
     /**
@@ -111,7 +111,7 @@ public abstract class FrcVisionTarget extends FrcOpenCVDetector<ArrayList<MatOfP
     {
         if (image != null)
         {
-            super.putFrame(image, targetRects, color, thickness);
+            super.putFrame(image, objectRects, color, thickness);
         }
     }   //putFrame
 
@@ -122,7 +122,7 @@ public abstract class FrcVisionTarget extends FrcOpenCVDetector<ArrayList<MatOfP
     {
         if (image != null)
         {
-            super.putFrame(image, targetRects, new Scalar(0, 255, 0), 0);
+            super.putFrame(image, objectRects, new Scalar(0, 255, 0), 0);
         }
     }   //putFrame
 
@@ -164,21 +164,21 @@ public abstract class FrcVisionTarget extends FrcOpenCVDetector<ArrayList<MatOfP
         // Process the image to detect the objects we are looking for and put them into detectedObjects.
         //
         processImage(image);
-        detectedTargets = getTargets();
+        detectedTargets = getDetectedObjects();
         //
         // If we detected any objects, convert them into an array of rectangles.
         //
         if (!detectedTargets.isEmpty())
         {
-            targetRects = new Rect[detectedTargets.size()];
-            for (int i = 0; i < targetRects.length; i++)
+            objectRects = new Rect[detectedTargets.size()];
+            for (int i = 0; i < objectRects.length; i++)
             {
-                targetRects[i] = Imgproc.boundingRect(detectedTargets.get(i));
+                objectRects[i] = Imgproc.boundingRect(detectedTargets.get(i));
             }
         }
         else
         {
-            targetRects = null;
+            objectRects = null;
             detectedTargets = null;
         }
 
