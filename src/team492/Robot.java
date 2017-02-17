@@ -22,6 +22,10 @@
 
 package team492;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import org.opencv.core.Rect;
 
 import com.ctre.CANTalon.FeedbackDevice;
@@ -71,8 +75,24 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     private static final boolean DEBUG_FACE_DETECTION = false;
     private static final double DASHBOARD_UPDATE_INTERVAL = 0.1;
 
+    public static enum MatchType
+    {
+        PRACTICE,
+        QUALIFICATION,
+        QUATER_FINAL,
+        SEMI_FINAL,
+        FINAL
+    }   //enum MatchType
+
+    public static enum Alliance
+    {
+        RED_ALLIANCE,
+        BLUE_ALLIANCE
+    }   //enum Alliance
+
     public HalDashboard dashboard = HalDashboard.getInstance();
     public TrcDbgTrace tracer = FrcRobotBase.getGlobalTracer();
+
     public double targetHeading = 0.0;
 
     private double nextUpdateTime = TrcUtil.getCurrentTime();
@@ -114,12 +134,21 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     //
     // Menus.
     //
-    public FrcChoiceMenu<FrcAuto.MatchType> matchTypeMenu;
+    public FrcChoiceMenu<MatchType> matchTypeMenu;
     public FrcValueMenu matchNumberMenu;
+    public FrcChoiceMenu<Alliance> allianceMenu;
     public FrcValueMenu driveTimeMenu;
     public FrcValueMenu drivePowerMenu;
     public FrcValueMenu driveDistanceMenu;
     public FrcValueMenu turnDegreesMenu;
+
+    public MatchType matchType;
+    public int matchNumber;
+    public Alliance alliance;
+    public double driveTime;
+    public double drivePower;
+    public double driveDistance;
+    public double turnDegrees;
 
     //
     // Robot Modes.
@@ -260,6 +289,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         //
         matchTypeMenu = new FrcChoiceMenu<>("Match type:");
         matchNumberMenu = new FrcValueMenu("Match number:", 0.0);
+        allianceMenu = new FrcChoiceMenu<>("Alliance:");
         //
         // The following value menus are shared between Autonomous and Test modes.
         //
@@ -271,10 +301,25 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         //
         // Populate Global Menus.
         //
-        matchTypeMenu.addChoice("Test", FrcAuto.MatchType.PRACTICE);
-        matchTypeMenu.addChoice("Qualifying", FrcAuto.MatchType.QUALIFYING);
-        matchTypeMenu.addChoice("Semi-final", FrcAuto.MatchType.SEMI_FINAL);
-        matchTypeMenu.addChoice("Final", FrcAuto.MatchType.FINAL);
+        matchTypeMenu.addChoice("Test", MatchType.PRACTICE);
+        matchTypeMenu.addChoice("Qualification", MatchType.QUALIFICATION);
+        matchTypeMenu.addChoice("Quater-final", MatchType.QUATER_FINAL);
+        matchTypeMenu.addChoice("Semi-final", MatchType.SEMI_FINAL);
+        matchTypeMenu.addChoice("Final", MatchType.FINAL);
+
+        allianceMenu.addChoice("Red", Alliance.RED_ALLIANCE);
+        allianceMenu.addChoice("Blue", Alliance.BLUE_ALLIANCE);
+
+        //
+        // Retrieve Global Choices.
+        //
+        matchType = matchTypeMenu.getCurrentChoiceObject();
+        matchNumber = (int)matchNumberMenu.getCurrentValue();
+        alliance = allianceMenu.getCurrentChoiceObject();
+        driveTime = driveTimeMenu.getCurrentValue();
+        drivePower = drivePowerMenu.getCurrentValue();
+        driveDistance = driveDistanceMenu.getCurrentValue()*12.0;
+        turnDegrees = turnDegreesMenu.getCurrentValue();
 
         //
         // Robot Modes.
@@ -360,6 +405,22 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
             }
         }
     }   //updateDashboard
+
+    public void startTraceLog()
+    {
+        Date now = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_hh-mm", Locale.US);
+        String logFilePath = "/home/lvuser/tracelog/" + matchType.toString();
+
+        if (matchType != MatchType.PRACTICE) logFilePath += matchNumber;
+        logFilePath += "_" + dateFormat.format(now) + ".log";
+        tracer.openTraceLog(logFilePath);
+    }   //startTraceLog
+
+    public void stopTraceLog()
+    {
+        tracer.closeTraceLog();
+    }   //stopTraceLog
 
     public void traceStateInfo(double elapsedTime, String stateName)
     {

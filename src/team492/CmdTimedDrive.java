@@ -29,7 +29,7 @@ import trclib.TrcTimer;
 
 class CmdTimedDrive implements TrcRobot.RobotCommand
 {
-    private enum State
+    private static enum State
     {
         DO_DELAY,
         DRIVE_BY_TIME,

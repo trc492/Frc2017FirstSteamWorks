@@ -22,7 +22,6 @@
 
 package team492;
 
-//MTS: import team492.CmdMidGearLift.State;
 import trclib.TrcEvent;
 import trclib.TrcRobot;
 import trclib.TrcStateMachine;
@@ -30,7 +29,7 @@ import trclib.TrcTimer;
 
 class CmdSideGearLift implements TrcRobot.RobotCommand
 {
-    private enum State
+    private static enum State
     {
         DO_DELAY,
         FORWARD1,
@@ -85,7 +84,7 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
         // Print debug info.
         //
         State state = sm.getState();
-        robot.dashboard.displayPrintf(1, "State: %s", state != null? sm.getState().toString(): "Disabled");
+        robot.dashboard.displayPrintf(1, "State: %s", state != null? state.toString(): "Disabled");
 
         if (sm.isReady())
         {
@@ -162,4 +161,4 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
         return done;
     }   //cmdPeriodic
 
-}   //class CmdPidDrive
+}   //class CmdSideGearLift

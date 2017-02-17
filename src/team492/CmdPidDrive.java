@@ -29,7 +29,7 @@ import trclib.TrcTimer;
 
 class CmdPidDrive implements TrcRobot.RobotCommand
 {
-    private enum State
+    private static enum State
     {
         DO_DELAY,
         DO_PID_DRIVE,
@@ -72,7 +72,7 @@ class CmdPidDrive implements TrcRobot.RobotCommand
         // Print debug info.
         //
         State state = sm.getState();
-        robot.dashboard.displayPrintf(1, "State: %s", state != null? sm.getState().toString(): "Disabled");
+        robot.dashboard.displayPrintf(1, "State: %s", state != null? state.toString(): "Disabled");
 
         if (sm.isReady())
         {

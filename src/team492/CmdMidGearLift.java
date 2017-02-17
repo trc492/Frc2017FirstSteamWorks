@@ -22,6 +22,7 @@
 
 package team492;
 
+import frclib.FrcValueMenu;
 import trclib.TrcEvent;
 import trclib.TrcRobot;
 import trclib.TrcStateMachine;
@@ -29,13 +30,14 @@ import trclib.TrcTimer;
 
 class CmdMidGearLift implements TrcRobot.RobotCommand
 {
-    private enum State
+    private static enum State
     {
         DO_DELAY,
-        MOVE_FORWARD1,
+        GOTO_MID_LIFT,
         VISION_GEAR_DEPLOY,
         MOVE_SIDEWAYS,
-        MOVE_FORWARD2, 
+        GOTO_RETRIEVAL_ZONE,
+        TURNTO_LOADING_STATION,
         DONE
     }   //enum State
 
@@ -43,28 +45,38 @@ class CmdMidGearLift implements TrcRobot.RobotCommand
 
     private Robot robot;
     private double delay;
-    private double forward1Distance;
-    private double forward2Distance;
+    private double midLiftDistance;
     private double sidewaysDistance;
-    private double heading;
+    private double retrievalZoneDistance;
+    private double loadingStationAngle;
     private CmdVisionGearDeploy cmdVisionDeploy;
     private TrcEvent event;
     private TrcTimer timer;
     private TrcStateMachine<State> sm;
 
-    CmdMidGearLift(Robot robot, double delay, double forward1Distance, double forward2Distance, double sidewaysDistance)
+    CmdMidGearLift(Robot robot, double delay)
     {
         this.robot = robot;
         this.delay = delay;
-        this.forward1Distance = forward1Distance;
-        this.forward2Distance = forward2Distance;
-        this.sidewaysDistance = sidewaysDistance;
-        this.heading = 0.0;
 
-        //MTS: Need to change to final parameters.
-        // cmdVisionDeploy = new CmdVisionGearDeploy(
-        //    robot, sidewaysDistance, sidewaysDistance, sidewaysDistance, sidewaysDistance);
-        // TODO add proper instantiation of cmdVisionDeploy
+        //
+        // All distances from the menus are in the unit of feet.
+        //
+        FrcValueMenu midLiftDistanceMenu = new FrcValueMenu("MidLiftDistance", 7.0 - RobotInfo.ROBOT_LENGTH/12.0);
+        FrcValueMenu sidewaysDistanceMenu = new FrcValueMenu("SidewaysDistance", 5.0);
+        FrcValueMenu retrievalZoneDistanceMenu = new FrcValueMenu("RetrievalZoneDistance", 40.0);
+        FrcValueMenu loadingStationAngleMenu = new FrcValueMenu("LoadingStationAngle", 45.0);
+
+        //
+        // Convert all distances to the unit of inches.
+        //
+        midLiftDistance = midLiftDistanceMenu.getCurrentValue()*12.0;
+        sidewaysDistance = Math.abs(sidewaysDistanceMenu.getCurrentValue()*12.0);
+        retrievalZoneDistance = retrievalZoneDistanceMenu.getCurrentValue()*12.0;
+        loadingStationAngle = loadingStationAngleMenu.getCurrentValue()*12.0;
+
+        cmdVisionDeploy = new CmdVisionGearDeploy(robot);
+
         event = new TrcEvent(moduleName);
         timer = new TrcTimer(moduleName);
         sm = new TrcStateMachine<>(moduleName);
@@ -79,12 +91,13 @@ class CmdMidGearLift implements TrcRobot.RobotCommand
         // Print debug info.
         //
         State state = sm.getState();
-        robot.dashboard.displayPrintf(1, "State: %s", state != null? sm.getState().toString(): "Disabled");
+        robot.dashboard.displayPrintf(1, "State: %s", state != null? state.toString(): "Disabled");
 
         if (sm.isReady())
         {
             boolean printStateInfo = true;
             state = sm.getState();
+            double xDistance, yDistance;
 
             switch (state)
             {
@@ -94,20 +107,23 @@ class CmdMidGearLift implements TrcRobot.RobotCommand
                     //
                     if (delay == 0.0)
                     {
-                        sm.setState(State.MOVE_FORWARD1);
+                        sm.setState(State.GOTO_MID_LIFT);
                     }
                     else
                     {
                         timer.set(delay, event);
-                        sm.waitForSingleEvent(event, State.MOVE_FORWARD1);
+                        sm.waitForSingleEvent(event, State.GOTO_MID_LIFT);
                     }
                     break;
 
-                case MOVE_FORWARD1:
+                case GOTO_MID_LIFT:
                     //
                     // Drive the set distance and heading.
                     //
-                    robot.pidDrive.setTarget(0.0, forward1Distance, heading, false, event);
+                    xDistance = 0.0;
+                    yDistance = midLiftDistance;
+
+                    robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
                     sm.waitForSingleEvent(event, State.VISION_GEAR_DEPLOY);
                     break;
 
@@ -120,14 +136,28 @@ class CmdMidGearLift implements TrcRobot.RobotCommand
                     break;
 
                 case MOVE_SIDEWAYS:
-                    robot.pidDrive.setTarget(sidewaysDistance, 0.0, heading, false, event);
-                    sm.waitForSingleEvent(event, State.MOVE_FORWARD2);
+                    xDistance = robot.alliance == Robot.Alliance.RED_ALLIANCE? -sidewaysDistance: sidewaysDistance;
+                    yDistance = 0.0;
+
+                    robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
+                    sm.waitForSingleEvent(event, State.GOTO_RETRIEVAL_ZONE);
                     break;
 
-                case MOVE_FORWARD2:
-                    robot.pidDrive.setTarget(0.0, forward2Distance, heading, false, event);
-                    sm.waitForSingleEvent(event, State.DONE);
+                case GOTO_RETRIEVAL_ZONE:
+                    xDistance = 0.0;
+                    yDistance = retrievalZoneDistance;
+
+                    robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
+                    sm.waitForSingleEvent(event, State.TURNTO_LOADING_STATION);
                     break;
+
+                case TURNTO_LOADING_STATION:
+                    xDistance = yDistance = 0.0;
+                    robot.targetHeading = robot.alliance == Robot.Alliance.RED_ALLIANCE?
+                        -loadingStationAngle: loadingStationAngle;
+
+                    robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
+                    sm.waitForSingleEvent(event, State.DONE);
 
                 case DONE:
                 default:

@@ -22,9 +22,7 @@
 
 package team492;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 
 import frclib.FrcChoiceMenu;
 import frclib.FrcValueMenu;
@@ -35,15 +33,7 @@ public class FrcAuto implements TrcRobot.RobotMode
 {
     private static final boolean USE_TRACELOG = false;
 
-    public enum MatchType
-    {
-        PRACTICE,
-        QUALIFYING,
-        SEMI_FINAL,
-        FINAL
-    }   //enum MatchType
-
-    public enum AutoStrategy
+    public static enum AutoStrategy
     {
         X_TIMED_DRIVE,
         Y_TIMED_DRIVE,
@@ -61,14 +51,8 @@ public class FrcAuto implements TrcRobot.RobotMode
     private FrcChoiceMenu<FrcAuto.AutoStrategy> autoStrategyMenu;
     private FrcValueMenu delayMenu;
 
-    private MatchType matchType = MatchType.PRACTICE;
-    private int matchNumber = 0;
     private AutoStrategy autoStrategy;
     private double delay;
-    private double driveTime;
-    private double drivePower;
-    private double driveDistance;
-    private double turnDegrees;
 
     private TrcRobot.RobotCommand autoCommand;
 
@@ -99,54 +83,36 @@ public class FrcAuto implements TrcRobot.RobotMode
     public void startMode()
     {
         HalDashboard.getInstance().clearDisplay();
+        if (USE_TRACELOG) robot.startTraceLog();
+        Date now = new Date();
+        robot.tracer.traceInfo(Robot.programName, "%s: ***** Starting autonomous *****", now.toString());
+
         //
         // Retrieve menu choice values.
         //
-        matchType = robot.matchTypeMenu.getCurrentChoiceObject();
-        matchNumber = (int)robot.matchNumberMenu.getCurrentValue();
         autoStrategy = autoStrategyMenu.getCurrentChoiceObject();
         delay = delayMenu.getCurrentValue();
-        driveTime = robot.driveTimeMenu.getCurrentValue();
-        drivePower = robot.drivePowerMenu.getCurrentValue();
-        driveDistance = robot.driveDistanceMenu.getCurrentValue()*12.0;
-        turnDegrees = robot.turnDegreesMenu.getCurrentValue();
-
-        Date now = new Date();
-
-        if (USE_TRACELOG)
-        {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_hh-mm", Locale.US);
-            String logFilePath = "/home/lvuser/tracelog/" + matchType.toString();
-
-            if (matchType != MatchType.PRACTICE) logFilePath += matchNumber;
-            logFilePath += "_" + dateFormat.format(now) + ".log";
-            robot.tracer.openTraceLog(logFilePath);
-        }
-
-        robot.tracer.traceInfo(Robot.programName, "%s: ***** Starting autonomous *****", now.toString());
-
-        robot.driveBase.resetPosition();
 
         switch (autoStrategy)
         {
             case X_TIMED_DRIVE:
-                autoCommand = new CmdTimedDrive(robot, delay, driveTime, drivePower, 0.0, 0.0);
+                autoCommand = new CmdTimedDrive(robot, delay, robot.driveTime, robot.drivePower, 0.0, 0.0);
                 break;
 
             case Y_TIMED_DRIVE:
-                autoCommand = new CmdTimedDrive(robot, delay, driveTime, 0.0, drivePower, 0.0);
+                autoCommand = new CmdTimedDrive(robot, delay, robot.driveTime, 0.0, robot.drivePower, 0.0);
                 break;
 
             case X_DISTANCE_DRIVE:
-                autoCommand = new CmdPidDrive(robot, delay, driveDistance, 0.0, 0.0);
+                autoCommand = new CmdPidDrive(robot, delay, robot.driveDistance, 0.0, 0.0);
                 break;
 
             case Y_DISTANCE_DRIVE:
-                autoCommand = new CmdPidDrive(robot, delay, 0.0, driveDistance, 0.0);
+                autoCommand = new CmdPidDrive(robot, delay, 0.0, robot.driveDistance, 0.0);
                 break;
 
             case TURN_DEGREES:
-                autoCommand = new CmdPidDrive(robot, delay, 0.0, 0.0, turnDegrees);
+                autoCommand = new CmdPidDrive(robot, delay, 0.0, 0.0, robot.turnDegrees);
                 break;
 
             default:
@@ -154,16 +120,16 @@ public class FrcAuto implements TrcRobot.RobotMode
                 autoCommand = null;
                 break;
         }
+
+        robot.driveBase.resetPosition();
+        robot.targetHeading = 0.0;
     }   //startMode
 
     @Override
     public void stopMode()
     {
         robot.driveBase.stop();
-        if (USE_TRACELOG)
-        {
-            robot.tracer.closeTraceLog();
-        }
+        if (USE_TRACELOG) robot.tracer.closeTraceLog();
     }   //stopMode
 
     @Override

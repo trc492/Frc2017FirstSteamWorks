@@ -29,6 +29,13 @@ public class RobotInfo
     //
 
     //
+    // Robot Dimensions.
+    //
+    public static final double ROBOT_LENGTH                     = 32.0;
+    public static final double ROBOT_WIDTH                      = 24.0;
+    public static final double ROBOT_HEIGHT                     = 36.0;
+
+    //
     // Joystick ports.
     //
     public static final int JSPORT_LEFT_DRIVESTICK              = 0;
