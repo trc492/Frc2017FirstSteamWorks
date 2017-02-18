@@ -44,10 +44,6 @@ public class TrcVisionTask<O> extends TrcThread<O> implements TrcThread.Periodic
     private static final TrcDbgTrace.TraceLevel traceLevel = TrcDbgTrace.TraceLevel.API;
     private static final TrcDbgTrace.MsgLevel msgLevel = TrcDbgTrace.MsgLevel.INFO;
     private TrcDbgTrace dbgTrace = null;
-    private TrcDbgTrace tracer = null;
-
-    private static final long DEF_PROCESSING_INTERVAL = 50;     //in msec
-    private boolean perfReportEnabled = false;
 
     /**
      * This interface provides methods to grab image from the video input, render image to video output and detect
@@ -85,13 +81,18 @@ public class TrcVisionTask<O> extends TrcThread<O> implements TrcThread.Periodic
 
     }   //interface VisionProcessor
 
+    private static final long DEF_PROCESSING_INTERVAL = 50;     //in msec
+
+    private boolean perfReportEnabled = false;
+    private TrcDbgTrace tracer = null;
+    private long totalTime = 0;
+    private long totalFrames = 0;
+    private double taskStartTime = 0.0;
+
     private VisionProcessor<O> visionProcessor;
     private Mat image;
     private O[] detectedObjectsBuffers;
     private int bufferIndex = 0;
-    private long totalTime = 0;
-    private long totalFrames = 0;
-    private double taskStartTime = 0.0;
 
     /**
      * Constructor: Create an instance of the object.
@@ -109,17 +110,26 @@ public class TrcVisionTask<O> extends TrcThread<O> implements TrcThread.Periodic
             dbgTrace = new TrcDbgTrace(moduleName, tracingEnabled, traceLevel, msgLevel);
         }
 
-        if (perfReportEnabled)
-        {
-            tracer = FrcRobotBase.getGlobalTracer();
-        }
-
         this.visionProcessor = visionProcessor;
         this.image = imageBuffer;
         this.detectedObjectsBuffers = detectedObjectsBuffers;
         setPeriodicTask(this);
         setProcessingInterval(DEF_PROCESSING_INTERVAL);
     }   //TrcVisionTask
+
+    /**
+     * This method enables/disables vision processing performance report.
+     *
+     * @param enabled specifies true to enable performance report, false to disable.
+     */
+    public void setPerfReportEnabled(boolean enabled)
+    {
+        perfReportEnabled = enabled;
+        if (perfReportEnabled && tracer == null)
+        {
+            tracer = FrcRobotBase.getGlobalTracer();
+        }
+    }   //setPerfReportEnabled
 
     /**
      * This method enables/disables the vision task. As long as the task is enabled, it will continue to
@@ -137,16 +147,6 @@ public class TrcVisionTask<O> extends TrcThread<O> implements TrcThread.Periodic
             taskStartTime = TrcUtil.getCurrentTime();
         }
     }   //setTaskEnabled
-
-    /**
-     * This method enables/disables vision processing performance report.
-     *
-     * @param enabled specifies true to enable performance report, false to disable.
-     */
-    public void setPerfReportEnabled(boolean enabled)
-    {
-        perfReportEnabled = enabled;
-    }   //setPerfReportEnabled
 
     //
     // Implements TrcThread.PeriodicTask interface.
