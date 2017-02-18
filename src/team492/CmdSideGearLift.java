@@ -38,6 +38,7 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
         MOVE_TOWARDS_AIRSHIP,
         VISION_DEPLOY,
         BACKUP_FROM_AIRSHIP,
+        MOVE_SIDEWAYS,
         TURN_TOWARDS_LOADING_STATION,
         MOVE_TOWARDS_LOADING_STATION,
         DONE
@@ -47,9 +48,11 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
 
     private Robot robot;
     private double delay;
+    private boolean rightSide;
     private double sideMoveDistance;
     private double angleToAirship;
     private double orientedAirshipMoveDistance;
+    private double sidewaysDistance;
     private double loadingStationTurnAngle;
     private double loadingStationMoveDistance;
     
@@ -58,20 +61,21 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
     private TrcTimer timer;
     private TrcStateMachine<State> sm;
 
-    CmdSideGearLift(Robot robot, double delay)
+    CmdSideGearLift(Robot robot, double delay, boolean rightSide)
     {
         this.robot = robot;
         this.delay = delay;
+        this.rightSide = rightSide;
         
         //
         // All distances from the menus are in the unit of feet.
         //
-        FrcValueMenu sideMoveDistanceMenu = new FrcValueMenu("SideMoveDistance", 7.0 - RobotInfo.ROBOT_LENGTH/12.0);
+        FrcValueMenu sideMoveDistanceMenu = new FrcValueMenu("MoveDistanceOnSide", 7.0 - RobotInfo.ROBOT_LENGTH/12.0);
         FrcValueMenu angleToAirshipMenu = new FrcValueMenu("AngleToAirship", 60.0);
         FrcValueMenu orientedAirshipMoveDistanceMenu = new FrcValueMenu("OrientedAirshipMoveDistance", 5.0);
+        FrcValueMenu sidewaysDistanceMenu = new FrcValueMenu("SidewaysDistance", 5.0);
         FrcValueMenu loadingStationTurnAngleMenu = new FrcValueMenu("LoadingStationTurnAngle", 45.0);
         FrcValueMenu loadingStationMoveDistanceMenu = new FrcValueMenu("LoadingStationMoveDistance", 20.0);
-        
         
         //
         // Convert all distances to the unit of inches.
@@ -79,6 +83,7 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
         sideMoveDistance = sideMoveDistanceMenu.getCurrentValue()*12.0;
         angleToAirship = Math.abs(angleToAirshipMenu.getCurrentValue());
         orientedAirshipMoveDistance =  Math.abs(orientedAirshipMoveDistanceMenu.getCurrentValue())*12.0;
+        sidewaysDistance = Math.abs(sidewaysDistanceMenu.getCurrentValue())*12.0;
         loadingStationTurnAngle = Math.abs(loadingStationTurnAngleMenu.getCurrentValue());
         loadingStationMoveDistance  = loadingStationMoveDistanceMenu.getCurrentValue()*12.0;
         
@@ -145,7 +150,7 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
                     //
                 	xDistance = 0;
                 	yDistance = 0;
-                	turnAngle = robot.alliance == Robot.Alliance.RED_ALLIANCE ? -angleToAirship : angleToAirship;
+                	turnAngle = rightSide ? -angleToAirship : angleToAirship;
                 	
                 	robot.pidDrive.setTarget(xDistance, yDistance, turnAngle, false, event);
                 	sm.waitForSingleEvent(event, State.MOVE_TOWARDS_AIRSHIP);
@@ -182,6 +187,17 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
                 	turnAngle = 0;
                 	
                 	robot.pidDrive.setTarget(xDistance, yDistance, turnAngle, false, event);
+                	sm.waitForSingleEvent(event, State.MOVE_SIDEWAYS);
+                	break;
+                case MOVE_SIDEWAYS:
+                    //
+                    // Turn to either side of airship
+                    //
+                	xDistance = robot.alliance == Robot.Alliance.RED_ALLIANCE ? -sidewaysDistance : sidewaysDistance;
+                	yDistance = 0;
+                	turnAngle = 0;
+                	
+                	robot.pidDrive.setTarget(xDistance, yDistance, turnAngle, false, event);
                 	sm.waitForSingleEvent(event, State.TURN_TOWARDS_LOADING_STATION);
                 	break;
                 case TURN_TOWARDS_LOADING_STATION:
@@ -190,7 +206,7 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
                     //
                 	xDistance = 0;
                 	yDistance = 0;
-                	turnAngle = robot.alliance == Robot.Alliance.RED_ALLIANCE ? loadingStationTurnAngle : -loadingStationTurnAngle;
+                	turnAngle = rightSide ? loadingStationTurnAngle : -loadingStationTurnAngle;
                 	
                 	robot.pidDrive.setTarget(xDistance, yDistance, turnAngle, false, event);
                 	sm.waitForSingleEvent(event, State.MOVE_TOWARDS_LOADING_STATION);
