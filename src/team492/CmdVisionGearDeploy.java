@@ -27,7 +27,7 @@ import org.opencv.core.Rect;
 import trclib.TrcEvent;
 import trclib.TrcRobot;
 import trclib.TrcStateMachine;
-import trclib.TrcTimer;
+// import trclib.TrcTimer;
 
 class CmdVisionGearDeploy implements TrcRobot.RobotCommand
 {
@@ -44,23 +44,29 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
     private double horizontalAlignmentThreshold;
     private double distanceAlignmentThreshold;
     private double heading;
-    private double alignmentSensitivity;
+    // private double alignmentSensitivity;
     private TrcEvent event;
-    private TrcTimer timer;
+    // private TrcTimer timer;
     private TrcStateMachine<State> sm;
+    private double horizontalAlignmentMultiplier;
+    private double distanceAlignmentMultiplier;
+    private double idealTargetSize;
 
     CmdVisionGearDeploy(Robot robot)
     {
         this.robot = robot;
 
-        // this.extendTime = extendTime;
-        // this.backupDistance = backupDistance;
-        // this.heading = heading;
-        // this.horizontalAlignmentThreshold = horizontalAlignmentThreshold;
-        // this.distanceAlignmentThreshold = distanceAlignmentThreshold;
+        this.extendTime = 0.3;
+        this.horizontalAlignmentMultiplier = 1.0;
+        this.backupDistance = 12.0;
+        this.heading = robot.targetHeading;
+        this.horizontalAlignmentThreshold = 10.0;
+        this.distanceAlignmentThreshold = 10.0;
+        this.distanceAlignmentMultiplier = 1.0;
+        this.idealTargetSize = 150;
         // this.alignmentSensitivity = alignmentSensitivity;
         event = new TrcEvent(moduleName);
-        timer = new TrcTimer(moduleName);
+        // timer = new TrcTimer(moduleName);
         sm = new TrcStateMachine<>(moduleName);
         sm.start(State.ALIGN_HORIZONTALLY);
     }   //CmdVisionGearDeploy
@@ -91,19 +97,32 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
                     // Position robot at target.
                     // get info from vision (m: alignment, n:distance)
                     double midpoint = getHorizontalPosition();
-                    double screenMidpoint = 160;
-                    // TODO find screenMidpoint
-                    double errorMargin = Math.abs(midpoint - screenMidpoint);
-                    if (errorMargin > horizontalAlignmentThreshold)
+                    double screenMidpoint = RobotInfo.CAM_WIDTH/2;
+                    double horizontalErrorMargin = midpoint - screenMidpoint;
+                    if (Math.abs(horizontalErrorMargin) > horizontalAlignmentThreshold)
                     {
-                        // is aligned
-                        double strafeSpeed = Math.signum(errorMargin);
-                        robot.pidDrive.setTarget(0.0, backupDistance, 0.0, false, event);
+                        double strafeTarget = Math.signum(horizontalErrorMargin)*horizontalAlignmentMultiplier;
+                        robot.pidDrive.setTarget(strafeTarget, 0.0, heading, false, event);
+                    }
+                    else
+                    {
+                    	sm.setState(State.ALIGN_DISTANCE);
                     }
                     sm.waitForSingleEvent(event, State.ALIGN_HORIZONTALLY);
                     break;
                 case ALIGN_DISTANCE:
+                	double actualTargetSize = getTargetSize();
+                	double distanceErrorMargin = idealTargetSize - actualTargetSize;
+                	if ( distanceErrorMargin > distanceAlignmentThreshold)
+                	{
+                		double distanceTarget = distanceErrorMargin*distanceAlignmentMultiplier;
+                	robot.pidDrive.setTarget(0.0, distanceTarget, heading, false, event);
                     sm.waitForSingleEvent(event, State.DEPLOY_GEAR);
+                	}
+                	else
+                	{
+                		sm.setState(State.DEPLOY_GEAR);
+                	}
                     break;
                 case DEPLOY_GEAR:
                     //
@@ -117,7 +136,7 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
                     //
                     // Backup from axle.
                     //
-                    robot.pidDrive.setTarget(0.0, backupDistance, 0.0, false, event);
+                    robot.pidDrive.setTarget(0.0, backupDistance, heading, false, event);
                     sm.waitForSingleEvent(event, State.DONE);
                     break;
 
@@ -138,9 +157,15 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
 
     private double getHorizontalPosition()
     {
-        Rect r = robot.visionTarget.getTargetRect();
-        double midpoint = r.x + r.width / 2;
+        Rect memeTangle = robot.visionTarget.getTargetRect();
+        double midpoint = memeTangle.x + memeTangle.width / 2;
         return midpoint;
+    }
+    private double getTargetSize()
+    {
+    	Rect dankTangle = robot.visionTarget.getTargetRect();
+    	double targetSize = dankTangle.height;
+    	return targetSize;
     }
 
 }   //class CmdVisionGearDeploy
