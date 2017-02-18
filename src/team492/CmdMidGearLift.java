@@ -118,7 +118,7 @@ class CmdMidGearLift implements TrcRobot.RobotCommand
 
                 case GOTO_MID_LIFT:
                     //
-                    // Drive the set distance and heading.
+                    // Go towards the mid lift.
                     //
                     xDistance = 0.0;
                     yDistance = midLiftDistance;
@@ -128,6 +128,9 @@ class CmdMidGearLift implements TrcRobot.RobotCommand
                     break;
 
                 case VISION_GEAR_DEPLOY:
+                    //
+                    // Have VisionGearDeploy aligning to the peg, deploy the gear and back up.
+                    //
                     printStateInfo = false;
                     if (cmdVisionDeploy.cmdPeriodic(elapsedTime))
                     {
@@ -136,6 +139,9 @@ class CmdMidGearLift implements TrcRobot.RobotCommand
                     break;
 
                 case MOVE_SIDEWAYS:
+                    //
+                    // Move sideways towards the loading station side and clear of the airship.
+                    //
                     xDistance = robot.alliance == Robot.Alliance.RED_ALLIANCE? -sidewaysDistance: sidewaysDistance;
                     yDistance = 0.0;
 
@@ -144,6 +150,9 @@ class CmdMidGearLift implements TrcRobot.RobotCommand
                     break;
 
                 case GOTO_RETRIEVAL_ZONE:
+                    //
+                    // Move towards the retrieval zone.
+                    //
                     xDistance = 0.0;
                     yDistance = retrievalZoneDistance;
 
@@ -152,6 +161,9 @@ class CmdMidGearLift implements TrcRobot.RobotCommand
                     break;
 
                 case TURNTO_LOADING_STATION:
+                    //
+                    // Turn towards the loading station.
+                    //
                     xDistance = yDistance = 0.0;
                     robot.targetHeading = robot.alliance == Robot.Alliance.RED_ALLIANCE?
                         -loadingStationAngle: loadingStationAngle;
