@@ -43,17 +43,19 @@ class CmdPidDrive implements TrcRobot.RobotCommand
     private double xDistance;
     private double yDistance;
     private double heading;
+    private double drivePowerLimit;
     private TrcEvent event;
     private TrcTimer timer;
     private TrcStateMachine<State> sm;
 
-    CmdPidDrive(Robot robot, double delay, double xDistance, double yDistance, double heading)
+    CmdPidDrive(Robot robot, double delay, double xDistance, double yDistance, double heading, double drivePowerLimit)
     {
         this.robot = robot;
         this.delay = delay;
         this.xDistance = xDistance;
         this.yDistance = yDistance;
         this.heading = heading;
+        this.drivePowerLimit = drivePowerLimit;
         event = new TrcEvent(moduleName);
         timer = new TrcTimer(moduleName);
         sm = new TrcStateMachine<>(moduleName);
@@ -99,6 +101,9 @@ class CmdPidDrive implements TrcRobot.RobotCommand
                     //
                     // Drive the set distance and heading.
                     //
+                    robot.gyroTurnPidCtrl.setOutputRange(-drivePowerLimit, drivePowerLimit);
+                    robot.encoderXPidCtrl.setOutputRange(-drivePowerLimit, drivePowerLimit);
+                    robot.encoderYPidCtrl.setOutputRange(-drivePowerLimit, drivePowerLimit);
                     robot.pidDrive.setTarget(xDistance, yDistance, heading, false, event);
                     sm.waitForSingleEvent(event, State.DONE);
                     break;
@@ -108,6 +113,9 @@ class CmdPidDrive implements TrcRobot.RobotCommand
                     //
                     // We are done.
                     //
+                    robot.gyroTurnPidCtrl.setOutputRange(-1.0, 1.0);
+                    robot.encoderXPidCtrl.setOutputRange(-1.0, 1.0);
+                    robot.encoderYPidCtrl.setOutputRange(-1.0, 1.0);
                     done = true;
                     sm.stop();
                     break;

@@ -26,7 +26,6 @@ import java.util.Date;
 
 import frclib.FrcChoiceMenu;
 import frclib.FrcValueMenu;
-import hallib.HalDashboard;
 import trclib.TrcRobot;
 
 public class FrcAuto implements TrcRobot.RobotMode
@@ -88,7 +87,6 @@ public class FrcAuto implements TrcRobot.RobotMode
     @Override
     public void startMode()
     {
-        HalDashboard.getInstance().clearDisplay();
         if (USE_TRACELOG) robot.startTraceLog();
         Date now = new Date();
         robot.tracer.traceInfo(Robot.programName, "%s: ***** Starting autonomous *****", now.toString());
@@ -122,15 +120,15 @@ public class FrcAuto implements TrcRobot.RobotMode
                 break;
 
             case X_DISTANCE_DRIVE:
-                autoCommand = new CmdPidDrive(robot, delay, robot.driveDistance, 0.0, 0.0);
+                autoCommand = new CmdPidDrive(robot, delay, robot.driveDistance, 0.0, 0.0, robot.drivePowerLimit);
                 break;
 
             case Y_DISTANCE_DRIVE:
-                autoCommand = new CmdPidDrive(robot, delay, 0.0, robot.driveDistance, 0.0);
+                autoCommand = new CmdPidDrive(robot, delay, 0.0, robot.driveDistance, 0.0, robot.drivePowerLimit);
                 break;
 
             case TURN_DEGREES:
-                autoCommand = new CmdPidDrive(robot, delay, 0.0, 0.0, robot.turnDegrees);
+                autoCommand = new CmdPidDrive(robot, delay, 0.0, 0.0, robot.turnDegrees, robot.drivePowerLimit);
                 break;
 
             default:
@@ -138,15 +136,11 @@ public class FrcAuto implements TrcRobot.RobotMode
                 autoCommand = null;
                 break;
         }
-
-        robot.driveBase.resetPosition();
-        robot.targetHeading = 0.0;
     }   //startMode
 
     @Override
     public void stopMode()
     {
-        robot.driveBase.stop();
         if (USE_TRACELOG) robot.tracer.closeTraceLog();
     }   //stopMode
 

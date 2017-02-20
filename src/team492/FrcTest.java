@@ -59,10 +59,6 @@ public class FrcTest extends FrcTeleOp
     //
     private FrcChoiceMenu<Test> testMenu;
     private Test test;
-    private double driveTime;
-    private double drivePower;
-    private double driveDistance;
-    private double turnDegrees;
 
     private CmdTimedDrive timedDriveCommand = null;
     private CmdPidDrive pidDriveCommand = null;
@@ -109,32 +105,28 @@ public class FrcTest extends FrcTeleOp
         // Retrieve menu choice values.
         //
         test = testMenu.getCurrentChoiceObject();
-        driveTime = robot.driveTimeMenu.getCurrentValue();
-        drivePower = robot.drivePowerMenu.getCurrentValue();
-        driveDistance = robot.driveDistanceMenu.getCurrentValue()*12.0;
-        turnDegrees = robot.turnDegreesMenu.getCurrentValue();
 
         boolean liveWindowEnabled = false;
         switch (test)
         {
             case X_TIMED_DRIVE:
-                timedDriveCommand = new CmdTimedDrive(robot, 0.0, driveTime, drivePower, 0.0, 0.0);
+                timedDriveCommand = new CmdTimedDrive(robot, 0.0, robot.driveTime, robot.drivePower, 0.0, 0.0);
                 break;
 
             case Y_TIMED_DRIVE:
-                timedDriveCommand = new CmdTimedDrive(robot, 0.0, driveTime, 0.0, drivePower, 0.0);
+                timedDriveCommand = new CmdTimedDrive(robot, 0.0, robot.driveTime, 0.0, robot.drivePower, 0.0);
                 break;
 
             case X_DISTANCE_DRIVE:
-                pidDriveCommand = new CmdPidDrive(robot, 0.0, driveDistance, 0.0, 0.0);
+                pidDriveCommand = new CmdPidDrive(robot, 0.0, robot.driveDistance, 0.0, 0.0, robot.drivePowerLimit);
                 break;
 
             case Y_DISTANCE_DRIVE:
-                pidDriveCommand = new CmdPidDrive(robot, 0.0, 0.0, driveDistance, 0.0);
+                pidDriveCommand = new CmdPidDrive(robot, 0.0, 0.0, robot.driveDistance, 0.0, robot.drivePowerLimit);
                 break;
 
             case TURN_DEGREES:
-                pidDriveCommand = new CmdPidDrive(robot, 0.0, 0.0, 0.0, turnDegrees);
+                pidDriveCommand = new CmdPidDrive(robot, 0.0, 0.0, 0.0, robot.turnDegrees, robot.drivePowerLimit);
                 break;
 
             case LIVE_WINDOW:

@@ -36,7 +36,11 @@ import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.Relay;
+import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.Relay.Direction;
 import frclib.FrcAHRSGyro;
+import frclib.FrcAnalogGyro;
 import frclib.FrcCANTalon;
 import frclib.FrcChoiceMenu;
 import frclib.FrcFaceDetector;
@@ -47,6 +51,7 @@ import frclib.FrcValueMenu;
 import hallib.HalDashboard;
 import trclib.TrcDbgTrace;
 import trclib.TrcDriveBase;
+import trclib.TrcGyro;
 import trclib.TrcPidController;
 import trclib.TrcPidDrive;
 import trclib.TrcRobot.RobotMode;
@@ -64,14 +69,16 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     public static final String programName = "FirstSteamWorks";
     public static final String moduleName = "Robot";
 
-    public static final boolean USE_VISION_TARGET = true;
+    public static final boolean USE_VISION_TARGET = false;
     public static final boolean USE_FACE_DETECTOR = false;
     public static final boolean USE_PIXY_VISION = false;
-    public static final boolean USE_USB_CAMERA = true;
+    public static final boolean USE_USB_CAMERA = false;
+    public static final boolean USE_NAV_X = false;
+    public static final boolean USE_ANALOG_GYRO = true;
 
-    private static final boolean DEBUG_DRIVE_BASE = false;
+    private static final boolean DEBUG_DRIVE_BASE = true;
     private static final boolean DEBUG_PID_DRIVE = false;
-    private static final boolean DEBUG_VISION_TARGET = true;
+    private static final boolean DEBUG_VISION_TARGET = false;
     private static final boolean DEBUG_FACE_DETECTION = false;
     private static final double DASHBOARD_UPDATE_INTERVAL = 0.1;
 
@@ -100,8 +107,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     //
     // Sensors.
     //
-    public FrcGyro gyro = null;
-    public FrcAHRSGyro ahrsGyro = null;
+    public TrcGyro gyro = null;
 
     //
     // VisionTarget subsystem.
@@ -130,6 +136,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     public FrcPneumatic mailbox;
     public GearPickup gearPickup;
     public Winch winch;
+    public Relay flashLights;
 
     //
     // Menus.
@@ -140,6 +147,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     public FrcValueMenu driveTimeMenu;
     public FrcValueMenu drivePowerMenu;
     public FrcValueMenu driveDistanceMenu;
+    public FrcValueMenu drivePowerLimitMenu;
     public FrcValueMenu turnDegreesMenu;
 
     public MatchType matchType;
@@ -148,6 +156,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     public double driveTime;
     public double drivePower;
     public double driveDistance;
+    public double drivePowerLimit;
     public double turnDegrees;
 
     //
@@ -169,13 +178,23 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
      * This function is run when the robot is first started up and should be used for any initialization code.
      */
     @Override
-    public void initRobot()
+    public void robotInit()
     {
         //
         // Sensors.
         //
-        gyro = new FrcGyro("ADXRS450", new ADXRS450_Gyro());
-//        ahrsGyro = new FrcAHRSGyro("AHRS", SPI.Port.kMXP);
+        if (USE_NAV_X)
+        {
+            gyro = new FrcAHRSGyro("NavX", SPI.Port.kMXP);
+        }
+        else if (USE_ANALOG_GYRO)
+        {
+            gyro = new FrcAnalogGyro("AnalogGyro", RobotInfo.AIN_ANALOG_GYRO);
+        }
+        else
+        {
+            gyro = new FrcGyro("ADXRS450", new ADXRS450_Gyro());
+        }
 
         //
         // VisionTarget subsystem.
@@ -241,10 +260,10 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         rightFrontWheel.enableLimitSwitch(false, false);
         rightRearWheel.enableLimitSwitch(false, false);
 
-        leftFrontWheel.setPositionSensorInverted(true);
-        leftRearWheel.setPositionSensorInverted(true);
-        rightFrontWheel.setPositionSensorInverted(false);
-        rightRearWheel.setPositionSensorInverted(false);
+        leftFrontWheel.setPositionSensorInverted(false);
+        leftRearWheel.setPositionSensorInverted(false);
+        rightFrontWheel.setPositionSensorInverted(true);
+        rightRearWheel.setPositionSensorInverted(true);
 
         leftFrontWheel.setFeedbackDevice(FeedbackDevice.QuadEncoder);
         leftRearWheel.setFeedbackDevice(FeedbackDevice.QuadEncoder);
@@ -254,7 +273,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         //
         // Initialize DriveBase subsystem.
         //
-        driveBase = new TrcDriveBase(leftFrontWheel, leftRearWheel, rightFrontWheel, rightRearWheel);//, gyro);
+        driveBase = new TrcDriveBase(leftFrontWheel, leftRearWheel, rightFrontWheel, rightRearWheel, gyro);
         driveBase.setXPositionScale(RobotInfo.ENCODER_X_INCHES_PER_COUNT);
         driveBase.setYPositionScale(RobotInfo.ENCODER_Y_INCHES_PER_COUNT);
 
@@ -283,6 +302,8 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
             "Mailbox", RobotInfo.CANID_PCM1, RobotInfo.SOL_MAILBOX_EXTEND, RobotInfo.SOL_MAILBOX_RETRACT);
         gearPickup = new GearPickup();
         winch = new Winch();
+        flashLights = new Relay(RobotInfo.RELAY_FLASHLIGHT_POWER);
+        flashLights.setDirection(Direction.kForward);
 
         //
         // Create Global Menus (can be used in all modes).
@@ -296,6 +317,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         driveTimeMenu = new FrcValueMenu("Drive Time", 5.0);
         drivePowerMenu = new FrcValueMenu("Drive Power", 0.2);
         driveDistanceMenu = new FrcValueMenu("Drive Distance", 12.0);
+        drivePowerLimitMenu = new FrcValueMenu("Drive Power Limit", 1.0);
         turnDegreesMenu = new FrcValueMenu("Turn Degrees", 360.0);
 
         //
@@ -319,6 +341,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         driveTime = driveTimeMenu.getCurrentValue();
         drivePower = drivePowerMenu.getCurrentValue();
         driveDistance = driveDistanceMenu.getCurrentValue()*12.0;
+        drivePowerLimit = drivePowerLimitMenu.getCurrentValue();
         turnDegrees = turnDegreesMenu.getCurrentValue();
 
         //
@@ -328,7 +351,19 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         autoMode = new FrcAuto(this);
         testMode = new FrcTest(this);
         setupRobotModes(teleOpMode, autoMode, testMode, null);
-    }   //initRobot
+    }   //robotInit
+
+    public void robotStartMode()
+    {
+        HalDashboard.getInstance().clearDisplay();
+        driveBase.resetPosition();
+        targetHeading = 0.0;
+    }   //robotStartMode
+
+    public void robotStopMode()
+    {
+        driveBase.stop();
+    }
 
     public void updateDashboard()
     {
@@ -445,10 +480,9 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         {
             value = driveBase.getYPosition();
         }
-        else if (pidCtrl == gyroTurnPidCtrl && gyro != null)
+        else if (pidCtrl == gyroTurnPidCtrl)
         {
-            value = gyro.getZHeading().value;
-//            value = ahrsGyro.getZHeading().value;
+            value = driveBase.getHeading();
         }
 
         return value;

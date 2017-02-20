@@ -22,8 +22,8 @@
 
 package team492;
 
+import edu.wpi.first.wpilibj.Relay.Value;
 import frclib.FrcJoystick;
-import hallib.HalDashboard;
 import trclib.TrcRobot;
 
 public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
@@ -48,6 +48,7 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
     private DriveMode driveMode = DriveMode.MECANUM_MODE;
 
     private boolean driveInverted = false;
+    private boolean flashLightsOn = false;
 
     public FrcTeleOp(Robot robot)
     {
@@ -72,13 +73,11 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
     @Override
     public void startMode()
     {
-        HalDashboard.getInstance().clearDisplay();
     }   // startMode
 
     @Override
     public void stopMode()
     {
-        robot.driveBase.stop();
     }   // stopMode
 
     @Override
@@ -321,6 +320,11 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
                     break;
 
                 case FrcJoystick.LOGITECH_BUTTON9:
+                    if (pressed)
+                    {
+                        flashLightsOn = !flashLightsOn;
+                        robot.flashLights.set(flashLightsOn? Value.kOn: Value.kOff);
+                    }
                     break;
 
                 case FrcJoystick.LOGITECH_BUTTON10:

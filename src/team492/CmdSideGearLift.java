@@ -51,7 +51,6 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
     private double sideMoveDistance;
     private double angleToAirship;
     private double orientedAirshipMoveDistance;
-    private double sidewaysDistance;
     private double loadingStationTurnAngle;
     private double loadingStationMoveDistance;
     
@@ -72,7 +71,6 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
         FrcValueMenu sideMoveDistanceMenu = new FrcValueMenu("MoveDistanceOnSide", 7.0 - RobotInfo.ROBOT_LENGTH/12.0);
         FrcValueMenu angleToAirshipMenu = new FrcValueMenu("AngleToAirship", 60.0);
         FrcValueMenu orientedAirshipMoveDistanceMenu = new FrcValueMenu("OrientedAirshipMoveDistance", 5.0);
-        FrcValueMenu sidewaysDistanceMenu = new FrcValueMenu("SidewaysDistance", 5.0);
         FrcValueMenu loadingStationTurnAngleMenu = new FrcValueMenu("LoadingStationTurnAngle", 45.0);
         FrcValueMenu loadingStationMoveDistanceMenu = new FrcValueMenu("LoadingStationMoveDistance", 20.0);
         
@@ -82,7 +80,6 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
         sideMoveDistance = sideMoveDistanceMenu.getCurrentValue()*12.0;
         angleToAirship = Math.abs(angleToAirshipMenu.getCurrentValue());
         orientedAirshipMoveDistance =  Math.abs(orientedAirshipMoveDistanceMenu.getCurrentValue())*12.0;
-        sidewaysDistance = Math.abs(sidewaysDistanceMenu.getCurrentValue())*12.0;
         loadingStationTurnAngle = Math.abs(loadingStationTurnAngleMenu.getCurrentValue());
         loadingStationMoveDistance  = loadingStationMoveDistanceMenu.getCurrentValue()*12.0;
         

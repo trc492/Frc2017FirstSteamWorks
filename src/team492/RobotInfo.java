@@ -31,9 +31,9 @@ public class RobotInfo
     //
     // Robot Dimensions.
     //
-    public static final double ROBOT_LENGTH                     = 32.0;
-    public static final double ROBOT_WIDTH                      = 24.0;
-    public static final double ROBOT_HEIGHT                     = 36.0;
+    public static final double ROBOT_LENGTH                     = 40.0;
+    public static final double ROBOT_WIDTH                      = 36.0;
+    public static final double ROBOT_HEIGHT                     = 24.0;
 
     //
     // Joystick ports.
@@ -46,8 +46,8 @@ public class RobotInfo
     // Analog Input ports.
     //
     public static final int AIN_PNEUMATIC_PRESSURE              = 0;
-    public static final int AIN_PIXYCAM_OBJECT_POS              = 1;
-
+    public static final int AIN_ANALOG_GYRO                     = 1;
+    public static final int AIN_PIXYCAM_OBJECT_POS              = 2;
     //
     // Digital Input ports.
     //
@@ -72,6 +72,7 @@ public class RobotInfo
     // Relay channels.
     //
     public static final int RELAY_RINGLIGHT_POWER               = 0;
+    public static final int RELAY_FLASHLIGHT_POWER              = 1;
 
     //
     // Solenoid channels.
@@ -94,23 +95,23 @@ public class RobotInfo
     //
     // DriveBase subsystem.
     //
-    public static final double ENCODER_X_INCHES_PER_COUNT       = 0.01321074310684615838703943056885;
-    public static final double ENCODER_X_KP                     = 0.045;
+    public static final double ENCODER_X_INCHES_PER_COUNT       = 0.0096445521503229;
+    public static final double ENCODER_X_KP                     = 0.17;
     public static final double ENCODER_X_KI                     = 0.0;
     public static final double ENCODER_X_KD                     = 0.0;
     public static final double ENCODER_X_KF                     = 0.0;
     public static final double ENCODER_X_TOLERANCE              = 1.0;
     public static final double ENCODER_X_SETTLING               = 0.2;
 
-    public static final double ENCODER_Y_INCHES_PER_COUNT       = 0.01621544056690844936881352331858;
-    public static final double ENCODER_Y_KP                     = 0.025;
+    public static final double ENCODER_Y_INCHES_PER_COUNT       = 0.0163332801250675;
+    public static final double ENCODER_Y_KP                     = 0.03;
     public static final double ENCODER_Y_KI                     = 0.0;
     public static final double ENCODER_Y_KD                     = 0.01;
     public static final double ENCODER_Y_KF                     = 0.0;
     public static final double ENCODER_Y_TOLERANCE              = 1.0;
     public static final double ENCODER_Y_SETTLING               = 0.2;
 
-    public static final double GYRO_TURN_KP                     = 0.02;     // 0.010;
+    public static final double GYRO_TURN_KP                     = 0.018;
     public static final double GYRO_TURN_KI                     = 0.0;
     public static final double GYRO_TURN_KD                     = 0.0;
     public static final double GYRO_TURN_KF                     = 0.0;

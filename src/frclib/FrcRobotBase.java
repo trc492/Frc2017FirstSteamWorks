@@ -59,7 +59,9 @@ public abstract class FrcRobotBase extends RobotBase
     /**
      * This method is called to initialize the robot.
      */
-    public abstract void initRobot();
+    public abstract void robotInit();
+    public abstract void robotStartMode();
+    public abstract void robotStopMode();
 
     private TrcTaskMgr taskMgr = new TrcTaskMgr();
     private HalDashboard dashboard = new HalDashboard();
@@ -189,7 +191,7 @@ public abstract class FrcRobotBase extends RobotBase
 
         HAL.report(tResourceType.kResourceType_Framework, tInstances.kFramework_Iterative);
 
-        initRobot();
+        robotInit();
 
         //
         // Tell the DS that the robot is ready to be enabled.
@@ -269,11 +271,13 @@ public abstract class FrcRobotBase extends RobotBase
                 {
                     teleOpMode.stopMode();
                 }
+                robotStopMode();
 
                 //
                 // Start current mode.
                 //
                 modeStartTime = TrcUtil.getCurrentTime();
+                robotStartMode();
                 if (currMode == RunMode.DISABLED_MODE)
                 {
                     LiveWindow.setEnabled(false);
@@ -284,7 +288,7 @@ public abstract class FrcRobotBase extends RobotBase
                 }
                 else if (currMode == RunMode.TEST_MODE)
                 {
-                    LiveWindow.setEnabled(true);
+//                    LiveWindow.setEnabled(true);
                     if (testMode != null)
                     {
                         testMode.startMode();
