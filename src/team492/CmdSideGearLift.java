@@ -64,7 +64,7 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
         this.robot = robot;
         this.delay = delay;
         this.rightSide = rightSide;
-        
+
         //
         // All distances from the menus are in the unit of feet.
         //
@@ -73,7 +73,7 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
         FrcValueMenu orientedAirshipMoveDistanceMenu = new FrcValueMenu("OrientedAirshipMoveDistance", 5.0);
         FrcValueMenu loadingStationTurnAngleMenu = new FrcValueMenu("LoadingStationTurnAngle", 45.0);
         FrcValueMenu loadingStationMoveDistanceMenu = new FrcValueMenu("LoadingStationMoveDistance", 20.0);
-        
+
         //
         // Convert all distances to the unit of inches.
         //
@@ -82,7 +82,7 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
         orientedAirshipMoveDistance =  Math.abs(orientedAirshipMoveDistanceMenu.getCurrentValue())*12.0;
         loadingStationTurnAngle = Math.abs(loadingStationTurnAngleMenu.getCurrentValue());
         loadingStationMoveDistance  = loadingStationMoveDistanceMenu.getCurrentValue()*12.0;
-        
+
         visionDeploy = new CmdVisionGearDeploy(robot);
 
         event = new TrcEvent(moduleName);
@@ -132,9 +132,9 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
                     //
                     // Drive the set distance and heading.
                     //
-                	xDistance = 0;
-                	yDistance = sideMoveDistance;
-                	
+                    xDistance = 0;
+                    yDistance = sideMoveDistance;
+
                     robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
                     sm.waitForSingleEvent(event, State.TURN_TOWARDS_AIRSHIP);
                     break;
@@ -143,68 +143,69 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
                     //
                     // Turn to face airship.
                     //
-                	xDistance = 0;
-                	yDistance = 0;
-                	
-                	robot.targetHeading = rightSide ? -angleToAirship : angleToAirship;
-                	
-                	robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
-                	sm.waitForSingleEvent(event, State.MOVE_TOWARDS_AIRSHIP);
-                	break;
-                
+                    xDistance = 0;
+                    yDistance = 0;
+                    robot.targetHeading = rightSide ? -angleToAirship : angleToAirship;
+
+                    robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
+                    sm.waitForSingleEvent(event, State.MOVE_TOWARDS_AIRSHIP);
+                    break;
+
                 case MOVE_TOWARDS_AIRSHIP:
                     //
                     // Proceed towards gear peg on corresponding side.
                     //
-                	xDistance = 0;
-                	yDistance = orientedAirshipMoveDistance;
+                    xDistance = 0;
+                    yDistance = orientedAirshipMoveDistance;
 
-                	robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
-                	sm.waitForSingleEvent(event, State.VISION_DEPLOY);
-                	break;
-                
+                    robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
+                    sm.waitForSingleEvent(event, State.VISION_DEPLOY);
+                    break;
+
                 case VISION_DEPLOY:
                     //
                     // Execute visionDeploy to dispense gear on peg
                     //
-                	
-                	if (visionDeploy.cmdPeriodic(elapsedTime))
-                	{
-                		sm.setState(State.BACKUP_FROM_AIRSHIP);
-                	}
-                	break;
+                    if (visionDeploy.cmdPeriodic(elapsedTime))
+                    {
+                        sm.setState(State.BACKUP_FROM_AIRSHIP);
+                    }
+                    break;
+
                 case BACKUP_FROM_AIRSHIP:
                     //
                     // Backup in addition to backup from visionDeploy
                     //
-                	xDistance = 0;
-                	yDistance = -orientedAirshipMoveDistance;
-                	
-                	robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
-                	sm.waitForSingleEvent(event, State.TURN_TOWARDS_LOADING_STATION);
-                	break;
+                    xDistance = 0;
+                    yDistance = -orientedAirshipMoveDistance;
+
+                    robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
+                    sm.waitForSingleEvent(event, State.TURN_TOWARDS_LOADING_STATION);
+                    break;
+
                 case TURN_TOWARDS_LOADING_STATION:
                     //
                     // Turn towards loading station after backing up from airship
                     //
-                	xDistance = 0;
-                	yDistance = 0;
-                	
-                	robot.targetHeading = rightSide ? loadingStationTurnAngle : -loadingStationTurnAngle;
-                	
-                	robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
-                	sm.waitForSingleEvent(event, State.MOVE_TOWARDS_LOADING_STATION);
-                	break;
+                    xDistance = 0;
+                    yDistance = 0;
+                    robot.targetHeading = rightSide ? loadingStationTurnAngle : -loadingStationTurnAngle;
+
+                    robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
+                    sm.waitForSingleEvent(event, State.MOVE_TOWARDS_LOADING_STATION);
+                    break;
+
                 case MOVE_TOWARDS_LOADING_STATION:
-                	//
-                	// Move towards (but not in) loading station
-                	//
-                	xDistance = 0;
-                	yDistance = loadingStationMoveDistance;
-                	
-                	robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
-                	sm.waitForSingleEvent(event, State.DONE);
-                	break;
+                    //
+                    // Move towards (but not in) loading station
+                    //
+                    xDistance = 0;
+                    yDistance = loadingStationMoveDistance;
+
+                    robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
+                    sm.waitForSingleEvent(event, State.DONE);
+                    break;
+
                 case DONE:
                 default:
                     //
@@ -214,6 +215,7 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
                     sm.stop();
                     break;
             }
+
             if(printStateInfo)
             {
                 robot.traceStateInfo(elapsedTime, state.toString());

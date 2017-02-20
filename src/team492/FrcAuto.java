@@ -34,9 +34,9 @@ public class FrcAuto implements TrcRobot.RobotMode
 
     public static enum AutoStrategy
     {
-    	LEFT_GEAR_LIFT,
-    	RIGHT_GEAR_LIFT,
-    	MIDDLE_GEAR_LIFT,
+        LEFT_GEAR_LIFT,
+        RIGHT_GEAR_LIFT,
+        MIDDLE_GEAR_LIFT,
         X_TIMED_DRIVE,
         Y_TIMED_DRIVE,
         X_DISTANCE_DRIVE,
@@ -99,18 +99,18 @@ public class FrcAuto implements TrcRobot.RobotMode
 
         switch (autoStrategy)
         {
-        	case LEFT_GEAR_LIFT:
-        		autoCommand = new CmdSideGearLift(robot, delay, false);
-        		break;
-        		
-        	case RIGHT_GEAR_LIFT:
-        		autoCommand = new CmdSideGearLift(robot, delay, true);
-        		break;
-        		
-        	case MIDDLE_GEAR_LIFT:
-        		autoCommand = new CmdMidGearLift(robot, delay);
-        		break;
-        		
+            case LEFT_GEAR_LIFT:
+                autoCommand = new CmdSideGearLift(robot, delay, false);
+                break;
+
+            case RIGHT_GEAR_LIFT:
+                autoCommand = new CmdSideGearLift(robot, delay, true);
+                break;
+
+            case MIDDLE_GEAR_LIFT:
+                autoCommand = new CmdMidGearLift(robot, delay);
+                break;
+
             case X_TIMED_DRIVE:
                 autoCommand = new CmdTimedDrive(robot, delay, robot.driveTime, robot.drivePower, 0.0, 0.0);
                 break;

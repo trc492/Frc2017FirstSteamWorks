@@ -22,23 +22,26 @@
 
 package team492;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import frclib.FrcPneumatic;
 
 public class GearPickup
 {
     private FrcPneumatic claw, arm;
+    private DigitalInput gearSensor;
 
     /**
      * Initialize the GearPickup class.
      */
     public GearPickup()
     {
-        this.claw = new FrcPneumatic(
+        claw = new FrcPneumatic(
             "GearPickupClaw", RobotInfo.CANID_PCM1,
             RobotInfo.SOL_GEARPICKUP_CLAW_EXTEND, RobotInfo.SOL_GEARPICKUP_CLAW_RETRACT);
-        this.arm = new FrcPneumatic(
+        arm = new FrcPneumatic(
             "GearPickupArm", RobotInfo.CANID_PCM1,
             RobotInfo.SOL_GEARPICKUP_ARM_EXTEND, RobotInfo.SOL_GEARPICKUP_ARM_RETRACT);
+        gearSensor = new DigitalInput(RobotInfo.DIN_GEAR_SENSOR);
     }
 
     /**
@@ -119,4 +122,10 @@ public class GearPickup
     {
         return !arm.isExtended();
     }
+
+    public boolean gearDetected()
+    {
+        return gearSensor.get();
+    }
+
 }

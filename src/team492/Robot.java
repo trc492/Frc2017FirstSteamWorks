@@ -35,6 +35,7 @@ import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.SPI;
@@ -72,7 +73,8 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     public static final boolean USE_VISION_TARGET = false;
     public static final boolean USE_FACE_DETECTOR = false;
     public static final boolean USE_PIXY_VISION = false;
-    public static final boolean USE_USB_CAMERA = false;
+    public static final boolean USE_AXIS_CAMERA = false;
+    public static final boolean USE_PIXY_CAMERA = false;
     public static final boolean USE_NAV_X = false;
     public static final boolean USE_ANALOG_GYRO = true;
 
@@ -108,6 +110,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     // Sensors.
     //
     public TrcGyro gyro = null;
+    public AnalogInput pressureSensor = null;
 
     //
     // VisionTarget subsystem.
@@ -195,6 +198,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         {
             gyro = new FrcGyro("ADXRS450", new ADXRS450_Gyro());
         }
+        pressureSensor = new AnalogInput(RobotInfo.AIN_PRESSURE_SENSOR);
 
         //
         // VisionTarget subsystem.
@@ -204,19 +208,24 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
             CvSink videoIn;
             CvSource videoOut;
 
-            if (USE_USB_CAMERA)
+            if (USE_AXIS_CAMERA)
+            {
+                AxisCamera axisCam = CameraServer.getInstance().addAxisCamera("axis-camera.local");
+                axisCam.setResolution(RobotInfo.CAM_WIDTH, RobotInfo.CAM_HEIGHT);
+                axisCam.setFPS(RobotInfo.CAM_FRAME_RATE);
+                axisCam.setBrightness(RobotInfo.CAM_BRIGHTNESS);
+                videoIn = CameraServer.getInstance().getVideo(axisCam);
+            }
+            else if (USE_PIXY_CAMERA)
+            {
+            }
+            else
             {
                 UsbCamera cam0 = CameraServer.getInstance().startAutomaticCapture("cam0", 0);
                 cam0.setResolution(RobotInfo.CAM_WIDTH, RobotInfo.CAM_HEIGHT);
                 cam0.setFPS(RobotInfo.CAM_FRAME_RATE);
                 cam0.setBrightness(RobotInfo.CAM_BRIGHTNESS);
                 videoIn = CameraServer.getInstance().getVideo(cam0);
-            }
-            else
-            {
-                AxisCamera axisCam = CameraServer.getInstance().addAxisCamera("axis-camera.local");
-                axisCam.setResolution(RobotInfo.CAM_WIDTH, RobotInfo.CAM_HEIGHT);
-                videoIn = CameraServer.getInstance().getVideo(axisCam);
             }
             videoOut = CameraServer.getInstance().putVideo("VisionTarget", RobotInfo.CAM_WIDTH, RobotInfo.CAM_HEIGHT);
 
@@ -363,7 +372,12 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     public void robotStopMode()
     {
         driveBase.stop();
-    }
+    }   //robotStopMode
+
+    public double getPressure()
+    {
+        return 50.0*pressureSensor.getVoltage() - 25.0;
+    }   //getPressure
 
     public void updateDashboard()
     {
@@ -432,6 +446,8 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
                     {
                         for (int i = 0; i < faceRects.length; i++)
                         {
+                            dashboard.displayPrintf(1 + i, "x=%d, y=%d, width=%d, height=%d",
+                                faceRects[i].x, faceRects[i].y, faceRects[i].width, faceRects[i].height);
                             tracer.traceInfo("FaceRect", "%02d: x=%d, y=%d, width=%d, height=%d",
                                 i, faceRects[i].x, faceRects[i].y, faceRects[i].width, faceRects[i].height);
                         }

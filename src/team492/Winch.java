@@ -32,9 +32,20 @@ public class Winch
     public Winch()
     {
         motor = new FrcCANTalon("WinchMotor", RobotInfo.CANID_WINCH);
+        motor.setPositionSensorInverted(false);
 //        proximitySensor = new DigitalInput(RobotInfo.DIN_PROXIMITY_SENSOR);
     }
-    
+
+    public boolean isLimitSwitchActive()
+    {
+        return !motor.isUpperLimitSwitchActive();
+    }
+
+    public double getPosition()
+    {
+        return motor.getPosition()*RobotInfo.WINCH_POSITION_SCALE; 
+    }
+
     public void setPower(double power)
     {
         double scale = 1.0; 
