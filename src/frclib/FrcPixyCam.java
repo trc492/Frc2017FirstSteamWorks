@@ -24,8 +24,6 @@ package frclib;
 
 import java.util.ArrayList;
 
-import org.opencv.core.Rect;
-
 import trclib.TrcDbgTrace;
 import trclib.TrcStateMachine;
 import trclib.TrcUtil;
@@ -42,6 +40,11 @@ public class FrcPixyCam extends FrcI2cDevice implements FrcI2cDevice.CompletionH
     private static final TrcDbgTrace.TraceLevel traceLevel = TrcDbgTrace.TraceLevel.API;
     private static final TrcDbgTrace.MsgLevel msgLevel = TrcDbgTrace.MsgLevel.INFO;
     private TrcDbgTrace dbgTrace = null;
+
+    private static final int PIXY_START_WORD                    = 0xaa55;
+    private static final int PIXY_START_WORD_CC                 = 0xaa56;
+    private static final int PIXY_START_WORDX                   = 0x55aa;
+    private static final byte PIXY_ORPHAN_BYTE                  = (byte)0xaa;
 
     /**
      * This class implements the pixy camera object block communication protocol. 
@@ -62,21 +65,20 @@ public class FrcPixyCam extends FrcI2cDevice implements FrcI2cDevice.CompletionH
      */
     private static enum State
     {
-        RECEIVE_SYNC,
-        RECEIVE_CHECKSUM,
-        RECEIVE_SIGNATURE,
-        RECEIVE_XCENTER,
-        RECEIVE_YCENTER,
-        RECEIVE_WIDTH,
-        RECEIVE_HEIGHT,
-        END_FRAME
+        SYNC,
+        CHECKSUM,
+        SIGNATURE,
+        XCENTER,
+        YCENTER,
+        WIDTH,
+        HEIGHT
     }   //enum State
 
-    private static final int DEF_I2C_ADDRESS = 0x34;
+    private static final int DEF_I2C_ADDRESS = 0x54;
 
     private byte[] data = new byte[2];
     private ArrayList<ObjectBlock> objects = new ArrayList<>();
-    private Rect[] detectedObjectRects = null;
+    private ObjectBlock[] detectedObjects = null;
     private TrcStateMachine<State> sm = new TrcStateMachine<>(moduleName);
     private ObjectBlock currBlock = null;
     private int currChecksum = 0;
@@ -98,8 +100,8 @@ public class FrcPixyCam extends FrcI2cDevice implements FrcI2cDevice.CompletionH
             dbgTrace = new TrcDbgTrace(moduleName + "." + instanceName, tracingEnabled, traceLevel, msgLevel);
         }
 
-        asyncRead(0, data, true, null, this);
-        sm.start(State.RECEIVE_SYNC);
+        asyncRead(0, data.length, data, false, null, this);
+        sm.start(State.SYNC);
     }   //FrcPixyCam
 
     /**
@@ -152,7 +154,7 @@ public class FrcPixyCam extends FrcI2cDevice implements FrcI2cDevice.CompletionH
         data[0] = 0x00;
         data[1] = (byte)0xfe;
         data[2] = brightness;
-        asyncWrite(0, data, null, null);
+        asyncWrite(0, data.length, data, null, null);
 
         if (debugEnabled)
         {
@@ -186,7 +188,7 @@ public class FrcPixyCam extends FrcI2cDevice implements FrcI2cDevice.CompletionH
         data[3] = (byte)(pan >> 8);
         data[4] = (byte)(tilt & 0xff);
         data[5] = (byte)(tilt >> 8);
-        asyncWrite(0, data, null, null);
+        asyncWrite(0, data.length, data, null, null);
 
         if (debugEnabled)
         {
@@ -216,7 +218,7 @@ public class FrcPixyCam extends FrcI2cDevice implements FrcI2cDevice.CompletionH
         data[2] = red;
         data[3] = green;
         data[4] = blue;
-        asyncWrite(0, data, null, null);
+        asyncWrite(0, data.length, data, null, null);
 
         if (debugEnabled)
         {
@@ -225,29 +227,58 @@ public class FrcPixyCam extends FrcI2cDevice implements FrcI2cDevice.CompletionH
     }   //setLED
 
     /**
-     * This method returns an array of rectangles of last detected objects.
+     * This method returns an array of detected object blocks.
      *
-     * @return array of rectangle of last detected objects.
+     * @return array of detected object blocks, can be null if no object detected.
      */
-    public Rect[] getObjectRects()
+    public ObjectBlock[] getDetectedObjects()
     {
-        final String funcName = "getObjectRects";
-        Rect[] objectRects = null;
+        final String funcName = "getDetectedObjects";
+        ObjectBlock[] objectBlocks = null;
 
         if (debugEnabled)
         {
             dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.API);
-            dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.API);
         }
 
         synchronized (objectLock)
         {
-            objectRects = detectedObjectRects;
-            detectedObjectRects = null;
+            objectBlocks = detectedObjects;
+            detectedObjects = null;
         }
 
-        return objectRects;
-    }   //getObjectRects
+        if (debugEnabled)
+        {
+            dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.API);
+        }
+
+        return objectBlocks;
+    }   //getDetectedObjects
+
+//    /**
+//     * This method returns an array of rectangles of last detected objects.
+//     *
+//     * @return array of rectangle of last detected objects.
+//     */
+//    public Rect[] getObjectRects()
+//    {
+//        final String funcName = "getObjectRects";
+//        Rect[] objectRects = null;
+//
+//        if (debugEnabled)
+//        {
+//            dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.API);
+//            dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.API);
+//        }
+//
+//        synchronized (objectLock)
+//        {
+//            objectRects = detectedObjectRects;
+//            detectedObjectRects = null;
+//        }
+//
+//        return objectRects;
+//    }   //getObjectRects
 
     //
     // Implements FrcI2cDevice.CompletionHandler interface.
@@ -264,99 +295,119 @@ public class FrcPixyCam extends FrcI2cDevice implements FrcI2cDevice.CompletionH
      */
     public void readCompletion(int regAddress, int length, double timestamp, byte[] data, boolean error)
     {
-        if (regAddress == 0 && length == 2 && !error)
+        if (regAddress == 0 && !error)
         {
-            int word = TrcUtil.bytesToInt(data[0], data[1]);
-            State state = sm.getState();
-
-            switch (state)
+            if (length == 1)
             {
-                case RECEIVE_SYNC:
-                    if (word == 0xaa55 || word == 0xaa56)
-                    {
-                        currBlock = new ObjectBlock();
-                        currBlock.sync = word;
-                        sm.setState(State.RECEIVE_CHECKSUM);
-                    }
-                    break;
+                //
+                // We were not word aligned, we should be now.
+                //
+                if (data[0] == PIXY_ORPHAN_BYTE)
+                {
+                    //
+                    // Detected a normal block.
+                    //
+                    currBlock = new ObjectBlock();
+                    currBlock.sync = PIXY_START_WORD;
+                    sm.setState(State.CHECKSUM);
+                }
+                else
+                {
+                    //
+                    // Something still not right, wait for another sync word.
+                    //
+                    sm.setState(State.SYNC);
+                }
+            }
+            else if (length == 2)
+            {
+                int word = TrcUtil.bytesToInt(data[0], data[1]);
+                State state = sm.getState();
 
-                case RECEIVE_CHECKSUM:
-                    if (word == 0xaa55 || word == 0xaa56)
-                    {
-                        currBlock = null;
-                        sm.setState(State.END_FRAME);
-                    }
-                    else
-                    {
-                        currBlock.checksum = word;
-                        currChecksum = 0;
-                        sm.setState(State.RECEIVE_SIGNATURE);
-                    }
-                    break;
+                switch (state)
+                {
+                    case SYNC:
+                        if (word == PIXY_START_WORDX)
+                        {
+                            //
+                            // We are not word aligned, consume the next byte.
+                            //
+                            asyncRead(0, 1, data, false, null, this);
+                        }
+                        else if (word == PIXY_START_WORD || word == PIXY_START_WORD_CC)
+                        {
+                            currBlock = new ObjectBlock();
+                            currBlock.sync = word;
+                            sm.setState(State.CHECKSUM);
+                        }
+                        break;
 
-                case RECEIVE_SIGNATURE:
-                    if (word >= 0 && word < 8)
-                    {
+                    case CHECKSUM:
+                        if (word != PIXY_START_WORD && word != PIXY_START_WORD_CC)
+                        {
+                            currBlock.checksum = word;
+                            currChecksum = 0;
+                            sm.setState(State.SIGNATURE);
+                        }
+                        else
+                        {
+                            //
+                            // Detected end-of-frame, dispose the empty currBlock we just allocated and process end
+                            // of frame.
+                            //
+                            currBlock = null;
+                            if (objects.size() > 0)
+                            {
+                                synchronized (objectLock)
+                                {
+                                    detectedObjects = (ObjectBlock[])objects.toArray();
+                                    objects.clear();
+                                }
+                            }
+                            sm.setState(State.SYNC);
+                        }
+                        break;
+
+                    case SIGNATURE:
                         currChecksum += word;
                         currBlock.signature = word;
-                        sm.setState(State.RECEIVE_XCENTER);
-                    }
-                    else
-                    {
-                        currBlock = null;
-                        sm.setState(State.RECEIVE_SYNC);
-                    }
-                    break;
+                        sm.setState(State.XCENTER);
+                        break;
 
-                case RECEIVE_XCENTER:
-                    currChecksum += word;
-                    currBlock.xCenter = word;
-                    sm.setState(State.RECEIVE_YCENTER);
-                    break;
+                    case XCENTER:
+                        currChecksum += word;
+                        currBlock.xCenter = word;
+                        sm.setState(State.YCENTER);
+                        break;
 
-                case RECEIVE_YCENTER:
-                    currChecksum += word;
-                    currBlock.yCenter = word;
-                    sm.setState(State.RECEIVE_WIDTH);
-                    break;
+                    case YCENTER:
+                        currChecksum += word;
+                        currBlock.yCenter = word;
+                        sm.setState(State.WIDTH);
+                        break;
 
-                case RECEIVE_WIDTH:
-                    currChecksum += word;
-                    currBlock.width = word;
-                    sm.setState(State.RECEIVE_HEIGHT);
-                    break;
+                    case WIDTH:
+                        currChecksum += word;
+                        currBlock.width = word;
+                        sm.setState(State.HEIGHT);
+                        break;
 
-                case RECEIVE_HEIGHT:
-                    currChecksum += word;
-                    currBlock.height = word;
-                    if (currChecksum == currBlock.checksum)
-                    {
-                        objects.add(currBlock);
-                    }
-                    currBlock = null;
-                    sm.setState(State.RECEIVE_SYNC);
-                    break;
-
-                case END_FRAME:
-                    if (objects.size() > 0)
-                    {
-                        synchronized (objectLock)
+                    case HEIGHT:
+                        currChecksum += word;
+                        currBlock.height = word;
+                        if (currChecksum == currBlock.checksum)
                         {
-                            detectedObjectRects = new Rect[objects.size()];
-                            for (int i = 0; i < objects.size(); i++)
-                            {
-                                ObjectBlock objBlock = objects.get(i);
-                                detectedObjectRects[i].x = objBlock.xCenter - objBlock.width/2;
-                                detectedObjectRects[i].y = objBlock.yCenter - objBlock.height/2;
-                                detectedObjectRects[i].width = objBlock.width;
-                                detectedObjectRects[i].height = objBlock.height;
-                            }
-                            objects.clear();
+                            objects.add(currBlock);
                         }
-                    }
-                    sm.setState(State.RECEIVE_SYNC);
-                    break;
+                        currBlock = null;
+                        sm.setState(State.SYNC);
+                        break;
+                }
             }
+            //
+            // Read the next word.
+            //
+            asyncRead(0, 2, data, false, null, this);
         }
     }   //readCompletion
 

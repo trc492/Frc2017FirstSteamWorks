@@ -35,13 +35,13 @@ import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Relay.Direction;
 import frclib.FrcAHRSGyro;
-import frclib.FrcAnalogGyro;
 import frclib.FrcCANTalon;
 import frclib.FrcChoiceMenu;
 import frclib.FrcFaceDetector;
@@ -75,8 +75,8 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     public static final boolean USE_PIXY_VISION = false;
     public static final boolean USE_AXIS_CAMERA = false;
     public static final boolean USE_PIXY_CAMERA = false;
-    public static final boolean USE_NAV_X = false;
-    public static final boolean USE_ANALOG_GYRO = true;
+    public static final boolean USE_NAV_X = true;
+    public static final boolean USE_ANALOG_GYRO = false;
 
     private static final boolean DEBUG_DRIVE_BASE = true;
     private static final boolean DEBUG_PID_DRIVE = false;
@@ -192,7 +192,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         }
         else if (USE_ANALOG_GYRO)
         {
-            gyro = new FrcAnalogGyro("AnalogGyro", RobotInfo.AIN_ANALOG_GYRO);
+            gyro = new FrcGyro("AnalogGyro", new AnalogGyro(RobotInfo.AIN_ANALOG_GYRO));
         }
         else
         {

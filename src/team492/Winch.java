@@ -27,6 +27,7 @@ import frclib.FrcCANTalon;
 public class Winch
 {
     private FrcCANTalon motor;
+    private boolean manualOverride = false;
 //    private DigitalInput proximitySensor;
 
     public Winch()
@@ -36,11 +37,20 @@ public class Winch
 //        proximitySensor = new DigitalInput(RobotInfo.DIN_PROXIMITY_SENSOR);
     }
 
-    public boolean isLimitSwitchActive()
+    public void setManualOverride(boolean override)
     {
-        return !motor.isUpperLimitSwitchActive();
+        this.manualOverride = override;
     }
 
+    public boolean isLimitSwitchActive()
+    {
+        return !motor.isFwdLimitSwitchClosed();
+    }
+
+//    public boolean isLimitSwitch1Active()
+//    {
+//        return !motor.isFwdLimitSwitchClosed();
+//    }
     public double getPosition()
     {
         return motor.getPosition()*RobotInfo.WINCH_POSITION_SCALE; 
@@ -51,7 +61,10 @@ public class Winch
         double scale = 1.0; 
 //        if (proximitySensor.get())
 //            scale = RobotInfo.WINCH_POWER_SCALE;
-        motor.setPower(power / scale);
+        if (!isLimitSwitchActive() || manualOverride)
+            motor.setPower(power / scale);
+        else
+            motor.setPower(0.0);
     }
   
 }   //class Winch
