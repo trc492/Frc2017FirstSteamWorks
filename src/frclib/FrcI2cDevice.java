@@ -77,8 +77,8 @@ public abstract class FrcI2cDevice extends I2C implements Runnable
     private class Request
     {
         public int regAddress;
-        public int length;
         public byte[] buffer;
+        public int length;
         public boolean readRequest;
         public boolean repeat;
         public TrcEvent event;
@@ -89,55 +89,27 @@ public abstract class FrcI2cDevice extends I2C implements Runnable
          * Constructor: Create an instance of the object.
          *
          * @param regAddress specifies the register address.
-         * @param length specifies the length of the register block to read/write.
          * @param buffer specifies the data buffer that contains data for a write request or to be filled with data
          *               for a read request. The requested length is implied by the length of the buffer.
+         * @param length specifies the length of the register block to read/write.
          * @param readRequest specifies true for a read request, false for a write request.
          * @param repeat specifies true to re-queue the request when completed.
          * @param event specifies the event to signal when the request is completed. It can be null.
          * @param handler specifies the completion handler to call when the request is completed. It can be null.
          */
         public Request(
-            int regAddress, int length, byte[] buffer, boolean readRequest, boolean repeat, TrcEvent event,
+            int regAddress, byte[] buffer, int length, boolean readRequest, boolean repeat, TrcEvent event,
             CompletionHandler handler)
         {
             this.regAddress = regAddress;
-            this.length = length;
             this.buffer = buffer;
+            this.length = length;
             this.readRequest = readRequest;
             this.repeat = repeat;
             this.event = event;
             this.handler = handler;
             this.error = false;
         }   //Request
-
-//        public boolean isIntersectedOrAdjacentWith(int startAddress, int length)
-//        {
-//            int requestEnd = regAddress + this.length;
-//            int endAddress = startAddress + length;
-//
-//            return startAddress >= regAddress && startAddress <= requestEnd
-//                || endAddress >= regAddress && endAddress <= requestEnd
-//                || regAddress >= startAddress && regAddress <= endAddress
-//                || requestEnd >= startAddress && requestEnd <= endAddress;
-//        }   //isIntersectedOrAdjacentWith
-//
-//        public boolean coalesceRange(int startAddress, int length)
-//        {
-//            boolean coalesce = isIntersectedOrAdjacentWith(startAddress, length);
-//
-//            if (coalesce)
-//            {
-//                int requestEnd = regAddress + this.length;
-//                int endAddress = startAddress + length;
-//
-//                regAddress = Math.min(regAddress, startAddress);
-//                requestEnd = Math.max(requestEnd, endAddress);
-//                this.length = requestEnd - regAddress;
-//            }
-//
-//            return coalesce;
-//        }   //coalesceRange
 
     }   //class Request
 
@@ -334,12 +306,12 @@ public abstract class FrcI2cDevice extends I2C implements Runnable
      * This method is doing a synchronous read from the device with the specified starting address and length of the
      * register block.
      *
-     * @param startAddress specifies the starting register to read from.
-     * @param length specifies the length of the register block to read.
+     * @param startAddress specifies the starting register to read from or -1 for read-only request.
      * @param buffer specifies the buffer to hold the data read.
+     * @param length specifies the length of the register block to read.
      * @return true if read was successful, false otherwise.
      */
-    public boolean syncRead(int startAddress, int length, byte[] buffer)
+    public boolean syncRead(int startAddress, byte[] buffer, int length)
     {
         final String funcName = "syncRead";
         boolean success = false;
@@ -355,7 +327,7 @@ public abstract class FrcI2cDevice extends I2C implements Runnable
         }
 
         TrcEvent event = new TrcEvent(instanceName + "." + startAddress + "." + length);
-        Request request = new Request(startAddress, length, buffer, true, false, event, null);
+        Request request = new Request(startAddress, buffer, length, true, false, event, null);
 
         requestQueue.add(request);
         while (!event.isSignaled())
@@ -378,23 +350,35 @@ public abstract class FrcI2cDevice extends I2C implements Runnable
     }   //syncRead
 
     /**
+     * This method is doing a synchronous read-only from the device with the specified length.
+     *
+     * @param buffer specifies the buffer to hold the data read.
+     * @param length specifies the length of the register block to read.
+     * @return true if read was successful, false otherwise.
+     */
+    public boolean syncRead(byte[] buffer, int length)
+    {
+        return syncRead(-1, buffer, length);
+    }   //syncRead
+
+    /**
      * This method is doing a synchronous write to the device with the specified starting address and data of the
      * register block.
      *
-     * @param startAddress specifies the starting register to read from.
-     * @param length specifies the length of the register block to write.
+     * @param startAddress specifies the starting register to write to or -1 for bulk write.
      * @param data specifies the data to write to the device.
+     * @param length specifies the length of the register block to write.
      * @return true if write was successful, false otherwise.
      */
-    public boolean syncWrite(int startAddress, int length, byte[] data)
+    public boolean syncWrite(int startAddress, byte[] data, int length)
     {
         final String funcName = "syncWrite";
         boolean success = false;
 
         if (debugEnabled)
         {
-            dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.API, "start=0x%02x,length=%d,data=%s",
-                startAddress, length, Arrays.toString(data));
+            dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.API, "start=0x%02x,data=%s,length=%d",
+                startAddress, Arrays.toString(data), length);
         }
 
         if (!isDeviceEnabled())
@@ -403,7 +387,7 @@ public abstract class FrcI2cDevice extends I2C implements Runnable
         }
 
         TrcEvent event = new TrcEvent(instanceName + "." + startAddress + "." + data.length);
-        Request request = new Request(startAddress, length, data, false, false, event, null);
+        Request request = new Request(startAddress, data, length, false, false, event, null);
 
         requestQueue.add(request);
         while (!event.isSignaled())
@@ -425,18 +409,30 @@ public abstract class FrcI2cDevice extends I2C implements Runnable
     }   //syncWrite
 
     /**
+     * This method is doing a synchronous bulk write to the device with the specified length.
+     *
+     * @param data specifies the data to write to the device.
+     * @param length specifies the length of the register block to write.
+     * @return true if write was successful, false otherwise.
+     */
+    public boolean syncWrite(byte[] data, int length)
+    {
+        return syncWrite(-1, data, length);
+    }   //syncWrite
+
+    /**
      * This method is doing an asynchronous read from the device with the specified starting address and length of the
      * register block.
      *
      * @param startAddress specifies the starting register to read from.
-     * @param length specifies the length of the register block to read.
      * @param buffer specifies the buffer to hold the data read.
+     * @param length specifies the length of the register block to read.
      * @param repeat specifies true to re-queue the request when completed.
      * @param event specifies the event to signal when the request is completed. It can be null.
      * @param handler specifies the completion handler to call when the request is completed. It can be null.
      */
     public void asyncRead(
-        int startAddress, int length, byte[] buffer, boolean repeat, TrcEvent event, CompletionHandler handler)
+        int startAddress, byte[] buffer, int length, boolean repeat, TrcEvent event, CompletionHandler handler)
     {
         final String funcName = "asyncRead";
 
@@ -446,7 +442,7 @@ public abstract class FrcI2cDevice extends I2C implements Runnable
                 startAddress, length, Boolean.toString(repeat), event.toString());
         }
 
-        requestQueue.add(new Request(startAddress, length, buffer, true, repeat, event, handler));
+        requestQueue.add(new Request(startAddress, buffer, length, true, repeat, event, handler));
 
         if (debugEnabled)
         {
@@ -459,41 +455,81 @@ public abstract class FrcI2cDevice extends I2C implements Runnable
      * register block.
      *
      * @param startAddress specifies the starting register to read from.
-     * @param length specifies the length of the register block to read.
      * @param buffer specifies the buffer to hold the data read.
+     * @param length specifies the length of the register block to read.
      * @param event specifies the event to signal when the request is completed. It can be null.
      * @param handler specifies the completion handler to call when the request is completed. It can be null.
      */
-    public void asyncRead(int startAddress, int length, byte[] buffer, TrcEvent event, CompletionHandler handler)
+    public void asyncRead(int startAddress, byte[] buffer, int length, TrcEvent event, CompletionHandler handler)
     {
-        asyncRead(startAddress, length, buffer, false, event, handler);
+        asyncRead(startAddress, buffer, length, false, event, handler);
+    }   //asyncRead
+
+    /**
+     * This method is doing an asynchronous read-only from the device with the specified length.
+     *
+     * @param buffer specifies the buffer to hold the data read.
+     * @param length specifies the length of the register block to read.
+     * @param repeat specifies true to re-queue the request when completed.
+     * @param event specifies the event to signal when the request is completed. It can be null.
+     * @param handler specifies the completion handler to call when the request is completed. It can be null.
+     */
+    public void asyncRead(byte[] buffer, int length, boolean repeat, TrcEvent event, CompletionHandler handler)
+    {
+        asyncRead(-1, buffer, length, repeat, event, handler);
+    }   //asyncRead
+
+    /**
+     * This method is doing an asynchronous read-only from the device with the specified length.
+     *
+     * @param buffer specifies the buffer to hold the data read.
+     * @param length specifies the length of the register block to read.
+     * @param event specifies the event to signal when the request is completed. It can be null.
+     * @param handler specifies the completion handler to call when the request is completed. It can be null.
+     */
+    public void asyncRead(byte[] buffer, int length, TrcEvent event, CompletionHandler handler)
+    {
+        asyncRead(-1, buffer, length, false, event, handler);
     }   //asyncRead
 
     /**
      * This method is doing an asynchronous write to the device with the specified starting address of the register
      * block and data buffer.
      *
-     * @param startAddress specifies the starting register to read from.
-     * @param length specifies the length of the register block to write.
+     * @param startAddress specifies the starting register to write to.
      * @param data specifies the data to write to the device.
+     * @param length specifies the length of the register block to write.
      * @param event specifies the event to signal when the request is completed. It can be null.
      * @param handler specifies the completion handler to call when the request is completed. It can be null.
      */
-    public void asyncWrite(int startAddress, int length, byte[] data, TrcEvent event, CompletionHandler handler)
+    public void asyncWrite(int startAddress, byte[] data, int length, TrcEvent event, CompletionHandler handler)
     {
         final String funcName = "asyncWrite";
         if (debugEnabled)
         {
-            dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.API, "start=0x%02x,length=%d,data=%s,event=%s",
-                startAddress, length, Arrays.toString(data), event.toString());
+            dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.API, "start=0x%02x,data=%s,length=%d,event=%s",
+                startAddress, Arrays.toString(data), length, event.toString());
         }
 
-        requestQueue.add(new Request(startAddress, length, data, false, false, event, handler));
+        requestQueue.add(new Request(startAddress, data, length, false, false, event, handler));
 
         if (debugEnabled)
         {
             dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.API);
         }
+    }   //asyncWrite
+
+    /**
+     * This method is doing an asynchronous bulk write to the device with the specified length.
+     *
+     * @param data specifies the data to write to the device.
+     * @param length specifies the length of the register block to write.
+     * @param event specifies the event to signal when the request is completed. It can be null.
+     * @param handler specifies the completion handler to call when the request is completed. It can be null.
+     */
+    public void asyncWrite(byte[] data, int length, TrcEvent event, CompletionHandler handler)
+    {
+        asyncWrite(-1, data, length, event, handler);
     }   //asyncWrite
 
     /**
@@ -517,11 +553,11 @@ public abstract class FrcI2cDevice extends I2C implements Runnable
         data[0] = command;
         if (waitForCompletion)
         {
-            syncWrite(regAddress, 1, data);
+            syncWrite(regAddress, data, data.length);
         }
         else
         {
-            asyncWrite(regAddress, 1, data, null, null);
+            asyncWrite(regAddress, data, data.length, null, null);
         }
 
         if (debugEnabled)
@@ -552,11 +588,11 @@ public abstract class FrcI2cDevice extends I2C implements Runnable
         data[1] = (byte)(command >> 8);
         if (waitForCompletion)
         {
-            syncWrite(regAddress, 2, data);
+            syncWrite(regAddress, data, data.length);
         }
         else
         {
-            asyncWrite(regAddress, 2, data, null, null);
+            asyncWrite(regAddress, data, data.length, null, null);
         }
 
         if (debugEnabled)
@@ -598,7 +634,8 @@ public abstract class FrcI2cDevice extends I2C implements Runnable
                     startTime = TrcUtil.getCurrentTime();
                     if (request.readRequest)
                     {
-                        if (!read(request.regAddress, request.length, request.buffer))
+                        if (request.regAddress == -1 && !readOnly(request.buffer, request.length) ||
+                            !read(request.regAddress, request.length, request.buffer))
                         {
                             request.error = true;
                         }
@@ -610,10 +647,19 @@ public abstract class FrcI2cDevice extends I2C implements Runnable
                     }
                     else
                     {
-                        ByteBuffer buffer = ByteBuffer.allocateDirect(request.length + 1);
+                        ByteBuffer buffer;
 
-                        buffer.put((byte)request.regAddress);
+                        if (request.regAddress == -1)
+                        {
+                            buffer = ByteBuffer.allocateDirect(request.length);
+                        }
+                        else
+                        {
+                            buffer = ByteBuffer.allocateDirect(request.length + 1);
+                            buffer.put((byte)request.regAddress);
+                        }
                         buffer.put(request.buffer);
+
                         if (!writeBulk(buffer, request.length + 1))
                         {
                             request.error = true;

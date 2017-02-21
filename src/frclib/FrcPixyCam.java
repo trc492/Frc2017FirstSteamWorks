@@ -45,6 +45,9 @@ public class FrcPixyCam extends FrcI2cDevice implements FrcI2cDevice.CompletionH
     private static final int PIXY_START_WORD_CC                 = 0xaa56;
     private static final int PIXY_START_WORDX                   = 0x55aa;
     private static final byte PIXY_ORPHAN_BYTE                  = (byte)0xaa;
+    private static final byte PIXY_CMD_SET_LED                  = (byte)0xfd;
+    private static final byte PIXY_CMD_SET_BRIGHTNESS           = (byte)0xfe;
+    private static final byte PIXY_CMD_SET_PAN_TILT             = (byte)0xff;
 
     /**
      * This class implements the pixy camera object block communication protocol. 
@@ -100,8 +103,6 @@ public class FrcPixyCam extends FrcI2cDevice implements FrcI2cDevice.CompletionH
             dbgTrace = new TrcDbgTrace(moduleName + "." + instanceName, tracingEnabled, traceLevel, msgLevel);
         }
 
-        asyncRead(0, data.length, data, false, null, this);
-        sm.start(State.SYNC);
     }   //FrcPixyCam
 
     /**
@@ -137,6 +138,67 @@ public class FrcPixyCam extends FrcI2cDevice implements FrcI2cDevice.CompletionH
     }   //FrcPixyCam
 
     /**
+     * This method enables/disables the pixy camera task.
+     *
+     * @param enabled specifies true to enable pixy camera, false to disable.
+     */
+    public void setEnabled(boolean enabled)
+    {
+        final String funcName = "setEnabled";
+
+        if (debugEnabled)
+        {
+            dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.API, "enanbled=%s", Boolean.toString(enabled));
+        }
+
+        super.setTaskEnabled(enabled);
+        if (enabled)
+        {
+            asyncRead(data, data.length, false, null, this);
+            sm.start(State.SYNC);
+        }
+        else
+        {
+            sm.stop();
+        }
+
+        if (debugEnabled)
+        {
+            dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.API);
+        }
+    }   //setEnabled
+
+    /**
+     * This method sets the LED to the specified color.
+     *
+     * @param red specifies the red value.
+     * @param green specifies the green value.
+     * @param blue specifies the blue value.
+     */
+    public void setLED(byte red, byte green, byte blue)
+    {
+        final String funcName = "setLED";
+        byte[] data = new byte[5];
+
+        if (debugEnabled)
+        {
+            dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.API, "red=%d,green=%d,blue=%d", red, green, blue);
+        }
+
+        data[0] = 0x00;
+        data[1] = PIXY_CMD_SET_LED;
+        data[2] = red;
+        data[3] = green;
+        data[4] = blue;
+        asyncWrite(data, data.length, null, null);
+
+        if (debugEnabled)
+        {
+            dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.API);
+        }
+    }   //setLED
+
+    /**
      * This method sets the camera brightness.
      *
      * @param brightness specifies the brightness value.
@@ -152,9 +214,9 @@ public class FrcPixyCam extends FrcI2cDevice implements FrcI2cDevice.CompletionH
         }
 
         data[0] = 0x00;
-        data[1] = (byte)0xfe;
+        data[1] = PIXY_CMD_SET_BRIGHTNESS;
         data[2] = brightness;
-        asyncWrite(0, data.length, data, null, null);
+        asyncWrite(data, data.length, null, null);
 
         if (debugEnabled)
         {
@@ -183,48 +245,18 @@ public class FrcPixyCam extends FrcI2cDevice implements FrcI2cDevice.CompletionH
         }
 
         data[0] = 0x00;
-        data[1] = (byte)0xff;
+        data[1] = PIXY_CMD_SET_PAN_TILT;
         data[2] = (byte)(pan & 0xff);
         data[3] = (byte)(pan >> 8);
         data[4] = (byte)(tilt & 0xff);
         data[5] = (byte)(tilt >> 8);
-        asyncWrite(0, data.length, data, null, null);
+        asyncWrite(data, data.length, null, null);
 
         if (debugEnabled)
         {
             dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.API);
         }
     }   //setPanTilt
-
-    /**
-     * This method sets the LED to the specified color.
-     *
-     * @param red specifies the red value.
-     * @param green specifies the green value.
-     * @param blue specifies the blue value.
-     */
-    public void setLED(byte red, byte green, byte blue)
-    {
-        final String funcName = "setLED";
-        byte[] data = new byte[5];
-
-        if (debugEnabled)
-        {
-            dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.API, "red=%d,green=%d,blue=%d", red, green, blue);
-        }
-
-        data[0] = 0x00;
-        data[1] = (byte)0xfd;
-        data[2] = red;
-        data[3] = green;
-        data[4] = blue;
-        asyncWrite(0, data.length, data, null, null);
-
-        if (debugEnabled)
-        {
-            dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.API);
-        }
-    }   //setLED
 
     /**
      * This method returns an array of detected object blocks.
@@ -332,7 +364,7 @@ public class FrcPixyCam extends FrcI2cDevice implements FrcI2cDevice.CompletionH
                             //
                             // We are not word aligned, consume the next byte.
                             //
-                            asyncRead(0, 1, data, false, null, this);
+                            asyncRead(data, 1, false, null, this);
                         }
                         else if (word == PIXY_START_WORD || word == PIXY_START_WORD_CC)
                         {
@@ -407,7 +439,7 @@ public class FrcPixyCam extends FrcI2cDevice implements FrcI2cDevice.CompletionH
             //
             // Read the next word.
             //
-            asyncRead(0, 2, data, false, null, this);
+            asyncRead(data, 2, false, null, this);
         }
     }   //readCompletion
 
