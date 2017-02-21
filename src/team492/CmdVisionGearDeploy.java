@@ -24,6 +24,7 @@ package team492;
 
 import org.opencv.core.Rect;
 
+import frclib.FrcValueMenu;
 import trclib.TrcEvent;
 import trclib.TrcRobot;
 import trclib.TrcStateMachine;
@@ -43,10 +44,7 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
     private double backupDistance;
     private double horizontalAlignmentThreshold;
     private double distanceAlignmentThreshold;
-    private double heading;
-    // private double alignmentSensitivity;
     private TrcEvent event;
-    // private TrcTimer timer;
     private TrcStateMachine<State> sm;
     private double horizontalAlignmentMultiplier;
     private double distanceAlignmentMultiplier;
@@ -55,18 +53,24 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
     CmdVisionGearDeploy(Robot robot)
     {
         this.robot = robot;
+        
+        FrcValueMenu extendTimeMenu = new FrcValueMenu("PneumaticExtendTime", 0.3);
+        FrcValueMenu horizontalAlignmentMultiplierMenu = new FrcValueMenu("HorizontalAlignmentMultiplier", 1.0);
+        FrcValueMenu backupDistanceMenu = new FrcValueMenu("BackupDistance", 12.0);
+        FrcValueMenu horizontalAlignmentThresholdMenu = new FrcValueMenu("HorizontalAlignmentThreshold", 10.0);
+        FrcValueMenu distanceAlignmentThresholdMenu = new FrcValueMenu("DistanceALignmentThreshold", 10.0);
+        FrcValueMenu distanceAlignmentMultiplierMenu = new FrcValueMenu("DistanceALignmentMultiplier", 1.0);
+        FrcValueMenu idealTargetSizeMenu = new FrcValueMenu("IdealTargetSize", 150);
 
-        this.extendTime = 0.3;
-        this.horizontalAlignmentMultiplier = 1.0;
-        this.backupDistance = 12.0;
-        this.heading = robot.targetHeading;
-        this.horizontalAlignmentThreshold = 10.0;
-        this.distanceAlignmentThreshold = 10.0;
-        this.distanceAlignmentMultiplier = 1.0;
-        this.idealTargetSize = 150;
-        // this.alignmentSensitivity = alignmentSensitivity;
+        extendTime = Math.abs(extendTimeMenu.getCurrentValue());
+        horizontalAlignmentMultiplier = Math.abs(horizontalAlignmentMultiplierMenu.getCurrentValue());
+        backupDistance =  Math.abs(backupDistanceMenu.getCurrentValue());
+        horizontalAlignmentThreshold = Math.abs(horizontalAlignmentThresholdMenu.getCurrentValue());
+        distanceAlignmentThreshold  = Math.abs(distanceAlignmentThresholdMenu.getCurrentValue());
+        distanceAlignmentMultiplier  = Math.abs(distanceAlignmentMultiplierMenu.getCurrentValue());
+        idealTargetSize  = Math.abs(idealTargetSizeMenu.getCurrentValue());
+
         event = new TrcEvent(moduleName);
-        // timer = new TrcTimer(moduleName);
         sm = new TrcStateMachine<>(moduleName);
         sm.start(State.ALIGN_HORIZONTALLY);
     }   //CmdVisionGearDeploy
@@ -101,29 +105,31 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
                     double horizontalErrorMargin = midpoint - screenMidpoint;
                     if (Math.abs(horizontalErrorMargin) > horizontalAlignmentThreshold)
                     {
-                        double strafeTarget = Math.signum(horizontalErrorMargin)*horizontalAlignmentMultiplier;
-                        robot.pidDrive.setTarget(strafeTarget, 0.0, heading, false, event);
+                        double strafeTarget = horizontalErrorMargin*horizontalAlignmentMultiplier;
+                        robot.pidDrive.setTarget(strafeTarget, 0.0, robot.targetHeading, false, event);
+                        sm.waitForSingleEvent(event, State.ALIGN_HORIZONTALLY);
                     }
                     else
                     {
                     	sm.setState(State.ALIGN_DISTANCE);
                     }
-                    sm.waitForSingleEvent(event, State.ALIGN_HORIZONTALLY);
                     break;
+                    
                 case ALIGN_DISTANCE:
                 	double actualTargetSize = getTargetSize();
                 	double distanceErrorMargin = idealTargetSize - actualTargetSize;
                 	if ( distanceErrorMargin > distanceAlignmentThreshold)
                 	{
                 		double distanceTarget = distanceErrorMargin*distanceAlignmentMultiplier;
-                	robot.pidDrive.setTarget(0.0, distanceTarget, heading, false, event);
-                    sm.waitForSingleEvent(event, State.DEPLOY_GEAR);
+                	    robot.pidDrive.setTarget(0.0, distanceTarget, robot.targetHeading, false, event);
+                        sm.waitForSingleEvent(event, State.ALIGN_DISTANCE);
                 	}
                 	else
                 	{
                 		sm.setState(State.DEPLOY_GEAR);
                 	}
                     break;
+                    
                 case DEPLOY_GEAR:
                     //
                     // Place gear on axle.
@@ -136,7 +142,7 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
                     //
                     // Backup from axle.
                     //
-                    robot.pidDrive.setTarget(0.0, backupDistance, heading, false, event);
+                    robot.pidDrive.setTarget(0.0, -backupDistance, robot.targetHeading, false, event);
                     sm.waitForSingleEvent(event, State.DONE);
                     break;
 
