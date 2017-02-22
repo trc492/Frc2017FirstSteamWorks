@@ -63,6 +63,14 @@ public class FrcPixyCam extends FrcI2cDevice implements FrcI2cDevice.CompletionH
         public int yCenter;
         public int width;
         public int height;
+        public int angle;
+
+        public String toString()
+        {
+            return String.format(
+                "sync=0x%04x, chksum=0x%04x, sig=%d, xCenter=%3d, yCenter=%3d, width=%3d, height=%3d, angle=%3d",
+                sync, checksum, signature, xCenter, yCenter, width, height, angle);
+        }
     }   //class ObjectBlock
 
     /**
@@ -76,7 +84,8 @@ public class FrcPixyCam extends FrcI2cDevice implements FrcI2cDevice.CompletionH
         XCENTER,
         YCENTER,
         WIDTH,
-        HEIGHT
+        HEIGHT,
+        ANGLE
     }   //enum State
 
     private byte[] data = new byte[2];
@@ -402,6 +411,24 @@ public class FrcPixyCam extends FrcI2cDevice implements FrcI2cDevice.CompletionH
                     case HEIGHT:
                         currChecksum += word;
                         currBlock.height = word;
+                        if (currBlock.sync == PIXY_START_WORD_CC)
+                        {
+                            sm.setState(State.ANGLE);
+                        }
+                        else
+                        {
+                            if (currChecksum == currBlock.checksum)
+                            {
+                                objects.add(currBlock);
+                            }
+                            currBlock = null;
+                            sm.setState(State.SYNC);
+                        }
+                        break;
+
+                    case ANGLE:
+                        currChecksum += word;
+                        currBlock.angle = word;
                         if (currChecksum == currBlock.checksum)
                         {
                             objects.add(currBlock);

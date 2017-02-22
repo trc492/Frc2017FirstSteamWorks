@@ -42,15 +42,16 @@ public class Winch
         this.manualOverride = override;
     }
 
-    public boolean isLimitSwitchActive()
+    public boolean isFwdLimitSwitchActive()
     {
         return !motor.isFwdLimitSwitchClosed();
     }
 
-//    public boolean isLimitSwitch1Active()
-//    {
-//        return !motor.isFwdLimitSwitchClosed();
-//    }
+    public boolean isRevLimitSwitchActive()
+    {
+        return !motor.isRevLimitSwitchClosed();
+    }
+
     public double getPosition()
     {
         return motor.getPosition()*RobotInfo.WINCH_POSITION_SCALE; 
@@ -61,7 +62,7 @@ public class Winch
         double scale = 1.0; 
 //        if (proximitySensor.get())
 //            scale = RobotInfo.WINCH_POWER_SCALE;
-        if (!isLimitSwitchActive() || manualOverride)
+        if (manualOverride || !isFwdLimitSwitchActive() && !isRevLimitSwitchActive())
             motor.setPower(power / scale);
         else
             motor.setPower(0.0);

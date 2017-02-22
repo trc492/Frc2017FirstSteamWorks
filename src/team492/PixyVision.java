@@ -38,6 +38,7 @@ public class PixyVision
     private FrcPixyCam pixyCamera = null;
     private Relay ringLightPower = null;
     private TrcDbgTrace tracer = FrcRobotBase.getGlobalTracer();
+    private Rect lastTargetRect = null;
 
     public PixyVision()
     {
@@ -52,24 +53,35 @@ public class PixyVision
     }
 
     /**
-     * This method returns an array of rectangles of last detected objects.
+     * This method returns the rectangle of the last detected target.
      *
-     * @return array of rectangle of last detected objects.
+     * @return rectangle of last detected target.
      */
-    public Rect[] getObjectRects()
+    public Rect getTargetRect()
     {
-        Rect[] objectRects = null;
         ObjectBlock[] detectedObjects = pixyCamera.getDetectedObjects();
 
-        if (detectedObjects != null)
+        if (detectedObjects != null && detectedObjects.length >= 2)
         {
             for (int i = 0; i < detectedObjects.length; i++)
             {
                 tracer.traceInfo("PixyVision", "[%d] %s", i, detectedObjects[i].toString());
             }
+            int targetCenterX = (detectedObjects[0].xCenter + detectedObjects[1].xCenter)/2;
+            int targetCenterY = (detectedObjects[0].yCenter + detectedObjects[1].yCenter)/2;
+            int targetWidth = Math.abs(detectedObjects[0].xCenter - detectedObjects[1].xCenter) +
+                              (detectedObjects[0].width + detectedObjects[1].width)/2;
+            int targetHeight = Math.max(detectedObjects[0].yCenter + detectedObjects[0].height/2,
+                                        detectedObjects[1].yCenter + detectedObjects[1].height/2) -
+                               Math.min(detectedObjects[0].yCenter - detectedObjects[0].height/2,
+                                        detectedObjects[1].yCenter - detectedObjects[1].height/2);
+            lastTargetRect = new Rect(targetCenterX - targetWidth/2, targetCenterY - targetHeight/2,
+                                      targetWidth, targetHeight);
+            tracer.traceInfo("PixyVision", "TargetRect: x=%d, y=%d, w=%d, h=%d",
+                lastTargetRect.x, lastTargetRect.y, lastTargetRect.width, lastTargetRect.height);
         }
 
-        return objectRects;
-    }   //getObjectRects
+        return lastTargetRect;
+    }   //getTargetRect
 
 }   // class PixyVision
