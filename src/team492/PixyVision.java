@@ -67,6 +67,7 @@ public class PixyVision
             {
                 tracer.traceInfo("PixyVision", "[%d] %s", i, detectedObjects[i].toString());
             }
+
             int targetCenterX = (detectedObjects[0].xCenter + detectedObjects[1].xCenter)/2;
             int targetCenterY = (detectedObjects[0].yCenter + detectedObjects[1].yCenter)/2;
             int targetWidth = Math.abs(detectedObjects[0].xCenter - detectedObjects[1].xCenter) +
@@ -75,6 +76,7 @@ public class PixyVision
                                         detectedObjects[1].yCenter + detectedObjects[1].height/2) -
                                Math.min(detectedObjects[0].yCenter - detectedObjects[0].height/2,
                                         detectedObjects[1].yCenter - detectedObjects[1].height/2);
+
             lastTargetRect = new Rect(targetCenterX - targetWidth/2, targetCenterY - targetHeight/2,
                                       targetWidth, targetHeight);
             tracer.traceInfo("PixyVision", "TargetRect: x=%d, y=%d, w=%d, h=%d",

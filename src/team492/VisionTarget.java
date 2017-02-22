@@ -44,6 +44,7 @@ public class VisionTarget extends FrcVisionTarget
     private Relay ringLightPower;
     private GripPipeline pipeline;
     private TrcDbgTrace tracer;
+    private Rect lastTargetRect = null;
 
     public VisionTarget(final String instanceName, CvSink videoIn, CvSource videoOut)
     {
@@ -63,8 +64,6 @@ public class VisionTarget extends FrcVisionTarget
 
     public Rect getTargetRect()
     {
-        Rect targetRect = null;
-
         if (isEnabled())
         {
             Rect[] objectRects = getObjectRects();
@@ -74,7 +73,7 @@ public class VisionTarget extends FrcVisionTarget
             {
                 for (int i = 0; i < objectRects.length; i++)
                 {
-                    tracer.traceInfo("ObjectRect", "%02d: x=%d, y=%d, width=%d, height=%d",
+                    tracer.traceInfo("VisionTarget", "%02d: x=%d, y=%d, width=%d, height=%d",
                         i, objectRects[i].x, objectRects[i].y, objectRects[i].width, objectRects[i].height);
                 }
                 //
@@ -98,11 +97,14 @@ public class VisionTarget extends FrcVisionTarget
                                             objectRects[1].y + objectRects[1].height);
                 int targetRectWidth = targetRectX2 - targetRectX1;
                 int targetRectHeight = targetRectY2 - targetRectY1;
-                targetRect = new Rect(targetRectX1, targetRectY1, targetRectWidth, targetRectHeight);
+
+                lastTargetRect = new Rect(targetRectX1, targetRectY1, targetRectWidth, targetRectHeight);
+                tracer.traceInfo("PixyVision", "TargetRect: x=%d, y=%d, w=%d, h=%d",
+                    lastTargetRect.x, lastTargetRect.y, lastTargetRect.width, lastTargetRect.height);
             }
         }
 
-        return targetRect;
+        return lastTargetRect;
     }   //getTargetRect
 
     //
