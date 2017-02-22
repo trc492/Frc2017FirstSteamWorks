@@ -48,7 +48,6 @@ import frclib.FrcFaceDetector;
 import frclib.FrcGyro;
 import frclib.FrcPneumatic;
 import frclib.FrcRobotBase;
-import frclib.FrcValueMenu;
 import hallib.HalDashboard;
 import trclib.TrcDbgTrace;
 import trclib.TrcDriveBase;
@@ -78,8 +77,8 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     public static final boolean USE_NAV_X = true;
     public static final boolean USE_ANALOG_GYRO = false;
 
-    private static final boolean DEBUG_DRIVE_BASE = true;
-    private static final boolean DEBUG_PID_DRIVE = false;
+    private static final boolean DEBUG_DRIVE_BASE = false;
+    private static final boolean DEBUG_PID_DRIVE = true;
     private static final boolean DEBUG_VISION_TARGET = false;
     private static final boolean DEBUG_FACE_DETECTION = false;
     private static final double DASHBOARD_UPDATE_INTERVAL = 0.1;
@@ -145,13 +144,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     // Menus.
     //
     public FrcChoiceMenu<MatchType> matchTypeMenu;
-    public FrcValueMenu matchNumberMenu;
     public FrcChoiceMenu<Alliance> allianceMenu;
-    public FrcValueMenu driveTimeMenu;
-    public FrcValueMenu drivePowerMenu;
-    public FrcValueMenu driveDistanceMenu;
-    public FrcValueMenu drivePowerLimitMenu;
-    public FrcValueMenu turnDegreesMenu;
 
     public MatchType matchType;
     public int matchNumber;
@@ -318,16 +311,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         // Create Global Menus (can be used in all modes).
         //
         matchTypeMenu = new FrcChoiceMenu<>("Match type:");
-        matchNumberMenu = new FrcValueMenu("Match number:", 0.0);
         allianceMenu = new FrcChoiceMenu<>("Alliance:");
-        //
-        // The following value menus are shared between Autonomous and Test modes.
-        //
-        driveTimeMenu = new FrcValueMenu("Drive Time", 5.0);
-        drivePowerMenu = new FrcValueMenu("Drive Power", 0.2);
-        driveDistanceMenu = new FrcValueMenu("Drive Distance", 12.0);
-        drivePowerLimitMenu = new FrcValueMenu("Drive Power Limit", 1.0);
-        turnDegreesMenu = new FrcValueMenu("Turn Degrees", 360.0);
 
         //
         // Populate Global Menus.
@@ -345,13 +329,13 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         // Retrieve Global Choices.
         //
         matchType = matchTypeMenu.getCurrentChoiceObject();
-        matchNumber = (int)matchNumberMenu.getCurrentValue();
+        matchNumber = (int)HalDashboard.getNumber("Match Number", 0.0);
         alliance = allianceMenu.getCurrentChoiceObject();
-        driveTime = driveTimeMenu.getCurrentValue();
-        drivePower = drivePowerMenu.getCurrentValue();
-        driveDistance = driveDistanceMenu.getCurrentValue()*12.0;
-        drivePowerLimit = drivePowerLimitMenu.getCurrentValue();
-        turnDegrees = turnDegreesMenu.getCurrentValue();
+        driveTime = HalDashboard.getNumber("Drive Time", 5.0);
+        drivePower = HalDashboard.getNumber("Drive Power", 0.2);
+        driveDistance = HalDashboard.getNumber("Drive Distance", 20.0*12.0);
+        drivePowerLimit = HalDashboard.getNumber("Drive Power Limit", 0.75);
+        turnDegrees = HalDashboard.getNumber("Turn Degrees", 360.0);
 
         //
         // Robot Modes.

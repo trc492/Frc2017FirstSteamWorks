@@ -24,7 +24,7 @@ package team492;
 
 import org.opencv.core.Rect;
 
-import frclib.FrcValueMenu;
+import hallib.HalDashboard;
 import trclib.TrcEvent;
 import trclib.TrcRobot;
 import trclib.TrcStateMachine;
@@ -53,26 +53,18 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
     CmdVisionGearDeploy(Robot robot)
     {
         this.robot = robot;
-        
-        FrcValueMenu extendTimeMenu = new FrcValueMenu("PneumaticExtendTime", 0.3);
-        FrcValueMenu horizontalAlignmentMultiplierMenu = new FrcValueMenu("HorizontalAlignmentMultiplier", 1.0);
-        FrcValueMenu backupDistanceMenu = new FrcValueMenu("BackupDistance", 12.0);
-        FrcValueMenu horizontalAlignmentThresholdMenu = new FrcValueMenu("HorizontalAlignmentThreshold", 10.0);
-        FrcValueMenu distanceAlignmentThresholdMenu = new FrcValueMenu("DistanceALignmentThreshold", 10.0);
-        FrcValueMenu distanceAlignmentMultiplierMenu = new FrcValueMenu("DistanceALignmentMultiplier", 1.0);
-        FrcValueMenu idealTargetSizeMenu = new FrcValueMenu("IdealTargetSize", 150);
 
-        extendTime = Math.abs(extendTimeMenu.getCurrentValue());
-        horizontalAlignmentMultiplier = Math.abs(horizontalAlignmentMultiplierMenu.getCurrentValue());
-        backupDistance =  Math.abs(backupDistanceMenu.getCurrentValue());
-        horizontalAlignmentThreshold = Math.abs(horizontalAlignmentThresholdMenu.getCurrentValue());
-        distanceAlignmentThreshold  = Math.abs(distanceAlignmentThresholdMenu.getCurrentValue());
-        distanceAlignmentMultiplier  = Math.abs(distanceAlignmentMultiplierMenu.getCurrentValue());
-        idealTargetSize  = Math.abs(idealTargetSizeMenu.getCurrentValue());
+        extendTime = Math.abs(HalDashboard.getNumber("PneumaticExtendTime", 0.3));
+        horizontalAlignmentMultiplier = Math.abs(HalDashboard.getNumber("HorizontalAlignmentMultiplier", 1.0));
+        backupDistance = Math.abs(HalDashboard.getNumber("BackupDistance", 12.0));
+        horizontalAlignmentThreshold = Math.abs(HalDashboard.getNumber("HorizontalAlignmentThreshold", 10.0));
+        distanceAlignmentThreshold = Math.abs(HalDashboard.getNumber("DistanceAlignmentThreshold", 10.0));
+        distanceAlignmentMultiplier = Math.abs(HalDashboard.getNumber("DistanceAlignmentMultiplier", 1.0));
+        idealTargetSize  = Math.abs(HalDashboard.getNumber("IdealTargetSize", 10.0));
 
         event = new TrcEvent(moduleName);
         sm = new TrcStateMachine<>(moduleName);
-        sm.start(State.ALIGN_HORIZONTALLY);
+        sm.start(State.ALIGN_DISTANCE);//ALIGN_HORIZONTALLY);
     }   //CmdVisionGearDeploy
 
     //
@@ -91,6 +83,7 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
 
         if (sm.isReady())
         {
+            double xDistance, yDistance;
             state = sm.getState();
 
             switch (state)
@@ -116,18 +109,22 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
                     break;
                     
                 case ALIGN_DISTANCE:
-                	double actualTargetSize = getTargetSize();
-                	double distanceErrorMargin = idealTargetSize - actualTargetSize;
-                	if ( distanceErrorMargin > distanceAlignmentThreshold)
-                	{
-                		double distanceTarget = distanceErrorMargin*distanceAlignmentMultiplier;
-                	    robot.pidDrive.setTarget(0.0, distanceTarget, robot.targetHeading, false, event);
-                        sm.waitForSingleEvent(event, State.ALIGN_DISTANCE);
-                	}
-                	else
-                	{
-                		sm.setState(State.DEPLOY_GEAR);
-                	}
+                    xDistance = 0.0;
+                    yDistance = 12.0;
+                    robot.pidDrive.setTarget(0.0, yDistance, robot.targetHeading, false, event);
+                    sm.waitForSingleEvent(event, State.DEPLOY_GEAR);
+//                	double actualTargetSize = getTargetSize();
+//                	double distanceErrorMargin = idealTargetSize - actualTargetSize;
+//                	if ( distanceErrorMargin > distanceAlignmentThreshold)
+//                	{
+//                		double distanceTarget = distanceErrorMargin*distanceAlignmentMultiplier;
+//                	    robot.pidDrive.setTarget(0.0, distanceTarget, robot.targetHeading, false, event);
+//                        sm.waitForSingleEvent(event, State.ALIGN_DISTANCE);
+//                	}
+//                	else
+//                	{
+//                		sm.setState(State.DEPLOY_GEAR);
+//                	}
                     break;
                     
                 case DEPLOY_GEAR:
@@ -142,7 +139,8 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
                     //
                     // Backup from axle.
                     //
-                    robot.pidDrive.setTarget(0.0, -backupDistance, robot.targetHeading, false, event);
+                    robot.pidDrive.setTarget(0.0, -24.0, robot.targetHeading, false, event);
+//                    robot.pidDrive.setTarget(0.0, -backupDistance, robot.targetHeading, false, event);
                     sm.waitForSingleEvent(event, State.DONE);
                     break;
 

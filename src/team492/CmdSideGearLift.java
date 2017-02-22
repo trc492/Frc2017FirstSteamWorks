@@ -22,7 +22,7 @@
 
 package team492;
 
-import frclib.FrcValueMenu;
+import hallib.HalDashboard;
 import trclib.TrcEvent;
 import trclib.TrcRobot;
 import trclib.TrcStateMachine;
@@ -48,8 +48,8 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
     private Robot robot;
     private double delay;
     private boolean rightSide;
-    private double sideMoveDistance;
-    private double angleToAirship;
+    private double sideAirshipDistance;
+    private double sideLiftAngle;
     private double orientedAirshipMoveDistance;
     private double loadingStationTurnAngle;
     private double loadingStationMoveDistance;
@@ -68,20 +68,15 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
         //
         // All distances from the menus are in the unit of feet.
         //
-        FrcValueMenu sideMoveDistanceMenu = new FrcValueMenu("MoveDistanceOnSide", 7.0 - RobotInfo.ROBOT_LENGTH/12.0);
-        FrcValueMenu angleToAirshipMenu = new FrcValueMenu("AngleToAirship", 60.0);
-        FrcValueMenu orientedAirshipMoveDistanceMenu = new FrcValueMenu("OrientedAirshipMoveDistance", 5.0);
-        FrcValueMenu loadingStationTurnAngleMenu = new FrcValueMenu("LoadingStationTurnAngle", 45.0);
-        FrcValueMenu loadingStationMoveDistanceMenu = new FrcValueMenu("LoadingStationMoveDistance", 20.0);
 
         //
         // Convert all distances to the unit of inches.
         //
-        sideMoveDistance = sideMoveDistanceMenu.getCurrentValue()*12.0;
-        angleToAirship = Math.abs(angleToAirshipMenu.getCurrentValue());
-        orientedAirshipMoveDistance =  Math.abs(orientedAirshipMoveDistanceMenu.getCurrentValue())*12.0;
-        loadingStationTurnAngle = Math.abs(loadingStationTurnAngleMenu.getCurrentValue());
-        loadingStationMoveDistance  = loadingStationMoveDistanceMenu.getCurrentValue()*12.0;
+        sideAirshipDistance = HalDashboard.getNumber("SideAirshipDistance", 48.0);
+        sideLiftAngle = Math.abs(HalDashboard.getNumber("SideLiftAngle", 60.0));
+        orientedAirshipMoveDistance = HalDashboard.getNumber("orientedAirshipMoveDistance", 30.0);
+        loadingStationTurnAngle = Math.abs(HalDashboard.getNumber("loadingStationTurnAngle", 0.0));
+        loadingStationMoveDistance = HalDashboard.getNumber("loadingStationMoveDistance", 40.0*12.0);
 
         visionDeploy = new CmdVisionGearDeploy(robot);
 
@@ -133,7 +128,7 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
                     // Drive the set distance and heading.
                     //
                     xDistance = 0;
-                    yDistance = sideMoveDistance;
+                    yDistance = sideAirshipDistance;
 
                     robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
                     sm.waitForSingleEvent(event, State.TURN_TOWARDS_AIRSHIP);
@@ -145,7 +140,7 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
                     //
                     xDistance = 0;
                     yDistance = 0;
-                    robot.targetHeading = rightSide ? -angleToAirship : angleToAirship;
+                    robot.targetHeading = rightSide ? -sideLiftAngle : sideLiftAngle;
 
                     robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
                     sm.waitForSingleEvent(event, State.MOVE_TOWARDS_AIRSHIP);

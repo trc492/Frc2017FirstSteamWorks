@@ -287,31 +287,6 @@ public class FrcPixyCam extends FrcI2cDevice implements FrcI2cDevice.CompletionH
         return objectBlocks;
     }   //getDetectedObjects
 
-//    /**
-//     * This method returns an array of rectangles of last detected objects.
-//     *
-//     * @return array of rectangle of last detected objects.
-//     */
-//    public Rect[] getObjectRects()
-//    {
-//        final String funcName = "getObjectRects";
-//        Rect[] objectRects = null;
-//
-//        if (debugEnabled)
-//        {
-//            dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.API);
-//            dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.API);
-//        }
-//
-//        synchronized (objectLock)
-//        {
-//            objectRects = detectedObjectRects;
-//            detectedObjectRects = null;
-//        }
-//
-//        return objectRects;
-//    }   //getObjectRects
-
     //
     // Implements FrcI2cDevice.CompletionHandler interface.
     //
@@ -327,7 +302,7 @@ public class FrcPixyCam extends FrcI2cDevice implements FrcI2cDevice.CompletionH
      */
     public void readCompletion(int regAddress, int length, double timestamp, byte[] data, boolean error)
     {
-        if (regAddress == 0 && !error)
+        if (regAddress == -1 && !error)
         {
             if (length == 1)
             {

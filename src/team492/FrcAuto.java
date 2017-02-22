@@ -25,7 +25,7 @@ package team492;
 import java.util.Date;
 
 import frclib.FrcChoiceMenu;
-import frclib.FrcValueMenu;
+import hallib.HalDashboard;
 import trclib.TrcRobot;
 
 public class FrcAuto implements TrcRobot.RobotMode
@@ -51,7 +51,6 @@ public class FrcAuto implements TrcRobot.RobotMode
     // Menus.
     //
     private FrcChoiceMenu<FrcAuto.AutoStrategy> autoStrategyMenu;
-    private FrcValueMenu delayMenu;
 
     private AutoStrategy autoStrategy;
     private double delay;
@@ -65,7 +64,6 @@ public class FrcAuto implements TrcRobot.RobotMode
         // Create Autonomous Mode specific menus.
         //
         autoStrategyMenu = new FrcChoiceMenu<>("Autonomous Strategies");
-        delayMenu = new FrcValueMenu("Delay", 0.0);
         //
         // Populate Autonomous Mode menus.
         //
@@ -95,7 +93,7 @@ public class FrcAuto implements TrcRobot.RobotMode
         // Retrieve menu choice values.
         //
         autoStrategy = autoStrategyMenu.getCurrentChoiceObject();
-        delay = delayMenu.getCurrentValue();
+        delay = HalDashboard.getNumber("Delay", 0.0);
 
         switch (autoStrategy)
         {

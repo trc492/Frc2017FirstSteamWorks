@@ -57,4 +57,29 @@ public class PixyVision
         double voltage = pixyCamera.getVoltage();
         return (voltage - RobotInfo.PIXYCAM_MID_VOLT) / RobotInfo.PIXYCAM_MID_VOLT;
     }
+//  /**
+//  * This method returns an array of rectangles of last detected objects.
+//  *
+//  * @return array of rectangle of last detected objects.
+//  */
+// public Rect[] getObjectRects()
+// {
+//     final String funcName = "getObjectRects";
+//     Rect[] objectRects = null;
+//
+//     if (debugEnabled)
+//     {
+//         dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.API);
+//         dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.API);
+//     }
+//
+//     synchronized (objectLock)
+//     {
+//         objectRects = detectedObjectRects;
+//         detectedObjectRects = null;
+//     }
+//
+//     return objectRects;
+// }   //getObjectRects
+
 }

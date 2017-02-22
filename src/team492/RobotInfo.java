@@ -96,27 +96,30 @@ public class RobotInfo
     //
     // DriveBase subsystem.
     //
-    public static final double ENCODER_X_INCHES_PER_COUNT       = 0.0096445521503229;
+
+    // 20-21-2017: 0.0091442577063687, 0.17, 0.0, 0.0
+    public static final double ENCODER_X_INCHES_PER_COUNT       = 0.0091442577063687;
     public static final double ENCODER_X_KP                     = 0.17;
     public static final double ENCODER_X_KI                     = 0.0;
     public static final double ENCODER_X_KD                     = 0.0;
     public static final double ENCODER_X_KF                     = 0.0;
-    public static final double ENCODER_X_TOLERANCE              = 1.0;
+    public static final double ENCODER_X_TOLERANCE              = 2.0;
     public static final double ENCODER_X_SETTLING               = 0.2;
 
-    public static final double ENCODER_Y_INCHES_PER_COUNT       = 0.0163332801250675;
+    // 02-21-2017: 0.0159419007257628, 0.03, 0.0, 0.0075
+    public static final double ENCODER_Y_INCHES_PER_COUNT       = 0.0159419007257628;
     public static final double ENCODER_Y_KP                     = 0.03;
     public static final double ENCODER_Y_KI                     = 0.0;
-    public static final double ENCODER_Y_KD                     = 0.01;
+    public static final double ENCODER_Y_KD                     = 0.007;
     public static final double ENCODER_Y_KF                     = 0.0;
-    public static final double ENCODER_Y_TOLERANCE              = 1.0;
+    public static final double ENCODER_Y_TOLERANCE              = 2.0;
     public static final double ENCODER_Y_SETTLING               = 0.2;
 
     public static final double GYRO_TURN_KP                     = 0.018;
     public static final double GYRO_TURN_KI                     = 0.0;
     public static final double GYRO_TURN_KD                     = 0.0;
     public static final double GYRO_TURN_KF                     = 0.0;
-    public static final double GYRO_TURN_TOLERANCE              = 1.0;
+    public static final double GYRO_TURN_TOLERANCE              = 2.0;
     public static final double GYRO_TURN_SETTLING               = 0.2;
 
     public static final double DRIVE_SLOW_XSCALE                = 3.0;
