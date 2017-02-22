@@ -22,22 +22,26 @@
 
 package team492;
 
-import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.DigitalInput;
+import org.opencv.core.Rect;
+
+import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Relay.Direction;
 import edu.wpi.first.wpilibj.Relay.Value;
+import frclib.FrcPixyCam;
+import frclib.FrcPixyCam.ObjectBlock;
+import frclib.FrcRobotBase;
+import trclib.TrcDbgTrace;
 
 public class PixyVision
 {
-    private AnalogInput pixyCamera = null;
-    private DigitalInput objectDetected = null;
+    private FrcPixyCam pixyCamera = null;
     private Relay ringLightPower = null;
+    private TrcDbgTrace tracer = FrcRobotBase.getGlobalTracer();
 
     public PixyVision()
     {
-        pixyCamera = new AnalogInput(RobotInfo.AIN_PIXYCAM_OBJECT_POS);
-        objectDetected = new DigitalInput(RobotInfo.DIN_PIXYCAM_OBJECTS_DETECTED);
+        pixyCamera = new FrcPixyCam("FrontPixy", I2C.Port.kMXP, RobotInfo.PIXYCAM_FRONT_I2C_ADDRESS);
         ringLightPower = new Relay(RobotInfo.RELAY_RINGLIGHT_POWER);
         ringLightPower.setDirection(Direction.kForward);
     }
@@ -47,39 +51,25 @@ public class PixyVision
         ringLightPower.set(on? Value.kOn: Value.kOff);
     }
 
-    public boolean isTargetDetected()
+    /**
+     * This method returns an array of rectangles of last detected objects.
+     *
+     * @return array of rectangle of last detected objects.
+     */
+    public Rect[] getObjectRects()
     {
-        return objectDetected.get();
-    }
+        Rect[] objectRects = null;
+        ObjectBlock[] detectedObjects = pixyCamera.getDetectedObjects();
 
-    public double getTargetPosition()
-    {
-        double voltage = pixyCamera.getVoltage();
-        return (voltage - RobotInfo.PIXYCAM_MID_VOLT) / RobotInfo.PIXYCAM_MID_VOLT;
-    }
-//  /**
-//  * This method returns an array of rectangles of last detected objects.
-//  *
-//  * @return array of rectangle of last detected objects.
-//  */
-// public Rect[] getObjectRects()
-// {
-//     final String funcName = "getObjectRects";
-//     Rect[] objectRects = null;
-//
-//     if (debugEnabled)
-//     {
-//         dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.API);
-//         dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.API);
-//     }
-//
-//     synchronized (objectLock)
-//     {
-//         objectRects = detectedObjectRects;
-//         detectedObjectRects = null;
-//     }
-//
-//     return objectRects;
-// }   //getObjectRects
+        if (detectedObjects != null)
+        {
+            for (int i = 0; i < detectedObjects.length; i++)
+            {
+                tracer.traceInfo("PixyVision", "[%d] %s", i, detectedObjects[i].toString());
+            }
+        }
 
-}
+        return objectRects;
+    }   //getObjectRects
+
+}   // class PixyVision

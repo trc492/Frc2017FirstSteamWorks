@@ -41,6 +41,8 @@ public class FrcPixyCam extends FrcI2cDevice implements FrcI2cDevice.CompletionH
     private static final TrcDbgTrace.MsgLevel msgLevel = TrcDbgTrace.MsgLevel.INFO;
     private TrcDbgTrace dbgTrace = null;
 
+    public static final int DEF_I2C_ADDRESS = 0x54;
+
     private static final int PIXY_START_WORD                    = 0xaa55;
     private static final int PIXY_START_WORD_CC                 = 0xaa56;
     private static final int PIXY_START_WORDX                   = 0x55aa;
@@ -52,7 +54,7 @@ public class FrcPixyCam extends FrcI2cDevice implements FrcI2cDevice.CompletionH
     /**
      * This class implements the pixy camera object block communication protocol. 
      */
-    private class ObjectBlock
+    public class ObjectBlock
     {
         public int sync;
         public int checksum;
@@ -76,8 +78,6 @@ public class FrcPixyCam extends FrcI2cDevice implements FrcI2cDevice.CompletionH
         WIDTH,
         HEIGHT
     }   //enum State
-
-    private static final int DEF_I2C_ADDRESS = 0x54;
 
     private byte[] data = new byte[2];
     private ArrayList<ObjectBlock> objects = new ArrayList<>();

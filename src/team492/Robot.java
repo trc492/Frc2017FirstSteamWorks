@@ -374,10 +374,10 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
             //
             // Sensor info.
             //
-            if (pixyVision != null && pixyVision.isTargetDetected())
-            {
-                dashboard.displayPrintf(1, "Pixy: %.3f", pixyVision.getTargetPosition());
-            }
+//            if (pixyVision != null && pixyVision.isTargetDetected())
+//            {
+//                dashboard.displayPrintf(1, "Pixy: %.3f", pixyVision.getTargetPosition());
+//            }
 
             if (DEBUG_DRIVE_BASE)
             {
