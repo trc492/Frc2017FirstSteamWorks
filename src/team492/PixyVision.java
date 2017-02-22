@@ -61,6 +61,7 @@ public class PixyVision
     {
         ObjectBlock[] detectedObjects = pixyCamera.getDetectedObjects();
 
+        tracer.traceInfo("PixyVision", "%d object(s) found", detectedObjects != null? detectedObjects.length: 0);
         if (detectedObjects != null && detectedObjects.length >= 2)
         {
             for (int i = 0; i < detectedObjects.length; i++)

@@ -68,7 +68,7 @@ public class VisionTarget extends FrcVisionTarget
         {
             Rect[] objectRects = getObjectRects();
 
-            tracer.traceInfo("Robot", "%d object(s) found", objectRects != null? objectRects.length: 0);
+            tracer.traceInfo("VisionTarget", "%d object(s) found", objectRects != null? objectRects.length: 0);
             if (objectRects != null && objectRects.length >= 2)
             {
                 for (int i = 0; i < objectRects.length; i++)
