@@ -69,18 +69,18 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     public static final String programName = "FirstSteamWorks";
     public static final String moduleName = "Robot";
 
-    public static final boolean USE_VISION_TARGET = false;
+    public static final boolean USE_GRIP_VISION = false;
     public static final boolean USE_FACE_DETECTOR = false;
-    public static final boolean USE_PIXY_VISION = false;
+    public static final boolean USE_PIXY_VISION = true;
     public static final boolean USE_AXIS_CAMERA = false;
-    public static final boolean USE_PIXY_CAMERA = false;
-    public static final boolean USE_NAV_X = true;
-    public static final boolean USE_ANALOG_GYRO = false;
+    public static final boolean USE_NAV_X = false;
+    public static final boolean USE_ANALOG_GYRO = true;
 
     private static final boolean DEBUG_DRIVE_BASE = false;
-    private static final boolean DEBUG_PID_DRIVE = true;
-    private static final boolean DEBUG_VISION_TARGET = false;
+    private static final boolean DEBUG_PID_DRIVE = false;
+    private static final boolean DEBUG_GRIP_VISION = false;
     private static final boolean DEBUG_FACE_DETECTION = false;
+    private static final boolean DEBUG_PIXY_VISION = true;
     private static final double DASHBOARD_UPDATE_INTERVAL = 0.1;
 
     public static enum MatchType
@@ -114,7 +114,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     //
     // VisionTarget subsystem.
     //
-    public VisionTarget visionTarget = null;
+    public GripVision gripVision = null;
     public FrcFaceDetector faceDetector = null;
     public PixyVision pixyVision = null;
 
@@ -196,7 +196,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         //
         // VisionTarget subsystem.
         //
-        if (USE_VISION_TARGET)
+        if (USE_GRIP_VISION)
         {
             CvSink videoIn;
             CvSource videoOut;
@@ -209,11 +209,11 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
                 axisCam.setBrightness(RobotInfo.CAM_BRIGHTNESS);
                 videoIn = CameraServer.getInstance().getVideo(axisCam);
             }
-            else if (USE_PIXY_CAMERA)
-            {
-            }
             else
             {
+                //
+                // Use USB camera.
+                //
                 UsbCamera cam0 = CameraServer.getInstance().startAutomaticCapture("cam0", 0);
                 cam0.setResolution(RobotInfo.CAM_WIDTH, RobotInfo.CAM_HEIGHT);
                 cam0.setFPS(RobotInfo.CAM_FRAME_RATE);
@@ -222,7 +222,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
             }
             videoOut = CameraServer.getInstance().putVideo("VisionTarget", RobotInfo.CAM_WIDTH, RobotInfo.CAM_HEIGHT);
 
-            visionTarget = new VisionTarget("VisionTarget", videoIn, videoOut);
+            gripVision = new GripVision("GripVision", videoIn, videoOut);
         }
         else if (USE_FACE_DETECTOR)
         {
@@ -348,7 +348,6 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
 
     public void robotStartMode()
     {
-        HalDashboard.getInstance().clearDisplay();
         driveBase.resetPosition();
         targetHeading = 0.0;
     }   //robotStartMode
@@ -370,14 +369,6 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         if (currTime >= nextUpdateTime)
         {
             nextUpdateTime = currTime + DASHBOARD_UPDATE_INTERVAL;
-
-            //
-            // Sensor info.
-            //
-//            if (pixyVision != null && pixyVision.isTargetDetected())
-//            {
-//                dashboard.displayPrintf(1, "Pixy: %.3f", pixyVision.getTargetPosition());
-//            }
 
             if (DEBUG_DRIVE_BASE)
             {
@@ -401,12 +392,12 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
                 HalDashboard.putNumber("DriveBase.Heading", driveBase.getHeading());
             }
 
-            if (DEBUG_VISION_TARGET)
+            if (DEBUG_GRIP_VISION)
             {
-                if (visionTarget != null && visionTarget.isEnabled())
+                if (gripVision != null && gripVision.isEnabled())
                 {
-                    Rect[] targetRects = visionTarget.getObjectRects();
-                    tracer.traceInfo("Robot", "Target is %s (%d)",
+                    Rect[] targetRects = gripVision.getObjectRects();
+                    tracer.traceInfo("GripVision", "Target is %s (%d)",
                         targetRects == null? "not found": "found", targetRects == null? 0: targetRects.length);
                     if (targetRects != null)
                     {
@@ -435,6 +426,21 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
                             tracer.traceInfo("FaceRect", "%02d: x=%d, y=%d, width=%d, height=%d",
                                 i, faceRects[i].x, faceRects[i].y, faceRects[i].width, faceRects[i].height);
                         }
+                    }
+                }
+            }
+
+            if (DEBUG_PIXY_VISION)
+            {
+                if (pixyVision != null && pixyVision.isEnabled())
+                {
+                    Rect targetRect = pixyVision.getTargetRect();
+                    if (targetRect != null)
+                    {
+                        dashboard.displayPrintf(1, "x=%d, y=%d, width=%d, height=%d",
+                            targetRect.x, targetRect.y, targetRect.width, targetRect.height);
+                        tracer.traceInfo("PixyVision", "x=%d, y=%d, width=%d, height=%d",
+                            targetRect.x, targetRect.y, targetRect.width, targetRect.height);
                     }
                 }
             }

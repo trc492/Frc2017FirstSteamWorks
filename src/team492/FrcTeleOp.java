@@ -24,6 +24,7 @@ package team492;
 
 import edu.wpi.first.wpilibj.Relay.Value;
 import frclib.FrcJoystick;
+import hallib.HalDashboard;
 import trclib.TrcRobot;
 
 public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
@@ -47,6 +48,7 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
     private boolean slowDriveOverride = false;
     private DriveMode driveMode = DriveMode.MECANUM_MODE;
 
+    private boolean visionEnabled = false;
     private boolean driveInverted = false;
     private boolean flashLightsOn = false;
 
@@ -73,6 +75,7 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
     @Override
     public void startMode()
     {
+        HalDashboard.getInstance().clearDisplay();
     }   // startMode
 
     @Override
@@ -178,10 +181,10 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
                 case FrcJoystick.LOGITECH_BUTTON10:
                     if (pressed)
                     {
-                        if (robot.visionTarget != null)
+                        if (robot.gripVision != null)
                         {
-                            robot.visionTarget.setVideoOutEnabled(false);
-                            robot.visionTarget.setEnabled(false);
+                            robot.gripVision.setVideoOutEnabled(false);
+                            robot.gripVision.setEnabled(false);
                             robot.tracer.traceInfo("TeleOp", "Vision Target disabled!");
                         }
                         else if (robot.faceDetector != null)
@@ -192,6 +195,7 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
                         }
                         else if (robot.pixyVision != null)
                         {
+                            robot.pixyVision.setEnabled(false);
                             robot.pixyVision.setRingLightOn(false);
                         }
                     }
@@ -200,10 +204,10 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
                 case FrcJoystick.LOGITECH_BUTTON11:
                     if (pressed)
                     {
-                        if (robot.visionTarget != null)
+                        if (robot.gripVision != null)
                         {
-                            robot.visionTarget.setEnabled(true);
-                            robot.visionTarget.setVideoOutEnabled(true);
+                            robot.gripVision.setEnabled(true);
+                            robot.gripVision.setVideoOutEnabled(true);
                             robot.tracer.traceInfo("TeleOp", "Vision Target enabled!");
                         }
                         else if (robot.faceDetector != null)
@@ -215,6 +219,7 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
                         else if (robot.pixyVision != null)
                         {
                             robot.pixyVision.setRingLightOn(true);
+                            robot.pixyVision.setEnabled(true);
                         }
                     }
                     break;
@@ -264,6 +269,27 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
             switch (button)
             {
                 case FrcJoystick.LOGITECH_TRIGGER:
+                    if (pressed)
+                    {
+                        visionEnabled = !visionEnabled;
+                        if (robot.gripVision != null)
+                        {
+                            robot.gripVision.setVideoOutEnabled(visionEnabled);
+                            robot.gripVision.setEnabled(visionEnabled);
+                            robot.tracer.traceInfo("TeleOp", "Grip Vision is %s!", Boolean.toString(visionEnabled));
+                        }
+                        else if (robot.faceDetector != null)
+                        {
+                            robot.faceDetector.setVideoOutEnabled(visionEnabled);
+                            robot.faceDetector.setEnabled(visionEnabled);
+                            robot.tracer.traceInfo("TeleOp", "Face Detector is %s!", Boolean.toString(visionEnabled));
+                        }
+                        else if (robot.pixyVision != null)
+                        {
+                            robot.pixyVision.setRingLightOn(visionEnabled);
+                            robot.pixyVision.setEnabled(visionEnabled);
+                        }
+                    }
                     break;
 
                 case FrcJoystick.LOGITECH_BUTTON2:
@@ -309,14 +335,6 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
                     break;
 
                 case FrcJoystick.LOGITECH_BUTTON8:
-                    if (pressed)
-                    {
-                        robot.mailbox.extend();
-                    }
-                    else
-                    {
-                        robot.mailbox.retract();
-                    }
                     break;
 
                 case FrcJoystick.LOGITECH_BUTTON9:

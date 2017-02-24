@@ -39,14 +39,14 @@ import frclib.FrcRobotBase;
 import frclib.FrcVisionTarget;
 import trclib.TrcDbgTrace;
 
-public class VisionTarget extends FrcVisionTarget
+public class GripVision extends FrcVisionTarget
 {
     private Relay ringLightPower;
     private GripPipeline pipeline;
     private TrcDbgTrace tracer;
     private Rect lastTargetRect = null;
 
-    public VisionTarget(final String instanceName, CvSink videoIn, CvSource videoOut)
+    public GripVision(final String instanceName, CvSink videoIn, CvSource videoOut)
     {
         super(instanceName, videoIn, videoOut);
 
@@ -54,7 +54,7 @@ public class VisionTarget extends FrcVisionTarget
         ringLightPower.setDirection(Direction.kForward);
         pipeline = new GripPipeline();
         tracer = FrcRobotBase.getGlobalTracer();
-    }   //VisionTarget
+    }   //GripVision
 
     public void setEnabled(boolean enabled)
     {
@@ -123,4 +123,4 @@ public class VisionTarget extends FrcVisionTarget
         return pipeline.findContoursOutput();
     }   //getDetectedObjects
 
-}   //class VisionTarget
+}   //class GripVision

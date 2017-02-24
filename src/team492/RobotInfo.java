@@ -132,7 +132,7 @@ public class RobotInfo
     // Vision subsystem.
     //
     public static final int PIXYCAM_FRONT_I2C_ADDRESS           = FrcPixyCam.DEF_I2C_ADDRESS;
-    public static final int PIXYCAM_BACK_I2C_ADDRESS            = PIXYCAM_FRONT_I2C_ADDRESS + 2;
+    public static final int PIXYCAM_REAR_I2C_ADDRESS            = PIXYCAM_FRONT_I2C_ADDRESS + 2;
     public static final double PIXYCAM_MID_VOLT                 = 3.3/2.0;  // in volts
 
     //

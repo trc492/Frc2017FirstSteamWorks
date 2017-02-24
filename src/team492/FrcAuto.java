@@ -85,6 +85,8 @@ public class FrcAuto implements TrcRobot.RobotMode
     @Override
     public void startMode()
     {
+        HalDashboard.getInstance().clearDisplay();
+
         if (USE_TRACELOG) robot.startTraceLog();
         Date now = new Date();
         robot.tracer.traceInfo(Robot.programName, "%s: ***** Starting autonomous *****", now.toString());

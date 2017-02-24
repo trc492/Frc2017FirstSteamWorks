@@ -24,28 +24,50 @@ package team492;
 
 import org.opencv.core.Rect;
 
-import edu.wpi.first.wpilibj.I2C;
+//import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Relay;
+import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.Relay.Direction;
 import edu.wpi.first.wpilibj.Relay.Value;
 import frclib.FrcPixyCam;
 import frclib.FrcPixyCam.ObjectBlock;
-import frclib.FrcRobotBase;
 import trclib.TrcDbgTrace;
 
 public class PixyVision
 {
+    private static final String moduleName = "PixyVision";
+    private static final boolean debugEnabled = false;
+    private static final boolean tracingEnabled = false;
+    private static final TrcDbgTrace.TraceLevel traceLevel = TrcDbgTrace.TraceLevel.API;
+    private static final TrcDbgTrace.MsgLevel msgLevel = TrcDbgTrace.MsgLevel.INFO;
+    private TrcDbgTrace dbgTrace = null;
+
     private FrcPixyCam pixyCamera = null;
     private Relay ringLightPower = null;
-    private TrcDbgTrace tracer = FrcRobotBase.getGlobalTracer();
     private Rect lastTargetRect = null;
 
     public PixyVision()
     {
-        pixyCamera = new FrcPixyCam("FrontPixy", I2C.Port.kMXP, RobotInfo.PIXYCAM_FRONT_I2C_ADDRESS);
+        if (debugEnabled)
+        {
+            dbgTrace = new TrcDbgTrace(moduleName, tracingEnabled, traceLevel, msgLevel);
+        }
+
+//        pixyCamera = new FrcPixyCam("FrontPixy", I2C.Port.kOnboard, RobotInfo.PIXYCAM_FRONT_I2C_ADDRESS);
+        pixyCamera = new FrcPixyCam("RearPixy", SerialPort.Port.kMXP, 19200);
         ringLightPower = new Relay(RobotInfo.RELAY_RINGLIGHT_POWER);
         ringLightPower.setDirection(Direction.kForward);
     }
+
+    public void setEnabled(boolean enabled)
+    {
+        pixyCamera.setEnabled(enabled);
+    }   //setEnabled
+
+    public boolean isEnabled()
+    {
+        return pixyCamera.isEnabled();
+    }   //isEnabled
 
     public void setRingLightOn(boolean on)
     {
@@ -61,12 +83,19 @@ public class PixyVision
     {
         ObjectBlock[] detectedObjects = pixyCamera.getDetectedObjects();
 
-        tracer.traceInfo("PixyVision", "%d object(s) found", detectedObjects != null? detectedObjects.length: 0);
+        if (debugEnabled)
+        {
+            dbgTrace.traceInfo(moduleName, "%d object(s) found", detectedObjects != null? detectedObjects.length: 0);
+        }
+
         if (detectedObjects != null && detectedObjects.length >= 2)
         {
-            for (int i = 0; i < detectedObjects.length; i++)
+            if (debugEnabled)
             {
-                tracer.traceInfo("PixyVision", "[%d] %s", i, detectedObjects[i].toString());
+                for (int i = 0; i < detectedObjects.length; i++)
+                {
+                    dbgTrace.traceInfo(moduleName, "[%d] %s", i, detectedObjects[i].toString());
+                }
             }
 
             int targetCenterX = (detectedObjects[0].xCenter + detectedObjects[1].xCenter)/2;
@@ -80,8 +109,12 @@ public class PixyVision
 
             lastTargetRect = new Rect(targetCenterX - targetWidth/2, targetCenterY - targetHeight/2,
                                       targetWidth, targetHeight);
-            tracer.traceInfo("PixyVision", "TargetRect: x=%d, y=%d, w=%d, h=%d",
-                lastTargetRect.x, lastTargetRect.y, lastTargetRect.width, lastTargetRect.height);
+
+            if (debugEnabled)
+            {
+                dbgTrace.traceInfo("PixyVision", "TargetRect: x=%d, y=%d, w=%d, h=%d",
+                    lastTargetRect.x, lastTargetRect.y, lastTargetRect.width, lastTargetRect.height);
+            }
         }
 
         return lastTargetRect;

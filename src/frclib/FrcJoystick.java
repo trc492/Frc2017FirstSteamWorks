@@ -27,6 +27,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import trclib.TrcDbgTrace;
 import trclib.TrcRobot;
 import trclib.TrcTaskMgr;
+import trclib.TrcUtil;
 
 /**
  * This class implements the platform dependent joystick. It provides monitoring of the joystick buttons. If the
@@ -99,8 +100,6 @@ public class FrcJoystick extends Joystick implements TrcTaskMgr.Task
     public static final int XBOX_BACK           = (1 << 6);
     public static final int XBOX_START          = (1 << 7);
 
-    private double deadbandThreshold = 0.15;
-
     /**
      * This interface, if provided, will allow this class to do a notification callback when there are button
      * activities.
@@ -117,6 +116,12 @@ public class FrcJoystick extends Joystick implements TrcTaskMgr.Task
         void joystickButtonEvent(FrcJoystick joystick, int button, boolean pressed);
 
     }   //interface ButonHandler
+
+    private static final double DEF_DEADBAND_THRESHOLD = 0.15;
+    private static final double DEF_SAMPLING_PERIOD = 0.02;     //Sampling at 50Hz.
+    private double samplingPeriod = DEF_SAMPLING_PERIOD;
+    private double nextPeriod = 0.0;
+    private double deadbandThreshold = DEF_DEADBAND_THRESHOLD;
 
     private final String instanceName;
     private int port;
@@ -176,6 +181,19 @@ public class FrcJoystick extends Joystick implements TrcTaskMgr.Task
     {
         return instanceName;
     }   //toString
+
+    public void setSamplingPeriod(double period)
+    {
+        final String funcName = "setSamplingPeriod";
+
+        if (debugEnabled)
+        {
+            dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.API, "period=%.3f", period);
+            dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.API);
+        }
+
+        samplingPeriod = period;
+    }   //setSamplingPeriod
 
     /**
      * This method inverts the y-axis of the analog sticks.
@@ -527,53 +545,59 @@ public class FrcJoystick extends Joystick implements TrcTaskMgr.Task
     public void prePeriodicTask(TrcRobot.RunMode runMode)
     {
         final String funcName = "prePeriodic";
+        double currTime = TrcUtil.getCurrentTime();
 
         if (debugEnabled)
         {
             dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.TASK, "mode=%s", runMode.toString());
         }
 
-        int currButtons = ds.getStickButtons(port);
-        if (buttonHandler != null && runMode != TrcRobot.RunMode.DISABLED_MODE)
+        if (currTime >= nextPeriod)
         {
-            int changedButtons = prevButtons^currButtons;
-            int buttonMask;
+            nextPeriod = currTime + samplingPeriod;
 
-            while (changedButtons != 0)
+            int currButtons = ds.getStickButtons(port);
+            if (buttonHandler != null && runMode != TrcRobot.RunMode.DISABLED_MODE)
             {
-                //
-                // buttonMask contains the least significant set bit.
-                //
-                buttonMask = changedButtons & ~(changedButtons^-changedButtons);
-                if ((currButtons & buttonMask) != 0)
+                int changedButtons = prevButtons^currButtons;
+                int buttonMask;
+
+                while (changedButtons != 0)
                 {
                     //
-                    // Button is pressed.
+                    // buttonMask contains the least significant set bit.
                     //
-                    if (debugEnabled)
+                    buttonMask = changedButtons & ~(changedButtons^-changedButtons);
+                    if ((currButtons & buttonMask) != 0)
                     {
-                        dbgTrace.traceInfo(funcName, "Button %x pressed", buttonMask);
+                        //
+                        // Button is pressed.
+                        //
+                        if (debugEnabled)
+                        {
+                            dbgTrace.traceInfo(funcName, "Button %x pressed", buttonMask);
+                        }
+                        buttonHandler.joystickButtonEvent(this, buttonMask, true);
                     }
-                    buttonHandler.joystickButtonEvent(this, buttonMask, true);
-                }
-                else
-                {
-                    //
-                    // Button is released.
-                    //
-                    if (debugEnabled)
+                    else
                     {
-                        dbgTrace.traceInfo(funcName, "Button %x released", buttonMask);
+                        //
+                        // Button is released.
+                        //
+                        if (debugEnabled)
+                        {
+                            dbgTrace.traceInfo(funcName, "Button %x released", buttonMask);
+                        }
+                        buttonHandler.joystickButtonEvent(this, buttonMask, false);
                     }
-                    buttonHandler.joystickButtonEvent(this, buttonMask, false);
+                    //
+                    // Clear the least significant set bit.
+                    //
+                    changedButtons &= ~buttonMask;
                 }
-                //
-                // Clear the least significant set bit.
-                //
-                changedButtons &= ~buttonMask;
             }
+            prevButtons = currButtons;
         }
-        prevButtons = currButtons;
 
         if (debugEnabled)
         {
