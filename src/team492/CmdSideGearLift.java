@@ -155,7 +155,8 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
                 	//
                 	// Turn until vision target visible
                 	//
-                	
+                	xDistance = 0;
+                	yDistance = 0;
                 	// If vision target detected, or if we hit the max turn angle, set the next state and clear event
                     if(robot.frontPixy.getTargetRect() != null || Math.abs(robot.targetHeading) >= maxSideLiftAngle){
                 		sm.setState(State.VISION_DEPLOY);
@@ -164,9 +165,9 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
                 	
                 	// If the event is signaled, but the vision target isn't visible, 
                 	// increment the targetHeading and clear event for further use
-                		robot.targetHeading += rightSide?-sideLiftAngleIncrement:sideLiftAngleIncrement;
+                	robot.targetHeading += rightSide?-sideLiftAngleIncrement:sideLiftAngleIncrement;
                 	// Turn to the target heading
-                	robot.pidDrive.setTarget(0, 0, robot.targetHeading, false, event);
+                	robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
                     sm.waitForSingleEvent(event, State.SLOW_TURN_TOWARDS_AIRSHIP);
                 	break;
 
