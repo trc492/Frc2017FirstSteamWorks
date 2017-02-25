@@ -176,7 +176,7 @@ class CmdMidGearLift implements TrcRobot.RobotCommand
                     yDistance = midOppositeEndDistance;
 
                     robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
-                    sm.waitForSingleEvent(event, State.GO_TO_OPPOSITE_END);
+                    sm.waitForSingleEvent(event, State.TURN_TO_LOADING_STATION);
                     break;
 
                 case TURN_TO_LOADING_STATION:
