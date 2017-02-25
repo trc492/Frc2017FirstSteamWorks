@@ -562,7 +562,7 @@ public class FrcPixyCam implements FrcI2cDevice.CompletionHandler, FrcSerialPort
                     throw new IllegalStateException(String.format("Unexpected request %s.", requestId));
             }
         }
-        else
+        else if (length > 0)
         {
             throw new IllegalStateException(String.format("Unexpected data length %d.", length));
         }

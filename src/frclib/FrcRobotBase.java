@@ -74,6 +74,7 @@ public abstract class FrcRobotBase extends RobotBase
     private RobotMode disabledMode = null;
     private static double modeStartTime = 0.0;
     private static double modeElapsedTime = 0.0;
+    private static long loopCounter = 0;
 
     /**
      * Constructor: Create an instance of the object.
@@ -147,6 +148,18 @@ public abstract class FrcRobotBase extends RobotBase
         modeElapsedTime = TrcUtil.getCurrentTime() - modeStartTime;
         return modeElapsedTime;
     }   //getModeElapsedTime
+
+    /**
+     * This method returns the loop counter. This is very useful for code to determine if it is called multiple times
+     * in the same loop. For example, it can be used to optimize sensor access so that if the sensor is accessed in
+     * the same loop, there is no reason to create a new bus transaction to get "fresh" data from the sensor.
+     *
+     * @return loop counter value.
+     */
+    public static long getLoopCounter()
+    {
+        return loopCounter;
+    }   //getLoopCounter
 
     /**
      * This method is called by the subclass to set up various robot mode objects.

@@ -42,19 +42,32 @@ public class PixyVision
     private static final TrcDbgTrace.MsgLevel msgLevel = TrcDbgTrace.MsgLevel.INFO;
     private TrcDbgTrace dbgTrace = null;
 
+    public enum Orientation
+    {
+        NORMAL_LANDSCAPE,
+        CLOCKWISE_PORTRAIT,
+        ANTICLOCKWISE_PORTRAIT,
+        UPSIDEDOWN_LANDSCAPE
+    }   //enum Orientation
+
+    private int signature;
+    private Orientation orientation;
     private FrcPixyCam pixyCamera = null;
     private Relay ringLightPower = null;
     private Rect lastTargetRect = null;
 
-    public PixyVision()
+    public PixyVision(int signature, int brightness, Orientation orientation)
     {
         if (debugEnabled)
         {
             dbgTrace = new TrcDbgTrace(moduleName, tracingEnabled, traceLevel, msgLevel);
         }
 
+        this.signature = signature;
+        this.orientation = orientation;
 //        pixyCamera = new FrcPixyCam("FrontPixy", I2C.Port.kOnboard, RobotInfo.PIXYCAM_FRONT_I2C_ADDRESS);
         pixyCamera = new FrcPixyCam("RearPixy", SerialPort.Port.kMXP, 19200);
+        pixyCamera.setBrightness((byte)brightness);
         ringLightPower = new Relay(RobotInfo.RELAY_RINGLIGHT_POWER);
         ringLightPower.setDirection(Direction.kForward);
     }
@@ -90,30 +103,72 @@ public class PixyVision
 
         if (detectedObjects != null && detectedObjects.length >= 2)
         {
-            if (debugEnabled)
+            ObjectBlock[] targets = new ObjectBlock[2];
+            int j = 0;
+
+            for (int i = 0; i < detectedObjects.length && j < targets.length; i++)
             {
-                for (int i = 0; i < detectedObjects.length; i++)
+                if (debugEnabled)
                 {
                     dbgTrace.traceInfo(moduleName, "[%d] %s", i, detectedObjects[i].toString());
                 }
+
+                if (signature == detectedObjects[i].signature)
+                {
+                    targets[j] = detectedObjects[i];
+                    j++;
+                }
             }
 
-            int targetCenterX = (detectedObjects[0].xCenter + detectedObjects[1].xCenter)/2;
-            int targetCenterY = (detectedObjects[0].yCenter + detectedObjects[1].yCenter)/2;
-            int targetWidth = Math.abs(detectedObjects[0].xCenter - detectedObjects[1].xCenter) +
-                              (detectedObjects[0].width + detectedObjects[1].width)/2;
-            int targetHeight = Math.max(detectedObjects[0].yCenter + detectedObjects[0].height/2,
-                                        detectedObjects[1].yCenter + detectedObjects[1].height/2) -
-                               Math.min(detectedObjects[0].yCenter - detectedObjects[0].height/2,
-                                        detectedObjects[1].yCenter - detectedObjects[1].height/2);
-
-            lastTargetRect = new Rect(targetCenterX - targetWidth/2, targetCenterY - targetHeight/2,
-                                      targetWidth, targetHeight);
-
-            if (debugEnabled)
+            if (j == 2)
             {
-                dbgTrace.traceInfo("PixyVision", "TargetRect: x=%d, y=%d, w=%d, h=%d",
-                    lastTargetRect.x, lastTargetRect.y, lastTargetRect.width, lastTargetRect.height);
+                int targetCenterX = (targets[0].xCenter + targets[1].xCenter)/2;
+                int targetCenterY = (targets[0].yCenter + targets[1].yCenter)/2;
+                int targetWidth = Math.abs(targets[0].xCenter - targets[1].xCenter) +
+                                  (targets[0].width + targets[1].width)/2;
+                int targetHeight = Math.max(targets[0].yCenter + targets[0].height/2,
+                                            targets[1].yCenter + targets[1].height/2) -
+                                   Math.min(targets[0].yCenter - targets[0].height/2,
+                                            targets[1].yCenter - targets[1].height/2);
+                int temp;
+
+                switch (orientation)
+                {
+                    case CLOCKWISE_PORTRAIT:
+                        temp = RobotInfo.PIXYCAM_WIDTH - targetCenterX;
+                        targetCenterX = targetCenterY;
+                        targetCenterY = temp;
+                        temp = targetWidth;
+                        targetWidth = targetHeight;
+                        targetHeight = temp;
+                        break;
+
+                    case ANTICLOCKWISE_PORTRAIT:
+                        temp = targetCenterX;
+                        targetCenterX = RobotInfo.PIXYCAM_HEIGHT - targetCenterY;
+                        targetCenterY = temp;
+                        temp = targetWidth;
+                        targetWidth = targetHeight;
+                        targetHeight = temp;
+                        break;
+
+                    case UPSIDEDOWN_LANDSCAPE:
+                        targetCenterX = RobotInfo.PIXYCAM_WIDTH - targetCenterX;
+                        targetCenterY = RobotInfo.PIXYCAM_HEIGHT - targetCenterY;
+                        break;
+
+                    case NORMAL_LANDSCAPE:
+                        break;
+                }
+
+                lastTargetRect = new Rect(targetCenterX - targetWidth/2, targetCenterY - targetHeight/2,
+                                          targetWidth, targetHeight);
+
+                if (debugEnabled)
+                {
+                    dbgTrace.traceInfo("PixyVision", "TargetRect: x=%d, y=%d, w=%d, h=%d",
+                        lastTargetRect.x, lastTargetRect.y, lastTargetRect.width, lastTargetRect.height);
+                }
             }
         }
 

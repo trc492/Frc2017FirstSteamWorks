@@ -238,7 +238,8 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         }
         else if (USE_PIXY_VISION)
         {
-            pixyVision = new PixyVision();
+            pixyVision = new PixyVision(
+                RobotInfo.PIXY_TARGET_SIGNATURE, RobotInfo.PIXY_BRIGHTNESS, RobotInfo.PIXY_ORIENTATION);
         }
 
         //
@@ -316,7 +317,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         //
         // Populate Global Menus.
         //
-        matchTypeMenu.addChoice("Test", MatchType.PRACTICE);
+        matchTypeMenu.addChoice("Practice", MatchType.PRACTICE);
         matchTypeMenu.addChoice("Qualification", MatchType.QUALIFICATION);
         matchTypeMenu.addChoice("Quater-final", MatchType.QUATER_FINAL);
         matchTypeMenu.addChoice("Semi-final", MatchType.SEMI_FINAL);
