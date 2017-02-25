@@ -136,11 +136,42 @@ public class FrcAuto implements TrcRobot.RobotMode
                 autoCommand = null;
                 break;
         }
+        //
+        // Start vision thread if necessary.
+        //
+        if (Robot.USE_GRIP_VISION)
+        {
+            robot.gripVision.setEnabled(true);
+        }
+        else if (Robot.USE_FACE_DETECTOR)
+        {
+            robot.faceDetector.setEnabled(true);
+        }
+        else if (Robot.USE_PIXY_VISION)
+        {
+            robot.pixyVision.setEnabled(true);
+        }
     }   //startMode
 
     @Override
     public void stopMode()
     {
+        //
+        // Kill vision thread if any.
+        //
+        if (Robot.USE_GRIP_VISION)
+        {
+            robot.gripVision.setEnabled(false);
+        }
+        else if (Robot.USE_FACE_DETECTOR)
+        {
+            robot.faceDetector.setEnabled(false);
+        }
+        else if (Robot.USE_PIXY_VISION)
+        {
+            robot.pixyVision.setEnabled(false);
+        }
+
         if (USE_TRACELOG) robot.tracer.closeTraceLog();
     }   //stopMode
 
