@@ -131,13 +131,16 @@ public class RobotInfo
     //
     // Vision subsystem.
     //
-    public static final int PIXYCAM_FRONT_I2C_ADDRESS           = FrcPixyCam.DEF_I2C_ADDRESS;
-    public static final int PIXYCAM_REAR_I2C_ADDRESS            = PIXYCAM_FRONT_I2C_ADDRESS + 2;
     public static final int PIXYCAM_WIDTH                       = 320;
     public static final int PIXYCAM_HEIGHT                      = 200;
-    public static final int PIXY_TARGET_SIGNATURE               = 1;
-    public static final int PIXY_BRIGHTNESS                     = 25;
-    public static final PixyVision.Orientation PIXY_ORIENTATION = PixyVision.Orientation.CLOCKWISE_PORTRAIT;
+    public static final int PIXY_LIFT_SIGNATURE                 = 1;
+    public static final int PIXY_GEAR_SIGNATURE                 = 2;
+    public static final int PIXYCAM_FRONT_I2C_ADDRESS           = FrcPixyCam.DEF_I2C_ADDRESS;
+    public static final int PIXYCAM_REAR_I2C_ADDRESS            = PIXYCAM_FRONT_I2C_ADDRESS + 2;
+    public static final int PIXY_FRONT_BRIGHTNESS               = 25;
+    public static final int PIXY_REAR_BRIGHTNESS                = 80;
+    public static final PixyVision.Orientation PIXY_FRONT_ORIENTATION = PixyVision.Orientation.CLOCKWISE_PORTRAIT;
+    public static final PixyVision.Orientation PIXY_REAR_ORIENTATION = PixyVision.Orientation.NORMAL_LANDSCAPE;
     public static final double PIXYCAM_MID_VOLT                 = 3.3/2.0;  // in volts
 
     //

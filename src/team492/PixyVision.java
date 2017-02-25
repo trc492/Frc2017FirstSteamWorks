@@ -24,7 +24,7 @@ package team492;
 
 import org.opencv.core.Rect;
 
-//import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.Relay.Direction;
@@ -50,12 +50,12 @@ public class PixyVision
         UPSIDEDOWN_LANDSCAPE
     }   //enum Orientation
 
+    private FrcPixyCam pixyCamera;
     private int signature;
     private Orientation orientation;
-    private FrcPixyCam pixyCamera = null;
-    private Relay ringLightPower = null;
+    private Relay ringLightPower;
 
-    public PixyVision(int signature, int brightness, Orientation orientation)
+    private void commonInit(int signature, int brightness, Orientation orientation)
     {
         if (debugEnabled)
         {
@@ -64,12 +64,25 @@ public class PixyVision
 
         this.signature = signature;
         this.orientation = orientation;
-//        pixyCamera = new FrcPixyCam("FrontPixy", I2C.Port.kOnboard, RobotInfo.PIXYCAM_FRONT_I2C_ADDRESS);
-        pixyCamera = new FrcPixyCam("RearPixy", SerialPort.Port.kMXP, 19200);
-        pixyCamera.setBrightness((byte)brightness);
         ringLightPower = new Relay(RobotInfo.RELAY_RINGLIGHT_POWER);
         ringLightPower.setDirection(Direction.kForward);
-    }
+        pixyCamera.setBrightness((byte)brightness);
+    }   //commonInit
+
+    public PixyVision(
+        final String instanceName, int signature, int brightness, Orientation orientation,
+        I2C.Port port, int i2cAddress)
+    {
+        pixyCamera = new FrcPixyCam(instanceName, port, i2cAddress);
+        commonInit(signature, brightness, orientation);
+    }   //PixyVision
+
+    public PixyVision(
+        final String instanceName, int signature, int brightness, Orientation orientation, SerialPort.Port port)
+    {
+        pixyCamera = new FrcPixyCam(instanceName, port);
+        commonInit(signature, brightness, orientation);
+    }   //PixyVision
 
     public void setEnabled(boolean enabled)
     {
@@ -84,7 +97,7 @@ public class PixyVision
     public void setRingLightOn(boolean on)
     {
         ringLightPower.set(on? Value.kOn: Value.kOff);
-    }
+    }   //setRingLightOn
 
     /**
      * This method returns the rectangle of the last detected target.

@@ -161,13 +161,13 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
 
     private double getHorizontalPosition()
     {
-        Rect memeTangle = robot.pixyVision.getTargetRect();
+        Rect memeTangle = robot.frontPixy.getTargetRect();
         double midpoint = memeTangle.x + memeTangle.width / 2;
         return midpoint;
     }
     private double getTargetSize()
     {
-        Rect dankTangle = robot.pixyVision.getTargetRect();
+        Rect dankTangle = robot.frontPixy.getTargetRect();
         double targetSize = dankTangle.height;
         return targetSize;
     }

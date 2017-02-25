@@ -38,8 +38,10 @@ import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.Relay.Direction;
 import frclib.FrcAHRSGyro;
 import frclib.FrcCANTalon;
@@ -116,7 +118,8 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     //
     public GripVision gripVision = null;
     public FrcFaceDetector faceDetector = null;
-    public PixyVision pixyVision = null;
+    public PixyVision frontPixy = null;
+    public PixyVision rearPixy = null;
 
     //
     // DriveBase subsystem.
@@ -238,8 +241,12 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         }
         else if (USE_PIXY_VISION)
         {
-            pixyVision = new PixyVision(
-                RobotInfo.PIXY_TARGET_SIGNATURE, RobotInfo.PIXY_BRIGHTNESS, RobotInfo.PIXY_ORIENTATION);
+            frontPixy = new PixyVision(
+                "FrontPixy", RobotInfo.PIXY_LIFT_SIGNATURE, RobotInfo.PIXY_FRONT_BRIGHTNESS,
+                RobotInfo.PIXY_FRONT_ORIENTATION, SerialPort.Port.kOnboard);
+            rearPixy = new PixyVision(
+                "RearPixy", RobotInfo.PIXY_GEAR_SIGNATURE, RobotInfo.PIXY_REAR_BRIGHTNESS,
+                RobotInfo.PIXY_REAR_ORIENTATION, I2C.Port.kMXP, RobotInfo.PIXYCAM_REAR_I2C_ADDRESS);
         }
 
         //
@@ -433,9 +440,9 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
 
             if (DEBUG_PIXY_VISION)
             {
-                if (pixyVision != null && pixyVision.isEnabled())
+                if (frontPixy != null && frontPixy.isEnabled())
                 {
-                    Rect targetRect = pixyVision.getTargetRect();
+                    Rect targetRect = frontPixy.getTargetRect();
                     if (targetRect != null)
                     {
                         dashboard.displayPrintf(1, "x=%d, y=%d, width=%d, height=%d",

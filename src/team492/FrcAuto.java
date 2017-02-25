@@ -149,7 +149,7 @@ public class FrcAuto implements TrcRobot.RobotMode
         }
         else if (Robot.USE_PIXY_VISION)
         {
-            robot.pixyVision.setEnabled(true);
+            robot.frontPixy.setEnabled(true);
         }
     }   //startMode
 
@@ -169,7 +169,7 @@ public class FrcAuto implements TrcRobot.RobotMode
         }
         else if (Robot.USE_PIXY_VISION)
         {
-            robot.pixyVision.setEnabled(false);
+            robot.frontPixy.setEnabled(false);
         }
 
         if (USE_TRACELOG) robot.tracer.closeTraceLog();

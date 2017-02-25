@@ -158,7 +158,7 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
                 	//
                 	
                 	// If vision target detected, or if we hit the max turn angle, set the next state and clear event
-                	if(robot.pixyVision.getTargetRect() != null || Math.abs(robot.targetHeading) >= maxSideLiftAngle){
+                    if(robot.frontPixy.getTargetRect() != null || Math.abs(robot.targetHeading) >= maxSideLiftAngle){
                 		sm.setState(State.MOVE_TOWARDS_AIRSHIP);
                 		event.clear();
                 		break;
