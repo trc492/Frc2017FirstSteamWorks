@@ -54,7 +54,6 @@ public class PixyVision
     private Orientation orientation;
     private FrcPixyCam pixyCamera = null;
     private Relay ringLightPower = null;
-    private Rect lastTargetRect = null;
 
     public PixyVision(int signature, int brightness, Orientation orientation)
     {
@@ -94,6 +93,7 @@ public class PixyVision
      */
     public Rect getTargetRect()
     {
+        Rect targetRect = null;
         ObjectBlock[] detectedObjects = pixyCamera.getDetectedObjects();
 
         if (debugEnabled)
@@ -161,18 +161,18 @@ public class PixyVision
                         break;
                 }
 
-                lastTargetRect = new Rect(targetCenterX - targetWidth/2, targetCenterY - targetHeight/2,
-                                          targetWidth, targetHeight);
+                targetRect = new Rect(targetCenterX - targetWidth/2, targetCenterY - targetHeight/2,
+                                      targetWidth, targetHeight);
 
                 if (debugEnabled)
                 {
                     dbgTrace.traceInfo("PixyVision", "TargetRect: x=%d, y=%d, w=%d, h=%d",
-                        lastTargetRect.x, lastTargetRect.y, lastTargetRect.width, lastTargetRect.height);
+                        targetRect.x, targetRect.y, targetRect.width, targetRect.height);
                 }
             }
         }
 
-        return lastTargetRect;
+        return targetRect;
     }   //getTargetRect
 
 }   // class PixyVision
