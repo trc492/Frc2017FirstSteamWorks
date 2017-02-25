@@ -22,10 +22,6 @@
 
 package team492;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-
 import org.opencv.core.Rect;
 
 import com.ctre.CANTalon.FeedbackDevice;
@@ -457,13 +453,9 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
 
     public void startTraceLog()
     {
-        Date now = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_hh-mm", Locale.US);
-        String logFilePath = "/home/lvuser/tracelog/" + matchType.toString();
-
-        if (matchType != MatchType.PRACTICE) logFilePath += matchNumber;
-        logFilePath += "_" + dateFormat.format(now) + ".log";
-        tracer.openTraceLog(logFilePath);
+        String filePrefix = matchType.toString();
+        if (matchType != MatchType.PRACTICE) filePrefix += matchNumber;
+        tracer.openTraceLog("/home/lvuser/tracelog", filePrefix);
     }   //startTraceLog
 
     public void stopTraceLog()
