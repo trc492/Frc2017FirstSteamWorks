@@ -34,7 +34,7 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
 {
     private static enum State
     {
-        ALIGN_HORIZONTALLY, ALIGN_DISTANCE, DEPLOY_GEAR, BACKUP, DONE
+        ALIGN_WITH_PEG, ALIGN_WITH_PEG_2, DRIVE_TO_TARGET, DEPLOY_GEAR, BACKUP, DONE
     }   //enum State
 
     private static final String moduleName = "CmdVisionGearDeploy";
@@ -42,29 +42,35 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
     private Robot robot;
     private double extendTime;
     private double backupDistance;
-    private double horizontalAlignmentThreshold;
+    private double turnAlignmentThreshold;
     private double distanceAlignmentThreshold;
     private TrcEvent event;
     private TrcStateMachine<State> sm;
-    private double horizontalAlignmentMultiplier;
+    private double turnAlignmentMultiplier;
     private double distanceAlignmentMultiplier;
     private double idealTargetSize;
+    private double inchesPerPixel;
 
+    private double lastDistanceToTarget;
+    
     CmdVisionGearDeploy(Robot robot)
     {
         this.robot = robot;
 
         extendTime = Math.abs(HalDashboard.getNumber("PneumaticExtendTime", 0.3));
-        horizontalAlignmentMultiplier = Math.abs(HalDashboard.getNumber("HorizontalAlignmentMultiplier", 1.0));
+        turnAlignmentMultiplier = Math.abs(HalDashboard.getNumber("TurnAlignmentMultiplier", 1.0));
         backupDistance = Math.abs(HalDashboard.getNumber("BackupDistance", 12.0));
-        horizontalAlignmentThreshold = Math.abs(HalDashboard.getNumber("HorizontalAlignmentThreshold", 10.0));
+        turnAlignmentThreshold = Math.abs(HalDashboard.getNumber("TurnAlignmentThreshold", 10.0));
         distanceAlignmentThreshold = Math.abs(HalDashboard.getNumber("DistanceAlignmentThreshold", 10.0));
         distanceAlignmentMultiplier = Math.abs(HalDashboard.getNumber("DistanceAlignmentMultiplier", 1.0));
         idealTargetSize  = Math.abs(HalDashboard.getNumber("IdealTargetSize", 10.0));
+        inchesPerPixel = HalDashboard.getNumber("inchesPerPixel", 1.0);
+        
+        lastDistanceToTarget = 0.0;
 
         event = new TrcEvent(moduleName);
         sm = new TrcStateMachine<>(moduleName);
-        sm.start(State.ALIGN_DISTANCE);//ALIGN_HORIZONTALLY);
+        sm.start(State.DRIVE_TO_TARGET);//ALIGN_HORIZONTALLY);
     }   //CmdVisionGearDeploy
 
     //
@@ -89,26 +95,68 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
             switch (state)
             {
 
-                case ALIGN_HORIZONTALLY:
+                case ALIGN_WITH_PEG:
                     //
                     // Position robot at target.
                     // get info from vision (m: alignment, n:distance)
-                    double midpoint = getHorizontalPosition();
-                    double screenMidpoint = RobotInfo.CAM_WIDTH/2;
-                    double horizontalErrorMargin = midpoint - screenMidpoint;
-                    if (Math.abs(horizontalErrorMargin) > horizontalAlignmentThreshold)
-                    {
-                        double strafeTarget = horizontalErrorMargin*horizontalAlignmentMultiplier;
-                        robot.pidDrive.setTarget(strafeTarget, 0.0, robot.targetHeading, false, event);
-                        sm.waitForSingleEvent(event, State.ALIGN_HORIZONTALLY);
-                    }
-                    else
-                    {
-                    	sm.setState(State.ALIGN_DISTANCE);
-                    }
+                	double actualTargetSize = getTargetSize();
+                	
+                	if(actualTargetSize == -1)
+                	{
+                		sm.setState(State.DRIVE_TO_TARGET);
+                	}
+                	else
+                	{
+                        lastDistanceToTarget = (idealTargetSize - actualTargetSize)*inchesPerPixel;
+                        double midpoint = getHorizontalPosition();
+                        double screenMidpoint = RobotInfo.CAM_WIDTH/2;
+                        double turnErrorMargin = midpoint - screenMidpoint;
+                        double angleToTarget = Math.atan((turnErrorMargin*inchesPerPixel)/lastDistanceToTarget);
+                        robot.targetHeading = angleToTarget + robot.driveBase.getHeading();
+                        if(Math.abs(turnErrorMargin) > turnAlignmentThreshold || Math.abs(lastDistanceToTarget) > distanceAlignmentThreshold)
+                        {
+                            robot.pidDrive.setTarget(0.0, lastDistanceToTarget/2, robot.targetHeading, false, event);
+                            sm.waitForSingleEvent(event, State.ALIGN_WITH_PEG_2);
+                        }
+                        else
+                        {
+                    	    sm.setState(State.DEPLOY_GEAR);
+                        }
+                	}
                     break;
                     
-                case ALIGN_DISTANCE:
+                case ALIGN_WITH_PEG_2:
+                	//
+                    // Position robot at target again.
+                    // get info from vision (m: alignment, n:distance)
+                	double newTargetSize = getTargetSize();
+                	if(newTargetSize == -1)
+                	{
+                		robot.pidDrive.setTarget(0.0, lastDistanceToTarget/2, robot.targetHeading, false, event);
+                        sm.waitForSingleEvent(event, State.DEPLOY_GEAR);
+                	}
+                	else
+                	{
+                	    double newDistanceToTarget = (idealTargetSize - newTargetSize)*inchesPerPixel;
+                        double midpoint = getHorizontalPosition();
+                        double screenMidpoint = RobotInfo.CAM_WIDTH/2;
+                        double turnErrorMargin = midpoint - screenMidpoint;
+                        double angleToTarget = Math.atan((turnErrorMargin*inchesPerPixel)/newDistanceToTarget);
+                        robot.targetHeading = angleToTarget + robot.driveBase.getHeading();
+                        if(Math.abs(turnErrorMargin) > turnAlignmentThreshold || Math.abs(newDistanceToTarget) > distanceAlignmentThreshold)
+                        {
+                            robot.pidDrive.setTarget(0.0, newDistanceToTarget, robot.targetHeading, false, event);
+                            sm.waitForSingleEvent(event, State.ALIGN_WITH_PEG_2);
+                        }
+                        else
+                        {
+                    	    sm.setState(State.DEPLOY_GEAR);
+                        }
+                	}
+                    break;
+                    
+                    
+                case DRIVE_TO_TARGET:
                     xDistance = 0.0;
                     yDistance = 12.0;
                     robot.pidDrive.setTarget(0.0, yDistance, robot.targetHeading, false, event);
@@ -161,15 +209,23 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
 
     private double getHorizontalPosition()
     {
-        Rect memeTangle = robot.frontPixy.getTargetRect();
+    	Rect memeTangle = robot.frontPixy.getTargetRect();
         double midpoint = memeTangle.x + memeTangle.width / 2;
         return midpoint;
     }
     private double getTargetSize()
     {
         Rect dankTangle = robot.frontPixy.getTargetRect();
+        if(dankTangle == null)
+        {
+        	double targetSize = -1;
+        	return targetSize;
+        }
+        else
+        {
         double targetSize = dankTangle.height;
         return targetSize;
+        }
     }
-
+    
 }   //class CmdVisionGearDeploy
