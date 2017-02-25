@@ -55,7 +55,7 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
     private double orientedAirshipMoveDistance;
     private double loadingStationTurnAngle;
     private double loadingStationMoveDistance;
-    
+
     private CmdVisionGearDeploy visionDeploy;
     private TrcEvent event;
     private TrcTimer timer;
@@ -93,7 +93,7 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
     //
     // Implements the TrcRobot.RobotCommand interface.
     //
-    
+
     @Override
     public boolean cmdPeriodic(double elapsedTime)
     {
@@ -137,39 +137,39 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
                     robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
                     sm.waitForSingleEvent(event, State.INITIAL_TURN_TOWARDS_AIRSHIP);
                     break;
-                    
+
                 case INITIAL_TURN_TOWARDS_AIRSHIP:
                     //
                     // Turn to face airship.
                     //
                     xDistance = 0;
                     yDistance = 0;
-
                     robot.targetHeading = rightSide ? -startSideLiftAngle : startSideLiftAngle;
 
                     robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
                     sm.waitForSingleEvent(event, State.SLOW_TURN_TOWARDS_AIRSHIP);
                     break;
-                    
+
                 case SLOW_TURN_TOWARDS_AIRSHIP:
-                	//
-                	// Turn until vision target visible
-                	//
-                	xDistance = 0;
-                	yDistance = 0;
-                	// If vision target detected, or if we hit the max turn angle, set the next state and clear event
-                    if(robot.frontPixy.getTargetRect() != null || Math.abs(robot.targetHeading) >= maxSideLiftAngle){
-                		sm.setState(State.VISION_DEPLOY);
-                		break;
-                	}
-                	
-                	// If the event is signaled, but the vision target isn't visible, 
-                	// increment the targetHeading and clear event for further use
-                	robot.targetHeading += rightSide?-sideLiftAngleIncrement:sideLiftAngleIncrement;
-                	// Turn to the target heading
-                	robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
-                    sm.waitForSingleEvent(event, State.SLOW_TURN_TOWARDS_AIRSHIP);
-                	break;
+                    //
+                    // Turn until vision target visible
+                    //
+                    xDistance = 0;
+                    yDistance = 0;
+                    // If vision target detected, or if we hit the max turn angle, set the next state
+                    if (robot.frontPixy.getTargetRect() != null || Math.abs(robot.targetHeading) >= maxSideLiftAngle)
+                    {
+                        sm.setState(State.VISION_DEPLOY);
+                    }
+                    else
+                    {
+                        // The vision target isn't visible, increment the targetHeading.
+                        robot.targetHeading += rightSide?-sideLiftAngleIncrement:sideLiftAngleIncrement;
+                        // Turn to the new target heading
+                        robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
+                        sm.waitForSingleEvent(event, State.SLOW_TURN_TOWARDS_AIRSHIP);
+                    }
+                    break;
 
                 case VISION_DEPLOY:
                     //
