@@ -111,7 +111,7 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
                         double midpoint = getHorizontalPosition();
                         double screenMidpoint = RobotInfo.CAM_WIDTH/2;
                         double turnErrorMargin = midpoint - screenMidpoint;
-                        double angleToTarget = Math.atan((turnErrorMargin*inchesPerPixel)/lastDistanceToTarget);
+                        double angleToTarget = Math.toDegrees(Math.atan((turnErrorMargin*inchesPerPixel)/lastDistanceToTarget));
                         robot.targetHeading = angleToTarget + robot.driveBase.getHeading();
                         if(Math.abs(turnErrorMargin) > turnAlignmentThreshold || Math.abs(lastDistanceToTarget) > distanceAlignmentThreshold)
                         {
@@ -146,7 +146,7 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
                         if(Math.abs(turnErrorMargin) > turnAlignmentThreshold || Math.abs(newDistanceToTarget) > distanceAlignmentThreshold)
                         {
                             robot.pidDrive.setTarget(0.0, newDistanceToTarget, robot.targetHeading, false, event);
-                            sm.waitForSingleEvent(event, State.ALIGN_WITH_PEG_2);
+                            sm.waitForSingleEvent(event, State.DEPLOY_GEAR);
                         }
                         else
                         {
@@ -159,7 +159,7 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
                 case DRIVE_TO_TARGET:
                     xDistance = 0.0;
                     yDistance = 12.0;
-                    robot.pidDrive.setTarget(0.0, yDistance, robot.targetHeading, false, event);
+                    robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
                     sm.waitForSingleEvent(event, State.DEPLOY_GEAR);
 //                	double actualTargetSize = getTargetSize();
 //                	double distanceErrorMargin = idealTargetSize - actualTargetSize;
