@@ -34,7 +34,8 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
     {
         DO_DELAY,
         MOVE_FORWARD_ON_SIDE,
-        TURN_TOWARDS_AIRSHIP,
+        INITIAL_TURN_TOWARDS_AIRSHIP,
+        SLOW_TURN_TOWARDS_AIRSHIP,
         MOVE_TOWARDS_AIRSHIP,
         VISION_DEPLOY,
         BACKUP_FROM_AIRSHIP,
@@ -49,7 +50,9 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
     private double delay;
     private boolean rightSide;
     private double sideAirshipDistance;
-    private double sideLiftAngle;
+    private double startSideLiftAngle;
+    private double sideLiftAngleIncrement;
+    private double maxSideLiftAngle;
     private double orientedAirshipMoveDistance;
     private double loadingStationTurnAngle;
     private double loadingStationMoveDistance;
@@ -73,7 +76,9 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
         // Convert all distances to the unit of inches.
         //
         sideAirshipDistance = HalDashboard.getNumber("SideAirshipDistance", 48.0);
-        sideLiftAngle = Math.abs(HalDashboard.getNumber("SideLiftAngle", 60.0));
+        startSideLiftAngle = Math.abs(HalDashboard.getNumber("SideLiftAngle", 45.0));
+        sideLiftAngleIncrement = Math.abs(HalDashboard.getNumber("SideLiftAngleIncrement", 5.0));
+        maxSideLiftAngle = Math.abs(HalDashboard.getNumber("SideLiftMaxAngle", 60.0));
         orientedAirshipMoveDistance = HalDashboard.getNumber("orientedAirshipMoveDistance", 30.0);
         loadingStationTurnAngle = Math.abs(HalDashboard.getNumber("loadingStationTurnAngle", 0.0));
         loadingStationMoveDistance = HalDashboard.getNumber("loadingStationMoveDistance", 40.0*12.0);
@@ -131,20 +136,44 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
                     yDistance = sideAirshipDistance;
 
                     robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
-                    sm.waitForSingleEvent(event, State.TURN_TOWARDS_AIRSHIP);
+                    sm.waitForSingleEvent(event, State.INITIAL_TURN_TOWARDS_AIRSHIP);
                     break;
                     
-                case TURN_TOWARDS_AIRSHIP:
+                case INITIAL_TURN_TOWARDS_AIRSHIP:
                     //
                     // Turn to face airship.
                     //
                     xDistance = 0;
                     yDistance = 0;
-                    robot.targetHeading = rightSide ? -sideLiftAngle : sideLiftAngle;
+
+                    robot.targetHeading = rightSide ? -startSideLiftAngle : startSideLiftAngle;
 
                     robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
-                    sm.waitForSingleEvent(event, State.MOVE_TOWARDS_AIRSHIP);
+                    sm.waitForSingleEvent(event, State.SLOW_TURN_TOWARDS_AIRSHIP);
                     break;
+                    
+                case SLOW_TURN_TOWARDS_AIRSHIP:
+                	//
+                	// Turn until vision target visible
+                	//
+                	
+                	// If vision target detected, or if we hit the max turn angle, set the next state and clear event
+                	if(robot.pixyVision.getTargetRect() != null || Math.abs(robot.targetHeading) >= maxSideLiftAngle){
+                		sm.setState(State.MOVE_TOWARDS_AIRSHIP);
+                		event.clear();
+                		break;
+                	}
+                	
+                	// If the event is signaled, but the vision target isn't visible, 
+                	// increment the targetHeading and clear event for further use
+                	if(event.isSignaled()){
+                		robot.targetHeading += rightSide?-sideLiftAngleIncrement:sideLiftAngleIncrement;
+                		event.clear();
+                	}
+                	
+                	// Turn to the target heading
+                	robot.pidDrive.setTarget(0, 0, robot.targetHeading, false, event);
+                	break;
 
                 case MOVE_TOWARDS_AIRSHIP:
                     //
