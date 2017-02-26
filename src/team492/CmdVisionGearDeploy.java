@@ -65,7 +65,7 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
         distanceAlignmentMultiplier = Math.abs(HalDashboard.getNumber("DistanceAlignmentMultiplier", 1.0));
         idealTargetSize  = Math.abs(HalDashboard.getNumber("IdealTargetSize", 10.0));
         inchesPerPixel = HalDashboard.getNumber("inchesPerPixel", 1.0);
-        
+
         lastDistanceToTarget = 0.0;
 
         event = new TrcEvent(moduleName);
@@ -120,9 +120,9 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
                         }
                         else
                         {
-                    	    sm.setState(State.DEPLOY_GEAR);
+                            sm.setState(State.DEPLOY_GEAR);
                         }
-                	}
+                    }
                     break;
                     
                 case ALIGN_WITH_PEG_2:

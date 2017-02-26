@@ -51,13 +51,13 @@
 	<widget field="Drive Power Limit" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="1" y="618"/>
 	</widget>
-	<widget field="Alliance:" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
+	<widget field="Alliance" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
 		<location x="120" y="360"/>
 	</widget>
-	<widget field="Match number:" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="14" y="500"/>
+	<widget field="Match Number" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="17" y="500"/>
 	</widget>
-	<widget field="Match type:" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
+	<widget field="Match Type" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
 		<location x="0" y="360"/>
 	</widget>
 	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.CameraServerViewer">

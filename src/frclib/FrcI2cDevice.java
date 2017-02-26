@@ -24,18 +24,17 @@ package frclib;
 
 import java.nio.ByteBuffer;
 import java.util.Arrays;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
 import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.I2C.Port;
 import trclib.TrcDbgTrace;
-import trclib.TrcEvent;
-import trclib.TrcUtil;
+import trclib.TrcDeviceQueue;
 
 /**
- * This class implements a platform dependent I2C device. It extends the WPILib I2C class and creates a separate
- * thread to provide asynchronous access to the device.
+ * This class implements a platform dependent I2C device. It extends TrcDeviceQueue to provide asynchronous request
+ * queue support and creates the I2C device using WPILib.
  */
-public class FrcI2cDevice extends I2C implements Runnable
+public class FrcI2cDevice extends TrcDeviceQueue
 {
     private static final String moduleName = "FrcI2cDevice";
     private static final boolean debugEnabled = false;
@@ -44,88 +43,7 @@ public class FrcI2cDevice extends I2C implements Runnable
     private static final TrcDbgTrace.MsgLevel msgLevel = TrcDbgTrace.MsgLevel.INFO;
     private TrcDbgTrace dbgTrace = null;
 
-    /**
-     * This interface provides callback notification on asynchronous read/write completion.
-     */
-    public interface CompletionHandler
-    {
-        /**
-         * This method is called when the read operation has been completed.
-         *
-         * @param requestId specifies the request ID. Can be null if none was specified.
-         * @param regAddress specifies the starting register address.
-         * @param length specifies the number of bytes read.
-         * @param data specifies the data byte array.
-         * @param error specifies true if the operation failed, false otherwise.
-         */
-        void readCompletion(Object requestId, int regAddress, int length, byte[] data, boolean error);
-
-        /**
-         * This method is called when the write operation has been completed.
-         *
-         * @param requestId specifies the request ID. Can  be null if none was specified.
-         * @param regAddress specifies the starting register address.
-         * @param length specifies the number of bytes written.
-         * @param error specifies true if the operation failed, false otherwise.
-         */
-        void writeCompletion(Object requestId, int regAddress, int length, boolean error);
-
-    }   //interface CompletionHandler
-
-    /**
-     * This class implements an I2C device request. Typically, a request will be put in the request queue so that
-     * each request will be sent to the I2C device sequentially.
-     */
-    private class Request
-    {
-        public Object requestId;
-        public int regAddress;
-        public byte[] buffer;
-        public int length;
-        public boolean readRequest;
-        public boolean repeat;
-        public TrcEvent event;
-        public CompletionHandler handler;
-        public boolean error;
-
-        /**
-         * Constructor: Create an instance of the object.
-         *
-         * @param requestId specifies the request ID that will be passed to the completion handler. It can be null.
-         * @param regAddress specifies the register address.
-         * @param buffer specifies the data buffer that contains data for a write request, null for a read request.
-         * @param length specifies the length of the register block to read/write.
-         * @param readRequest specifies true for a read request, false for a write request.
-         * @param repeat specifies true to re-queue the request when completed.
-         * @param event specifies the event to signal when the request is completed. It can be null.
-         * @param handler specifies the completion handler to call when the request is completed. It can be null.
-         */
-        public Request(
-            Object requestId, int regAddress, byte[] buffer, int length, boolean readRequest, boolean repeat,
-            TrcEvent event, CompletionHandler handler)
-        {
-            this.requestId = requestId;
-            this.regAddress = regAddress;
-            this.buffer = buffer;
-            this.length = length;
-            this.readRequest = readRequest;
-            this.repeat = repeat;
-            this.event = event;
-            this.handler = handler;
-            this.error = false;
-        }   //Request
-
-    }   //class Request
-
-    private boolean perfReportEnabled = false;
-    private TrcDbgTrace tracer = null;
-    private double totalTime = 0.0;
-    private int totalRequests = 0;
-
-    private final String instanceName;
-    private ConcurrentLinkedQueue<Request> requestQueue;
-    private Thread deviceTask;
-    private volatile long processingInterval = 0;    // in msec
+    private I2C device;
 
     /**
      * Constructor: Creates an instance of the object.
@@ -136,16 +54,14 @@ public class FrcI2cDevice extends I2C implements Runnable
      */
     public FrcI2cDevice(final String instanceName, Port port, int devAddress)
     {
-        super(port, devAddress);
+        super(instanceName);
 
         if (debugEnabled)
         {
             dbgTrace = new TrcDbgTrace(moduleName + "." + instanceName, tracingEnabled, traceLevel, msgLevel);
         }
 
-        this.instanceName = instanceName;
-        requestQueue = new ConcurrentLinkedQueue<>();
-        deviceTask = new Thread(this, instanceName);
+        device = new I2C(port, devAddress);
     }   //FrcI2cDevice
 
     /**
@@ -159,525 +75,79 @@ public class FrcI2cDevice extends I2C implements Runnable
         this(instanceName, Port.kOnboard, devAddress);
     }   //FrcI2cDevice
 
-    /**
-     * This method returns the instance name.
-     *
-     * @return instance name.
-     */
-    public String toString()
-    {
-        return instanceName;
-    }   //toString
-
-    /**
-     * This method checks if the periodic task is enabled.
-     *
-     * @return true if task is enabled, false otherwise.
-     */
-    public synchronized boolean isTaskEnabled()
-    {
-        return deviceTask.isAlive();
-    }   //isTaskEnabled
-
-    /**
-     * This method enables/disables the periodic task. If enabling task, the task will be started. If disabling task,
-     * the task will be terminated.
-     *
-     * @param enabled specifies true to enable periodic task, false to disable.
-     */
-    public synchronized void setTaskEnabled(boolean enabled)
-    {
-        boolean isAlive = deviceTask.isAlive();
-
-        if (!isAlive && enabled)
-        {
-            totalTime = 0.0;
-            totalRequests = 0;
-            deviceTask.start();
-        }
-        else if (isAlive && !enabled)
-        {
-            deviceTask.interrupt();
-        }
-    }   //setTaskEnabled
-
-    /**
-     * This method sets the periodic task processing interval.
-     *
-     * @param interval specifies the processing interval in msec. If 0, process as fast as the CPU can run.
-     */
-    public synchronized void setProcessingInterval(long interval)
-    {
-        final String funcName = "setProcessingInterval";
-
-        if (debugEnabled)
-        {
-            dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.API, "interval=%dms", interval);
-            dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.API);
-        }
-
-        processingInterval = interval;
-    }   //setProcessInterval
-
-    /**
-     * This method returns the periodic task processing interval.
-     *
-     * @return periodic task processing interval in msec.
-     */
-    public synchronized long getProcessingInterval()
-    {
-        final String funcName = "getProcessingInterval";
-
-        if (debugEnabled)
-        {
-            dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.API);
-            dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.API, "=%d", processingInterval);
-        }
-
-        return processingInterval;
-    }   //getProcessingInterval
-
-    /**
-     * This method enables/disables vision processing performance report.
-     *
-     * @param enabled specifies true to enable performance report, false to disable.
-     */
-    public synchronized void setPerfReportEnabled(boolean enabled)
-    {
-        perfReportEnabled = enabled;
-        if (perfReportEnabled && tracer == null)
-        {
-            tracer = FrcRobotBase.getGlobalTracer();
-        }
-    }   //setPerfReportEnabled
-
-    /**
-     * This method is doing a synchronous read from the device with the specified starting address and length of the
-     * register block.
-     *
-     * @param startAddress specifies the starting register to read from or -1 for read-only request.
-     * @param buffer specifies the buffer to hold the data read.
-     * @param length specifies the length of the register block to read.
-     * @return true if read was successful, false otherwise.
-     */
-    public boolean syncRead(int startAddress, byte[] buffer, int length)
-    {
-        final String funcName = "syncRead";
-        boolean success = false;
-
-        if (debugEnabled)
-        {
-            dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.API, "start=0x%02x,len=%d", startAddress, length);
-        }
-
-        if (!isTaskEnabled())
-        {
-            throw new RuntimeException("Must call setTaskEnabled first.");
-        }
-
-        TrcEvent event = new TrcEvent(instanceName + "." + startAddress + "." + length);
-        Request request = new Request(null, startAddress, buffer, length, true, false, event, null);
-
-        requestQueue.add(request);
-
-        while (!event.isSignaled())
-        {
-            Thread.yield();
-        }
-
-        if (!request.error)
-        {
-            success = true;
-        }
-
-        if (debugEnabled)
-        {
-            dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.API, "=%s (%s)",
-                Boolean.toString(success), Arrays.toString(buffer));
-        }
-
-        return success;
-    }   //syncRead
-
-    /**
-     * This method is doing a synchronous read-only from the device with the specified length.
-     *
-     * @param buffer specifies the buffer to hold the data read.
-     * @param length specifies the length of the register block to read.
-     * @return true if read was successful, false otherwise.
-     */
-    public boolean syncRead(byte[] buffer, int length)
-    {
-        return syncRead(-1, buffer, length);
-    }   //syncRead
-
-    /**
-     * This method is doing a synchronous write to the device with the specified starting address and data of the
-     * register block.
-     *
-     * @param startAddress specifies the starting register to write to or -1 for bulk write.
-     * @param data specifies the data to write to the device.
-     * @param length specifies the length of the register block to write.
-     * @return true if write was successful, false otherwise.
-     */
-    public boolean syncWrite(int startAddress, byte[] data, int length)
-    {
-        final String funcName = "syncWrite";
-        boolean success = false;
-
-        if (debugEnabled)
-        {
-            dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.API, "start=0x%02x,data=%s,length=%d",
-                startAddress, Arrays.toString(data), length);
-        }
-
-        if (!isTaskEnabled())
-        {
-            throw new RuntimeException("Must call setTaskEnabled first.");
-        }
-
-        TrcEvent event = new TrcEvent(instanceName + "." + startAddress + "." + data.length);
-        Request request = new Request(null, startAddress, data, length, false, false, event, null);
-
-        requestQueue.add(request);
-
-        while (!event.isSignaled())
-        {
-            Thread.yield();
-        }
-
-        if (!request.error)
-        {
-            success = true;
-        }
-
-        if (debugEnabled)
-        {
-            dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.API, "=%s", Boolean.toString(success));
-        }
-
-        return success;
-    }   //syncWrite
-
-    /**
-     * This method is doing a synchronous bulk write to the device with the specified length.
-     *
-     * @param data specifies the data to write to the device.
-     * @param length specifies the length of the register block to write.
-     * @return true if write was successful, false otherwise.
-     */
-    public boolean syncWrite(byte[] data, int length)
-    {
-        return syncWrite(-1, data, length);
-    }   //syncWrite
-
-    /**
-     * This method is doing an asynchronous read from the device with the specified starting address and length of the
-     * register block.
-     *
-     * @param requestId specifies the request ID that will be passed to the completion handler. It can be null.
-     * @param startAddress specifies the starting register to read from.
-     * @param buffer specifies the buffer to hold the data read.
-     * @param length specifies the length of the register block to read.
-     * @param repeat specifies true to re-queue the request when completed.
-     * @param event specifies the event to signal when the request is completed. It can be null.
-     * @param handler specifies the completion handler to call when the request is completed. It can be null.
-     */
-    public void asyncRead(
-        Object requestId, int startAddress, byte[] buffer, int length, boolean repeat, TrcEvent event,
-        CompletionHandler handler)
-    {
-        final String funcName = "asyncRead";
-
-        if (debugEnabled)
-        {
-            dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.API, "id=%s,start=0x%02x,len=%d,repeat=%s,event=%s",
-                requestId != null? requestId: "null", startAddress, length, Boolean.toString(repeat),
-                event == null? "null": event.toString());
-        }
-
-        if (!isTaskEnabled())
-        {
-            throw new RuntimeException("Must call setTaskEnabled first.");
-        }
-
-        requestQueue.add(new Request(requestId, startAddress, buffer, length, true, repeat, event, handler));
-
-        if (debugEnabled)
-        {
-            dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.API);
-        }
-    }   //asyncRead
-
-    /**
-     * This method is doing an asynchronous read from the device with the specified starting address and length of the
-     * register block.
-     *
-     * @param requestId specifies the request ID that will be passed to the completion handler. It can be null.
-     * @param startAddress specifies the starting register to read from.
-     * @param buffer specifies the buffer to hold the data read.
-     * @param length specifies the length of the register block to read.
-     * @param event specifies the event to signal when the request is completed. It can be null.
-     * @param handler specifies the completion handler to call when the request is completed. It can be null.
-     */
-    public void asyncRead(
-        Object requestId, int startAddress, byte[] buffer, int length, TrcEvent event, CompletionHandler handler)
-    {
-        asyncRead(requestId, startAddress, buffer, length, false, event, handler);
-    }   //asyncRead
-
-    /**
-     * This method is doing an asynchronous read-only from the device with the specified length.
-     *
-     * @param requestId specifies the request ID that will be passed to the completion handler. It can be null.
-     * @param buffer specifies the buffer to hold the data read.
-     * @param length specifies the length of the register block to read.
-     * @param repeat specifies true to re-queue the request when completed.
-     * @param event specifies the event to signal when the request is completed. It can be null.
-     * @param handler specifies the completion handler to call when the request is completed. It can be null.
-     */
-    public void asyncRead(
-        Object requestId, byte[] buffer, int length, boolean repeat, TrcEvent event, CompletionHandler handler)
-    {
-        asyncRead(requestId, -1, buffer, length, repeat, event, handler);
-    }   //asyncRead
-
-    /**
-     * This method is doing an asynchronous read-only from the device with the specified length.
-     *
-     * @param requestId specifies the request ID that will be passed to the completion handler. It can be null.
-     * @param buffer specifies the buffer to hold the data read.
-     * @param length specifies the length of the register block to read.
-     * @param event specifies the event to signal when the request is completed. It can be null.
-     * @param handler specifies the completion handler to call when the request is completed. It can be null.
-     */
-    public void asyncRead(Object requestId, byte[] buffer, int length, TrcEvent event, CompletionHandler handler)
-    {
-        asyncRead(requestId, -1, buffer, length, false, event, handler);
-    }   //asyncRead
-
-    /**
-     * This method is doing an asynchronous write to the device with the specified starting address of the register
-     * block and data buffer.
-     *
-     * @param requestId specifies the request ID that will be passed to the completion handler. It can be null.
-     * @param startAddress specifies the starting register to write to.
-     * @param data specifies the data to write to the device.
-     * @param length specifies the length of the register block to write.
-     * @param event specifies the event to signal when the request is completed. It can be null.
-     * @param handler specifies the completion handler to call when the request is completed. It can be null.
-     */
-    public void asyncWrite(
-        Object requestId, int startAddress, byte[] data, int length, TrcEvent event, CompletionHandler handler)
-    {
-        final String funcName = "asyncWrite";
-        if (debugEnabled)
-        {
-            dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.API, "id=%s,start=0x%02x,data=%s,length=%d,event=%s",
-                requestId != null? requestId: "null", startAddress, Arrays.toString(data), length,
-                event == null? "null": event.toString());
-        }
-
-        if (!isTaskEnabled())
-        {
-            throw new RuntimeException("Must call setTaskEnabled first.");
-        }
-
-        requestQueue.add(new Request(requestId, startAddress, data, length, false, false, event, handler));
-
-        if (debugEnabled)
-        {
-            dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.API);
-        }
-    }   //asyncWrite
-
-    /**
-     * This method is doing an asynchronous bulk write to the device with the specified length.
-     *
-     * @param requestId specifies the request ID that will be passed to the completion handler. It can be null.
-     * @param data specifies the data to write to the device.
-     * @param length specifies the length of the register block to write.
-     * @param event specifies the event to signal when the request is completed. It can be null.
-     * @param handler specifies the completion handler to call when the request is completed. It can be null.
-     */
-    public void asyncWrite(Object requestId, byte[] data, int length, TrcEvent event, CompletionHandler handler)
-    {
-        asyncWrite(requestId, -1, data, length, event, handler);
-    }   //asyncWrite
-
-    /**
-     * This method sends a byte command to the device.
-     *
-     * @param regAddress specifies the register address to write to.
-     * @param command specifies the command byte.
-     * @param waitForCompletion specifies true to wait for write completion.
-     */
-    public void sendByteCommand(int regAddress, byte command, boolean waitForCompletion)
-    {
-        final String funcName = "sendByteCommand";
-        byte[] data = new byte[1];
-
-        if (debugEnabled)
-        {
-            dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.API, "addr=%x,cmd=%x,sync=%s",
-                regAddress, command, Boolean.toString(waitForCompletion));
-        }
-
-        data[0] = command;
-        if (waitForCompletion)
-        {
-            syncWrite(regAddress, data, data.length);
-        }
-        else
-        {
-            asyncWrite(null, regAddress, data, data.length, null, null);
-        }
-
-        if (debugEnabled)
-        {
-            dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.API);
-        }
-    }   //sendByteCommand
-
-    /**
-     * This method sends a 16-bit command to the device.
-     *
-     * @param regAddress specifies the register address to write to.
-     * @param command specifies the 16-bit command.
-     * @param waitForCompletion specifies true to wait for write completion.
-     */
-    public void sendWordCommand(int regAddress, short command, boolean waitForCompletion)
-    {
-        final String funcName = "sendWordCommand";
-        byte[] data = new byte[2];
-
-        if (debugEnabled)
-        {
-            dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.API, "addr=%x,cmd=%x,sync=%s",
-                regAddress, command, Boolean.toString(waitForCompletion));
-        }
-
-        data[0] = (byte)(command & 0xff);
-        data[1] = (byte)(command >> 8);
-        if (waitForCompletion)
-        {
-            syncWrite(regAddress, data, data.length);
-        }
-        else
-        {
-            asyncWrite(null, regAddress, data, data.length, null, null);
-        }
-
-        if (debugEnabled)
-        {
-            dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.API);
-        }
-    }   //sendWordCommand
-
     //
-    // Implements Runnable interface.
+    // Implements TrcDeviceQueue abstract methods.
     //
 
     /**
-     * This method runs the periodic processing task.
+     * This method is called to read data from the device with the specified length.
+     *
+     * @param address specifies the I2C register address to read from if any.
+     * @param length specifies the number of bytes to read.
+     * @return a byte array containing the data read.
      */
     @Override
-    public void run()
+    public byte[] readData(int address, int length)
     {
-        final String funcName = "run";
+        final String funcName = "readData";
+        byte[] buffer = new byte[length];
 
         if (debugEnabled)
         {
-            dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.CALLBK);
+            dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.CALLBK, "addr=%d,len=%d", address, length);
         }
 
-        while (!Thread.interrupted())
+        if (address == -1 && !device.readOnly(buffer, length) || !device.read(address, length, buffer))
         {
-            long requestStartTime = TrcUtil.getCurrentTimeMillis();
-            Request request = requestQueue.poll();
-
-            if (request != null)
-            {
-                double startTime;
-                double elapsedTime;
-
-                startTime = TrcUtil.getCurrentTime();
-                if (request.readRequest)
-                {
-                    if (request.regAddress == -1 && !readOnly(request.buffer, request.length) ||
-                        !read(request.regAddress, request.length, request.buffer))
-                    {
-                        request.error = true;
-                    }
-
-                    if (request.repeat)
-                    {
-                        requestQueue.add(request);
-                    }
-                }
-                else
-                {
-                    ByteBuffer buffer;
-
-                    if (request.regAddress == -1)
-                    {
-                        buffer = ByteBuffer.allocateDirect(request.length);
-                    }
-                    else
-                    {
-                        buffer = ByteBuffer.allocateDirect(request.length + 1);
-                        buffer.put((byte)request.regAddress);
-                    }
-                    buffer.put(request.buffer);
-
-                    if (!writeBulk(buffer, request.length + 1))
-                    {
-                        request.error = true;
-                    }
-                }
-                elapsedTime = TrcUtil.getCurrentTime() - startTime;
-                totalTime += elapsedTime;
-                totalRequests++;
-                if (perfReportEnabled && tracer != null)
-                {
-                    tracer.traceInfo(funcName, "Average request time = %.3f msec", totalTime/totalRequests);
-                }
-
-                if (request.event != null)
-                {
-                    request.event.set(true);
-                }
-
-                if (request.handler != null)
-                {
-                    if (request.readRequest)
-                    {
-                        request.handler.readCompletion(
-                            request.requestId, request.regAddress, request.length, request.buffer, request.error);
-                    }
-                    else
-                    {
-                        request.handler.writeCompletion(
-                            request.requestId, request.regAddress, request.length, request.error);
-                    }
-                }
-            }
-
-            if (processingInterval > 0)
-            {
-                long sleepTime = processingInterval - (TrcUtil.getCurrentTimeMillis() - requestStartTime);
-                TrcUtil.sleep(sleepTime);
-            }
-            else
-            {
-                Thread.yield();
-            }
+            buffer = null;
         }
 
         if (debugEnabled)
         {
-            dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.CALLBK);
+            dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.CALLBK, "=%s", Arrays.toString(buffer));
         }
-    }   //run
+
+        return buffer;
+    }   //readData
+
+    /**
+     * This method is called to write data to the device with the specified data buffer and length.
+     *
+     * @param address specifies the I2C register address to write to if any.
+     * @param buffer specifies the buffer containing the data to be written to the device.
+     * @param length specifies the number of bytes to write.
+     * @return number of bytes written.
+     */
+    @Override
+    public int writeData(int address, byte[] buffer, int length)
+    {
+        final String funcName = "writeData";
+        int buffLen = address == -1? length: length + 1;
+        ByteBuffer byteBuffer = ByteBuffer.allocateDirect(buffLen);
+
+        if (debugEnabled)
+        {
+            dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.CALLBK, "addr=%d,data=%s,len=%d",
+                address, Arrays.toString(buffer), length);
+        }
+
+        if (address != -1)
+        {
+            byteBuffer.put((byte)address);
+        }
+        byteBuffer.put(buffer);
+
+        if (!device.writeBulk(byteBuffer, length))
+        {
+            length = 0;
+        }
+
+        if (debugEnabled)
+        {
+            dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.CALLBK, "=%d", length);
+        }
+
+        return length;
+    }   //writeData
 
 }   //class FtcI2cDevice

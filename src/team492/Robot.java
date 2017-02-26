@@ -240,9 +240,9 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
             frontPixy = new PixyVision(
                 "FrontPixy", RobotInfo.PIXY_LIFT_SIGNATURE, RobotInfo.PIXY_FRONT_BRIGHTNESS,
                 RobotInfo.PIXY_FRONT_ORIENTATION, SerialPort.Port.kOnboard);
-            rearPixy = new PixyVision(
-                "RearPixy", RobotInfo.PIXY_GEAR_SIGNATURE, RobotInfo.PIXY_REAR_BRIGHTNESS,
-                RobotInfo.PIXY_REAR_ORIENTATION, I2C.Port.kMXP, RobotInfo.PIXYCAM_REAR_I2C_ADDRESS);
+//            rearPixy = new PixyVision(
+//                "RearPixy", RobotInfo.PIXY_GEAR_SIGNATURE, RobotInfo.PIXY_REAR_BRIGHTNESS,
+//                RobotInfo.PIXY_REAR_ORIENTATION, I2C.Port.kMXP, RobotInfo.PIXYCAM_REAR_I2C_ADDRESS);
         }
 
         //
@@ -314,8 +314,8 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         //
         // Create Global Menus (can be used in all modes).
         //
-        matchTypeMenu = new FrcChoiceMenu<>("Match type:");
-        allianceMenu = new FrcChoiceMenu<>("Alliance:");
+        matchTypeMenu = new FrcChoiceMenu<>("Match Type");
+        allianceMenu = new FrcChoiceMenu<>("Alliance");
 
         //
         // Populate Global Menus.

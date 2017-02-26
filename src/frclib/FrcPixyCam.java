@@ -28,13 +28,14 @@ import java.util.Arrays;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.SerialPort;
 import trclib.TrcDbgTrace;
+import trclib.TrcDeviceQueue;
 import trclib.TrcUtil;
 
 /**
- * This class implements a platform dependent pixy camera that extends FrcI2cDevice. It provides access to the last
- * detected objects reported by the pixy camera asynchronously.
+ * This class implements a platform dependent pixy camera that is either connected to an I2C bus or a Serial Port.
+ * It provides access to the last detected objects reported by the pixy camera asynchronously.
  */
-public class FrcPixyCam implements FrcI2cDevice.CompletionHandler, FrcSerialPort.CompletionHandler
+public class FrcPixyCam implements TrcDeviceQueue.CompletionHandler
 {
     private static final String moduleName = "FrcPixyCam";
     private static final boolean debugEnabled = false;
@@ -86,7 +87,7 @@ public class FrcPixyCam implements FrcI2cDevice.CompletionHandler, FrcSerialPort
     /**
      * This is used identify the request type.
      */
-    private static enum RequestId
+    private static enum RequestTag
     {
         SYNC,
         ALIGN,
@@ -97,7 +98,7 @@ public class FrcPixyCam implements FrcI2cDevice.CompletionHandler, FrcSerialPort
         WIDTH,
         HEIGHT,
         ANGLE
-    }   //enum RequestId
+    }   //enum RequestTag
 
     private FrcI2cDevice i2cPixy = null;
     private FrcSerialPort serialPixy = null;
@@ -226,7 +227,7 @@ public class FrcPixyCam implements FrcI2cDevice.CompletionHandler, FrcSerialPort
 
         if (!wasEnabled && enabled)
         {
-            asyncReadData(RequestId.SYNC, 2);
+            asyncReadData(RequestTag.SYNC, 2);
         }
 
         if (debugEnabled)
@@ -238,26 +239,26 @@ public class FrcPixyCam implements FrcI2cDevice.CompletionHandler, FrcSerialPort
     /**
      * This method issues an asynchronous read of the specified number of bytes from the device.
      *
-     * @param requestId specifies the request ID that will be passed to the completion handler. It can be null.
+     * @param requestTag specifies the tag to identify the request. Can be null if none was provided.
      * @param length specifies the number of bytes to read.
      */
-    public void asyncReadData(RequestId requestId, int length)
+    public void asyncReadData(RequestTag requestTag, int length)
     {
         final String funcName = "asyncReadData";
 
         if (debugEnabled)
         {
-            dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.API, "id=%s,length=%d",
-                requestId != null? requestId: "null", length);
+            dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.API, "tag=%s,length=%d",
+                requestTag != null? requestTag: "null", length);
         }
 
         if (i2cPixy != null)
         {
-            i2cPixy.asyncRead(requestId, new byte[length], length, null, this);
+            i2cPixy.asyncRead(requestTag, length, null, this);
         }
         else if (serialPixy != null)
         {
-            serialPixy.asyncRead(requestId, length, null, this);
+            serialPixy.asyncRead(requestTag, length, null, this);
         }
 
         if (debugEnabled)
@@ -269,27 +270,26 @@ public class FrcPixyCam implements FrcI2cDevice.CompletionHandler, FrcSerialPort
     /**
      * This method writes the data buffer to the device asynchronously.
      *
-     * @param requestId specifies the request ID that will be passed to the completion handler. It can be null.
+     * @param requestTag specifies the tag to identify the request. Can be null if none was provided.
      * @param data specifies the data buffer.
-     * @param length specifies the number of bytes to write.
      */
-    public void asyncWriteData(RequestId requestId, byte[] data, int length)
+    public void asyncWriteData(RequestTag requestTag, byte[] data)
     {
         final String funcName = "asyncWriteData";
 
         if (debugEnabled)
         {
-            dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.API, "requestId=%s,data=%s,length=%d",
-                requestId != null? requestId: "null", Arrays.toString(data), length);
+            dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.API, "tag=%s,data=%s,length=%d",
+                requestTag != null? requestTag: "null", Arrays.toString(data), data.length);
         }
 
         if (i2cPixy != null)
         {
-            i2cPixy.asyncWrite(requestId, data, length, null, null);
+            i2cPixy.asyncWrite(requestTag, data, data.length, null, null);
         }
         else if (serialPixy != null)
         {
-            serialPixy.asyncWrite(requestId, data, length, null, null);
+            serialPixy.asyncWrite(requestTag, data, data.length, null, null);
         }
 
         if (debugEnabled)
@@ -320,7 +320,7 @@ public class FrcPixyCam implements FrcI2cDevice.CompletionHandler, FrcSerialPort
         data[2] = red;
         data[3] = green;
         data[4] = blue;
-        asyncWriteData(null, data, data.length);
+        asyncWriteData(null, data);
 
         if (debugEnabled)
         {
@@ -346,7 +346,7 @@ public class FrcPixyCam implements FrcI2cDevice.CompletionHandler, FrcSerialPort
         data[0] = 0x00;
         data[1] = PIXY_CMD_SET_BRIGHTNESS;
         data[2] = brightness;
-        asyncWriteData(null, data, data.length);
+        asyncWriteData(null, data);
 
         if (debugEnabled)
         {
@@ -380,7 +380,7 @@ public class FrcPixyCam implements FrcI2cDevice.CompletionHandler, FrcSerialPort
         data[3] = (byte)(pan >> 8);
         data[4] = (byte)(tilt & 0xff);
         data[5] = (byte)(tilt >> 8);
-        asyncWriteData(null, data, data.length);
+        asyncWriteData(null, data);
 
         if (debugEnabled)
         {
@@ -420,35 +420,34 @@ public class FrcPixyCam implements FrcI2cDevice.CompletionHandler, FrcSerialPort
     /**
      * This method processes the data from the read completion handler.
      *
-     * @param requestId specifies the request ID.
+     * @param requestTag specifies the tag to identify the request. Can be null if none was provided.
      * @param data specifies the data read.
      * @param length specifies the number of bytes read.
      */
-    private void processData(RequestId requestId, byte[] data, int length)
+    private void processData(RequestTag requestTag, byte[] data, int length)
     {
         final String funcName = "processData";
 
         if (length == 1)
         {
-            if (requestId != RequestId.ALIGN)
+            if (requestTag != RequestTag.ALIGN)
             {
-                throw new IllegalStateException(
-                    String.format("Unexpected request %s (Expecting SyncLow or SyncHigh).", requestId));
+                throw new IllegalStateException(String.format("Unexpected request %s (Expecting ALIGN).", requestTag));
             }
             else if (data[0] == PIXY_SYNC_HIGH)
             {
-                asyncReadData(RequestId.CHECKSUM, 2);
+                asyncReadData(RequestTag.CHECKSUM, 2);
             }
             else
             {
-                asyncReadData(RequestId.SYNC, 2);
+                asyncReadData(RequestTag.SYNC, 2);
             }
         }
         else if (length == 2)
         {
             int word = TrcUtil.bytesToInt(data[0], data[1]);
 
-            switch (requestId)
+            switch (requestTag)
             {
                 case SYNC:
                     if (currBlock == null)
@@ -459,16 +458,16 @@ public class FrcPixyCam implements FrcI2cDevice.CompletionHandler, FrcSerialPort
                     if (word == PIXY_START_WORD || word == PIXY_START_WORD_CC)
                     {
                         currBlock.sync = word;
-                        asyncReadData(RequestId.CHECKSUM, 2);
+                        asyncReadData(RequestTag.CHECKSUM, 2);
                     }
                     else if (word == PIXY_START_WORDX)
                     {
                         currBlock.sync = PIXY_START_WORD;
-                        asyncReadData(RequestId.ALIGN, 1);
+                        asyncReadData(RequestTag.ALIGN, 1);
                     }
                     else
                     {
-                        asyncReadData(RequestId.SYNC, 2);
+                        asyncReadData(RequestTag.SYNC, 2);
                     }
                     break;
 
@@ -477,12 +476,12 @@ public class FrcPixyCam implements FrcI2cDevice.CompletionHandler, FrcSerialPort
                     {
                         currBlock.checksum = word;
                         runningChecksum = 0;
-                        asyncReadData(RequestId.SIGNATURE, 2);
+                        asyncReadData(RequestTag.SIGNATURE, 2);
                     }
                     else
                     {
                         currBlock.sync = word;
-                        asyncReadData(RequestId.CHECKSUM, 2);
+                        asyncReadData(RequestTag.CHECKSUM, 2);
                         //
                         // Detected end-of-frame, convert the array list of objects into detected object array.
                         //
@@ -508,25 +507,25 @@ public class FrcPixyCam implements FrcI2cDevice.CompletionHandler, FrcSerialPort
                 case SIGNATURE:
                     currBlock.signature = word;
                     runningChecksum += word;
-                    asyncReadData(RequestId.XCENTER, 2);
+                    asyncReadData(RequestTag.XCENTER, 2);
                     break;
 
                 case XCENTER:
                     currBlock.xCenter = word;
                     runningChecksum += word;
-                    asyncReadData(RequestId.YCENTER, 2);
+                    asyncReadData(RequestTag.YCENTER, 2);
                     break;
 
                 case YCENTER:
                     currBlock.yCenter = word;
                     runningChecksum += word;
-                    asyncReadData(RequestId.WIDTH, 2);
+                    asyncReadData(RequestTag.WIDTH, 2);
                     break;
 
                 case WIDTH:
                     currBlock.width = word;
                     runningChecksum += word;
-                    asyncReadData(RequestId.HEIGHT, 2);
+                    asyncReadData(RequestTag.HEIGHT, 2);
                     break;
 
                 case HEIGHT:
@@ -534,7 +533,7 @@ public class FrcPixyCam implements FrcI2cDevice.CompletionHandler, FrcSerialPort
                     runningChecksum += word;
                     if (currBlock.sync == PIXY_START_WORD_CC)
                     {
-                        asyncReadData(RequestId.ANGLE, 2);
+                        asyncReadData(RequestTag.ANGLE, 2);
                     }
                     else
                     {
@@ -543,7 +542,7 @@ public class FrcPixyCam implements FrcI2cDevice.CompletionHandler, FrcSerialPort
                             objects.add(currBlock);
                             currBlock = null;
                         }
-                        asyncReadData(RequestId.SYNC, 2);
+                        asyncReadData(RequestTag.SYNC, 2);
                     }
                     break;
 
@@ -555,11 +554,11 @@ public class FrcPixyCam implements FrcI2cDevice.CompletionHandler, FrcSerialPort
                         objects.add(currBlock);
                         currBlock = null;
                     }
-                    asyncReadData(RequestId.SYNC, 2);
+                    asyncReadData(RequestTag.SYNC, 2);
                     break;
 
                 default:
-                    throw new IllegalStateException(String.format("Unexpected request %s.", requestId));
+                    throw new IllegalStateException(String.format("Unexpected request %s.", requestTag));
             }
         }
         else if (length > 0)
@@ -569,32 +568,31 @@ public class FrcPixyCam implements FrcI2cDevice.CompletionHandler, FrcSerialPort
     }   //processData
 
     //
-    // Implements FrcI2cDevice.CompletionHandler interface.
+    // Implements TrcDeviceQueue.CompletionHandler interface.
     //
 
     /**
      * This method is called when the read operation has been completed.
      *
-     * @param requestId specifies the request ID.
-     * @param regAddress specifies the starting register address.
-     * @param length specifies the number of bytes read.
-     * @param data specifies the data byte array.
-     * @param error specifies true if the operation failed, false otherwise.
+     * @param requestTag specifies the tag to identify the request. Can be null if none was provided.
+     * @param address specifies the data address read from if any, can be -1 if none specified.
+     * @param data specifies the byte array containing data read.
+     * @param error specifies true if the request failed, false otherwise. When true, data is invalid.
      */
     @Override
-    public void readCompletion(Object requestId, int regAddress, int length, byte[] data, boolean error)
+    public void readCompletion(Object requestTag, int address, byte[] data, boolean error)
     {
         final String funcName = "readCompletion";
 
         if (debugEnabled)
         {
-            dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.CALLBK, "id=%s,addr=0x%x,len=%d,data=%s,error=%s",
-                requestId, regAddress, length, Arrays.toString(data), Boolean.toString(error));
+            dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.CALLBK, "tag=%s,addr=0x%x,len=%d,data=%s,error=%s",
+                requestTag, address, data.length, Arrays.toString(data), Boolean.toString(error));
         }
 
-        if (regAddress == -1 && !error && data != null)
+        if (address == -1 && !error && data != null)
         {
-            processData((RequestId)requestId, data, length);
+            processData((RequestTag)requestTag, data, data.length);
         }
 
         if (debugEnabled)
@@ -604,58 +602,16 @@ public class FrcPixyCam implements FrcI2cDevice.CompletionHandler, FrcSerialPort
     }   //readCompletion
 
     /**
-     * This method is called when the write operation has been completed (not implemented).
+     * This method is called when the write operation has been completed.
      *
-     * @param requestId specifies the request ID.
-     * @param regAddress specifies the starting register address.
+     * @param requestTag specifies the tag to identify the request. Can be null if none was provided.
+     * @param address specifies the data address wrote to if any, can be -1 if none specified.
      * @param length specifies the number of bytes written.
-     * @param error specifies true if the operation failed, false otherwise.
+     * @param error specifies true if the request failed to write the specified length, false otherwise.
+     *              When true, length is invalid.
      */
     @Override
-    public void writeCompletion(Object requestId, int regAddress, int length, boolean error)
-    {
-    }   //writeCompletion
-
-    //
-    // Implements FrcSerialPort.CompletionHandler interface.
-    //
-
-    /**
-     * This method is called when the read operation has been completed.
-     *
-     * @param requestId specifies the request ID.
-     * @param data specifies the data byte array.
-     */
-    @Override
-    public void readCompletion(Object requestId, byte[] data)
-    {
-        final String funcName = "readCompletion";
-
-        if (debugEnabled)
-        {
-            dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.CALLBK, "id=%s,data=%s,length=%d",
-                requestId, Arrays.toString(data), data.length);
-        }
-
-        if (data != null)
-        {
-            processData((RequestId)requestId, data, data.length);
-        }
-
-        if (debugEnabled)
-        {
-            dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.CALLBK);
-        }
-    }   //readCompletion
-
-    /**
-     * This method is called when the write operation has been completed (not implemented).
-     *
-     * @param requestId specifies the request ID.
-     * @param length specifies the number of bytes written.
-     */
-    @Override
-    public void writeCompletion(Object requestId, int length)
+    public void writeCompletion(Object requestTag, int address, int length, boolean error)
     {
     }   //writeCompletion
 
