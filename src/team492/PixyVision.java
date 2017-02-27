@@ -25,10 +25,7 @@ package team492;
 import org.opencv.core.Rect;
 
 import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.SerialPort;
-import edu.wpi.first.wpilibj.Relay.Direction;
-import edu.wpi.first.wpilibj.Relay.Value;
 import frclib.FrcPixyCam;
 import frclib.FrcPixyCam.ObjectBlock;
 import trclib.TrcDbgTrace;
@@ -42,6 +39,21 @@ public class PixyVision
     private static final TrcDbgTrace.MsgLevel msgLevel = TrcDbgTrace.MsgLevel.INFO;
     private TrcDbgTrace dbgTrace = null;
 
+    public class TargetInfo
+    {
+        public Rect rect;
+        public double distance;
+        public double angle;
+
+        public TargetInfo(Rect rect, double distance, double angle)
+        {
+            this.rect = rect;
+            this.distance = distance;
+            this.angle = angle;
+        }   //TargetInfo
+
+    }   //class TargetInfo
+
     public enum Orientation
     {
         NORMAL_LANDSCAPE,
@@ -50,10 +62,11 @@ public class PixyVision
         UPSIDEDOWN_LANDSCAPE
     }   //enum Orientation
 
+    private static final double PIXY_DISTANCE_SCALE = 2040.0;
+
     private FrcPixyCam pixyCamera;
     private int signature;
     private Orientation orientation;
-    private Relay ringLightPower;
 
     private void commonInit(int signature, int brightness, Orientation orientation)
     {
@@ -64,8 +77,6 @@ public class PixyVision
 
         this.signature = signature;
         this.orientation = orientation;
-        ringLightPower = new Relay(RobotInfo.RELAY_RINGLIGHT_POWER);
-        ringLightPower.setDirection(Direction.kForward);
         pixyCamera.setBrightness((byte)brightness);
     }   //commonInit
 
@@ -94,17 +105,12 @@ public class PixyVision
         return pixyCamera.isEnabled();
     }   //isEnabled
 
-    public void setRingLightOn(boolean on)
-    {
-        ringLightPower.set(on? Value.kOn: Value.kOff);
-    }   //setRingLightOn
-
     /**
      * This method returns the rectangle of the last detected target.
      *
      * @return rectangle of last detected target.
      */
-    public Rect getTargetRect()
+    private Rect getTargetRect()
     {
         Rect targetRect = null;
         ObjectBlock[] detectedObjects = pixyCamera.getDetectedObjects();
@@ -187,5 +193,22 @@ public class PixyVision
 
         return targetRect;
     }   //getTargetRect
+
+    public TargetInfo getTargetInfo()
+    {
+        TargetInfo targetInfo = null;
+        Rect targetRect = getTargetRect();
+
+        if (targetRect != null)
+        {
+            double targetCenterX = targetRect.x + targetRect.width/2.0;
+            double targetDistance = PIXY_DISTANCE_SCALE/targetRect.width; 
+            double targetAngle = Math.toDegrees(
+                Math.atan((targetCenterX - RobotInfo.PIXYCAM_WIDTH/2.0)/targetRect.height));
+            targetInfo = new TargetInfo(targetRect, targetDistance, targetAngle);
+        }
+
+        return targetInfo;
+    }   //getTargetInfo
 
 }   // class PixyVision

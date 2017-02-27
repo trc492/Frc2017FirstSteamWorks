@@ -87,12 +87,15 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
         {
             robot.faceDetector.setEnabled(true);
         }
-//        else if (Robot.USE_PIXY_VISION)
+        else if (Robot.USE_PIXY_VISION)
+        {
+            robot.ringLightsPower.set(Value.kOn);
+            robot.frontPixy.setEnabled(true);
+            robot.rearPixy.setEnabled(true);
+        }
+//        else if (Robot.USE_PIXY_TEST)
 //        {
-//            robot.frontPixy.setRingLightOn(true);
-//            robot.rearPixy.setRingLightOn(true);
-//            robot.frontPixy.setEnabled(true);
-//            robot.rearPixy.setEnabled(true);
+//            robot.ringLightsPower.set(Value.kOn);
 //        }
     }   // startMode
 
@@ -110,12 +113,15 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
         {
             robot.faceDetector.setEnabled(false);
         }
-//        else if (Robot.USE_PIXY_VISION)
+        else if (Robot.USE_PIXY_VISION)
+        {
+            robot.frontPixy.setEnabled(false);
+            robot.rearPixy.setEnabled(false);
+            robot.ringLightsPower.set(Value.kOff);
+        }
+//        else if (Robot.USE_PIXY_TEST)
 //        {
-//            robot.frontPixy.setEnabled(false);
-//            robot.rearPixy.setEnabled(false);
-//            robot.frontPixy.setRingLightOn(false);
-//            robot.rearPixy.setRingLightOn(false);
+//            robot.ringLightsPower.set(Value.kOff);
 //        }
     }   // stopMode
 
@@ -232,7 +238,7 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
                         else if (robot.frontPixy != null)
                         {
                             robot.frontPixy.setEnabled(false);
-                            robot.frontPixy.setRingLightOn(false);
+                            robot.ringLightsPower.set(Value.kOff);
                         }
                     }
                     break;
@@ -254,7 +260,7 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
                         }
                         else if (robot.frontPixy != null)
                         {
-                            robot.frontPixy.setRingLightOn(true);
+                            robot.ringLightsPower.set(Value.kOn);
                             robot.frontPixy.setEnabled(true);
                         }
                     }
@@ -322,7 +328,7 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
                         }
                         else if (robot.frontPixy != null)
                         {
-                            robot.frontPixy.setRingLightOn(visionEnabled);
+                            robot.ringLightsPower.set(visionEnabled? Value.kOn: Value.kOff);
                             robot.frontPixy.setEnabled(visionEnabled);
                         }
                     }
@@ -377,7 +383,7 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
                     if (pressed)
                     {
                         flashLightsOn = !flashLightsOn;
-                        robot.flashLights.set(flashLightsOn? Value.kOn: Value.kOff);
+                        robot.flashLightsPower.set(flashLightsOn? Value.kOn: Value.kOff);
                     }
                     break;
 

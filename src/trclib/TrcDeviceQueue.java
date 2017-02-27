@@ -147,6 +147,7 @@ public abstract class TrcDeviceQueue implements Runnable
     private ConcurrentLinkedQueue<Request> requestQueue;
     private Thread deviceTask;
     private volatile long processingInterval = 0;    // in msec
+    private volatile boolean taskEnabled = false;
 
     /**
      * Constructor: Creates an instance of the object.
@@ -163,6 +164,7 @@ public abstract class TrcDeviceQueue implements Runnable
         this.instanceName = instanceName;
         requestQueue = new ConcurrentLinkedQueue<>();
         deviceTask = new Thread(this, instanceName);
+        deviceTask.start();
     }   //TrcDeviceQueue
 
     /**
@@ -176,13 +178,34 @@ public abstract class TrcDeviceQueue implements Runnable
     }   //toString
 
     /**
+     * This method checks if the device task has been terminated.
+     *
+     * @return true if task has been terminated, false otherwise.
+     */
+    public synchronized boolean isTaskTerminated()
+    {
+        return !deviceTask.isAlive();
+    }   //isTaskTerminated
+
+    /**
+     * This method is called to terminate the device task.
+     */
+    public synchronized void terminateTask()
+    {
+        if (deviceTask.isAlive())
+        {
+            deviceTask.interrupt();
+        }
+    }   //terminateTask
+
+    /**
      * This method checks if the device task is enabled.
      *
      * @return true if task is enabled, false otherwise.
      */
-    public boolean isTaskEnabled()
+    public synchronized boolean isTaskEnabled()
     {
-        return deviceTask.isAlive();
+        return deviceTask.isAlive() && taskEnabled;
     }   //isTaskEnabled
 
     /**
@@ -191,19 +214,16 @@ public abstract class TrcDeviceQueue implements Runnable
      *
      * @param enabled specifies true to enable device task, false to disable.
      */
-    public void setTaskEnabled(boolean enabled)
+    public synchronized void setTaskEnabled(boolean enabled)
     {
-        boolean isAlive = deviceTask.isAlive();
-
-        if (!isAlive && enabled)
+        if (deviceTask.isAlive())
         {
-            totalTime = 0.0;
-            totalRequests = 0;
-            deviceTask.start();
-        }
-        else if (isAlive && !enabled)
-        {
-            deviceTask.interrupt();
+            if (!taskEnabled && enabled)
+            {
+                totalTime = 0.0;
+                totalRequests = 0;
+            }
+            taskEnabled = enabled;
         }
     }   //setTaskEnabled
 
@@ -212,7 +232,7 @@ public abstract class TrcDeviceQueue implements Runnable
      *
      * @param interval specifies the processing interval in msec. If 0, process as fast as the CPU can run.
      */
-    public void setProcessingInterval(long interval)
+    public synchronized void setProcessingInterval(long interval)
     {
         final String funcName = "setProcessingInterval";
 
@@ -230,7 +250,7 @@ public abstract class TrcDeviceQueue implements Runnable
      *
      * @return device task processing interval in msec.
      */
-    public long getProcessingInterval()
+    public synchronized long getProcessingInterval()
     {
         final String funcName = "getProcessingInterval";
 
@@ -579,55 +599,59 @@ public abstract class TrcDeviceQueue implements Runnable
         while (!Thread.interrupted())
         {
             long requestStartTime = TrcUtil.getCurrentTimeMillis();
-            Request request = requestQueue.poll();
 
-            if (request != null)
+            if (isTaskEnabled())
             {
-                double startTime;
-                double elapsedTime;
+                Request request = requestQueue.poll();
 
-                startTime = TrcUtil.getCurrentTime();
-                if (request.readRequest)
+                if (request != null)
                 {
-                    request.buffer = readData(request.address, request.length);
-                    request.error = request.buffer == null;
-                }
-                else
-                {
-                    int length = writeData(request.address, request.buffer, request.length);
-                    request.error = length != request.length;
-                    request.length = length;
-                }
-                elapsedTime = TrcUtil.getCurrentTime() - startTime;
-                totalTime += elapsedTime;
-                totalRequests++;
-                if (perfTracer != null)
-                {
-                    perfTracer.traceInfo(funcName, "Average request time = %.3f msec", totalTime/totalRequests);
-                }
+                    double startTime;
+                    double elapsedTime;
 
-                if (request.event != null)
-                {
-                    request.event.set(true);
-                }
-
-                if (request.handler != null)
-                {
+                    startTime = TrcUtil.getCurrentTime();
                     if (request.readRequest)
                     {
-                        request.handler.readCompletion(
-                            request.requestTag, request.address, request.buffer, request.error);
+                        request.buffer = readData(request.address, request.length);
+                        request.error = request.buffer == null;
                     }
                     else
                     {
-                        request.handler.writeCompletion(
-                            request.requestTag, request.address, request.length, request.error);
+                        int length = writeData(request.address, request.buffer, request.length);
+                        request.error = length != request.length;
+                        request.length = length;
                     }
-                }
+                    elapsedTime = TrcUtil.getCurrentTime() - startTime;
+                    totalTime += elapsedTime;
+                    totalRequests++;
+                    if (perfTracer != null)
+                    {
+                        perfTracer.traceInfo(funcName, "Average request time = %.3f msec", totalTime/totalRequests);
+                    }
 
-                if (request.readRequest && request.repeat)
-                {
-                    requestQueue.add(request);
+                    if (request.event != null)
+                    {
+                        request.event.set(true);
+                    }
+
+                    if (request.handler != null)
+                    {
+                        if (request.readRequest)
+                        {
+                            request.handler.readCompletion(
+                                request.requestTag, request.address, request.buffer, request.error);
+                        }
+                        else
+                        {
+                            request.handler.writeCompletion(
+                                request.requestTag, request.address, request.length, request.error);
+                        }
+                    }
+
+                    if (request.readRequest && request.repeat)
+                    {
+                        requestQueue.add(request);
+                    }
                 }
             }
 

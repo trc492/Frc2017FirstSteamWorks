@@ -428,6 +428,11 @@ public class FrcPixyCam implements TrcDeviceQueue.CompletionHandler
     {
         final String funcName = "processData";
 
+        if (debugEnabled)
+        {
+            dbgTrace.traceInfo(funcName, "tag=%s,data=%s,len=%d", requestTag, Arrays.toString(data), length);
+        }
+
         if (length == 1)
         {
             if (requestTag != RequestTag.ALIGN)

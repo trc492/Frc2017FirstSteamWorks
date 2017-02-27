@@ -67,18 +67,19 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     public static final String programName = "FirstSteamWorks";
     public static final String moduleName = "Robot";
 
+    public static final boolean USE_NAV_X = true;
+    public static final boolean USE_ANALOG_GYRO = false;
     public static final boolean USE_GRIP_VISION = false;
     public static final boolean USE_FACE_DETECTOR = false;
     public static final boolean USE_PIXY_VISION = true;
     public static final boolean USE_AXIS_CAMERA = false;
-    public static final boolean USE_NAV_X = false;
-    public static final boolean USE_ANALOG_GYRO = true;
+//    public static final boolean USE_PIXY_TEST = false;
 
     private static final boolean DEBUG_DRIVE_BASE = false;
     private static final boolean DEBUG_PID_DRIVE = false;
     private static final boolean DEBUG_GRIP_VISION = false;
     private static final boolean DEBUG_FACE_DETECTION = false;
-    private static final boolean DEBUG_PIXY_VISION = true;
+    private static final boolean DEBUG_PIXY_VISION = false;
     private static final double DASHBOARD_UPDATE_INTERVAL = 0.1;
 
     public static enum MatchType
@@ -116,6 +117,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     public FrcFaceDetector faceDetector = null;
     public PixyVision frontPixy = null;
     public PixyVision rearPixy = null;
+    public PixyTest testPixy = null;
 
     //
     // DriveBase subsystem.
@@ -134,10 +136,11 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     //
     // Define our subsystems for Auto and TeleOp modes.
     //
+    public Relay ringLightsPower;
+    public Relay flashLightsPower;
     public FrcPneumatic mailbox;
     public GearPickup gearPickup;
     public Winch winch;
-    public Relay flashLights;
 
     //
     // Menus.
@@ -239,11 +242,15 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         {
             frontPixy = new PixyVision(
                 "FrontPixy", RobotInfo.PIXY_LIFT_SIGNATURE, RobotInfo.PIXY_FRONT_BRIGHTNESS,
-                RobotInfo.PIXY_FRONT_ORIENTATION, SerialPort.Port.kOnboard);
-//            rearPixy = new PixyVision(
-//                "RearPixy", RobotInfo.PIXY_GEAR_SIGNATURE, RobotInfo.PIXY_REAR_BRIGHTNESS,
-//                RobotInfo.PIXY_REAR_ORIENTATION, I2C.Port.kMXP, RobotInfo.PIXYCAM_REAR_I2C_ADDRESS);
+                RobotInfo.PIXY_FRONT_ORIENTATION, SerialPort.Port.kMXP);
+            rearPixy = new PixyVision(
+                "RearPixy", RobotInfo.PIXY_GEAR_SIGNATURE, RobotInfo.PIXY_REAR_BRIGHTNESS,
+                RobotInfo.PIXY_REAR_ORIENTATION, I2C.Port.kMXP, RobotInfo.PIXYCAM_REAR_I2C_ADDRESS);
         }
+//        else if (USE_PIXY_TEST)
+//        {
+//            testPixy = new PixyTest(I2C.Port.kOnboard, RobotInfo.PIXYCAM_FRONT_I2C_ADDRESS);
+//        }
 
         //
         // DriveBase subsystem.
@@ -304,12 +311,14 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         //
         // Create other subsystems.
         //
+        ringLightsPower = new Relay(RobotInfo.RELAY_RINGLIGHT_POWER);
+        ringLightsPower.setDirection(Direction.kForward);
+        flashLightsPower = new Relay(RobotInfo.RELAY_FLASHLIGHT_POWER);
+        flashLightsPower.setDirection(Direction.kForward);
         mailbox = new FrcPneumatic(
             "Mailbox", RobotInfo.CANID_PCM1, RobotInfo.SOL_MAILBOX_EXTEND, RobotInfo.SOL_MAILBOX_RETRACT);
         gearPickup = new GearPickup();
         winch = new Winch();
-        flashLights = new Relay(RobotInfo.RELAY_FLASHLIGHT_POWER);
-        flashLights.setDirection(Direction.kForward);
 
         //
         // Create Global Menus (can be used in all modes).
@@ -434,17 +443,19 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
                 }
             }
 
-            if (DEBUG_PIXY_VISION)
+            if (frontPixy != null && frontPixy.isEnabled())
             {
-                if (frontPixy != null && frontPixy.isEnabled())
+                PixyVision.TargetInfo targetInfo = frontPixy.getTargetInfo();
+                if (targetInfo != null)
                 {
-                    Rect targetRect = frontPixy.getTargetRect();
-                    if (targetRect != null)
+                    dashboard.displayPrintf(1, "x=%d, y=%d, width=%d, height=%d",
+                        targetInfo.rect.x, targetInfo.rect.y, targetInfo.rect.width, targetInfo.rect.height);
+                    dashboard.displayPrintf(2, "distance=%.1f, angle=%.1f", targetInfo.distance, targetInfo.angle);
+                    if (DEBUG_PIXY_VISION)
                     {
-                        dashboard.displayPrintf(1, "x=%d, y=%d, width=%d, height=%d",
-                            targetRect.x, targetRect.y, targetRect.width, targetRect.height);
-                        tracer.traceInfo("PixyVision", "x=%d, y=%d, width=%d, height=%d",
-                            targetRect.x, targetRect.y, targetRect.width, targetRect.height);
+                        tracer.traceInfo("PixyVision", "x=%d, y=%d, width=%d, height=%d, distance=%.1f, angle=%.1f",
+                            targetInfo.rect.x, targetInfo.rect.y, targetInfo.rect.width, targetInfo.rect.height,
+                            targetInfo.distance, targetInfo.angle);
                     }
                 }
             }

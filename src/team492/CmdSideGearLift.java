@@ -157,7 +157,7 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
                     xDistance = 0;
                     yDistance = 0;
                     // If vision target detected, or if we hit the max turn angle, set the next state
-                    if (robot.frontPixy.getTargetRect() != null || Math.abs(robot.targetHeading) >= maxSideLiftAngle)
+                    if (robot.frontPixy.getTargetInfo() != null || Math.abs(robot.targetHeading) >= maxSideLiftAngle)
                     {
                         sm.setState(State.VISION_DEPLOY);
                     }
