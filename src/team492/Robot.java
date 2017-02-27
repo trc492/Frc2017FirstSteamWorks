@@ -73,7 +73,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     public static final boolean USE_FACE_DETECTOR = false;
     public static final boolean USE_PIXY_VISION = true;
     public static final boolean USE_AXIS_CAMERA = false;
-//    public static final boolean USE_PIXY_TEST = false;
+//    public static final boolean USE_PIXY_TEST = true;
 
     private static final boolean DEBUG_DRIVE_BASE = false;
     private static final boolean DEBUG_PID_DRIVE = false;
@@ -245,14 +245,14 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
                 RobotInfo.PIXY_FRONT_ORIENTATION, SerialPort.Port.kMXP);
 //            frontPixy = new PixyVision(
 //                "FrontPixy", RobotInfo.PIXY_LIFT_SIGNATURE, RobotInfo.PIXY_FRONT_BRIGHTNESS,
-//                RobotInfo.PIXY_FRONT_ORIENTATION, I2C.Port.kMXP, RobotInfo.PIXYCAM_FRONT_I2C_ADDRESS);
+//                RobotInfo.PIXY_FRONT_ORIENTATION, I2C.Port.kOnboard, RobotInfo.PIXYCAM_FRONT_I2C_ADDRESS);
             rearPixy = new PixyVision(
                 "RearPixy", RobotInfo.PIXY_GEAR_SIGNATURE, RobotInfo.PIXY_REAR_BRIGHTNESS,
                 RobotInfo.PIXY_REAR_ORIENTATION, I2C.Port.kMXP, RobotInfo.PIXYCAM_REAR_I2C_ADDRESS);
         }
 //        else if (USE_PIXY_TEST)
 //        {
-//            testPixy = new PixyTest(I2C.Port.kMXP, RobotInfo.PIXYCAM_FRONT_I2C_ADDRESS);
+//            testPixy = new PixyTest(I2C.Port.kOnboard, RobotInfo.PIXYCAM_FRONT_I2C_ADDRESS);
 //        }
 
         //
