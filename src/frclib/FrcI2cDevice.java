@@ -97,7 +97,7 @@ public class FrcI2cDevice extends TrcDeviceQueue
             dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.CALLBK, "addr=%d,len=%d", address, length);
         }
 
-        if (address == -1 && !device.readOnly(buffer, length) || !device.read(address, length, buffer))
+        if (address == -1 && device.readOnly(buffer, length) || device.read(address, length, buffer))
         {
             buffer = null;
         }
@@ -137,7 +137,7 @@ public class FrcI2cDevice extends TrcDeviceQueue
         }
         byteBuffer.put(buffer);
 
-        if (!device.writeBulk(byteBuffer, length))
+        if (device.writeBulk(byteBuffer, length))
         {
             length = 0;
         }

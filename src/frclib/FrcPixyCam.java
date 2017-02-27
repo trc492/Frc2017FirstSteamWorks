@@ -92,12 +92,8 @@ public class FrcPixyCam implements TrcDeviceQueue.CompletionHandler
         SYNC,
         ALIGN,
         CHECKSUM,
-        SIGNATURE,
-        XCENTER,
-        YCENTER,
-        WIDTH,
-        HEIGHT,
-        ANGLE
+        NORMAL_BLOCK,
+        COLOR_CODE_BLOCK
     }   //enum RequestTag
 
     private FrcI2cDevice i2cPixy = null;
@@ -106,7 +102,6 @@ public class FrcPixyCam implements TrcDeviceQueue.CompletionHandler
     private ObjectBlock[] detectedObjects = null;
     private ObjectBlock currBlock = null;
     private Object objectLock = new Object();
-    private int runningChecksum = 0;
 
     /**
      * Constructor: Create an instance of the object.
@@ -401,7 +396,7 @@ public class FrcPixyCam implements TrcDeviceQueue.CompletionHandler
         if (debugEnabled)
         {
             dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.API);
-        }
+}
 
         synchronized (objectLock)
         {
@@ -427,39 +422,29 @@ public class FrcPixyCam implements TrcDeviceQueue.CompletionHandler
     private void processData(RequestTag requestTag, byte[] data, int length)
     {
         final String funcName = "processData";
+        int word;
 
         if (debugEnabled)
         {
             dbgTrace.traceInfo(funcName, "tag=%s,data=%s,len=%d", requestTag, Arrays.toString(data), length);
         }
 
-        if (length == 1)
+        switch (requestTag)
         {
-            if (requestTag != RequestTag.ALIGN)
-            {
-                throw new IllegalStateException(String.format("Unexpected request %s (Expecting ALIGN).", requestTag));
-            }
-            else if (data[0] == PIXY_SYNC_HIGH)
-            {
-                asyncReadData(RequestTag.CHECKSUM, 2);
-            }
-            else
-            {
-                asyncReadData(RequestTag.SYNC, 2);
-            }
-        }
-        else if (length == 2)
-        {
-            int word = TrcUtil.bytesToInt(data[0], data[1]);
+            case SYNC:
+                if (currBlock == null)
+                {
+                    currBlock = new ObjectBlock();
+                }
 
-            switch (requestTag)
-            {
-                case SYNC:
-                    if (currBlock == null)
-                    {
-                        currBlock = new ObjectBlock();
-                    }
-
+                if (length != 2)
+                {
+                    throw new IllegalStateException(String.format("Unexpected data length %d in %s.",
+                        length, requestTag));
+                }
+                else
+                {
+                    word = TrcUtil.bytesToInt(data[0], data[1]);
                     if (word == PIXY_START_WORD || word == PIXY_START_WORD_CC)
                     {
                         currBlock.sync = word;
@@ -474,16 +459,35 @@ public class FrcPixyCam implements TrcDeviceQueue.CompletionHandler
                     {
                         asyncReadData(RequestTag.SYNC, 2);
                     }
-                    break;
+                }
+                break;
 
-                case CHECKSUM:
-                    if (word != PIXY_START_WORD && word != PIXY_START_WORD_CC)
-                    {
-                        currBlock.checksum = word;
-                        runningChecksum = 0;
-                        asyncReadData(RequestTag.SIGNATURE, 2);
-                    }
-                    else
+            case ALIGN:
+                if (length != 1)
+                {
+                    throw new IllegalStateException(String.format("Unexpected data length %d in %s.",
+                        length, requestTag));
+                }
+                else if (data[0] == PIXY_SYNC_HIGH)
+                {
+                    asyncReadData(RequestTag.CHECKSUM, 2);
+                }
+                else
+                {
+                    asyncReadData(RequestTag.SYNC, 2);
+                }
+                break;
+
+            case CHECKSUM:
+                if (length != 2)
+                {
+                    throw new IllegalStateException(String.format("Unexpected data length %d in %s.",
+                        length, requestTag));
+                }
+                else
+                {
+                    word = TrcUtil.bytesToInt(data[0], data[1]);
+                    if (word == PIXY_START_WORD || word == PIXY_START_WORD_CC)
                     {
                         currBlock.sync = word;
                         asyncReadData(RequestTag.CHECKSUM, 2);
@@ -507,68 +511,79 @@ public class FrcPixyCam implements TrcDeviceQueue.CompletionHandler
                             }
                         }
                     }
-                    break;
-
-                case SIGNATURE:
-                    currBlock.signature = word;
-                    runningChecksum += word;
-                    asyncReadData(RequestTag.XCENTER, 2);
-                    break;
-
-                case XCENTER:
-                    currBlock.xCenter = word;
-                    runningChecksum += word;
-                    asyncReadData(RequestTag.YCENTER, 2);
-                    break;
-
-                case YCENTER:
-                    currBlock.yCenter = word;
-                    runningChecksum += word;
-                    asyncReadData(RequestTag.WIDTH, 2);
-                    break;
-
-                case WIDTH:
-                    currBlock.width = word;
-                    runningChecksum += word;
-                    asyncReadData(RequestTag.HEIGHT, 2);
-                    break;
-
-                case HEIGHT:
-                    currBlock.height = word;
-                    runningChecksum += word;
-                    if (currBlock.sync == PIXY_START_WORD_CC)
+                    else if (currBlock.sync == PIXY_START_WORD)
                     {
-                        asyncReadData(RequestTag.ANGLE, 2);
+                        asyncReadData(RequestTag.NORMAL_BLOCK, 10);
+                    }
+                    else if (currBlock.sync == PIXY_START_WORD_CC)
+                    {
+                        asyncReadData(RequestTag.COLOR_CODE_BLOCK, 12);
                     }
                     else
                     {
-                        if (runningChecksum == currBlock.checksum)
-                        {
-                            objects.add(currBlock);
-                            currBlock = null;
-                        }
-                        asyncReadData(RequestTag.SYNC, 2);
+                        throw new IllegalStateException(String.format("Unexpected sync word 0x%04x in %s.",
+                            currBlock.sync, requestTag));
                     }
-                    break;
+                }
+                break;
 
-                case ANGLE:
-                    currBlock.angle = word;
+            case NORMAL_BLOCK:
+            case COLOR_CODE_BLOCK:
+                if (requestTag == RequestTag.NORMAL_BLOCK && length != 10 ||
+                    requestTag == RequestTag.COLOR_CODE_BLOCK && length != 12)
+                {
+                    throw new IllegalStateException(String.format("Unexpected data length %d in %s.",
+                        length, requestTag));
+                }
+                else
+                {
+                    int index;
+                    int runningChecksum = 0;
+
+                    index = 0;
+                    word = TrcUtil.bytesToInt(data[index], data[index + 1]);
                     runningChecksum += word;
+                    currBlock.signature = word;
+
+                    index += 2;
+                    word = TrcUtil.bytesToInt(data[index], data[index + 1]);
+                    runningChecksum += word;
+                    currBlock.xCenter = word;
+
+                    index += 2;
+                    word = TrcUtil.bytesToInt(data[index], data[index + 1]);
+                    runningChecksum += word;
+                    currBlock.yCenter = word;
+
+                    index += 2;
+                    word = TrcUtil.bytesToInt(data[index], data[index + 1]);
+                    runningChecksum += word;
+                    currBlock.width = word;
+
+                    index += 2;
+                    word = TrcUtil.bytesToInt(data[index], data[index + 1]);
+                    runningChecksum += word;
+                    currBlock.height = word;
+
+                    if (requestTag == RequestTag.COLOR_CODE_BLOCK)
+                    {
+                        index += 2;
+                        word = TrcUtil.bytesToInt(data[index], data[index + 1]);
+                        runningChecksum += word;
+                        currBlock.angle = word;
+                    }
+
                     if (runningChecksum == currBlock.checksum)
                     {
                         objects.add(currBlock);
                         currBlock = null;
                     }
                     asyncReadData(RequestTag.SYNC, 2);
-                    break;
+                }
+                break;
 
-                default:
-                    throw new IllegalStateException(String.format("Unexpected request %s.", requestTag));
-            }
-        }
-        else if (length > 0)
-        {
-            throw new IllegalStateException(String.format("Unexpected data length %d.", length));
+            default:
+                throw new IllegalStateException(String.format("Unexpected request tag %s.", requestTag));
         }
     }   //processData
 
@@ -591,8 +606,8 @@ public class FrcPixyCam implements TrcDeviceQueue.CompletionHandler
 
         if (debugEnabled)
         {
-            dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.CALLBK, "tag=%s,addr=0x%x,len=%d,data=%s,error=%s",
-                requestTag, address, data.length, Arrays.toString(data), Boolean.toString(error));
+            dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.CALLBK, "tag=%s,addr=0x%x,data=%s,error=%s",
+                requestTag, address, data != null? Arrays.toString(data): "null", Boolean.toString(error));
         }
 
         if (address == -1 && !error && data != null)
