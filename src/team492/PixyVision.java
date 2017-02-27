@@ -117,7 +117,8 @@ public class PixyVision
 
         if (debugEnabled)
         {
-            dbgTrace.traceInfo(moduleName, "%d object(s) found", detectedObjects != null? detectedObjects.length: 0);
+            dbgTrace.traceInfo(moduleName, "%s object(s) found",
+                detectedObjects != null? "" + detectedObjects.length: "null");
         }
 
         if (detectedObjects != null && detectedObjects.length >= 2)

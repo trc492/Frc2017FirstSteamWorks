@@ -511,18 +511,22 @@ public class FrcPixyCam implements TrcDeviceQueue.CompletionHandler
                             }
                         }
                     }
-                    else if (currBlock.sync == PIXY_START_WORD)
-                    {
-                        asyncReadData(RequestTag.NORMAL_BLOCK, 10);
-                    }
-                    else if (currBlock.sync == PIXY_START_WORD_CC)
-                    {
-                        asyncReadData(RequestTag.COLOR_CODE_BLOCK, 12);
-                    }
                     else
                     {
-                        throw new IllegalStateException(String.format("Unexpected sync word 0x%04x in %s.",
-                            currBlock.sync, requestTag));
+                        currBlock.checksum = word;
+                        if (currBlock.sync == PIXY_START_WORD)
+                        {
+                            asyncReadData(RequestTag.NORMAL_BLOCK, 10);
+                        }
+                        else if (currBlock.sync == PIXY_START_WORD_CC)
+                        {
+                            asyncReadData(RequestTag.COLOR_CODE_BLOCK, 12);
+                        }
+                        else
+                        {
+                            throw new IllegalStateException(String.format("Unexpected sync word 0x%04x in %s.",
+                                currBlock.sync, requestTag));
+                        }
                     }
                 }
                 break;
@@ -577,6 +581,11 @@ public class FrcPixyCam implements TrcDeviceQueue.CompletionHandler
                     {
                         objects.add(currBlock);
                         currBlock = null;
+                    }
+                    else if (debugEnabled)
+                    {
+                        dbgTrace.traceInfo(funcName, "Incorrect checksum %d (expecting %d).",
+                            runningChecksum, currBlock.checksum);
                     }
                     asyncReadData(RequestTag.SYNC, 2);
                 }
