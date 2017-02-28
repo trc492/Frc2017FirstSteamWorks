@@ -41,7 +41,6 @@ import trclib.TrcDbgTrace;
 
 public class GripVision extends FrcVisionTarget
 {
-    private Relay ringLightPower;
     private GripPipeline pipeline;
     private TrcDbgTrace tracer;
     private Rect lastTargetRect = null;
@@ -50,17 +49,9 @@ public class GripVision extends FrcVisionTarget
     {
         super(instanceName, videoIn, videoOut);
 
-        ringLightPower = new Relay(RobotInfo.RELAY_RINGLIGHT_POWER);
-        ringLightPower.setDirection(Direction.kForward);
         pipeline = new GripPipeline();
         tracer = FrcRobotBase.getGlobalTracer();
     }   //GripVision
-
-    public void setEnabled(boolean enabled)
-    {
-        ringLightPower.set(enabled? Value.kOn: Value.kOff);
-        super.setEnabled(enabled);
-    }   //setEnabled
 
     public Rect getTargetRect()
     {

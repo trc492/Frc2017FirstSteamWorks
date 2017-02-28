@@ -81,6 +81,7 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
         //
         if (Robot.USE_GRIP_VISION)
         {
+            robot.ringLightsPower.set(Value.kOn);
             robot.gripVision.setEnabled(true);
         }
         else if (Robot.USE_FACE_DETECTOR)
@@ -108,6 +109,7 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
         if (Robot.USE_GRIP_VISION)
         {
             robot.gripVision.setEnabled(false);
+            robot.ringLightsPower.set(Value.kOff);
         }
         else if (Robot.USE_FACE_DETECTOR)
         {
