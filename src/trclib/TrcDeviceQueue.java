@@ -273,6 +273,13 @@ public abstract class TrcDeviceQueue implements Runnable
         perfTracer = tracer;
     }   //setPerformanceTracer
 
+    protected void queueRequest(
+        Object requestTag, boolean readRequest, int address, byte[] buffer, int length, boolean repeat, TrcEvent event,
+        CompletionHandler handler)
+    {
+        requestQueue.add(new Request(requestTag, readRequest, address, buffer, length, repeat, event, handler));
+    }   //queueRequest
+
     /**
      * This method is doing a synchronous read from the device with the specified length to read.
      *
