@@ -32,9 +32,6 @@ import org.opencv.core.Rect;
 
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
-import edu.wpi.first.wpilibj.Relay;
-import edu.wpi.first.wpilibj.Relay.Direction;
-import edu.wpi.first.wpilibj.Relay.Value;
 import frclib.FrcRobotBase;
 import frclib.FrcVisionTarget;
 import trclib.TrcDbgTrace;

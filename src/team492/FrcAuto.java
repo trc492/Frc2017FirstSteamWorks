@@ -46,6 +46,7 @@ public class FrcAuto implements TrcRobot.RobotMode
     }   //enum AutoStrategy
 
     private Robot robot;
+    private boolean useVision = false;
 
     //
     // Menus.
@@ -100,14 +101,17 @@ public class FrcAuto implements TrcRobot.RobotMode
         switch (autoStrategy)
         {
             case LEFT_GEAR_LIFT:
+                useVision = true;
                 autoCommand = new CmdSideGearLift(robot, delay, false);
                 break;
 
             case RIGHT_GEAR_LIFT:
+                useVision = true;
                 autoCommand = new CmdSideGearLift(robot, delay, true);
                 break;
 
             case MIDDLE_GEAR_LIFT:
+                useVision = true;
                 autoCommand = new CmdMidGearLift(robot, delay);
                 break;
 
@@ -139,37 +143,18 @@ public class FrcAuto implements TrcRobot.RobotMode
         //
         // Start vision thread if necessary.
         //
-        if (Robot.USE_GRIP_VISION)
+        if (useVision)
         {
-            robot.gripVision.setEnabled(true);
-        }
-        else if (Robot.USE_FACE_DETECTOR)
-        {
-            robot.faceDetector.setEnabled(true);
-        }
-        else if (Robot.USE_PIXY_VISION)
-        {
-            robot.frontPixy.setEnabled(true);
+            robot.setVisionEnabled(true);
         }
     }   //startMode
 
     @Override
     public void stopMode()
     {
-        //
-        // Kill vision thread if any.
-        //
-        if (Robot.USE_GRIP_VISION)
+        if (useVision)
         {
-            robot.gripVision.setEnabled(false);
-        }
-        else if (Robot.USE_FACE_DETECTOR)
-        {
-            robot.faceDetector.setEnabled(false);
-        }
-        else if (Robot.USE_PIXY_VISION)
-        {
-            robot.frontPixy.setEnabled(false);
+            robot.setVisionEnabled(false);
         }
 
         if (USE_TRACELOG) robot.tracer.closeTraceLog();

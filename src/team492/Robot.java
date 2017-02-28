@@ -39,6 +39,7 @@ import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.Relay.Direction;
+import edu.wpi.first.wpilibj.Relay.Value;
 import frclib.FrcAHRSGyro;
 import frclib.FrcCANTalon;
 import frclib.FrcChoiceMenu;
@@ -377,6 +378,35 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     {
         return 50.0*pressureSensor.getVoltage() - 25.0;
     }   //getPressure
+
+    public void setVisionEnabled(boolean enabled)
+    {
+        ringLightsPower.set(enabled? Value.kOn: Value.kOff);
+        if (gripVision != null)
+        {
+            gripVision.setVideoOutEnabled(enabled);
+            gripVision.setEnabled(enabled);
+            tracer.traceInfo("TeleOp", "Grip Vision is %s!", Boolean.toString(enabled));
+        }
+        else if (faceDetector != null)
+        {
+            faceDetector.setVideoOutEnabled(enabled);
+            faceDetector.setEnabled(enabled);
+            tracer.traceInfo("TeleOp", "Face Detector is %s!", Boolean.toString(enabled));
+        }
+        else
+        {
+            if (frontPixy != null)
+            {
+                frontPixy.setEnabled(enabled);
+            }
+
+            if (rearPixy != null)
+            {
+                rearPixy.setEnabled(enabled);
+            }
+        }
+    }   //setVisionEnabled
 
     public void updateDashboard()
     {
