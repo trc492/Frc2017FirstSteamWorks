@@ -27,8 +27,8 @@ import org.opencv.core.Rect;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.SerialPort;
 import frclib.FrcPixyCam;
-import frclib.FrcPixyCam.ObjectBlock;
 import trclib.TrcDbgTrace;
+import trclib.TrcPixyCam.ObjectBlock;
 
 public class PixyVision
 {
