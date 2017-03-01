@@ -439,8 +439,7 @@ public class FrcPixyCam implements TrcDeviceQueue.CompletionHandler
 
                 if (length != 2)
                 {
-                    throw new IllegalStateException(String.format("Unexpected data length %d in %s.",
-                        length, requestTag));
+                    asyncReadData(RequestTag.SYNC, 2);
                 }
                 else
                 {

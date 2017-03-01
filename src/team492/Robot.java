@@ -68,12 +68,14 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     public static final String programName = "FirstSteamWorks";
     public static final String moduleName = "Robot";
 
-    public static final boolean USE_NAV_X = true;
-    public static final boolean USE_ANALOG_GYRO = false;
+    public static final boolean USE_NAV_X = false;
+    public static final boolean USE_ANALOG_GYRO = true;
     public static final boolean USE_GRIP_VISION = false;
-    public static final boolean USE_FACE_DETECTOR = false;
-    public static final boolean USE_PIXY_VISION = true;
     public static final boolean USE_AXIS_CAMERA = false;
+    public static final boolean USE_FACE_DETECTOR = false;
+    public static final boolean USE_FRONT_PIXY = true;
+    public static final boolean USE_FRONT_PIXY_UART = true;
+    public static final boolean USE_REAR_PIXY = false;
 //    public static final boolean USE_PIXY_TEST = true;
 
     private static final boolean DEBUG_DRIVE_BASE = false;
@@ -239,17 +241,30 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
             faceDetector = new FrcFaceDetector(
                 "FaceDetector", "/home/lvuser/cascade-files/haarcascade_frontalface_alt.xml", videoIn, videoOut);
         }
-        else if (USE_PIXY_VISION)
+        else if (USE_FRONT_PIXY || USE_REAR_PIXY)
         {
-            frontPixy = new PixyVision(
-                "FrontPixy", RobotInfo.PIXY_LIFT_SIGNATURE, RobotInfo.PIXY_FRONT_BRIGHTNESS,
-                RobotInfo.PIXY_FRONT_ORIENTATION, SerialPort.Port.kMXP);
-//            frontPixy = new PixyVision(
-//                "FrontPixy", RobotInfo.PIXY_LIFT_SIGNATURE, RobotInfo.PIXY_FRONT_BRIGHTNESS,
-//                RobotInfo.PIXY_FRONT_ORIENTATION, I2C.Port.kOnboard, RobotInfo.PIXYCAM_FRONT_I2C_ADDRESS);
-            rearPixy = new PixyVision(
-                "RearPixy", RobotInfo.PIXY_GEAR_SIGNATURE, RobotInfo.PIXY_REAR_BRIGHTNESS,
-                RobotInfo.PIXY_REAR_ORIENTATION, I2C.Port.kMXP, RobotInfo.PIXYCAM_REAR_I2C_ADDRESS);
+            if (USE_FRONT_PIXY)
+            {
+                if (USE_FRONT_PIXY_UART)
+                {
+                    frontPixy = new PixyVision(
+                        "FrontPixy", RobotInfo.PIXY_LIFT_SIGNATURE, RobotInfo.PIXY_FRONT_BRIGHTNESS,
+                        RobotInfo.PIXY_FRONT_ORIENTATION, SerialPort.Port.kMXP);
+                }
+                else
+                {
+                    frontPixy = new PixyVision(
+                        "FrontPixy", RobotInfo.PIXY_LIFT_SIGNATURE, RobotInfo.PIXY_FRONT_BRIGHTNESS,
+                        RobotInfo.PIXY_FRONT_ORIENTATION, I2C.Port.kOnboard, RobotInfo.PIXYCAM_FRONT_I2C_ADDRESS);
+                }
+            }
+
+            if (USE_REAR_PIXY)
+            {
+                rearPixy = new PixyVision(
+                    "RearPixy", RobotInfo.PIXY_GEAR_SIGNATURE, RobotInfo.PIXY_REAR_BRIGHTNESS,
+                    RobotInfo.PIXY_REAR_ORIENTATION, I2C.Port.kMXP, RobotInfo.PIXYCAM_REAR_I2C_ADDRESS);
+            }
         }
 //        else if (USE_PIXY_TEST)
 //        {
@@ -381,9 +396,9 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
 
     public void setVisionEnabled(boolean enabled)
     {
-        ringLightsPower.set(enabled? Value.kOn: Value.kOff);
         if (gripVision != null)
         {
+            ringLightsPower.set(enabled? Value.kOn: Value.kOff);
             gripVision.setVideoOutEnabled(enabled);
             gripVision.setEnabled(enabled);
             tracer.traceInfo("TeleOp", "Grip Vision is %s!", Boolean.toString(enabled));
@@ -396,6 +411,8 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         }
         else
         {
+            ringLightsPower.set(enabled? Value.kOn: Value.kOff);
+
             if (frontPixy != null)
             {
                 frontPixy.setEnabled(enabled);

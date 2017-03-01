@@ -62,7 +62,8 @@ public class PixyVision
         UPSIDEDOWN_LANDSCAPE
     }   //enum Orientation
 
-    private static final double PIXY_DISTANCE_SCALE = 2040.0;
+    private static final double PIXY_DISTANCE_SCALE = 2300.0;   //DistanceInInches*targetWidthdInPixels
+    private static final double TARGET_WIDTH_INCHES = 10.0;
 
     private FrcPixyCam pixyCamera;
     private int signature;
@@ -202,10 +203,31 @@ public class PixyVision
 
         if (targetRect != null)
         {
+            //
+            // Physical target width:           W = 10 inches.
+            // Physical target distance 1:      D1 = 20 inches.
+            // Target pixel width at 20 inches: w1 = 115
+            // Physical target distance 2:      D2 = 24 inches
+            // Target pixel width at 24 inches: w2 = 96
+            // Camera lens focal length:        f
+            //    W/D1 = w1/f and W/D2 = w2/f
+            // => f = w1*D1/W and f = w2*D2/W
+            // => w1*D1/W = w2*D2/W
+            // => w1*D1 = w2*D2 = PIXY_DISTANCE_SCALE = 2300
+            //
+            // Screen center X:                 Xs = 320/2 = 160
+            // Target center X:                 Xt
+            // Heading error:                   e = Xt - Xs
+            // Turn angle:                      a
+            //    tan(a) = e/f
+            // => a = atan(e/f) and f = w1*D1/W
+            // => a = atan((e*W)/(w1*D1))
+            //
             double targetCenterX = targetRect.x + targetRect.width/2.0;
             double targetDistance = PIXY_DISTANCE_SCALE/targetRect.width; 
             double targetAngle = Math.toDegrees(
-                Math.atan((targetCenterX - RobotInfo.PIXYCAM_WIDTH/2.0)/targetRect.height));
+                Math.atan((targetCenterX - RobotInfo.PIXYCAM_WIDTH/2.0)*TARGET_WIDTH_INCHES/
+                          (targetDistance*targetRect.width)));
             targetInfo = new TargetInfo(targetRect, targetDistance, targetAngle);
         }
 
