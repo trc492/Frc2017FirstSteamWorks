@@ -23,6 +23,7 @@
 package team492;
 
 import hallib.HalDashboard;
+import team492.Robot.Alliance;
 import trclib.TrcEvent;
 import trclib.TrcRobot;
 import trclib.TrcStateMachine;
@@ -66,12 +67,12 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
     private TrcTimer timer;
     private TrcStateMachine<State> sm;
 
-    CmdSideGearLift(Robot robot, double delay, boolean rightSide, boolean isRed)
+    CmdSideGearLift(Robot robot, double delay, boolean rightSide)
     {
         this.robot = robot;
         this.delay = delay;
         this.rightSide = rightSide;
-        this.isRed = isRed;
+        this.isRed = robot.alliance == Alliance.RED_ALLIANCE;
 
         //
         // All distances from the menus are in the unit of feet.
@@ -221,25 +222,26 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
                     robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
                     sm.waitForSingleEvent(event, State.TURN_TOWARDS_LOADING_STATION_ALONG_BACK);
                     break;
-                    
+
                 case TURN_TOWARDS_LOADING_STATION_ALONG_BACK:
-                	if((isRed && !rightSide) || (!isRed && rightSide)){ //if already at loading station, go to done
-                		sm.setState(State.DONE);
-                		break;
-                	}
-                	xDistance = 0;
-                	yDistance = 0;
-                	double angle = loadingStationTurnAlongBackAngle * (isRed?-1:1); //turn left or right?
-                	robot.pidDrive.setTarget(xDistance, yDistance, angle, false, event);
-                	sm.waitForSingleEvent(event, State.MOVE_TOWARDS_LOADING_STATION_ALONG_BACK);
-                	break;
+                    if((isRed && !rightSide) || (!isRed && rightSide)){ //if already at loading station, go to done
+                        sm.setState(State.DONE);
+                        break;
+                    }
+                    xDistance = 0;
+                    yDistance = 0;
+                    double angle = loadingStationTurnAlongBackAngle * (isRed?-1:1); //turn left or right?
+                    robot.pidDrive.setTarget(xDistance, yDistance, angle, false, event);
+                    sm.waitForSingleEvent(event, State.MOVE_TOWARDS_LOADING_STATION_ALONG_BACK);
+                    break;
 
                 case MOVE_TOWARDS_LOADING_STATION_ALONG_BACK:
-                	xDistance = 0;
-                	yDistance = loadingStationAlongBackDistance;
-                	robot.pidDrive.setTarget(xDistance, yDistance, 0, false, event);
-                	sm.waitForSingleEvent(event, State.DONE);
-                	break;
+                    xDistance = 0;
+                    yDistance = loadingStationAlongBackDistance;
+                    robot.pidDrive.setTarget(xDistance, yDistance, 0, false, event);
+                    sm.waitForSingleEvent(event, State.DONE);
+                    break;
+
                 case DONE:
                 default:
                     //
