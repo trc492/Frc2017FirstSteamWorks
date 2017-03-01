@@ -40,6 +40,8 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
         BACKUP_FROM_AIRSHIP,
         TURN_TOWARDS_LOADING_STATION,
         MOVE_TOWARDS_LOADING_STATION,
+        TURN_TOWARDS_LOADING_STATION_ALONG_BACK,
+        MOVE_TOWARDS_LOADING_STATION_ALONG_BACK,
         DONE
     }   //enum State
 
@@ -55,17 +57,21 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
     private double orientedAirshipMoveDistance;
     private double loadingStationTurnAngle;
     private double loadingStationMoveDistance;
+    private double loadingStationAlongBackDistance;
+    private double loadingStationTurnAlongBackAngle;
+    private boolean isRed;
 
     private CmdVisionGearDeploy visionDeploy;
     private TrcEvent event;
     private TrcTimer timer;
     private TrcStateMachine<State> sm;
 
-    CmdSideGearLift(Robot robot, double delay, boolean rightSide)
+    CmdSideGearLift(Robot robot, double delay, boolean rightSide, boolean isRed)
     {
         this.robot = robot;
         this.delay = delay;
         this.rightSide = rightSide;
+        this.isRed = isRed;
 
         //
         // All distances from the menus are in the unit of feet.
@@ -81,7 +87,8 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
         orientedAirshipMoveDistance = HalDashboard.getNumber("orientedAirshipMoveDistance", 30.0);
         loadingStationTurnAngle = Math.abs(HalDashboard.getNumber("loadingStationTurnAngle", 0.0));
         loadingStationMoveDistance = HalDashboard.getNumber("loadingStationMoveDistance", 40.0*12.0);
-
+        loadingStationAlongBackDistance = HalDashboard.getNumber("loadingStationAlongBack",280); //280 taken from the field drawings
+        loadingStationTurnAlongBackAngle = HalDashboard.getNumber("loadingStationTurnAnglealongBack",90);
         visionDeploy = new CmdVisionGearDeploy(robot);
 
         event = new TrcEvent(moduleName);
@@ -212,9 +219,27 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
                     yDistance = loadingStationMoveDistance;
 
                     robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
-                    sm.waitForSingleEvent(event, State.DONE);
+                    sm.waitForSingleEvent(event, State.TURN_TOWARDS_LOADING_STATION_ALONG_BACK);
                     break;
+                    
+                case TURN_TOWARDS_LOADING_STATION_ALONG_BACK:
+                	if((isRed && !rightSide) || (!isRed && rightSide)){ //if already at loading station, go to done
+                		sm.setState(State.DONE);
+                		break;
+                	}
+                	xDistance = 0;
+                	yDistance = 0;
+                	double angle = loadingStationTurnAlongBackAngle * (isRed?-1:1); //turn left or right?
+                	robot.pidDrive.setTarget(xDistance, yDistance, angle, false, event);
+                	sm.waitForSingleEvent(event, State.MOVE_TOWARDS_LOADING_STATION_ALONG_BACK);
+                	break;
 
+                case MOVE_TOWARDS_LOADING_STATION_ALONG_BACK:
+                	xDistance = 0;
+                	yDistance = loadingStationAlongBackDistance;
+                	robot.pidDrive.setTarget(xDistance, yDistance, 0, false, event);
+                	sm.waitForSingleEvent(event, State.DONE);
+                	break;
                 case DONE:
                 default:
                     //
