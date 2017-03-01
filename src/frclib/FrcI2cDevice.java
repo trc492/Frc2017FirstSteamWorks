@@ -24,13 +24,13 @@ package frclib;
 
 import java.nio.ByteBuffer;
 import java.util.Arrays;
-import java.util.concurrent.ConcurrentLinkedQueue;
+//import java.util.concurrent.ConcurrentLinkedQueue;
 
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.I2C.Port;
 import trclib.TrcDbgTrace;
 import trclib.TrcDeviceQueue;
-import trclib.TrcEvent;
+//import trclib.TrcEvent;
 
 /**
  * This class implements a platform dependent I2C device. It extends TrcDeviceQueue to provide asynchronous request

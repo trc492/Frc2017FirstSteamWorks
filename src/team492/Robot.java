@@ -68,8 +68,8 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     public static final String programName = "FirstSteamWorks";
     public static final String moduleName = "Robot";
 
-    public static final boolean USE_NAV_X = false;
-    public static final boolean USE_ANALOG_GYRO = true;
+    public static final boolean USE_NAV_X = true;
+    public static final boolean USE_ANALOG_GYRO = false;
     public static final boolean USE_GRIP_VISION = false;
     public static final boolean USE_AXIS_CAMERA = false;
     public static final boolean USE_FACE_DETECTOR = false;
@@ -241,7 +241,11 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
             faceDetector = new FrcFaceDetector(
                 "FaceDetector", "/home/lvuser/cascade-files/haarcascade_frontalface_alt.xml", videoIn, videoOut);
         }
-        else if (USE_FRONT_PIXY || USE_REAR_PIXY)
+//      else if (USE_PIXY_TEST)
+//      {
+//          testPixy = new PixyTest(I2C.Port.kOnboard, RobotInfo.PIXYCAM_FRONT_I2C_ADDRESS);
+//      }
+        else
         {
             if (USE_FRONT_PIXY)
             {
@@ -266,10 +270,6 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
                     RobotInfo.PIXY_REAR_ORIENTATION, I2C.Port.kMXP, RobotInfo.PIXYCAM_REAR_I2C_ADDRESS);
             }
         }
-//        else if (USE_PIXY_TEST)
-//        {
-//            testPixy = new PixyTest(I2C.Port.kOnboard, RobotInfo.PIXYCAM_FRONT_I2C_ADDRESS);
-//        }
 
         //
         // DriveBase subsystem.
