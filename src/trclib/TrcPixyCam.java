@@ -99,6 +99,7 @@ public abstract class TrcPixyCam implements TrcDeviceQueue.CompletionHandler
         COLOR_CODE_BLOCK
     }   //enum RequestTag
 
+    private final String instanceName;
     private ArrayList<ObjectBlock> objects = new ArrayList<>();
     private ObjectBlock[] detectedObjects = null;
     private ObjectBlock currBlock = null;
@@ -115,7 +116,19 @@ public abstract class TrcPixyCam implements TrcDeviceQueue.CompletionHandler
         {
             dbgTrace = new TrcDbgTrace(moduleName + "." + instanceName, tracingEnabled, traceLevel, msgLevel);
         }
+
+        this.instanceName = instanceName;
     }   //TrcPixyCam
+
+    /**
+     * This method returns the instance name.
+     *
+     * @return instance name.
+     */
+    public String toString()
+    {
+        return instanceName;
+    }   //toString
 
     /**
      * This method starts the pixy camera by sending the initial read request.
