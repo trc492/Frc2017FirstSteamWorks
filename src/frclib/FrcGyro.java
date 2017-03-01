@@ -49,6 +49,7 @@ public class FrcGyro extends TrcGyro
         }
 
         this.gyro = gyro;
+        gyro.calibrate();
     }   //FrcGyro
 
     //
