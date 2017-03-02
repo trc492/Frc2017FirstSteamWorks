@@ -112,6 +112,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     //
     public TrcGyro gyro = null;
     public AnalogInput pressureSensor = null;
+    public AnalogInput ultrasonicSensor = null;
 
     //
     // VisionTarget subsystem.
@@ -120,7 +121,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     public FrcFaceDetector faceDetector = null;
     public PixyVision frontPixy = null;
     public PixyVision rearPixy = null;
-    public PixyTest testPixy = null;
+//    public PixyTest testPixy = null;
 
     //
     // DriveBase subsystem.
@@ -197,6 +198,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
             gyro = new FrcGyro("ADXRS450", new ADXRS450_Gyro());
         }
         pressureSensor = new AnalogInput(RobotInfo.AIN_PRESSURE_SENSOR);
+        ultrasonicSensor = new AnalogInput(RobotInfo.AIN_ULTRASONIC_SENSOR);
 
         //
         // VisionTarget subsystem.
@@ -393,6 +395,11 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     {
         return 50.0*pressureSensor.getVoltage() - 25.0;
     }   //getPressure
+
+    public double getUltrasonicDistance()
+    {
+        return ultrasonicSensor.getVoltage()*1024.0/25.4; 
+    }   //getUltrasonicDistance
 
     public void setVisionEnabled(boolean enabled)
     {

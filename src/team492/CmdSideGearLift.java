@@ -52,6 +52,7 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
     private Robot robot;
     private double delay;
     private boolean rightSide;
+    private boolean isRed;
     private double sideAirshipDistance;
     private double startSideLiftAngle;
     private double sideLiftAngleIncrement;
@@ -62,7 +63,6 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
     private double baseLineToLaunchPadLine;
     private double diagonalTurnAngle;
     private double diagonalDistance;
-    private boolean isRed;
 
     private CmdVisionGearDeploy visionDeploy;
     private TrcEvent event;
@@ -77,10 +77,6 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
         this.isRed = robot.alliance == Alliance.RED_ALLIANCE;
 
         //
-        // All distances from the menus are in the unit of feet.
-        //
-
-        //
         // Convert all distances to the unit of inches.
         //
         sideAirshipDistance = HalDashboard.getNumber("SideAirshipDistance", 48.0);
@@ -93,7 +89,7 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
         baseLineToLaunchPadLine = HalDashboard.getNumber("BaselinetoLaunchpadLine",92); //from schematics
         diagonalTurnAngle = HalDashboard.getNumber("DiagonalTurnAngle", 50); // 50 from calculations with schematics
         diagonalDistance = HalDashboard.getNumber("DiagonalMoveDistance", 350); // 350 from calculations with schematics
-        
+
         visionDeploy = new CmdVisionGearDeploy(robot);
 
         event = new TrcEvent(moduleName);
@@ -208,6 +204,7 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
                     //
                     // Turn towards loading station after backing up from airship
                     //
+                    // MTS: loadingStationTurnAnlge might just be ZERO!!!
                     xDistance = 0;
                     yDistance = 0;
                     robot.targetHeading = rightSide ? loadingStationTurnAngle : -loadingStationTurnAngle;
@@ -220,52 +217,53 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
                     //
                     // Move towards (but not in) loading station
                     //
-                	
-                	if((isRed && rightSide) || (!isRed && !rightSide)){
-                		sm.setState(State.MOVE_PAST_AIRSHIP);
-                		break;
-                	}
-                	
+                    if((isRed && rightSide) || (!isRed && !rightSide))
+                    {
+                        sm.setState(State.MOVE_PAST_AIRSHIP);
+                    }
+                    else
+                    {
+                        xDistance = 0;
+                        yDistance = loadingStationMoveDistance;
+
+                        robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
+                        sm.waitForSingleEvent(event, State.DONE);
+                    }
+                    break;
+
+                case MOVE_PAST_AIRSHIP:
+                    //
+                    // Move from baseline to launchpad line
+                    //
                     xDistance = 0;
-                    yDistance = loadingStationMoveDistance;
+                    yDistance = baseLineToLaunchPadLine;
+
+                    robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
+                    sm.waitForSingleEvent(event, State.TURN_ALONG_DIAGONAL);
+                    break;
+
+                case TURN_ALONG_DIAGONAL:
+                    //
+                    // Turn to the opposite corner of neutral zone
+                    //
+                    xDistance = 0;
+                    yDistance = 0;
+                    robot.targetHeading = diagonalTurnAngle * (isRed?-1:1);
+
+                    robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
+                    sm.waitForSingleEvent(event, State.MOVE_ALONG_DIAGONAL);
+                    break;
+
+                case MOVE_ALONG_DIAGONAL:
+                    //
+                    // Move to the opposite corner of neutral zone
+                    //
+                    xDistance = 0;
+                    yDistance = diagonalDistance;
 
                     robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
                     sm.waitForSingleEvent(event, State.DONE);
                     break;
-                    
-                case MOVE_PAST_AIRSHIP:
-                	//
-                	// Move from baseline to launchpad line
-                	//
-                	xDistance = 0;
-                	yDistance = baseLineToLaunchPadLine;
-                	
-                	robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
-                	sm.waitForSingleEvent(event, State.TURN_ALONG_DIAGONAL);
-                	break;
-                	
-                case TURN_ALONG_DIAGONAL:
-                	//
-                	// Turn to the opposite corner of neutral zone
-                	//
-                	xDistance = 0;
-                	yDistance = 0;
-                	robot.targetHeading = diagonalTurnAngle * (isRed?-1:1);
-                	
-                	robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
-                	sm.waitForSingleEvent(event, State.MOVE_ALONG_DIAGONAL);
-                	break;
-                	
-                case MOVE_ALONG_DIAGONAL:
-                	//
-                	// Move to the opposite corner of neutral zone
-                	//
-                	xDistance = 0;
-                	yDistance = diagonalDistance;
-                	
-                	robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
-                	sm.waitForSingleEvent(event, State.DONE);
-                	break;
 
                 case DONE:
                 default:

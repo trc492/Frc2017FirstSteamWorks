@@ -252,6 +252,7 @@ public class FrcTest extends FrcTeleOp
             Boolean.toString(robot.winch.isRevLimitSwitchActive()));
         robot.dashboard.displayPrintf(13, "GearPickup: gear=%s", robot.gearPickup.gearDetected());
         robot.dashboard.displayPrintf(14, "PressureSensor: pressure=%.1f", robot.getPressure());
+        robot.dashboard.displayPrintf(15, "Ultrasonic=%.1f inches", robot.getUltrasonicDistance());
     }   //doSensorsTest
 
     /**
