@@ -83,12 +83,12 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
         startSideLiftAngle = Math.abs(HalDashboard.getNumber("SideLiftAngle", 45.0));
         sideLiftAngleIncrement = Math.abs(HalDashboard.getNumber("SideLiftAngleIncrement", 5.0));
         maxSideLiftAngle = Math.abs(HalDashboard.getNumber("SideLiftMaxAngle", 60.0));
-        orientedAirshipMoveDistance = HalDashboard.getNumber("orientedAirshipMoveDistance", 30.0);
-        loadingStationTurnAngle = Math.abs(HalDashboard.getNumber("loadingStationTurnAngle", 0.0));
-        loadingStationMoveDistance = HalDashboard.getNumber("loadingStationMoveDistance", 40.0*12.0);
-        baseLineToLaunchPadLine = HalDashboard.getNumber("BaselinetoLaunchpadLine",92); //from schematics
-        diagonalTurnAngle = HalDashboard.getNumber("DiagonalTurnAngle", 50); // 50 from calculations with schematics
-        diagonalDistance = HalDashboard.getNumber("DiagonalMoveDistance", 350); // 350 from calculations with schematics
+        orientedAirshipMoveDistance = HalDashboard.getNumber("SideOrientedAirshipDistance", 30.0);
+        loadingStationTurnAngle = Math.abs(HalDashboard.getNumber("SideLoadingStationAngle", 0.0));
+        loadingStationMoveDistance = HalDashboard.getNumber("SideLoadingStationDistance", 40.0*12.0);
+        baseLineToLaunchPadLine = HalDashboard.getNumber("SideBaselineToLaunchpadLine",92); //from schematics
+        diagonalTurnAngle = HalDashboard.getNumber("SideDiagonalAngle", 50); // 50 from calculations with schematics
+        diagonalDistance = HalDashboard.getNumber("SideDiagonalDistance", 350); // 350 from calculations with schematics
 
         visionDeploy = new CmdVisionGearDeploy(robot);
 
