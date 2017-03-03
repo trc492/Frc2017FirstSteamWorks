@@ -147,6 +147,12 @@ public class FrcAuto implements TrcRobot.RobotMode
         {
             robot.setVisionEnabled(true);
         }
+
+        robot.driveBase.resetPosition();
+        robot.targetHeading = 0.0;
+        robot.encoderXPidCtrl.setOutputRange(-0.5, 0.5);
+        robot.encoderYPidCtrl.setOutputRange(-0.5, 0.5);
+        robot.gyroTurnPidCtrl.setOutputRange(-0.5, 0.5);
     }   //startMode
 
     @Override

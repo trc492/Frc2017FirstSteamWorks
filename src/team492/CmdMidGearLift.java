@@ -143,7 +143,7 @@ class CmdMidGearLift implements TrcRobot.RobotCommand
                         robot.alliance == Robot.Alliance.RED_ALLIANCE? -midSidewallAngle: midSidewallAngle; 
 
                     robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
-                    sm.waitForSingleEvent(event, State.GO_TO_SIDEWALL);
+                    sm.waitForSingleEvent(event, State.DONE);//GO_TO_SIDEWALL);
                     break;
 
                 case GO_TO_SIDEWALL:
@@ -153,6 +153,7 @@ class CmdMidGearLift implements TrcRobot.RobotCommand
                     xDistance = 0.0;
                     yDistance = midSidewallDistance;
 
+                    robot.encoderYPidCtrl.setOutputRange(-1.0, 1.0);
                     robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
                     sm.waitForSingleEvent(event, State.TURN_TO_OPPOSITE_END);
                     break;

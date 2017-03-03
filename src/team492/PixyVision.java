@@ -52,6 +52,11 @@ public class PixyVision
             this.angle = angle;
         }   //TargetInfo
 
+        public String toString()
+        {
+            return String.format("Rect[%d,%d,%d,%d], distance=%.1f, angle=%.1f",
+                rect.x, rect.y, rect.width, rect.height, distance, angle);
+        }
     }   //class TargetInfo
 
     public enum Orientation

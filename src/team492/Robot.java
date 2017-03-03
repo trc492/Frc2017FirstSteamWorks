@@ -382,8 +382,6 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
 
     public void robotStartMode()
     {
-        driveBase.resetPosition();
-        targetHeading = 0.0;
     }   //robotStartMode
 
     public void robotStopMode()

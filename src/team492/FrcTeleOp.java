@@ -76,11 +76,16 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
     public void startMode()
     {
         HalDashboard.getInstance().clearDisplay();
+        robot.setVisionEnabled(true);
+
+        robot.driveBase.resetPosition();
+        robot.targetHeading = 0.0;
     }   // startMode
 
     @Override
     public void stopMode()
     {
+        robot.setVisionEnabled(false);
     }   // stopMode
 
     @Override

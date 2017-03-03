@@ -22,7 +22,9 @@
 
 package team492;
 
+import frclib.FrcRobotBase;
 import hallib.HalDashboard;
+import trclib.TrcDbgTrace;
 import trclib.TrcEvent;
 import trclib.TrcRobot;
 import trclib.TrcStateMachine;
@@ -36,6 +38,7 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
 
     private static final String moduleName = "CmdVisionGearDeploy";
 
+    private TrcDbgTrace tracer = FrcRobotBase.getGlobalTracer();
     private Robot robot;
     private double idealTargetDistance;
     private double distanceToTarget;
@@ -55,7 +58,7 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
         idealTargetDistance  = Math.abs(HalDashboard.getNumber("IdealTargetDistance", 6.0));
         distanceToTarget = HalDashboard.getNumber("DistanceToTarget", 12.0);
         extendTime = Math.abs(HalDashboard.getNumber("PneumaticExtendTime", 0.3));
-        backupDistance = Math.abs(HalDashboard.getNumber("BackupDistance", 12.0));
+        backupDistance = Math.abs(HalDashboard.getNumber("BackupDistance", 36.0));
         turnAlignmentThreshold = Math.abs(HalDashboard.getNumber("TurnAlignmentThreshold", 10.0));
         distanceAlignmentThreshold = Math.abs(HalDashboard.getNumber("DistanceAlignmentThreshold", 10.0));
 
@@ -88,6 +91,8 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
             {
                 case ALIGN_WITH_PEG:
                     targetInfo = robot.frontPixy.getTargetInfo();
+                    tracer.traceInfo("GearDeploy", "Target Info: %s",
+                        targetInfo != null? targetInfo.toString(): "not found");
                     if(targetInfo == null)
                     {
                         //
@@ -177,7 +182,8 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
                         //
                         // Going there blind.
                         //
-                        yDistance = distanceToTarget;
+//                        yDistance = distanceToTarget;
+                        yDistance = robot.getUltrasonicDistance() - 12.0;
                     }
                     else
                     {
@@ -225,6 +231,7 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
                     //
                     // We are done.
                     //
+                    robot.mailbox.retract();
                     done = true;
                     sm.stop();
                     break;
