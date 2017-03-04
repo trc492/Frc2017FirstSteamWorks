@@ -149,14 +149,14 @@ public class PixyVision
 
             if (j == 2)
             {
-                int targetCenterX = (targets[0].xCenter + targets[1].xCenter)/2;
-                int targetCenterY = (targets[0].yCenter + targets[1].yCenter)/2;
-                int targetWidth = Math.abs(targets[0].xCenter - targets[1].xCenter) +
+                int targetCenterX = (targets[0].centerX + targets[1].centerX)/2;
+                int targetCenterY = (targets[0].centerY + targets[1].centerY)/2;
+                int targetWidth = Math.abs(targets[0].centerX - targets[1].centerX) +
                                   (targets[0].width + targets[1].width)/2;
-                int targetHeight = Math.max(targets[0].yCenter + targets[0].height/2,
-                                            targets[1].yCenter + targets[1].height/2) -
-                                   Math.min(targets[0].yCenter - targets[0].height/2,
-                                            targets[1].yCenter - targets[1].height/2);
+                int targetHeight = Math.max(targets[0].centerY + targets[0].height/2,
+                                            targets[1].centerY + targets[1].height/2) -
+                                   Math.min(targets[0].centerY - targets[0].height/2,
+                                            targets[1].centerY - targets[1].height/2);
                 int temp;
 
                 switch (orientation)
