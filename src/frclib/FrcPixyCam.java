@@ -27,6 +27,7 @@ import java.util.Arrays;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.SerialPort;
 import trclib.TrcDbgTrace;
+import trclib.TrcDeviceQueue;
 import trclib.TrcPixyCam;
 
 /**
@@ -51,8 +52,7 @@ public class FrcPixyCam extends TrcPixyCam
     public static final SerialPort.Parity DEF_PARITY = SerialPort.Parity.kNone;
     public static final SerialPort.StopBits DEF_STOP_BITS = SerialPort.StopBits.kOne;
 
-    private FrcI2cDevice i2cPixy = null;
-    private FrcSerialPort serialPixy = null;
+    private TrcDeviceQueue pixyCam = null;
 
     /**
      * Constructor: Create an instance of the object.
@@ -70,7 +70,7 @@ public class FrcPixyCam extends TrcPixyCam
             dbgTrace = new TrcDbgTrace(moduleName + "." + instanceName, tracingEnabled, traceLevel, msgLevel);
         }
 
-        i2cPixy = new FrcI2cDevice(instanceName, port, devAddress);
+        pixyCam = new FrcI2cDevice(instanceName, port, devAddress);
     }   //FrcPixyCam
 
     /**
@@ -105,7 +105,7 @@ public class FrcPixyCam extends TrcPixyCam
             dbgTrace = new TrcDbgTrace(moduleName + "." + instanceName, tracingEnabled, traceLevel, msgLevel);
         }
 
-        serialPixy = new FrcSerialPort(instanceName, port, baudRate, dataBits, parity, stopBits);
+        pixyCam = new FrcSerialPort(instanceName, port, baudRate, dataBits, parity, stopBits);
     }   //FrcPixyCam
 
     /**
@@ -131,10 +131,6 @@ public class FrcPixyCam extends TrcPixyCam
         this(instanceName, port, DEF_BAUD_RATE, DEF_DATA_BITS, DEF_PARITY, DEF_STOP_BITS);
     }   //FrcPixyCam
 
-    //
-    // Implements TrcPixyCam abstract methods.
-    //
-
     /**
      * This method checks if the pixy camera is enabled.
      *
@@ -143,8 +139,7 @@ public class FrcPixyCam extends TrcPixyCam
     public boolean isEnabled()
     {
         final String funcName = "isEnabled";
-        boolean enabled = i2cPixy != null? i2cPixy.isTaskEnabled():
-                          serialPixy != null? serialPixy.isTaskEnabled(): false;
+        boolean enabled = pixyCam.isTaskEnabled();
 
         if (debugEnabled)
         {
@@ -163,21 +158,14 @@ public class FrcPixyCam extends TrcPixyCam
     public void setEnabled(boolean enabled)
     {
         final String funcName = "setEnabled";
-        boolean wasEnabled = isEnabled();
+        boolean wasEnabled = pixyCam.isTaskEnabled();
 
         if (debugEnabled)
         {
             dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.API, "enanbled=%s", Boolean.toString(enabled));
         }
 
-        if (i2cPixy != null)
-        {
-            i2cPixy.setTaskEnabled(enabled);
-        }
-        else if (serialPixy != null)
-        {
-            serialPixy.setTaskEnabled(enabled);
-        }
+        pixyCam.setTaskEnabled(enabled);
 
         if (!wasEnabled && enabled)
         {
@@ -189,6 +177,10 @@ public class FrcPixyCam extends TrcPixyCam
             dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.API);
         }
     }   //setEnabled
+
+    //
+    // Implements TrcPixyCam abstract methods.
+    //
 
     /**
      * This method issues an asynchronous read of the specified number of bytes from the device.
@@ -207,14 +199,7 @@ public class FrcPixyCam extends TrcPixyCam
                 requestTag != null? requestTag: "null", length);
         }
 
-        if (i2cPixy != null)
-        {
-            i2cPixy.asyncRead(requestTag, length, null, this);
-        }
-        else if (serialPixy != null)
-        {
-            serialPixy.asyncRead(requestTag, length, null, this);
-        }
+        pixyCam.asyncRead(requestTag, length, null, this);
 
         if (debugEnabled)
         {
@@ -239,14 +224,7 @@ public class FrcPixyCam extends TrcPixyCam
                 requestTag != null? requestTag: "null", Arrays.toString(data), data.length);
         }
 
-        if (i2cPixy != null)
-        {
-            i2cPixy.asyncWrite(requestTag, data, data.length, null, null);
-        }
-        else if (serialPixy != null)
-        {
-            serialPixy.asyncWrite(requestTag, data, data.length, null, null);
-        }
+        pixyCam.asyncWrite(requestTag, data, data.length, null, null);
 
         if (debugEnabled)
         {

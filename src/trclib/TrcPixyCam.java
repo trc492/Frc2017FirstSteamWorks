@@ -241,7 +241,7 @@ public abstract class TrcPixyCam implements TrcDeviceQueue.CompletionHandler
         if (debugEnabled)
         {
             dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.API);
-}
+        }
 
         synchronized (objectLock)
         {
@@ -277,6 +277,9 @@ public abstract class TrcPixyCam implements TrcDeviceQueue.CompletionHandler
         switch (requestTag)
         {
             case SYNC:
+                //
+                // If we don't already have an object block allocated, allocate it now.
+                //
                 if (currBlock == null)
                 {
                     currBlock = new ObjectBlock();
@@ -284,6 +287,10 @@ public abstract class TrcPixyCam implements TrcDeviceQueue.CompletionHandler
 
                 if (length != 2)
                 {
+                    //
+                    // We should never get here. But if we do, probably due to device read failure, we will initiate
+                    // another read for SYNC.
+                    //
                     asyncReadData(RequestTag.SYNC, 2);
                 }
                 else
@@ -291,16 +298,26 @@ public abstract class TrcPixyCam implements TrcDeviceQueue.CompletionHandler
                     word = TrcUtil.bytesToInt(data[0], data[1]);
                     if (word == PIXY_START_WORD || word == PIXY_START_WORD_CC)
                     {
+                        //
+                        // Found a sync word, initiate the read for CHECKSUM.
+                        //
                         currBlock.sync = word;
                         asyncReadData(RequestTag.CHECKSUM, 2);
                     }
                     else if (word == PIXY_START_WORDX)
                     {
+                        //
+                        // We are word misaligned. Realign it by reading one byte and expecting it to be the high
+                        // sync byte.
+                        //
                         currBlock.sync = PIXY_START_WORD;
                         asyncReadData(RequestTag.ALIGN, 1);
                     }
                     else
                     {
+                        //
+                        // We don't find the sync word, throw it away and initiate another read for SYNC.
+                        //
                         asyncReadData(RequestTag.SYNC, 2);
                     }
                 }
@@ -309,15 +326,25 @@ public abstract class TrcPixyCam implements TrcDeviceQueue.CompletionHandler
             case ALIGN:
                 if (length != 1)
                 {
+                    //
+                    // We should never come here. Let's throw any exception to catch this unlikely scenario.
+                    //
                     throw new IllegalStateException(String.format("Unexpected data length %d in %s.",
                         length, requestTag));
                 }
                 else if (data[0] == PIXY_SYNC_HIGH)
                 {
+                    //
+                    // Found the expected upper sync byte, so initiate the read for CHECKSUM.
+                    //
                     asyncReadData(RequestTag.CHECKSUM, 2);
                 }
                 else
                 {
+                    //
+                    // Don't see the expected upper sync byte, let's initiate another read for SYNC assuming we are
+                    // now word aligned again.
+                    //
                     asyncReadData(RequestTag.SYNC, 2);
                 }
                 break;
@@ -325,6 +352,9 @@ public abstract class TrcPixyCam implements TrcDeviceQueue.CompletionHandler
             case CHECKSUM:
                 if (length != 2)
                 {
+                    //
+                    // We should never come here. Let's throw any exception to catch this unlikely scenario.
+                    //
                     throw new IllegalStateException(String.format("Unexpected data length %d in %s.",
                         length, requestTag));
                 }
@@ -333,6 +363,10 @@ public abstract class TrcPixyCam implements TrcDeviceQueue.CompletionHandler
                     word = TrcUtil.bytesToInt(data[0], data[1]);
                     if (word == PIXY_START_WORD || word == PIXY_START_WORD_CC)
                     {
+                        //
+                        // We were expecting a checksum but found a sync word. It means that's the end-of-frame.
+                        // Save away the sync word for the next frame and initiate the next read for CHECKSUM.
+                        //
                         currBlock.sync = word;
                         asyncReadData(RequestTag.CHECKSUM, 2);
                         //
@@ -357,6 +391,11 @@ public abstract class TrcPixyCam implements TrcDeviceQueue.CompletionHandler
                     }
                     else
                     {
+                        //
+                        // Looks like we have a checksum, save it away and initiate the read for the rest of the
+                        // block. If the sync word was PIXY_START_WORD, then it is a 10-byte NORMAL_BLOCK, else it
+                        // is a 12-byte COLOR_CODE_BLOCK.
+                        //
                         currBlock.checksum = word;
                         if (currBlock.sync == PIXY_START_WORD)
                         {
@@ -368,6 +407,9 @@ public abstract class TrcPixyCam implements TrcDeviceQueue.CompletionHandler
                         }
                         else
                         {
+                            //
+                            // We should never come here. Let's throw any exception to catch this unlikely scenario.
+                            //
                             throw new IllegalStateException(String.format("Unexpected sync word 0x%04x in %s.",
                                 currBlock.sync, requestTag));
                         }
@@ -380,6 +422,9 @@ public abstract class TrcPixyCam implements TrcDeviceQueue.CompletionHandler
                 if (requestTag == RequestTag.NORMAL_BLOCK && length != 10 ||
                     requestTag == RequestTag.COLOR_CODE_BLOCK && length != 12)
                 {
+                    //
+                    // We should never come here. Let's throw any exception to catch this unlikely scenario.
+                    //
                     throw new IllegalStateException(String.format("Unexpected data length %d in %s.",
                         length, requestTag));
                 }
@@ -387,32 +432,44 @@ public abstract class TrcPixyCam implements TrcDeviceQueue.CompletionHandler
                 {
                     int index;
                     int runningChecksum = 0;
-
+                    //
+                    // Save away the signature and accumulate checksum.
+                    //
                     index = 0;
                     word = TrcUtil.bytesToInt(data[index], data[index + 1]);
                     runningChecksum += word;
                     currBlock.signature = word;
-
+                    //
+                    // Save away the object center X and accumulate checksum.
+                    //
                     index += 2;
                     word = TrcUtil.bytesToInt(data[index], data[index + 1]);
                     runningChecksum += word;
                     currBlock.xCenter = word;
-
+                    //
+                    // Save away the object center Y and accumulate checksum.
+                    //
                     index += 2;
                     word = TrcUtil.bytesToInt(data[index], data[index + 1]);
                     runningChecksum += word;
                     currBlock.yCenter = word;
-
+                    //
+                    // Save away the object width and accumulate checksum.
+                    //
                     index += 2;
                     word = TrcUtil.bytesToInt(data[index], data[index + 1]);
                     runningChecksum += word;
                     currBlock.width = word;
-
+                    //
+                    // Save away the object height and accumulate checksum.
+                    //
                     index += 2;
                     word = TrcUtil.bytesToInt(data[index], data[index + 1]);
                     runningChecksum += word;
                     currBlock.height = word;
-
+                    //
+                    // If it is a COLOR_CODE_BLOCK, save away the object angle and accumulate checksum.
+                    //
                     if (requestTag == RequestTag.COLOR_CODE_BLOCK)
                     {
                         index += 2;
@@ -423,6 +480,9 @@ public abstract class TrcPixyCam implements TrcDeviceQueue.CompletionHandler
 
                     if (runningChecksum == currBlock.checksum)
                     {
+                        //
+                        // Checksum is correct, add the object block.
+                        //
                         objects.add(currBlock);
                         currBlock = null;
                     }
@@ -431,11 +491,17 @@ public abstract class TrcPixyCam implements TrcDeviceQueue.CompletionHandler
                         dbgTrace.traceInfo(funcName, "Incorrect checksum %d (expecting %d).",
                             runningChecksum, currBlock.checksum);
                     }
+                    //
+                    // Initiate the read for the SYNC word of the next block.
+                    //
                     asyncReadData(RequestTag.SYNC, 2);
                 }
                 break;
 
             default:
+                //
+                // We should never come here. Let's throw any exception to catch this unlikely scenario.
+                //
                 throw new IllegalStateException(String.format("Unexpected request tag %s.", requestTag));
         }
     }   //processData

@@ -99,7 +99,7 @@ public class FrcI2cDevice extends TrcDeviceQueue //implements TrcDeviceQueue.Com
             dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.CALLBK, "addr=%d,len=%d", address, length);
         }
 
-        if (address == -1 && device.readOnly(buffer, length) || device.read(address, length, buffer))
+        if (address == -1 && device.readOnly(buffer, length) || address != -1 && device.read(address, length, buffer))
         {
             buffer = null;
         }
