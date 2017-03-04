@@ -22,6 +22,7 @@
 
 package team492;
 
+import edu.wpi.first.wpilibj.SerialPort;
 import frclib.FrcPixyCam;
 
 public class RobotInfo
@@ -140,8 +141,12 @@ public class RobotInfo
     public static final int PIXYCAM_REAR_I2C_ADDRESS            = PIXYCAM_FRONT_I2C_ADDRESS + 2;
     public static final int PIXY_FRONT_BRIGHTNESS               = 35;
     public static final int PIXY_REAR_BRIGHTNESS                = 80;
-    public static final PixyVision.Orientation PIXY_FRONT_ORIENTATION = PixyVision.Orientation.UPSIDEDOWN_LANDSCAPE;
+    public static final PixyVision.Orientation PIXY_FRONT_ORIENTATION = PixyVision.Orientation.NORMAL_LANDSCAPE;
     public static final PixyVision.Orientation PIXY_REAR_ORIENTATION = PixyVision.Orientation.NORMAL_LANDSCAPE;
+    public static final int PIXY_BAUD_RATE                      = 9600;
+    public static final int PIXY_DATA_BITS                      = 8;
+    public static final SerialPort.Parity PIXY_PARITY           = SerialPort.Parity.kNone;
+    public static final SerialPort.StopBits PIXY_STOP_BITS      = SerialPort.StopBits.kOne;
     public static final double PIXYCAM_MID_VOLT                 = 3.3/2.0;  // in volts
 
     //

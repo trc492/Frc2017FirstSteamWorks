@@ -97,7 +97,8 @@ public class PixyVision
     public PixyVision(
         final String instanceName, int signature, int brightness, Orientation orientation, SerialPort.Port port)
     {
-        pixyCamera = new FrcPixyCam(instanceName, port);
+        pixyCamera = new FrcPixyCam(instanceName, port,
+            RobotInfo.PIXY_BAUD_RATE, RobotInfo.PIXY_DATA_BITS, RobotInfo.PIXY_PARITY, RobotInfo.PIXY_STOP_BITS);
         commonInit(signature, brightness, orientation);
     }   //PixyVision
 
