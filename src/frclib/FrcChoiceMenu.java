@@ -108,7 +108,6 @@ public class FrcChoiceMenu<T>
         this.menuTitle = menuTitle;
         chooser = new SendableChooser<>();
         choiceItems = new ArrayList<>();
-        HalDashboard.putData(menuTitle, chooser);
     }   //FrcChoiceMenu
 
     /**
@@ -159,6 +158,8 @@ public class FrcChoiceMenu<T>
         {
             chooser.addObject(choiceText, choiceObject);
         }
+
+        HalDashboard.putData(menuTitle, chooser);
 
         if (debugEnabled)
         {

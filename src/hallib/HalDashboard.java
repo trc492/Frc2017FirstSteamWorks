@@ -26,44 +26,35 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import trclib.TrcDbgTrace;
 
 /**
- * This class is a wrapper for the Telemetry class. In addition to providing
- * a way to send named data to the Driver Station to be displayed, it also
- * simulates an LCD display similar to the NXT Mindstorms. The Mindstorms
- * has only 8 lines but this dashboard can support as many lines as the
- * Driver Station can support. By default, we set the number of lines to 16.
- * By changing a constant here, you can have as many lines as you want. This
- * dashboard display is very useful for displaying debug information. In
- * particular, the TrcMenu class uses the dashboard to display a choice menu
- * and interact with the user for choosing autonomous strategies and options.
+ * This class extends the SmartDashboard class and provides a way to send named data to the Driver Station to be
+ * displayed, it also simulates an LCD display similar to the NXT Mindstorms. The Mindstorms has only 8 lines but
+ * this dashboard can support as many lines as the Driver Station can support. By default, we set the number of lines
+ * to 16. By changing a constant here, you can have as many lines as you want. This dashboard display is very useful
+ * for displaying debug information.
  */
 public class HalDashboard extends SmartDashboard
 {
     private static final String moduleName = "HalDashboard";
     private static final boolean debugEnabled = false;
+    private static final boolean tracingEnabled = false;
+    private static final TrcDbgTrace.TraceLevel traceLevel = TrcDbgTrace.TraceLevel.API;
+    private static final TrcDbgTrace.MsgLevel msgLevel = TrcDbgTrace.MsgLevel.INFO;
     private TrcDbgTrace dbgTrace = null;
 
     public static final int MAX_NUM_TEXTLINES = 16;
-
     private static final String displayKeyFormat = "%02d";
+
     private static HalDashboard instance = null;
     private static String[] display = new String[MAX_NUM_TEXTLINES];
 
     /**
      * Constructor: Creates an instance of the object.
-     * There should only be one global instance of this object.
-     * Typically, only the FtcOpMode object should construct an
-     * instance of this object via getInstance(telemetry) and
-     * nobody else.
      */
     public HalDashboard()
     {
         if (debugEnabled)
         {
-            dbgTrace = new TrcDbgTrace(
-                    moduleName,
-                    false,
-                    TrcDbgTrace.TraceLevel.API,
-                    TrcDbgTrace.MsgLevel.INFO);
+            dbgTrace = new TrcDbgTrace(moduleName, tracingEnabled, traceLevel, msgLevel);
         }
 
         instance = this;
@@ -71,9 +62,8 @@ public class HalDashboard extends SmartDashboard
     }   //HalDashboard
 
     /**
-     * This static method allows any class to get an instance of
-     * the dashboard so that it can display information on its
-     * display.
+     * This static method allows any class to get an instance of the dashboard so that it can display information
+     * on its display.
      *
      * @return global instance of the dashboard object.
      */
@@ -94,8 +84,7 @@ public class HalDashboard extends SmartDashboard
         if (lineNum >= 0 && lineNum < display.length)
         {
             display[lineNum] = String.format(format, args);
-            SmartDashboard.putString(
-                    String.format(displayKeyFormat, lineNum), display[lineNum]);
+            SmartDashboard.putString(String.format(displayKeyFormat, lineNum), display[lineNum]);
         }
     }   //displayPrintf
 
@@ -134,9 +123,31 @@ public class HalDashboard extends SmartDashboard
 
         for (int i = 0; i < display.length; i++)
         {
-            SmartDashboard.putString(
-                    String.format(displayKeyFormat, i), display[i]);
+            SmartDashboard.putString(String.format(displayKeyFormat, i), display[i]);
         }
     }   //refreshDisplay
+
+    /**
+     * This method returns the value associated with the given key. If the key does not already exist, it will
+     * create the key and put the default value in it and also return the default value.
+     *
+     * @param key specifies the key.
+     * @param defaultValue specifies the default value if the key does not already exist.
+     * @return value associated with the key or the default value if key does not exist.
+     */
+    public static double getNumber(String key, double defaultValue)
+    {
+        double value = SmartDashboard.getNumber(key, defaultValue);
+        //
+        // If we get the default value back, the key may not exist. Let's call putNumber to create it with the
+        // default value.
+        //
+        if (value == defaultValue)
+        {
+            SmartDashboard.putNumber(key, defaultValue);
+        }
+
+        return value;
+    }   //getNumber
 
 }   //class HalDashboard
