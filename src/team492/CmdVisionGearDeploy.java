@@ -34,7 +34,7 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
 {
     private static enum State
     {
-        WAIT_FOR_CAMERA, ALIGN_WITH_PEG, DRIVE_TO_TARGET_BLIND, DEPLOY_GEAR, BACKUP, DONE
+        WAIT_FOR_CAMERA, ALIGN_WITH_PEG, DRIVE_TO_TARGET, DEPLOY_GEAR, BACKUP, DONE
     }   //enum State
 
     private static final String moduleName = "CmdVisionGearDeploy";
@@ -111,36 +111,20 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
                     targetInfo = robot.frontPixy.getTargetInfo();
                     tracer.traceInfo("GearDeploy", "Target Info: %s",
                         targetInfo != null? targetInfo.toString(): "not found");
-                    if(targetInfo == null)
+                    if(targetInfo == null || Math.abs(targetInfo.angle) <= visionAlignAngleTolerance)
                     {
                         //
-                        // Can't find the target for some reason, let's just do it blind.
+                        // We either don't see the target or the target is already aligned.
+                        // If we don't see the target, just have blind faith that it's already aligned.
                         //
-                        sm.setState(State.DRIVE_TO_TARGET_BLIND);
-                    }
-                    else if (Math.abs(targetInfo.angle) <= visionAlignAngleTolerance &&
-                             Math.abs(targetInfo.distance - visionTargetDistance) <= visionAlignDistanceTolerance)
-                    {
-                        //
-                        // We are there, go for it.
-                        //
-                        sm.setState(State.DEPLOY_GEAR);
+                        sm.setState(State.DRIVE_TO_TARGET);
                     }
                     else
                     {
                         //
-                        // See the target but not quite there yet, let's move there.
+                        // See the target but not quite aligned, turn to align with it.
                         //
-                        xDistance = 0.0;
-                        yDistance = targetInfo.distance - visionTargetDistance;
-                        if (lastTargetInfo == null)
-                        {
-                            //
-                            // If lastTargetInfo is null, this is the first half run, so half the distance.
-                            //
-                            yDistance /= 2.0;
-                            lastTargetInfo = targetInfo;
-                        }
+                        xDistance = yDistance = 0.0;
                         robot.targetHeading += targetInfo.angle;
 
                         robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
@@ -148,7 +132,7 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
                     }
                     break;
 
-                case DRIVE_TO_TARGET_BLIND:
+                case DRIVE_TO_TARGET:
                     xDistance = 0.0;
                     if (lastTargetInfo == null)
                     {
@@ -160,9 +144,9 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
                     else
                     {
                         //
-                        // Going the other half of the distance from last time.
+                        // We saw the target at least once, use the info to calculate the distance to go.
                         //
-                        yDistance = (lastTargetInfo.distance - visionTargetDistance)/2.0;
+                        yDistance = lastTargetInfo.distance - visionTargetDistance;
                     }
 
                     robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
