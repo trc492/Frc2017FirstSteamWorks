@@ -22,10 +22,6 @@
 
 package trclib;
 
-import org.opencv.core.Mat;
-import org.opencv.core.Rect;
-import org.opencv.core.Scalar;
-
 import frclib.FrcRobotBase;
 
 /**
@@ -34,9 +30,10 @@ import frclib.FrcRobotBase;
  * image. This class is to be extended by a platform dependent vision processor who will provide the video input
  * and output. 
  *
- * @param <O>specifies the type of the detected objects.
+ * @param <I> specifies the type of the input image.
+ * @param <O> specifies the type of the detected objects.
  */
-public class TrcVisionTask<O> extends TrcThread<O> implements TrcThread.PeriodicTask
+public class TrcVisionTask<I, O> implements TrcThread.PeriodicTask
 {
     private static final String moduleName = "TrcVisionTask";
     private static final boolean debugEnabled = false;
@@ -48,8 +45,11 @@ public class TrcVisionTask<O> extends TrcThread<O> implements TrcThread.Periodic
     /**
      * This interface provides methods to grab image from the video input, render image to video output and detect
      * objects from the acquired image.
+     *
+     * @param <I> specifies the type of the input image.
+     * @param <O> specifies the type of the detected object.
      */
-    public interface VisionProcessor<O>
+    public interface VisionProcessor<I, O>
     {
         /**
          * This method is called to grab an image frame from the video input.
@@ -57,17 +57,7 @@ public class TrcVisionTask<O> extends TrcThread<O> implements TrcThread.Periodic
          * @param image specifies the frame buffer to hold the captured image.
          * @return true if frame is successfully captured, false otherwise.
          */
-        boolean grabFrame(Mat image);
-
-        /**
-         * This method is called to render an image to the video output and overlay detected objects on top of it.
-         *
-         * @param image specifies the frame to be rendered to the video output.
-         * @param detectedObjectRects specifies the detected object rectangles.
-         * @param color specifies the color of the rectangles to render on the video output stream.
-         * @param thickness specifies the thickness of the rectangles to render on the video output stream.
-         */
-        void putFrame(Mat image, Rect[] detectedObjectRects, Scalar color, int thickness);
+        boolean grabFrame(I image);
 
         /**
          * This method is called to detect objects in the acquired image frame.
@@ -77,11 +67,9 @@ public class TrcVisionTask<O> extends TrcThread<O> implements TrcThread.Periodic
          *        preallocated buffer required.
          * @return detected objects, null if none detected.
          */
-        O detectObjects(Mat image, O detectedObjects);
+        O detectObjects(I image, O detectedObjects);
 
     }   //interface VisionProcessor
-
-    private static final long DEF_PROCESSING_INTERVAL = 50;     //in msec
 
     private boolean perfReportEnabled = false;
     private TrcDbgTrace tracer = null;
@@ -89,33 +77,46 @@ public class TrcVisionTask<O> extends TrcThread<O> implements TrcThread.Periodic
     private long totalFrames = 0;
     private double taskStartTime = 0.0;
 
-    private VisionProcessor<O> visionProcessor;
-    private Mat image;
-    private O[] detectedObjectsBuffers;
+    private final String instanceName;
+    private VisionProcessor<I, O> visionProcessor;
+    private I[] imageBuffers;
+    private O[] detectedObjectBuffers;
+    private int imageIndex = 0;
     private int bufferIndex = 0;
+    private TrcThread<O> visionTask;
 
     /**
      * Constructor: Create an instance of the object.
      *
+     * @param instanceName specifies the instance name.
      * @param visionProcessor specifies the vision processor object.
-     * @param imageBuffer specifies the buffer to hold video image.
+     * @param imageBuffers specifies an array of image buffers.
      * @param detectedObjectsBuffers specifies an array of buffers to hold the detected objects.
      */
-    public TrcVisionTask(VisionProcessor<O> visionProcessor, Mat imageBuffer, O[] detectedObjectsBuffers)
+    public TrcVisionTask(
+        final String instanceName, VisionProcessor<I, O> visionProcessor, I[] imageBuffers, O[] detectedObjectBuffers)
     {
-        super("VisionTask", null);
-
         if (debugEnabled)
         {
             dbgTrace = new TrcDbgTrace(moduleName, tracingEnabled, traceLevel, msgLevel);
         }
 
+        this.instanceName = instanceName;
         this.visionProcessor = visionProcessor;
-        this.image = imageBuffer;
-        this.detectedObjectsBuffers = detectedObjectsBuffers;
-        setPeriodicTask(this);
-        setProcessingInterval(DEF_PROCESSING_INTERVAL);
+        this.imageBuffers = imageBuffers;
+        this.detectedObjectBuffers = detectedObjectBuffers;
+        visionTask = new TrcThread<>(instanceName, this);
     }   //TrcVisionTask
+
+    /**
+     * This method returns the instance name.
+     *
+     * @return instance name.
+     */
+    public String toString()
+    {
+        return instanceName;
+    }   //toString
 
     /**
      * This method enables/disables vision processing performance report.
@@ -132,21 +133,108 @@ public class TrcVisionTask<O> extends TrcThread<O> implements TrcThread.Periodic
     }   //setPerfReportEnabled
 
     /**
-     * This method enables/disables the vision task. As long as the task is enabled, it will continue to
-     * acquire/process data.
-     *
-     * @param enabled specifies true to enable periodic task, false to disable.
+     * This method is called to terminate the vision task. Once this is called, no other method in this class
+     * should not be called except for isTaskTerminated().
      */
-    public void setTaskEnabled(boolean enabled)
+    public void terminateTask()
     {
-        super.setTaskEnabled(enabled);
+        visionTask.terminateTask();
+    }   //terminateTask
+
+    /**
+     * This method checks if the vision task has been terminated.
+     *
+     * @return true if vision task is terminated, false otherwise.
+     */
+    public boolean isTaskTerminated()
+    {
+        return visionTask.isTaskTerminated();
+    }   //isTaskTerminated
+
+    /**
+     * This method enables/disables the vision task. As long as the task is enabled, it will continue to
+     * acquire/process images.
+     *
+     * @param enabled specifies true to enable vision task, false to disable.
+     */
+    public void setEnabled(boolean enabled)
+    {
+        final String funcName = "setEnabled";
+
+        if (debugEnabled)
+        {
+            dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.API, "enabled=%s", Boolean.toString(enabled));
+        }
+
+        visionTask.setTaskEnabled(enabled);
         if (enabled)
         {
             totalTime = 0;
             totalFrames = 0;
             taskStartTime = TrcUtil.getCurrentTime();
         }
-    }   //setTaskEnabled
+
+        if (debugEnabled)
+        {
+            dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.API);
+        }
+    }   //setEnabled
+
+    /**
+     * This method returns the state of the vision task.
+     *
+     * @return true if the vision task is enabled, false otherwise.
+     */
+    public boolean isEnabled()
+    {
+        final String funcName = "isEnabled";
+        boolean enabled = visionTask.isTaskEnabled();
+
+        if (debugEnabled)
+        {
+            dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.API);
+            dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.API, "=%s", Boolean.toString(enabled));
+        }
+
+        return enabled;
+    }   //isEnabled
+
+    /**
+     * This method sets the vision task processing interval.
+     *
+     * @param interval specifies the processing interval in msec. If 0, process as fast as the CPU can run.
+     */
+    public void setProcessingInterval(long interval)
+    {
+        final String funcName = "setProcessingInterval";
+
+        if (debugEnabled)
+        {
+            dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.API, "interval=%dms", interval);
+            dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.API);
+        }
+
+        visionTask.setProcessingInterval(interval);
+    }   //setProcessInterval
+
+    /**
+     * This method returns the vision task processing interval.
+     *
+     * @return vision task processing interval in msec.
+     */
+    public long getProcessingInterval()
+    {
+        final String funcName = "getProcessingInterval";
+        long interval = visionTask.getProcessingInterval();
+
+        if (debugEnabled)
+        {
+            dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.API);
+            dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.API, "=%d", interval);
+        }
+
+        return interval;
+    }   //getProcessingInterval
 
     //
     // Implements TrcThread.PeriodicTask interface.
@@ -167,7 +255,7 @@ public class TrcVisionTask<O> extends TrcThread<O> implements TrcThread.Periodic
             dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.TASK);
         }
 
-        if (visionProcessor.grabFrame(image))
+        if (visionProcessor.grabFrame(imageBuffers[imageIndex]))
         {
             //
             // Capture an image and subject it for object detection. The object detector produces an array of
@@ -175,7 +263,7 @@ public class TrcVisionTask<O> extends TrcThread<O> implements TrcThread.Periodic
             //
             startTime = TrcUtil.getCurrentTimeMillis();
             visionProcessor.detectObjects(
-                image, detectedObjectsBuffers != null? detectedObjectsBuffers[bufferIndex]: null);
+                imageBuffers[imageIndex], detectedObjectBuffers != null? detectedObjectBuffers[bufferIndex]: null);
             elapsedTime = TrcUtil.getCurrentTimeMillis() - startTime;
             totalTime += elapsedTime;
             totalFrames++;
@@ -184,14 +272,14 @@ public class TrcVisionTask<O> extends TrcThread<O> implements TrcThread.Periodic
                 tracer.traceInfo(funcName, "Average processing time = %.3f msec, Frame rate = %.1f",
                     (double)totalTime/totalFrames, totalFrames/(TrcUtil.getCurrentTime() - taskStartTime));
             }
-
-            if (detectedObjectsBuffers != null)
+            //
+            // Switch to the next buffer so that we won't clobber the info while the client is accessing it.
+            //
+            imageIndex = (imageIndex + 1)%imageBuffers.length;
+            if (detectedObjectBuffers != null)
             {
-                setData(detectedObjectsBuffers[bufferIndex]);
-                //
-                // Switch to the next buffer so that we won't clobber the info while the client is accessing it.
-                //
-                bufferIndex = (bufferIndex + 1)%detectedObjectsBuffers.length;
+                visionTask.setData(detectedObjectBuffers[bufferIndex]);
+                bufferIndex = (bufferIndex + 1)%detectedObjectBuffers.length;
             }
         }
 

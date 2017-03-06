@@ -534,6 +534,12 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         tracer.traceInfo(moduleName, "[%5.3f] %10s: xPos=%6.2f,yPos=%6.2f,heading=%6.1f/%6.1f",
             elapsedTime, stateName, driveBase.getXPosition(), driveBase.getYPosition(), driveBase.getHeading(),
             targetHeading);
+        if (pidDrive.isActive())
+        {
+            encoderXPidCtrl.printPidInfo(tracer);
+            encoderYPidCtrl.printPidInfo(tracer);
+            gyroTurnPidCtrl.printPidInfo(tracer);
+        }
     }   //traceStateInfo
 
     //

@@ -22,13 +22,9 @@
 
 package frclib;
 
-import java.util.ArrayList;
-
 import org.opencv.core.Mat;
-import org.opencv.core.MatOfPoint;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
-import org.opencv.imgproc.Imgproc;
 
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
@@ -39,7 +35,7 @@ import trclib.TrcDbgTrace;
  * care of thread synchronization so making the use of this class extremely simple. This class is intended to be
  * inherited by another class that provides specific methods to process the image and to retrieve the results.
  */
-public abstract class FrcVisionTarget extends FrcOpenCVDetector<ArrayList<MatOfPoint>>
+public abstract class FrcVisionTarget extends FrcOpenCVDetector<Rect[]>
 {
     private static final String moduleName = "FrcVisionTarget";
     private static final boolean debugEnabled = false;
@@ -56,14 +52,16 @@ public abstract class FrcVisionTarget extends FrcOpenCVDetector<ArrayList<MatOfP
     public abstract void processImage(Mat image);
 
     /**
-     * This method returns an array list of detected objects.
+     * This method returns an array of detected object rectangles.
      *
-     * @return array list of detected objects.
+     * @return array of detected object rectangles.
      */
-    public abstract ArrayList<MatOfPoint> getDetectedObjects();
+    public abstract Rect[] getDetectedObjectRects();
 
-    private volatile Mat image = null;
+    private static final int NUM_IMAGE_BUFFERS = 2;
+
     private volatile Rect[] objectRects = null;
+    private volatile Mat currImage = null;
     private boolean videoOutEnabled = false;
 
     /**
@@ -75,7 +73,7 @@ public abstract class FrcVisionTarget extends FrcOpenCVDetector<ArrayList<MatOfP
      */
     public FrcVisionTarget(final String instanceName, CvSink videoIn, CvSource videoOut)
     {
-        super(instanceName, videoIn, videoOut);
+        super(instanceName, videoIn, videoOut, NUM_IMAGE_BUFFERS, null);
 
         if (debugEnabled)
         {
@@ -109,9 +107,9 @@ public abstract class FrcVisionTarget extends FrcOpenCVDetector<ArrayList<MatOfP
      */
     public void putFrame(Scalar color, int thickness)
     {
-        if (image != null)
+        if (currImage != null)
         {
-            super.putFrame(image, objectRects, color, thickness);
+            super.putFrame(currImage, objectRects, color, thickness);
         }
     }   //putFrame
 
@@ -120,9 +118,9 @@ public abstract class FrcVisionTarget extends FrcOpenCVDetector<ArrayList<MatOfP
      */
     public void putFrame()
     {
-        if (image != null)
+        if (currImage != null)
         {
-            super.putFrame(image, objectRects, new Scalar(0, 255, 0), 0);
+            super.putFrame(currImage, objectRects, new Scalar(0, 255, 0), 0);
         }
     }   //putFrame
 
@@ -157,37 +155,20 @@ public abstract class FrcVisionTarget extends FrcOpenCVDetector<ArrayList<MatOfP
      * @return detected objects, null if none detected.
      */
     @Override
-    public ArrayList<MatOfPoint> detectObjects(Mat image, ArrayList<MatOfPoint> detectedObjects)
+    public Rect[] detectObjects(Mat image, Rect[] buffers)
     {
-        ArrayList<MatOfPoint> detectedTargets = null;
         //
         // Process the image to detect the objects we are looking for and put them into detectedObjects.
         //
         processImage(image);
-        detectedTargets = getDetectedObjects();
-        //
-        // If we detected any objects, convert them into an array of rectangles.
-        //
-        if (!detectedTargets.isEmpty())
-        {
-            objectRects = new Rect[detectedTargets.size()];
-            for (int i = 0; i < objectRects.length; i++)
-            {
-                objectRects[i] = Imgproc.boundingRect(detectedTargets.get(i));
-            }
-        }
-        else
-        {
-            objectRects = null;
-            detectedTargets = null;
-        }
+        objectRects = getDetectedObjectRects();
 
         if (videoOutEnabled)
         {
             putFrame();
         }
 
-        return detectedTargets;
+        return objectRects;
     }   //detectObjects
 
 }   //class FrcVisionTarget

@@ -44,12 +44,13 @@ public class FrcFaceDetector extends FrcOpenCVDetector<MatOfRect>
     private static final TrcDbgTrace.MsgLevel msgLevel = TrcDbgTrace.MsgLevel.INFO;
     private TrcDbgTrace dbgTrace = null;
 
+    private static final int NUM_IMAGE_BUFFERS = 2;
     private static final int NUM_OBJECT_BUFFERS = 2;
 
-    private MatOfRect[] detectedFacesBuffers;
+    private static volatile MatOfRect[] detectedFacesBuffers = new MatOfRect[NUM_OBJECT_BUFFERS];
     private CascadeClassifier faceDetector;
     private volatile Rect[] faceRects = null;
-    private volatile Mat image = null;
+    private volatile Mat currImage = null;
     private boolean videoOutEnabled = false;
 
     /**
@@ -63,22 +64,19 @@ public class FrcFaceDetector extends FrcOpenCVDetector<MatOfRect>
     public FrcFaceDetector(
         final String instanceName, final String classifierPath, CvSink videoIn, CvSource videoOut)
     {
-        super(instanceName, videoIn, videoOut);
+        super(instanceName, videoIn, videoOut, NUM_IMAGE_BUFFERS, detectedFacesBuffers);
 
         if (debugEnabled)
         {
             dbgTrace = new TrcDbgTrace(moduleName, tracingEnabled, traceLevel, msgLevel);
         }
-
         //
-        // Preallocate MatOfRect since this is expensive to allocate.
+        // Preallocate two MatOfRects for ping pong processing.
         //
-        detectedFacesBuffers = new MatOfRect[NUM_OBJECT_BUFFERS];
         for (int i = 0; i < detectedFacesBuffers.length; i++)
         {
             detectedFacesBuffers[i] = new MatOfRect();
         }
-        setPreallocatedObjectBuffers(detectedFacesBuffers);
 
         faceDetector = new CascadeClassifier(classifierPath);
         if (faceDetector.empty())
@@ -113,9 +111,9 @@ public class FrcFaceDetector extends FrcOpenCVDetector<MatOfRect>
      */
     public void putFrame(Scalar color, int thickness)
     {
-        if (image != null)
+        if (currImage != null)
         {
-            super.putFrame(image, faceRects, color, thickness);
+            super.putFrame(currImage, faceRects, color, thickness);
         }
     }   //putFrame
 
@@ -124,9 +122,9 @@ public class FrcFaceDetector extends FrcOpenCVDetector<MatOfRect>
      */
     public void putFrame()
     {
-        if (image != null)
+        if (currImage != null)
         {
-            super.putFrame(image, faceRects, new Scalar(0, 255, 0), 0);
+            super.putFrame(currImage, faceRects, new Scalar(0, 255, 0), 0);
         }
     }   //putFrame
 
@@ -149,7 +147,7 @@ public class FrcFaceDetector extends FrcOpenCVDetector<MatOfRect>
     }   //setVideoOutEnabled
 
     //
-    // Implements the FrcVisionTask.VisionProcesor interface.
+    // Implements the TrcVisionTask.VisionProcesor interface.
     //
 
     /**
@@ -164,7 +162,6 @@ public class FrcFaceDetector extends FrcOpenCVDetector<MatOfRect>
     public MatOfRect detectObjects(Mat image, MatOfRect detectedObjects)
     {
         final String funcName = "detectedObjects";
-        MatOfRect detected = null;
 
         if (debugEnabled)
         {
@@ -176,11 +173,11 @@ public class FrcFaceDetector extends FrcOpenCVDetector<MatOfRect>
         if (!detectedObjects.empty())
         {
             faceRects = detectedObjects.toArray();
-            detected = detectedObjects;
         }
         else
         {
             faceRects = null;
+            detectedObjects = null;
         }
 
         if (videoOutEnabled)
@@ -188,14 +185,15 @@ public class FrcFaceDetector extends FrcOpenCVDetector<MatOfRect>
             putFrame();
         }
 
-        this.image = image;
+        currImage = image;
 
         if (debugEnabled)
         {
-            dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.CALLBK, "=%s", Boolean.toString(detected != null));
+            dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.CALLBK, "=%s",
+                Boolean.toString(detectedObjects != null));
         }
 
-        return detected;
+        return detectedObjects;
     }   //detectedObjects
 
 }   //class FrcFaceDetector
