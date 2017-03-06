@@ -28,26 +28,30 @@ import trclib.TrcDbgTrace;
 import trclib.TrcEvent;
 import trclib.TrcRobot;
 import trclib.TrcStateMachine;
+import trclib.TrcTimer;
 
 class CmdVisionGearDeploy implements TrcRobot.RobotCommand
 {
     private static enum State
     {
-        ALIGN_WITH_PEG, DRIVE_TO_TARGET, DEPLOY_GEAR, BACKUP, DONE
+        WAIT_FOR_CAMERA, ALIGN_WITH_PEG, DRIVE_TO_TARGET_BLIND, DEPLOY_GEAR, BACKUP, DONE
     }   //enum State
 
     private static final String moduleName = "CmdVisionGearDeploy";
 
     private TrcDbgTrace tracer = FrcRobotBase.getGlobalTracer();
     private Robot robot;
-    private double idealTargetDistance;
-    private double distanceToTarget;
-    private double extendTime;
-    private double backupDistance;
-    private double turnAlignmentThreshold;
-    private double distanceAlignmentThreshold;
+
+    private double visionCameraSettling;
+    private double visionAlignAngleTolerance;
+    private double visionAlignDistanceTolerance;
+    private double visionTargetDistance;
+    private double visionSonarDistance;
+    private double visionGearDeployTime;
+    private double visionBackupDistance;
 
     private TrcEvent event;
+    private TrcTimer timer;
     private TrcStateMachine<State> sm;
     private PixyVision.TargetInfo lastTargetInfo = null;
 
@@ -55,16 +59,18 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
     {
         this.robot = robot;
 
-        idealTargetDistance  = Math.abs(HalDashboard.getNumber("IdealTargetDistance", 6.0));
-        distanceToTarget = HalDashboard.getNumber("DistanceToTarget", 12.0);
-        extendTime = Math.abs(HalDashboard.getNumber("PneumaticExtendTime", 0.3));
-        backupDistance = Math.abs(HalDashboard.getNumber("BackupDistance", 36.0));
-        turnAlignmentThreshold = Math.abs(HalDashboard.getNumber("TurnAlignmentThreshold", 10.0));
-        distanceAlignmentThreshold = Math.abs(HalDashboard.getNumber("DistanceAlignmentThreshold", 10.0));
+        visionCameraSettling = HalDashboard.getNumber("VisionCameraSettling", 0.2);
+        visionAlignAngleTolerance = HalDashboard.getNumber("VisionAlignAngleTolerance", 1.0);
+        visionAlignDistanceTolerance = HalDashboard.getNumber("VisionAlignDistanceTolerance", 1.0);
+        visionTargetDistance = HalDashboard.getNumber("VisionTargetDistance", 6.0);
+        visionSonarDistance = HalDashboard.getNumber("VisionSonarDistance", 12.0);
+        visionGearDeployTime = HalDashboard.getNumber("VisionGearDeployTime", 0.3);
+        visionBackupDistance = HalDashboard.getNumber("VisionBackupDistance", 36.0);
 
         event = new TrcEvent(moduleName);
+        timer = new TrcTimer("VisionGear");
         sm = new TrcStateMachine<>(moduleName);
-        sm.start(State.DRIVE_TO_TARGET);//ALIGN_HORIZONTALLY);
+        sm.start(State.WAIT_FOR_CAMERA);
     }   //CmdVisionGearDeploy
 
     //
@@ -89,6 +95,18 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
 
             switch (state)
             {
+                case WAIT_FOR_CAMERA:
+                    if (visionCameraSettling == 0.0)
+                    {
+                        sm.setState(State.ALIGN_WITH_PEG);
+                    }
+                    else
+                    {
+                        timer.set(visionCameraSettling, event);
+                        sm.waitForSingleEvent(event, State.ALIGN_WITH_PEG);
+                    }
+                    break;
+
                 case ALIGN_WITH_PEG:
                     targetInfo = robot.frontPixy.getTargetInfo();
                     tracer.traceInfo("GearDeploy", "Target Info: %s",
@@ -98,10 +116,10 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
                         //
                         // Can't find the target for some reason, let's just do it blind.
                         //
-                        sm.setState(State.DRIVE_TO_TARGET);
+                        sm.setState(State.DRIVE_TO_TARGET_BLIND);
                     }
-                    else if (Math.abs(targetInfo.angle) <= turnAlignmentThreshold &&
-                             Math.abs(targetInfo.distance - idealTargetDistance) <= distanceAlignmentThreshold)
+                    else if (Math.abs(targetInfo.angle) <= visionAlignAngleTolerance &&
+                             Math.abs(targetInfo.distance - visionTargetDistance) <= visionAlignDistanceTolerance)
                     {
                         //
                         // We are there, go for it.
@@ -114,7 +132,7 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
                         // See the target but not quite there yet, let's move there.
                         //
                         xDistance = 0.0;
-                        yDistance = targetInfo.distance - idealTargetDistance;
+                        yDistance = targetInfo.distance - visionTargetDistance;
                         if (lastTargetInfo == null)
                         {
                             //
@@ -126,93 +144,36 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
                         robot.targetHeading += targetInfo.angle;
 
                         robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
-                        sm.waitForSingleEvent(event, State.ALIGN_WITH_PEG);
-//                        lastDistanceToTarget = (idealTargetSize - actualTargetSize)*inchesPerPixel;
-//                        double midpoint = getHorizontalPosition();
-//                        double screenMidpoint = RobotInfo.CAM_WIDTH/2;
-//                        double turnErrorMargin = midpoint - screenMidpoint;
-//                        double angleToTarget = Math.toDegrees(Math.atan((turnErrorMargin*inchesPerPixel)/lastDistanceToTarget));
-//                        robot.targetHeading = angleToTarget + robot.driveBase.getHeading();
-//                        if(Math.abs(turnErrorMargin) > turnAlignmentThreshold || Math.abs(lastDistanceToTarget) > distanceAlignmentThreshold)
-//                        {
-//                            robot.pidDrive.setTarget(0.0, lastDistanceToTarget/2, robot.targetHeading, false, event);
-//                            sm.waitForSingleEvent(event, State.ALIGN_WITH_PEG_2);
-//                        }
-//                        else
-//                        {
-//                            sm.setState(State.DEPLOY_GEAR);
-//                        }
+                        sm.waitForSingleEvent(event, State.WAIT_FOR_CAMERA);
                     }
                     break;
-                    
-//                case ALIGN_WITH_PEG_2:
-//                	//
-//                    // Position robot at target again.
-//                    // get info from vision (m: alignment, n:distance)
-//                	double newTargetSize = getTargetSize();
-//                	if(newTargetSize == -1)
-//                	{
-//                		robot.pidDrive.setTarget(0.0, lastDistanceToTarget/2, robot.targetHeading, false, event);
-//                        sm.waitForSingleEvent(event, State.DEPLOY_GEAR);
-//                	}
-//                	else
-//                	{
-//                	    double newDistanceToTarget = (idealTargetSize - newTargetSize)*inchesPerPixel;
-//                        double midpoint = getHorizontalPosition();
-//                        double screenMidpoint = RobotInfo.CAM_WIDTH/2;
-//                        double turnErrorMargin = midpoint - screenMidpoint;
-//                        double angleToTarget = Math.atan((turnErrorMargin*inchesPerPixel)/newDistanceToTarget);
-//                        robot.targetHeading = angleToTarget + robot.driveBase.getHeading();
-//                        if(Math.abs(turnErrorMargin) > turnAlignmentThreshold || Math.abs(newDistanceToTarget) > distanceAlignmentThreshold)
-//                        {
-//                            robot.pidDrive.setTarget(0.0, newDistanceToTarget, robot.targetHeading, false, event);
-//                            sm.waitForSingleEvent(event, State.DEPLOY_GEAR);
-//                        }
-//                        else
-//                        {
-//                    	    sm.setState(State.DEPLOY_GEAR);
-//                        }
-//                	}
-//                    break;
 
-                case DRIVE_TO_TARGET:
+                case DRIVE_TO_TARGET_BLIND:
                     xDistance = 0.0;
                     if (lastTargetInfo == null)
                     {
                         //
-                        // Going there blind.
+                        // We never see the target, so use the ultrasonic distance instead.
                         //
-//                        yDistance = distanceToTarget;
-                        yDistance = robot.getUltrasonicDistance() - 12.0;
+                        yDistance = robot.getUltrasonicDistance() - visionSonarDistance;
                     }
                     else
                     {
                         //
                         // Going the other half of the distance from last time.
                         //
-                        yDistance = (lastTargetInfo.distance - idealTargetDistance)/2.0;
+                        yDistance = (lastTargetInfo.distance - visionTargetDistance)/2.0;
                     }
                     robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
                     sm.waitForSingleEvent(event, State.DEPLOY_GEAR);
-//                	double actualTargetSize = getTargetSize();
-//                	double distanceErrorMargin = idealTargetSize - actualTargetSize;
-//                	if ( distanceErrorMargin > distanceAlignmentThreshold)
-//                	{
-//                		double distanceTarget = distanceErrorMargin*distanceAlignmentMultiplier;
-//                	    robot.pidDrive.setTarget(0.0, distanceTarget, robot.targetHeading, false, event);
-//                        sm.waitForSingleEvent(event, State.ALIGN_DISTANCE);
-//                	}
-//                	else
-//                	{
-//                		sm.setState(State.DEPLOY_GEAR);
-//                	}
                     break;
-                    
+
                 case DEPLOY_GEAR:
                     //
                     // Place gear on axle.
                     //
-                    robot.mailbox.extend(extendTime, event);
+                    robot.mailbox.extend();
+                    timer.set(visionGearDeployTime, event);
                     sm.waitForSingleEvent(event, State.BACKUP);
                     break;
 
@@ -221,7 +182,7 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
                     // Backup from axle.
                     //
                     xDistance = 0.0;
-                    yDistance = -backupDistance;
+                    yDistance = -visionBackupDistance;
                     robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
                     sm.waitForSingleEvent(event, State.DONE);
                     break;
@@ -236,31 +197,11 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
                     sm.stop();
                     break;
             }
+
             robot.traceStateInfo(elapsedTime, state.toString());
         }
 
         return done;
     }   //cmdPeriodic
 
-//    private double getHorizontalPosition()
-//    {
-//    	Rect memeTangle = robot.frontPixy.getTargetRect();
-//        double midpoint = memeTangle.x + memeTangle.width / 2;
-//        return midpoint;
-//    }
-//    private double getTargetSize()
-//    {
-//        Rect dankTangle = robot.frontPixy.getTargetRect();
-//        if(dankTangle == null)
-//        {
-//        	double targetSize = -1;
-//        	return targetSize;
-//        }
-//        else
-//        {
-//        double targetSize = dankTangle.height;
-//        return targetSize;
-//        }
-//    }
-    
 }   //class CmdVisionGearDeploy

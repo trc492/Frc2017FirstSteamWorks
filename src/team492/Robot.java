@@ -363,13 +363,13 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         // Retrieve Global Choices.
         //
         matchType = matchTypeMenu.getCurrentChoiceObject();
-        matchNumber = (int)HalDashboard.getNumber("Match Number", 0.0);
+        matchNumber = (int)HalDashboard.getNumber("MatchNumber", 0.0);
         alliance = allianceMenu.getCurrentChoiceObject();
-        driveTime = HalDashboard.getNumber("Drive Time", 5.0);
-        drivePower = HalDashboard.getNumber("Drive Power", 0.2);
-        driveDistance = HalDashboard.getNumber("Drive Distance", 20.0*12.0);
-        drivePowerLimit = HalDashboard.getNumber("Drive Power Limit", 0.75);
-        turnDegrees = HalDashboard.getNumber("Turn Degrees", 360.0);
+        driveTime = HalDashboard.getNumber("DriveTime", 5.0);
+        drivePower = HalDashboard.getNumber("DrivePower", 0.2);
+        driveDistance = HalDashboard.getNumber("DriveDistance", 12.0);
+        drivePowerLimit = HalDashboard.getNumber("DrivePowerLimit", 0.5);
+        turnDegrees = HalDashboard.getNumber("TurnDegrees", 90.0);
 
         //
         // Robot Modes.

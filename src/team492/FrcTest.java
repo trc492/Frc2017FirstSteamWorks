@@ -109,6 +109,10 @@ public class FrcTest extends FrcTeleOp
         boolean liveWindowEnabled = false;
         switch (test)
         {
+            case DRIVE_MOTORS_TEST:
+                motorIndex = 0;
+                break;
+
             case X_TIMED_DRIVE:
                 timedDriveCommand = new CmdTimedDrive(robot, 0.0, robot.driveTime, robot.drivePower, 0.0, 0.0);
                 break;

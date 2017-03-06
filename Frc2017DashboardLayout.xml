@@ -1,25 +1,46 @@
 <xml version="1.0">
 <dashboard>
-	<widget field="Match Number" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+	<widget field="MatchNumber" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="0" y="560"/>
 	</widget>
 	<widget field="Delay" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="0" y="600"/>
 	</widget>
-	<widget field="Drive Time" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+	<widget field="DriveTime" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="0" y="625"/>
 	</widget>
-	<widget field="Drive Power" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+	<widget field="DrivePower" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="0" y="650"/>
 	</widget>
-	<widget field="Drive Distance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+	<widget field="DriveDistance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="0" y="675"/>
 	</widget>
-	<widget field="Drive Power Limit" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+	<widget field="DrivePowerLimit" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="0" y="700"/>
 	</widget>
-	<widget field="Turn Degrees" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+	<widget field="TurnDegrees" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="0" y="725"/>
+	</widget>
+	<widget field="VisionCameraSettling" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="250" y="650"/>
+	</widget>
+	<widget field="VisionAlignAngleTolerance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="250" y="675"/>
+	</widget>
+	<widget field="VisionAlignDistanceTolerance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="250" y="700"/>
+	</widget>
+	<widget field="VisionTargetDistance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="250" y="725"/>
+	</widget>
+	<widget field="VisionSonarDistance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="250" y="750"/>
+	</widget>
+	<widget field="VisionGearDeployTime" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="250" y="775"/>
+	</widget>
+	<widget field="VisionBackupDistance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="250" y="800"/>
 	</widget>
 	<widget field="MidLiftDistance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="650" y="375"/>
@@ -151,5 +172,4 @@
 </dashboard>
 <live-window>
 </live-window>
-	<hidden field="Auto Selector"/>
 </xml>
