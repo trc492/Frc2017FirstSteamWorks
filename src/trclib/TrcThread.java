@@ -184,7 +184,7 @@ public class TrcThread<T> implements Runnable
 
     /**
      * This method is called to terminate the periodic task. Once this is called, no other method in this class
-     * should not be called except for isTaskTerminated().
+     * should be called except for isTaskTerminated().
      */
     public void terminateTask()
     {
