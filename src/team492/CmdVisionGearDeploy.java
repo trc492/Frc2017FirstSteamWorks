@@ -44,7 +44,6 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
 
     private double visionCameraSettling;
     private double visionAlignAngleTolerance;
-    private double visionAlignDistanceTolerance;
     private double visionTargetDistance;
     private double visionSonarDistance;
     private double visionGearDeployTime;
@@ -61,7 +60,6 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
 
         visionCameraSettling = HalDashboard.getNumber("VisionCameraSettling", 0.2);
         visionAlignAngleTolerance = HalDashboard.getNumber("VisionAlignAngleTolerance", 1.0);
-        visionAlignDistanceTolerance = HalDashboard.getNumber("VisionAlignDistanceTolerance", 1.0);
         visionTargetDistance = HalDashboard.getNumber("VisionTargetDistance", 6.0);
         visionSonarDistance = HalDashboard.getNumber("VisionSonarDistance", 12.0);
         visionGearDeployTime = HalDashboard.getNumber("VisionGearDeployTime", 0.3);
