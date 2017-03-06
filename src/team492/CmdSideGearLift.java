@@ -213,7 +213,6 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
                     //
                     // Turn towards loading station after backing up from airship
                     //
-                    // MTS: loadingStationTurnAnlge might just be ZERO!!!
                     xDistance = 0;
                     yDistance = 0;
                     robot.targetHeading = rightSide ? sideLoadingStationAngle : -sideLoadingStationAngle;

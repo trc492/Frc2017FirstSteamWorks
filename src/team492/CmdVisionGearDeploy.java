@@ -164,6 +164,7 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
                         //
                         yDistance = (lastTargetInfo.distance - visionTargetDistance)/2.0;
                     }
+
                     robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
                     sm.waitForSingleEvent(event, State.DEPLOY_GEAR);
                     break;
@@ -179,7 +180,7 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
 
                 case BACKUP:
                     //
-                    // Backup from axle.
+                    // Backup from the lift.
                     //
                     xDistance = 0.0;
                     yDistance = -visionBackupDistance;
