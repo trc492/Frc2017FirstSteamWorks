@@ -22,6 +22,8 @@
 
 package team492;
 
+import java.util.ArrayList;
+
 import org.opencv.core.Rect;
 
 import edu.wpi.first.wpilibj.I2C;
@@ -71,35 +73,38 @@ public class PixyVision
     private static final double TARGET_WIDTH_INCHES = 10.0;
 
     private FrcPixyCam pixyCamera;
+    private Robot robot;
     private int signature;
     private Orientation orientation;
 
-    private void commonInit(int signature, int brightness, Orientation orientation)
+    private void commonInit(Robot robot, int signature, int brightness, Orientation orientation)
     {
         if (debugEnabled)
         {
             dbgTrace = new TrcDbgTrace(moduleName, tracingEnabled, traceLevel, msgLevel);
         }
 
+        this.robot = robot;
         this.signature = signature;
         this.orientation = orientation;
         pixyCamera.setBrightness((byte)brightness);
     }   //commonInit
 
     public PixyVision(
-        final String instanceName, int signature, int brightness, Orientation orientation,
+        final String instanceName, Robot robot, int signature, int brightness, Orientation orientation,
         I2C.Port port, int i2cAddress)
     {
         pixyCamera = new FrcPixyCam(instanceName, port, i2cAddress);
-        commonInit(signature, brightness, orientation);
+        commonInit(robot, signature, brightness, orientation);
     }   //PixyVision
 
     public PixyVision(
-        final String instanceName, int signature, int brightness, Orientation orientation, SerialPort.Port port)
+        final String instanceName, Robot robot, int signature, int brightness, Orientation orientation,
+        SerialPort.Port port)
     {
         pixyCamera = new FrcPixyCam(instanceName, port,
             RobotInfo.PIXY_BAUD_RATE, RobotInfo.PIXY_DATA_BITS, RobotInfo.PIXY_PARITY, RobotInfo.PIXY_STOP_BITS);
-        commonInit(signature, brightness, orientation);
+        commonInit(robot, signature, brightness, orientation);
     }   //PixyVision
 
     public void setEnabled(boolean enabled)
@@ -113,9 +118,10 @@ public class PixyVision
     }   //isEnabled
 
     /**
-     * This method returns the rectangle of the last detected target.
+     * This method analyzes all the detected object rectangles and attempts to find a pair that are the likely targets.
+     * It then returns the rectangle enclosing the two object rectangles.
      *
-     * @return rectangle of last detected target.
+     * @return rectangle of the detected target.
      */
     private Rect getTargetRect()
     {
@@ -127,74 +133,132 @@ public class PixyVision
             dbgTrace.traceInfo(moduleName, "%s object(s) found",
                 detectedObjects != null? "" + detectedObjects.length: "null");
         }
-
+        //
+        // Make sure the camera detected at least two objects.
+        //
         if (detectedObjects != null && detectedObjects.length >= 2)
         {
-            ObjectBlock[] targets = new ObjectBlock[2];
-            int j = 0;
-
-            for (int i = 0; i < detectedObjects.length && j < targets.length; i++)
+            ArrayList<Rect> objectList = new ArrayList<>();
+            double targetDistance = robot.getUltrasonicDistance();
+            //
+            // Filter out objects that don't have the correct signature.
+            //
+            for (int i = 0; i < detectedObjects.length; i++)
             {
-                if (debugEnabled)
-                {
-                    dbgTrace.traceInfo(moduleName, "[%d] %s", i, detectedObjects[i].toString());
-                }
-
                 if (signature == detectedObjects[i].signature)
                 {
-                    targets[j] = detectedObjects[i];
-                    j++;
+                    int temp;
+                    //
+                    // If we have the camera mounted in other orientations, we need to adjust the object rectangles
+                    // accordingly.
+                    //
+                    switch (orientation)
+                    {
+                        case CLOCKWISE_PORTRAIT:
+                            temp = RobotInfo.PIXYCAM_WIDTH - detectedObjects[i].centerX;
+                            detectedObjects[i].centerX = detectedObjects[i].centerY;
+                            detectedObjects[i].centerY = temp;
+                            temp = detectedObjects[i].width;
+                            detectedObjects[i].width = detectedObjects[i].height;
+                            detectedObjects[i].height = temp;
+                            break;
+
+                        case ANTICLOCKWISE_PORTRAIT:
+                            temp = detectedObjects[i].centerX;
+                            detectedObjects[i].centerX = RobotInfo.PIXYCAM_HEIGHT - detectedObjects[i].centerY;
+                            detectedObjects[i].centerY = temp;
+                            temp = detectedObjects[i].width;
+                            detectedObjects[i].width = detectedObjects[i].height;
+                            detectedObjects[i].height = temp;
+                            break;
+
+                        case UPSIDEDOWN_LANDSCAPE:
+                            detectedObjects[i].centerX = RobotInfo.PIXYCAM_WIDTH - detectedObjects[i].centerX;
+                            detectedObjects[i].centerY = RobotInfo.PIXYCAM_HEIGHT - detectedObjects[i].centerY;
+                            break;
+
+                        case NORMAL_LANDSCAPE:
+                            break;
+                    }
+
+                    Rect rect = new Rect(detectedObjects[i].centerX - detectedObjects[i].width/2,
+                                         detectedObjects[i].centerY - detectedObjects[i].height/2,
+                                         detectedObjects[i].width, detectedObjects[i].height);
+                    objectList.add(rect);
+
+                    if (debugEnabled)
+                    {
+                        dbgTrace.traceInfo(moduleName, "[%d] %s", i, detectedObjects[i].toString());
+                    }
                 }
             }
-
-            if (j == 2)
+            //
+            // Filter out objects that don't have the right size and aspect ratio.
+            // Knowing the target distance from the ultrasonic sensor, we can calculate the expected pixel width
+            // and height of the targets.
+            //
+            if (objectList.size() >= 2)
             {
-                int targetCenterX = (targets[0].centerX + targets[1].centerX)/2;
-                int targetCenterY = (targets[0].centerY + targets[1].centerY)/2;
-                int targetWidth = Math.abs(targets[0].centerX - targets[1].centerX) +
-                                  (targets[0].width + targets[1].width)/2;
-                int targetHeight = Math.max(targets[0].centerY + targets[0].height/2,
-                                            targets[1].centerY + targets[1].height/2) -
-                                   Math.min(targets[0].centerY - targets[0].height/2,
-                                            targets[1].centerY - targets[1].height/2);
-                int temp;
+                double expectedWidth = PIXY_DISTANCE_SCALE/targetDistance/5.0;
+                double expectedHeight = PIXY_DISTANCE_SCALE/targetDistance/2.0;
 
-                switch (orientation)
+                for (int i = objectList.size() - 1; i >= 0; i--)
                 {
-                    case CLOCKWISE_PORTRAIT:
-                        temp = RobotInfo.PIXYCAM_WIDTH - targetCenterX;
-                        targetCenterX = targetCenterY;
-                        targetCenterY = temp;
-                        temp = targetWidth;
-                        targetWidth = targetHeight;
-                        targetHeight = temp;
-                        break;
+                    Rect r = objectList.get(i);
+                    double widthRatio = r.width/expectedWidth;
+                    double heightRatio = r.height/expectedHeight;
+                    //
+                    // If either the width or the height of the object is in the ball park (+/- 20%), let it pass.
+                    //
+                    if (widthRatio >= 0.8 && widthRatio <= 1.2 || heightRatio >= 0.8 && heightRatio <= 1.2) continue;
+                    objectList.remove(i);
 
-                    case ANTICLOCKWISE_PORTRAIT:
-                        temp = targetCenterX;
-                        targetCenterX = RobotInfo.PIXYCAM_HEIGHT - targetCenterY;
-                        targetCenterY = temp;
-                        temp = targetWidth;
-                        targetWidth = targetHeight;
-                        targetHeight = temp;
-                        break;
-
-                    case UPSIDEDOWN_LANDSCAPE:
-                        targetCenterX = RobotInfo.PIXYCAM_WIDTH - targetCenterX;
-                        targetCenterY = RobotInfo.PIXYCAM_HEIGHT - targetCenterY;
-                        break;
-
-                    case NORMAL_LANDSCAPE:
-                        break;
+                    if (debugEnabled)
+                    {
+                        dbgTrace.traceInfo(moduleName, "Removing: x=%d, y=%d, width=%d, height=%d",
+                            r.x, r.y, r.width, r.height);
+                    }
                 }
+            }
+            //
+            // For all remaining objects, pair them in all combinations and find the first pair that matches the
+            // expected size and aspect ratio.
+            //
+            if (objectList.size() >= 2)
+            {
+                double expectedWidth = PIXY_DISTANCE_SCALE/targetDistance;
+                double expectedHeight = PIXY_DISTANCE_SCALE/targetDistance;
 
-                targetRect = new Rect(targetCenterX - targetWidth/2, targetCenterY - targetHeight/2,
-                                      targetWidth, targetHeight);
-
-                if (debugEnabled)
+                for (int i = 0; targetRect == null && i < objectList.size() - 1; i++)
                 {
-                    dbgTrace.traceInfo("PixyVision", "TargetRect: x=%d, y=%d, w=%d, h=%d",
-                        targetRect.x, targetRect.y, targetRect.width, targetRect.height);
+                    Rect r1 = objectList.get(i);
+
+                    for (int j = i + 1; targetRect == null && j < objectList.size(); j++)
+                    {
+                        Rect r2 = objectList.get(j);
+                        int targetX1 = Math.min(r1.x, r2.x);
+                        int targetY1 = Math.min(r1.y, r2.y);
+                        int targetX2 = Math.max(r1.x + r1.width,  r2.x + r2.width);
+                        int targetY2 = Math.max(r1.y + r1.height, r2.y + r2.height);
+                        int targetWidth = targetX2 - targetX1;
+                        int targetHeight = targetY2 - targetY1;
+                        int targetCenterX = targetX1 + targetWidth/2;
+                        int targetCenterY = targetY1 + targetHeight/2;
+                        double widthRatio = targetWidth/expectedWidth;
+                        double heightRatio = targetHeight/expectedHeight;
+
+                        if (widthRatio >= 0.8 && heightRatio <= 1.2)
+                        {
+                            targetRect = new Rect(targetCenterX - targetWidth/2, targetCenterY - targetHeight/2,
+                                targetWidth, targetHeight);
+
+                            if (debugEnabled)
+                            {
+                                dbgTrace.traceInfo(moduleName, "TargetRect: x=%d, y=%d, w=%d, h=%d",
+                                    targetRect.x, targetRect.y, targetRect.width, targetRect.height);
+                            }
+                        }
+                    }
                 }
             }
         }

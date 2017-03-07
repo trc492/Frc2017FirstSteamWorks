@@ -254,13 +254,13 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
                 if (USE_FRONT_PIXY_UART)
                 {
                     frontPixy = new PixyVision(
-                        "FrontPixy", RobotInfo.PIXY_LIFT_SIGNATURE, RobotInfo.PIXY_FRONT_BRIGHTNESS,
+                        "FrontPixy", this, RobotInfo.PIXY_LIFT_SIGNATURE, RobotInfo.PIXY_FRONT_BRIGHTNESS,
                         RobotInfo.PIXY_FRONT_ORIENTATION, SerialPort.Port.kMXP);
                 }
                 else
                 {
                     frontPixy = new PixyVision(
-                        "FrontPixy", RobotInfo.PIXY_LIFT_SIGNATURE, RobotInfo.PIXY_FRONT_BRIGHTNESS,
+                        "FrontPixy", this, RobotInfo.PIXY_LIFT_SIGNATURE, RobotInfo.PIXY_FRONT_BRIGHTNESS,
                         RobotInfo.PIXY_FRONT_ORIENTATION, I2C.Port.kMXP, RobotInfo.PIXYCAM_FRONT_I2C_ADDRESS);
                 }
             }
@@ -268,7 +268,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
             if (USE_REAR_PIXY)
             {
                 rearPixy = new PixyVision(
-                    "RearPixy", RobotInfo.PIXY_GEAR_SIGNATURE, RobotInfo.PIXY_REAR_BRIGHTNESS,
+                    "RearPixy", this, RobotInfo.PIXY_GEAR_SIGNATURE, RobotInfo.PIXY_REAR_BRIGHTNESS,
                     RobotInfo.PIXY_REAR_ORIENTATION, I2C.Port.kMXP, RobotInfo.PIXYCAM_REAR_I2C_ADDRESS);
             }
         }
