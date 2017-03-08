@@ -27,15 +27,15 @@ import java.util.Arrays;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.SerialPort.*;
 import trclib.TrcDbgTrace;
-import trclib.TrcDeviceQueue;
+import trclib.TrcSerialBusDevice;
 
 /**
- * This class implements a platform dependent serial port device. It extends TrcDeviceQueue to provide asynchronous
- * request queue support and creates the SerialPort device using WPILib.
+ * This class implements a platform dependent serial port device (UART). It extends TrcSerialBusDevice to provide
+ * asynchronous request queue support and creates the SerialPort device using WPILib.
  */
-public class FrcSerialPort extends TrcDeviceQueue
+public class FrcSerialPortDevice extends TrcSerialBusDevice
 {
-    private static final String moduleName = "FrcSerialPort";
+    private static final String moduleName = "FrcSerialPortDevice";
     private static final boolean debugEnabled = false;
     private static final boolean tracingEnabled = false;
     private static final TrcDbgTrace.TraceLevel traceLevel = TrcDbgTrace.TraceLevel.API;
@@ -54,7 +54,7 @@ public class FrcSerialPort extends TrcDeviceQueue
      * @param parity specifies the parity type.
      * @param stopBits specifies the number of stop bits.
      */
-    public FrcSerialPort(
+    public FrcSerialPortDevice(
         final String instanceName, Port port, int baudRate, int dataBits, Parity parity, StopBits stopBits)
     {
         super(instanceName);
@@ -65,7 +65,7 @@ public class FrcSerialPort extends TrcDeviceQueue
         }
 
         device = new SerialPort(baudRate, port, dataBits, parity, stopBits);
-    }   //FrcSerialPort
+    }   //FrcSerialPortDevice
 
     /**
      * Constructor: Creates an instance of the object.
@@ -76,7 +76,7 @@ public class FrcSerialPort extends TrcDeviceQueue
      * @param parity specifies the parity type.
      * @param stopBits specifies the number of stop bits.
      */
-    public FrcSerialPort(final String instanceName, int baudRate, int dataBits, Parity parity, StopBits stopBits)
+    public FrcSerialPortDevice(final String instanceName, int baudRate, int dataBits, Parity parity, StopBits stopBits)
     {
         this(instanceName, Port.kOnboard, baudRate, dataBits, parity, stopBits);
     }   //FrcSerialPort
@@ -88,13 +88,13 @@ public class FrcSerialPort extends TrcDeviceQueue
      * @param port specifies the serial port (on-board or on the MXP).
      * @param baudRate specifies the serial baud rate.
      */
-    public FrcSerialPort(final String instanceName, Port port, int baudRate)
+    public FrcSerialPortDevice(final String instanceName, Port port, int baudRate)
     {
         this(instanceName, port, baudRate, 8, Parity.kNone, StopBits.kOne);
     }   //FrcSerialPort
 
     //
-    // Implements TrcDeviceQueue abstract methods.
+    // Implements TrcSerialBusDevice abstract methods.
     //
 
     /**
@@ -143,4 +143,4 @@ public class FrcSerialPort extends TrcDeviceQueue
         return bytesWritten;
     }   //writeData
 
-}   //class FtcSerialPort
+}   //class FtcSerialPortDevice

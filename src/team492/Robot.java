@@ -74,7 +74,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     public static final boolean USE_AXIS_CAMERA = false;
     public static final boolean USE_FACE_DETECTOR = false;
     public static final boolean USE_FRONT_PIXY = true;
-    public static final boolean USE_FRONT_PIXY_UART = true;
+    public static final boolean USE_FRONT_PIXY_UART = false;
     public static final boolean USE_REAR_PIXY = false;
 //    public static final boolean USE_PIXY_TEST = true;
 
@@ -367,7 +367,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         alliance = allianceMenu.getCurrentChoiceObject();
         driveTime = HalDashboard.getNumber("DriveTime", 5.0);
         drivePower = HalDashboard.getNumber("DrivePower", 0.2);
-        driveDistance = HalDashboard.getNumber("DriveDistance", 12.0);
+        driveDistance = HalDashboard.getNumber("DriveDistance", 6.0);
         drivePowerLimit = HalDashboard.getNumber("DrivePowerLimit", 0.5);
         turnDegrees = HalDashboard.getNumber("TurnDegrees", 90.0);
 
@@ -505,12 +505,14 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
                 {
                     dashboard.displayPrintf(1, "x=%d, y=%d, width=%d, height=%d",
                         targetInfo.rect.x, targetInfo.rect.y, targetInfo.rect.width, targetInfo.rect.height);
-                    dashboard.displayPrintf(2, "distance=%.1f, angle=%.1f", targetInfo.distance, targetInfo.angle);
+                    dashboard.displayPrintf(2, "xDistance=%.1f, yDistance=%.1f, angle=%.1f",
+                        targetInfo.xDistance, targetInfo.yDistance, targetInfo.angle);
                     if (DEBUG_PIXY_VISION)
                     {
-                        tracer.traceInfo("PixyVision", "x=%d, y=%d, width=%d, height=%d, distance=%.1f, angle=%.1f",
+                        tracer.traceInfo(
+                            "PixyVision", "x=%d, y=%d, width=%d, height=%d, xDistance=%.1f, yDistance=%.1f, angle=%.1f",
                             targetInfo.rect.x, targetInfo.rect.y, targetInfo.rect.width, targetInfo.rect.height,
-                            targetInfo.distance, targetInfo.angle);
+                            targetInfo.xDistance, targetInfo.yDistance, targetInfo.angle);
                     }
                 }
             }

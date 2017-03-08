@@ -28,13 +28,13 @@ import java.util.Arrays;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.I2C.Port;
 import trclib.TrcDbgTrace;
-import trclib.TrcDeviceQueue;
+import trclib.TrcSerialBusDevice;
 
 /**
- * This class implements a platform dependent I2C device. It extends TrcDeviceQueue to provide asynchronous request
- * queue support and creates the I2C device using WPILib.
+ * This class implements a platform dependent I2C device. It extends TrcSerialBusDevice to provide asynchronous
+ * request queue support and creates the I2C device using WPILib.
  */
-public class FrcI2cDevice extends TrcDeviceQueue //implements TrcDeviceQueue.CompletionHandler
+public class FrcI2cDevice extends TrcSerialBusDevice
 {
     private static final String moduleName = "FrcI2cDevice";
     private static final boolean debugEnabled = false;
@@ -43,6 +43,8 @@ public class FrcI2cDevice extends TrcDeviceQueue //implements TrcDeviceQueue.Com
     private static final TrcDbgTrace.MsgLevel msgLevel = TrcDbgTrace.MsgLevel.INFO;
     private TrcDbgTrace dbgTrace = null;
 
+//    private static final boolean REVERSE_BITS = false;
+//
     private I2C device;
 
     /**
@@ -76,7 +78,7 @@ public class FrcI2cDevice extends TrcDeviceQueue //implements TrcDeviceQueue.Com
     }   //FrcI2cDevice
 
     //
-    // Implements TrcDeviceQueue abstract methods.
+    // Implements TrcSerialBusDevice abstract methods.
     //
 
     /**
@@ -101,6 +103,20 @@ public class FrcI2cDevice extends TrcDeviceQueue //implements TrcDeviceQueue.Com
         {
             buffer = null;
         }
+//        else if (REVERSE_BITS)
+//        {
+//            for (int i = 0; i < buffer.length; i++)
+//            {
+//                byte newData = 0;
+//
+//                for (int j = 0; j < 8; j++)
+//                {
+//                    newData |= (buffer[i] & (1 << j)) << (8 - j - 1);
+//                }
+//
+//                buffer[i] = newData;
+//            }
+//        }
 
         if (debugEnabled)
         {

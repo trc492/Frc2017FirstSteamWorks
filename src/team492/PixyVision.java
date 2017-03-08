@@ -41,23 +41,27 @@ public class PixyVision
     private static final TrcDbgTrace.MsgLevel msgLevel = TrcDbgTrace.MsgLevel.INFO;
     private TrcDbgTrace dbgTrace = null;
 
+    private static final boolean FILTER_ENABLED = true;
+
     public class TargetInfo
     {
         public Rect rect;
-        public double distance;
+        public double xDistance;
+        public double yDistance;
         public double angle;
 
-        public TargetInfo(Rect rect, double distance, double angle)
+        public TargetInfo(Rect rect, double xDistance, double yDistance, double angle)
         {
             this.rect = rect;
-            this.distance = distance;
+            this.xDistance = xDistance;
+            this.yDistance = yDistance;
             this.angle = angle;
         }   //TargetInfo
 
         public String toString()
         {
-            return String.format("Rect[%d,%d,%d,%d], distance=%.1f, angle=%.1f",
-                rect.x, rect.y, rect.width, rect.height, distance, angle);
+            return String.format("Rect[%d,%d,%d,%d], xDistance=%.1f, yDistance=%.1f, angle=%.1f",
+                rect.x, rect.y, rect.width, rect.height, xDistance, yDistance, angle);
         }
     }   //class TargetInfo
 
@@ -192,73 +196,98 @@ public class PixyVision
                     }
                 }
             }
-            //
-            // Filter out objects that don't have the right size and aspect ratio.
-            // Knowing the target distance from the ultrasonic sensor, we can calculate the expected pixel width
-            // and height of the targets.
-            //
-            if (objectList.size() >= 2)
+
+            if (FILTER_ENABLED)
             {
-                double expectedWidth = PIXY_DISTANCE_SCALE/targetDistance/5.0;
-                double expectedHeight = PIXY_DISTANCE_SCALE/targetDistance/2.0;
-
-                for (int i = objectList.size() - 1; i >= 0; i--)
+                //
+                // Filter out objects that don't have the right size and aspect ratio.
+                // Knowing the target distance from the ultrasonic sensor, we can calculate the expected pixel width
+                // and height of the targets.
+                //
+                if (objectList.size() >= 2)
                 {
-                    Rect r = objectList.get(i);
-                    double widthRatio = r.width/expectedWidth;
-                    double heightRatio = r.height/expectedHeight;
-                    //
-                    // If either the width or the height of the object is in the ball park (+/- 20%), let it pass.
-                    //
-                    if (widthRatio >= 0.8 && widthRatio <= 1.2 || heightRatio >= 0.8 && heightRatio <= 1.2) continue;
-                    objectList.remove(i);
+                    double expectedWidth = PIXY_DISTANCE_SCALE/targetDistance/5.0;
+                    double expectedHeight = PIXY_DISTANCE_SCALE/targetDistance/2.0;
 
-                    if (debugEnabled)
+                    for (int i = objectList.size() - 1; i >= 0; i--)
                     {
-                        dbgTrace.traceInfo(moduleName, "Removing: x=%d, y=%d, width=%d, height=%d",
-                            r.x, r.y, r.width, r.height);
+                        Rect r = objectList.get(i);
+                        double widthRatio = r.width/expectedWidth;
+                        double heightRatio = r.height/expectedHeight;
+                        //
+                        // If either the width or the height of the object is in the ball park (+/- 20%), let it pass.
+                        //
+                        if (widthRatio >= 0.8 && widthRatio <= 1.2 || heightRatio >= 0.8 && heightRatio <= 1.2)
+                            continue;
+
+                        objectList.remove(i);
+
+                        if (debugEnabled)
+                        {
+                            dbgTrace.traceInfo(moduleName, "Removing: x=%d, y=%d, width=%d, height=%d",
+                                r.x, r.y, r.width, r.height);
+                        }
                     }
                 }
-            }
-            //
-            // For all remaining objects, pair them in all combinations and find the first pair that matches the
-            // expected size and aspect ratio.
-            //
-            if (objectList.size() >= 2)
-            {
-                double expectedWidth = PIXY_DISTANCE_SCALE/targetDistance;
-                double expectedHeight = PIXY_DISTANCE_SCALE/targetDistance;
-
-                for (int i = 0; targetRect == null && i < objectList.size() - 1; i++)
+                //
+                // For all remaining objects, pair them in all combinations and find the first pair that matches the
+                // expected size and aspect ratio.
+                //
+                if (objectList.size() >= 2)
                 {
-                    Rect r1 = objectList.get(i);
+                    double expectedWidth = PIXY_DISTANCE_SCALE/targetDistance;
+                    double expectedHeight = PIXY_DISTANCE_SCALE/targetDistance;
 
-                    for (int j = i + 1; targetRect == null && j < objectList.size(); j++)
+                    for (int i = 0; targetRect == null && i < objectList.size() - 1; i++)
                     {
-                        Rect r2 = objectList.get(j);
-                        int targetX1 = Math.min(r1.x, r2.x);
-                        int targetY1 = Math.min(r1.y, r2.y);
-                        int targetX2 = Math.max(r1.x + r1.width,  r2.x + r2.width);
-                        int targetY2 = Math.max(r1.y + r1.height, r2.y + r2.height);
-                        int targetWidth = targetX2 - targetX1;
-                        int targetHeight = targetY2 - targetY1;
-                        int targetCenterX = targetX1 + targetWidth/2;
-                        int targetCenterY = targetY1 + targetHeight/2;
-                        double widthRatio = targetWidth/expectedWidth;
-                        double heightRatio = targetHeight/expectedHeight;
+                        Rect r1 = objectList.get(i);
 
-                        if (widthRatio >= 0.8 && heightRatio <= 1.2)
+                        for (int j = i + 1; targetRect == null && j < objectList.size(); j++)
                         {
-                            targetRect = new Rect(targetCenterX - targetWidth/2, targetCenterY - targetHeight/2,
-                                targetWidth, targetHeight);
+                            Rect r2 = objectList.get(j);
+                            int targetX1 = Math.min(r1.x, r2.x);
+                            int targetY1 = Math.min(r1.y, r2.y);
+                            int targetX2 = Math.max(r1.x + r1.width,  r2.x + r2.width);
+                            int targetY2 = Math.max(r1.y + r1.height, r2.y + r2.height);
+                            int targetWidth = targetX2 - targetX1;
+                            int targetHeight = targetY2 - targetY1;
+                            int targetCenterX = targetX1 + targetWidth/2;
+                            int targetCenterY = targetY1 + targetHeight/2;
+                            double widthRatio = targetWidth/expectedWidth;
+                            double heightRatio = targetHeight/expectedHeight;
 
-                            if (debugEnabled)
+                            if (widthRatio >= 0.8 && heightRatio <= 1.2)
                             {
-                                dbgTrace.traceInfo(moduleName, "TargetRect: x=%d, y=%d, w=%d, h=%d",
-                                    targetRect.x, targetRect.y, targetRect.width, targetRect.height);
+                                targetRect = new Rect(targetCenterX - targetWidth/2, targetCenterY - targetHeight/2,
+                                    targetWidth, targetHeight);
+
+                                if (debugEnabled)
+                                {
+                                    dbgTrace.traceInfo(moduleName, "***TargetRect***: x=%d, y=%d, w=%d, h=%d",
+                                        targetRect.x, targetRect.y, targetRect.width, targetRect.height);
+                                }
                             }
                         }
                     }
+                }
+            }
+            else if (objectList.size() >= 2)
+            {
+                Rect r1 = objectList.get(0);
+                Rect r2 = objectList.get(1);
+                int targetX1 = Math.min(r1.x, r2.x);
+                int targetY1 = Math.min(r1.y, r2.y);
+                int targetX2 = Math.max(r1.x + r1.width,  r2.x + r2.width);
+                int targetY2 = Math.max(r1.y + r1.height, r2.y + r2.height);
+                int targetWidth = targetX2 - targetX1;
+                int targetHeight = targetY2 - targetY1;
+
+                targetRect = new Rect(targetX1, targetY1, targetWidth, targetHeight);
+
+                if (debugEnabled)
+                {
+                    dbgTrace.traceInfo(moduleName, "***TargetRect***: x=%d, y=%d, w=%d, h=%d",
+                        targetRect.x, targetRect.y, targetRect.width, targetRect.height);
                 }
             }
         }
@@ -294,11 +323,10 @@ public class PixyVision
             // => a = atan((e*W)/(w1*D1))
             //
             double targetCenterX = targetRect.x + targetRect.width/2.0;
-            double targetDistance = PIXY_DISTANCE_SCALE/targetRect.width; 
-            double targetAngle = Math.toDegrees(
-                Math.atan((targetCenterX - RobotInfo.PIXYCAM_WIDTH/2.0)*TARGET_WIDTH_INCHES/
-                          (targetDistance*targetRect.width)));
-            targetInfo = new TargetInfo(targetRect, targetDistance, targetAngle);
+            double targetXDistance = (targetCenterX - RobotInfo.PIXYCAM_WIDTH/2.0)*TARGET_WIDTH_INCHES/targetRect.width;
+            double targetYDistance = PIXY_DISTANCE_SCALE/targetRect.width; 
+            double targetAngle = Math.toDegrees(Math.atan(targetXDistance/targetYDistance));
+            targetInfo = new TargetInfo(targetRect, targetXDistance, targetYDistance, targetAngle);
         }
 
         return targetInfo;

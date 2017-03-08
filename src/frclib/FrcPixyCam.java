@@ -27,7 +27,7 @@ import java.util.Arrays;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.SerialPort;
 import trclib.TrcDbgTrace;
-import trclib.TrcDeviceQueue;
+import trclib.TrcSerialBusDevice;
 import trclib.TrcPixyCam;
 
 /**
@@ -52,7 +52,7 @@ public class FrcPixyCam extends TrcPixyCam
     public static final SerialPort.Parity DEF_PARITY = SerialPort.Parity.kNone;
     public static final SerialPort.StopBits DEF_STOP_BITS = SerialPort.StopBits.kOne;
 
-    private TrcDeviceQueue pixyCam = null;
+    private TrcSerialBusDevice pixyCam = null;
 
     /**
      * Constructor: Create an instance of the object.
@@ -105,7 +105,7 @@ public class FrcPixyCam extends TrcPixyCam
             dbgTrace = new TrcDbgTrace(moduleName + "." + instanceName, tracingEnabled, traceLevel, msgLevel);
         }
 
-        pixyCam = new FrcSerialPort(instanceName, port, baudRate, dataBits, parity, stopBits);
+        pixyCam = new FrcSerialPortDevice(instanceName, port, baudRate, dataBits, parity, stopBits);
     }   //FrcPixyCam
 
     /**

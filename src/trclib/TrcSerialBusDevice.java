@@ -30,16 +30,16 @@ import trclib.TrcEvent;
 import trclib.TrcUtil;
 
 /**
- * This class implements a platform independent device queue. This class is intended to be inherited by a platform
- * dependent device that provides synchronous methods to access the device. It creates a request queue to allow both
- * synchronous and asynchronous requests to be queued for processing. The request queue is processed by a separate
- * thread for asynchronous access.
+ * This class implements a platform independent serial bus device. This class is intended to be inherited by a
+ * platform dependent serial bus device such as I2C device or Serial Port device that provides synchronous methods
+ * to access the device. It creates a request queue to allow both synchronous and asynchronous requests to be queued
+ * for processing. The request queue is processed by a separate thread for asynchronous access.
  *
  * @param <T> specifies the request tag type.
  */
-public abstract class TrcDeviceQueue implements Runnable
+public abstract class TrcSerialBusDevice implements Runnable
 {
-    private static final String moduleName = "TrcDeviceThread";
+    private static final String moduleName = "TrcSerialBusDevice";
     private static final boolean debugEnabled = false;
     private static final boolean tracingEnabled = false;
     private static final TrcDbgTrace.TraceLevel traceLevel = TrcDbgTrace.TraceLevel.API;
@@ -95,7 +95,7 @@ public abstract class TrcDeviceQueue implements Runnable
 
     /**
      * This class implements a request. Typically, a request will be put in the request queue so that each request
-     * will be processed in the order they came in
+     * will be processed in the order they came in.
      */
     private class Request
     {
@@ -154,7 +154,7 @@ public abstract class TrcDeviceQueue implements Runnable
      *
      * @param instanceName specifies the instance name.
      */
-    public TrcDeviceQueue(final String instanceName)
+    public TrcSerialBusDevice(final String instanceName)
     {
         if (debugEnabled)
         {
@@ -165,7 +165,7 @@ public abstract class TrcDeviceQueue implements Runnable
         requestQueue = new ConcurrentLinkedQueue<>();
         deviceTask = new Thread(this, instanceName);
         deviceTask.start();
-    }   //TrcDeviceQueue
+    }   //TrcSerialBusDevice
 
     /**
      * This method returns the instance name.
@@ -679,4 +679,4 @@ public abstract class TrcDeviceQueue implements Runnable
         }
     }   //run
 
-}   //class TrcDeviceQueue
+}   //class TrcSerialBusDevice

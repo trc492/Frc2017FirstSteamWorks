@@ -144,7 +144,7 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
                         //
                         // We saw the target at least once, use the info to calculate the distance to go.
                         //
-                        yDistance = lastTargetInfo.distance - visionTargetDistance;
+                        yDistance = lastTargetInfo.yDistance - visionTargetDistance;
                     }
 
                     robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
