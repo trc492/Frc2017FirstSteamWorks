@@ -287,7 +287,8 @@ public class PixyVision
                     }
                 }
             }
-            else if (objectList.size() >= 2)
+
+            if (targetRect == null && objectList.size() >= 2)
             {
                 Rect r1 = objectList.get(0);
                 Rect r2 = objectList.get(1);
@@ -302,7 +303,7 @@ public class PixyVision
 
                 if (debugEnabled)
                 {
-                    dbgTrace.traceInfo(moduleName, "***TargetRect***: x=%d, y=%d, w=%d, h=%d",
+                    dbgTrace.traceInfo(moduleName, "===TargetRect===: x=%d, y=%d, w=%d, h=%d",
                         targetRect.x, targetRect.y, targetRect.width, targetRect.height);
                 }
             }
