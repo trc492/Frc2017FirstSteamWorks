@@ -204,37 +204,37 @@ public class PixyVision
                 // Knowing the target distance from the ultrasonic sensor, we can calculate the expected pixel width
                 // and height of the targets.
                 //
-                if (objectList.size() >= 2)
-                {
-                    double expectedWidth = PIXY_DISTANCE_SCALE/targetDistance/5.0;
-                    double expectedHeight = PIXY_DISTANCE_SCALE/targetDistance/2.0;
-
-                    if (debugEnabled)
-                    {
-                        dbgTrace.traceInfo(moduleName, "Expected Object: distance=%.1f, width=%.1f, height=%.1f",
-                            targetDistance, expectedWidth, expectedHeight);
-                    }
-
-                    for (int i = objectList.size() - 1; i >= 0; i--)
-                    {
-                        Rect r = objectList.get(i);
-                        double widthRatio = r.width/expectedWidth;
-                        double heightRatio = r.height/expectedHeight;
-                        //
-                        // If either the width or the height of the object is in the ball park (+/- 20%), let it pass.
-                        //
-                        if (widthRatio >= 0.8 && widthRatio <= 1.2 || heightRatio >= 0.8 && heightRatio <= 1.2)
-                            continue;
-
-                        objectList.remove(i);
-
-                        if (debugEnabled)
-                        {
-                            dbgTrace.traceInfo(moduleName, "Removing: x=%d, y=%d, width=%d, height=%d",
-                                r.x, r.y, r.width, r.height);
-                        }
-                    }
-                }
+//                if (objectList.size() >= 2)
+//                {
+//                    double expectedWidth = PIXY_DISTANCE_SCALE/targetDistance/5.0;
+//                    double expectedHeight = PIXY_DISTANCE_SCALE/targetDistance/2.0;
+//
+//                    if (debugEnabled)
+//                    {
+//                        dbgTrace.traceInfo(moduleName, "Expected Object: distance=%.1f, width=%.1f, height=%.1f",
+//                            targetDistance, expectedWidth, expectedHeight);
+//                    }
+//
+//                    for (int i = objectList.size() - 1; i >= 0; i--)
+//                    {
+//                        Rect r = objectList.get(i);
+//                        double widthRatio = r.width/expectedWidth;
+//                        double heightRatio = r.height/expectedHeight;
+//                        //
+//                        // If either the width or the height of the object is in the ball park (+/- 20%), let it pass.
+//                        //
+//                        if (widthRatio >= 0.8 && widthRatio <= 1.2 || heightRatio >= 0.8 && heightRatio <= 1.2)
+//                            continue;
+//
+//                        objectList.remove(i);
+//
+//                        if (debugEnabled)
+//                        {
+//                            dbgTrace.traceInfo(moduleName, "Removing: x=%d, y=%d, width=%d, height=%d",
+//                                r.x, r.y, r.width, r.height);
+//                        }
+//                    }
+//                }
                 //
                 // For all remaining objects, pair them in all combinations and find the first pair that matches the
                 // expected size and aspect ratio.
@@ -243,6 +243,12 @@ public class PixyVision
                 {
                     double expectedWidth = PIXY_DISTANCE_SCALE/targetDistance;
                     double expectedHeight = PIXY_DISTANCE_SCALE/targetDistance;
+
+                    if (debugEnabled)
+                    {
+                        dbgTrace.traceInfo(moduleName, "Expected Target: distance=%.1f, width=%.1f, height=%.1f",
+                            targetDistance, expectedWidth, expectedHeight);
+                    }
 
                     for (int i = 0; targetRect == null && i < objectList.size() - 1; i++)
                     {
