@@ -43,8 +43,6 @@ public class FrcI2cDevice extends TrcSerialBusDevice
     private static final TrcDbgTrace.MsgLevel msgLevel = TrcDbgTrace.MsgLevel.INFO;
     private TrcDbgTrace dbgTrace = null;
 
-//    private static final boolean REVERSE_BITS = false;
-//
     private I2C device;
 
     /**
@@ -103,20 +101,6 @@ public class FrcI2cDevice extends TrcSerialBusDevice
         {
             buffer = null;
         }
-//        else if (REVERSE_BITS)
-//        {
-//            for (int i = 0; i < buffer.length; i++)
-//            {
-//                byte newData = 0;
-//
-//                for (int j = 0; j < 8; j++)
-//                {
-//                    newData |= (buffer[i] & (1 << j)) << (8 - j - 1);
-//                }
-//
-//                buffer[i] = newData;
-//            }
-//        }
 
         if (debugEnabled)
         {

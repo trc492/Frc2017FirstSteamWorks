@@ -146,7 +146,7 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
                     xDistance = 0;
                     yDistance = sideAirshipDistance;
 
-                    robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
+                    robot.setPidDriveTarget(xDistance, yDistance, robot.targetHeading, false, event);
                     sm.waitForSingleEvent(event, State.INITIAL_TURN_TOWARDS_AIRSHIP);
                     break;
 
@@ -158,7 +158,7 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
                     yDistance = 0;
                     robot.targetHeading = rightSide ? -sideLiftAngle : sideLiftAngle;
 
-                    robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
+                    robot.setPidDriveTarget(xDistance, yDistance, robot.targetHeading, false, event);
                     sm.waitForSingleEvent(event, State.SLOW_TURN_TOWARDS_AIRSHIP);
                     break;
 
@@ -190,7 +190,7 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
                         // The vision target isn't visible, increment the targetHeading.
                         robot.targetHeading += rightSide?-sideLiftAngleIncrement:sideLiftAngleIncrement;
                         // Turn to the new target heading
-                        robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
+                        robot.setPidDriveTarget(xDistance, yDistance, robot.targetHeading, false, event);
                         sm.waitForSingleEvent(event, State.WAIT_FOR_CAMERA);
                     }
                     break;
@@ -199,7 +199,7 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
                     xDistance = 0;
                     yDistance = sideOrientedAirshipDistance;
 
-                    robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
+                    robot.setPidDriveTarget(xDistance, yDistance, robot.targetHeading, false, event);
                     sm.waitForSingleEvent(event, State.VISION_DEPLOY);
                     break;
 
@@ -220,7 +220,7 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
                     xDistance = 0;
                     yDistance = -sideOrientedAirshipDistance;
 
-                    robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
+                    robot.setPidDriveTarget(xDistance, yDistance, robot.targetHeading, false, event);
                     sm.waitForSingleEvent(event, State.TURN_TOWARDS_LOADING_STATION);
                     break;
 
@@ -232,7 +232,7 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
                     yDistance = 0;
                     robot.targetHeading = rightSide ? sideLoadingStationAngle : -sideLoadingStationAngle;
 
-                    robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
+                    robot.setPidDriveTarget(xDistance, yDistance, robot.targetHeading, false, event);
                     sm.waitForSingleEvent(event, State.DONE);//MOVE_TOWARDS_LOADING_STATION);
                     break;
 
@@ -250,7 +250,7 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
                         xDistance = 0;
                         yDistance = sideLoadingStationDistance;
 
-                        robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
+                        robot.setPidDriveTarget(xDistance, yDistance, robot.targetHeading, false, event);
                         sm.waitForSingleEvent(event, State.DONE);
                     }
                     break;
@@ -262,7 +262,7 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
                     xDistance = 0;
                     yDistance = sideBaseLineToLaunchPadLine;
 
-                    robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
+                    robot.setPidDriveTarget(xDistance, yDistance, robot.targetHeading, false, event);
                     sm.waitForSingleEvent(event, State.TURN_ALONG_DIAGONAL);
                     break;
 
@@ -274,7 +274,7 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
                     yDistance = 0;
                     robot.targetHeading = sideDiagonalAngle * (isRed?-1:1);
 
-                    robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
+                    robot.setPidDriveTarget(xDistance, yDistance, robot.targetHeading, false, event);
                     sm.waitForSingleEvent(event, State.MOVE_ALONG_DIAGONAL);
                     break;
 
@@ -285,7 +285,7 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
                     xDistance = 0;
                     yDistance = sideDiagonalDistance;
 
-                    robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
+                    robot.setPidDriveTarget(xDistance, yDistance, robot.targetHeading, false, event);
                     sm.waitForSingleEvent(event, State.DONE);
                     break;
 

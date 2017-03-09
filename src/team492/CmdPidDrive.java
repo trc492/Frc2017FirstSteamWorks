@@ -104,7 +104,7 @@ class CmdPidDrive implements TrcRobot.RobotCommand
                     robot.gyroTurnPidCtrl.setOutputRange(-drivePowerLimit, drivePowerLimit);
                     robot.encoderXPidCtrl.setOutputRange(-drivePowerLimit, drivePowerLimit);
                     robot.encoderYPidCtrl.setOutputRange(-drivePowerLimit, drivePowerLimit);
-                    robot.pidDrive.setTarget(xDistance, yDistance, heading, false, event);
+                    robot.setPidDriveTarget(xDistance, yDistance, heading, false, event);
                     sm.waitForSingleEvent(event, State.DONE);
                     break;
 

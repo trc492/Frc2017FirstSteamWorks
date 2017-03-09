@@ -50,6 +50,7 @@ import frclib.FrcRobotBase;
 import hallib.HalDashboard;
 import trclib.TrcDbgTrace;
 import trclib.TrcDriveBase;
+import trclib.TrcEvent;
 import trclib.TrcGyro;
 import trclib.TrcPidController;
 import trclib.TrcPidDrive;
@@ -429,6 +430,75 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
             }
         }
     }   //setVisionEnabled
+
+    void setPidDriveTarget(
+            double xDistance, double yDistance, double heading, boolean holdTarget, TrcEvent event)
+    {
+        double degrees = Math.abs(heading - driveBase.getHeading());
+        double xMag = Math.abs(xDistance);
+        double yMag = Math.abs(yDistance);
+        //
+        // No oscillation if turn-only.
+        //
+        boolean noOscillation = degrees != 0.0 && xMag == 0.0 && yMag == 0.0;
+        gyroTurnPidCtrl.setNoOscillation(noOscillation);
+
+        if (DEBUG_PID_DRIVE)
+        {
+            tracer.traceInfo("setDrivePIDTarget", "x=%.1f, y=%.1f, heading=%.1f/%.1f, NoOscillation=%s",
+                xDistance, yDistance, driveBase.getHeading(), heading, Boolean.toString(noOscillation));
+        }
+
+        if (xMag != 0.0 && xMag < RobotInfo.ENCODER_X_SMALL_THRESHOLD)
+        {
+            //
+            // Small X movement, use stronger X PID to overcome friction.
+            //
+            encoderXPidCtrl.setPID(
+                    RobotInfo.ENCODER_X_SMALL_KP, RobotInfo.ENCODER_X_SMALL_KI, RobotInfo.ENCODER_X_SMALL_KD, 0.0);
+        }
+        else
+        {
+            //
+            // Use normal X PID.
+            //
+            encoderXPidCtrl.setPID(RobotInfo.ENCODER_X_KP, RobotInfo.ENCODER_X_KI, RobotInfo.ENCODER_X_KD, 0.0);
+        }
+
+        if (yMag != 0.0 && yMag < RobotInfo.ENCODER_Y_SMALL_THRESHOLD)
+        {
+            //
+            // Small Y movement, use stronger Y PID to overcome friction.
+            //
+            encoderYPidCtrl.setPID(
+                    RobotInfo.ENCODER_Y_SMALL_KP, RobotInfo.ENCODER_Y_SMALL_KI, RobotInfo.ENCODER_Y_SMALL_KD, 0.0);
+        }
+        else
+        {
+            //
+            // Use normal Y PID.
+            //
+            encoderYPidCtrl.setPID(RobotInfo.ENCODER_Y_KP, RobotInfo.ENCODER_Y_KI, RobotInfo.ENCODER_Y_KD, 0.0);
+        }
+
+        if (degrees != 0.0 && degrees < RobotInfo.GYRO_TURN_SMALL_THRESHOLD)
+        {
+            //
+            // Small turn, use stronger turn PID to overcome friction.
+            //
+            gyroTurnPidCtrl.setPID(
+                    RobotInfo.GYRO_TURN_SMALL_KP, RobotInfo.GYRO_TURN_SMALL_KI, RobotInfo.GYRO_TURN_SMALL_KD, 0.0);
+        }
+        else
+        {
+            //
+            // Use normal turn PID.
+            //
+            gyroTurnPidCtrl.setPID(RobotInfo.GYRO_TURN_KP, RobotInfo.GYRO_TURN_KI, RobotInfo.GYRO_TURN_KD, 0.0);
+        }
+
+        pidDrive.setTarget(xDistance, yDistance, heading, holdTarget, event);
+    }   //setPidDriveTarget
 
     public void updateDashboard()
     {

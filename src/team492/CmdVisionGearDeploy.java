@@ -34,7 +34,14 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
 {
     private static enum State
     {
-        WAIT_FOR_CAMERA, ALIGN_WITH_PEG, DRIVE_TO_TARGET, DEPLOY_GEAR, BACKUP, DONE
+//        WAIT_FOR_CAMERA,
+        TURN_TO_TARGET,
+        DRIVE_TOWARDS_TARGET,
+        ALIGN_WITH_TARGET,
+        DRIVE_TO_TARGET,
+        DEPLOY_GEAR,
+        BACKUP,
+        DONE
     }   //enum State
 
     private static final String moduleName = "CmdVisionGearDeploy";
@@ -42,33 +49,28 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
     private TrcDbgTrace tracer = FrcRobotBase.getGlobalTracer();
     private Robot robot;
 
-    private double visionCameraSettling;
-    private double visionAlignAngleTolerance;
-    private double visionTargetDistance;
     private double visionSonarDistance;
+    private double visionTargetDistance;
     private double visionGearDeployTime;
     private double visionBackupDistance;
 
     private TrcEvent event;
     private TrcTimer timer;
     private TrcStateMachine<State> sm;
-    private PixyVision.TargetInfo lastTargetInfo = null;
 
     CmdVisionGearDeploy(Robot robot)
     {
         this.robot = robot;
 
-        visionCameraSettling = HalDashboard.getNumber("VisionCameraSettling", 0.2);
-        visionAlignAngleTolerance = HalDashboard.getNumber("VisionAlignAngleTolerance", 1.0);
+        visionSonarDistance = HalDashboard.getNumber("VisionSonarDistance", 24.0);
         visionTargetDistance = HalDashboard.getNumber("VisionTargetDistance", 6.0);
-        visionSonarDistance = HalDashboard.getNumber("VisionSonarDistance", 12.0);
         visionGearDeployTime = HalDashboard.getNumber("VisionGearDeployTime", 0.3);
         visionBackupDistance = HalDashboard.getNumber("VisionBackupDistance", 36.0);
 
         event = new TrcEvent(moduleName);
         timer = new TrcTimer("VisionGear");
         sm = new TrcStateMachine<>(moduleName);
-        sm.start(State.WAIT_FOR_CAMERA);
+        sm.start(State.TURN_TO_TARGET);
     }   //CmdVisionGearDeploy
 
     //
@@ -83,6 +85,7 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
         // Print debug info.
         //
         State state = sm.getState();
+        State nextState;
         robot.dashboard.displayPrintf(1, "State: %s", state != null ? state.toString() : "Disabled");
 
         if (sm.isReady())
@@ -93,61 +96,60 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
 
             switch (state)
             {
-                case WAIT_FOR_CAMERA:
-                    if (visionCameraSettling == 0.0)
-                    {
-                        sm.setState(State.ALIGN_WITH_PEG);
-                    }
-                    else
-                    {
-                        timer.set(visionCameraSettling, event);
-                        sm.waitForSingleEvent(event, State.ALIGN_WITH_PEG);
-                    }
+//                case WAIT_FOR_CAMERA:
+//                    if (visionCameraSettling == 0.0)
+//                    {
+//                        sm.setState(State.TURN_TO_TARGET);
+//                    }
+//                    else
+//                    {
+//                        timer.set(visionCameraSettling, event);
+//                        sm.waitForSingleEvent(event, State.TURN_TO_TARGET);
+//                    }
+//                    break;
+//
+                case TURN_TO_TARGET:
+                    targetInfo = robot.frontPixy.getTargetInfo();
+                    double angle = targetInfo != null? targetInfo.angle: 0.0;
+                    xDistance = yDistance = 0.0;
+                    robot.targetHeading += angle;
+                    nextState = Math.abs(angle) <= RobotInfo.GYRO_TURN_TOLERANCE?
+                        State.DRIVE_TOWARDS_TARGET: State.TURN_TO_TARGET;
+
+                    tracer.traceInfo(moduleName, "Target Info: %s",
+                        targetInfo != null? targetInfo.toString(): "not found");
+
+                    robot.setPidDriveTarget(xDistance, yDistance, robot.targetHeading, false, event);
+                    sm.waitForSingleEvent(event, nextState);
                     break;
 
-                case ALIGN_WITH_PEG:
-                    targetInfo = robot.frontPixy.getTargetInfo();
-                    tracer.traceInfo("GearDeploy", "Target Info: %s",
-                        targetInfo != null? targetInfo.toString(): "not found");
-                    if(targetInfo == null || Math.abs(targetInfo.angle) <= visionAlignAngleTolerance)
-                    {
-                        //
-                        // We either don't see the target or the target is already aligned.
-                        // If we don't see the target, just have blind faith that it's already aligned.
-                        //
-                        sm.setState(State.DRIVE_TO_TARGET);
-                    }
-                    else
-                    {
-                        //
-                        // See the target but not quite aligned, turn to align with it.
-                        //
-                        xDistance = yDistance = 0.0;
-                        robot.targetHeading += targetInfo.angle;
+                case DRIVE_TOWARDS_TARGET:
+                    xDistance = 0.0;
+                    yDistance = robot.getUltrasonicDistance() - visionSonarDistance;
 
-                        robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
-                        sm.waitForSingleEvent(event, State.WAIT_FOR_CAMERA);
-                    }
+                    robot.setPidDriveTarget(xDistance, yDistance, robot.targetHeading, false, event);
+                    sm.waitForSingleEvent(event, State.ALIGN_WITH_TARGET);
+                    break;
+
+                case ALIGN_WITH_TARGET:
+                    targetInfo = robot.frontPixy.getTargetInfo();
+                    xDistance = targetInfo != null? targetInfo.xDistance: 0.0;
+                    yDistance = 0.0;
+                    nextState = Math.abs(xDistance) <= RobotInfo.ENCODER_X_TOLERANCE?
+                        State.DRIVE_TO_TARGET: State.ALIGN_WITH_TARGET;
+
+                    tracer.traceInfo(moduleName, "Target Info: %s",
+                        targetInfo != null? targetInfo.toString(): "not found");
+
+                    robot.setPidDriveTarget(xDistance, yDistance, robot.targetHeading, false, event);
+                    sm.waitForSingleEvent(event, nextState);
                     break;
 
                 case DRIVE_TO_TARGET:
                     xDistance = 0.0;
-                    if (lastTargetInfo == null)
-                    {
-                        //
-                        // We never see the target, so use the ultrasonic distance instead.
-                        //
-                        yDistance = robot.getUltrasonicDistance() - visionSonarDistance;
-                    }
-                    else
-                    {
-                        //
-                        // We saw the target at least once, use the info to calculate the distance to go.
-                        //
-                        yDistance = lastTargetInfo.yDistance - visionTargetDistance;
-                    }
+                    yDistance = robot.getUltrasonicDistance() - visionTargetDistance;
 
-                    robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
+                    robot.setPidDriveTarget(xDistance, yDistance, robot.targetHeading, false, event);
                     sm.waitForSingleEvent(event, State.DEPLOY_GEAR);
                     break;
 
@@ -166,7 +168,7 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
                     //
                     xDistance = 0.0;
                     yDistance = -visionBackupDistance;
-                    robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
+                    robot.setPidDriveTarget(xDistance, yDistance, robot.targetHeading, false, event);
                     sm.waitForSingleEvent(event, State.DONE);
                     break;
 
