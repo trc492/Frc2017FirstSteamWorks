@@ -443,17 +443,17 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
                 //
                 // DriveBase debug info.
                 //
-                dashboard.displayPrintf(1, "DriveBase: lf=%.0f, rf=%.0f, lr=%.0f, rr=%.0f",
+                dashboard.displayPrintf(8, "DriveBase: lf=%.0f, rf=%.0f, lr=%.0f, rr=%.0f",
                     leftFrontWheel.getPosition(), rightFrontWheel.getPosition(),
                     leftRearWheel.getPosition(), rightRearWheel.getPosition());
-                dashboard.displayPrintf(2, "DriveBase: X=%.1f, Y=%.1f, Heading=%.1f",
+                dashboard.displayPrintf(9, "DriveBase: X=%.1f, Y=%.1f, Heading=%.1f",
                     driveBase.getXPosition(), driveBase.getYPosition(), driveBase.getHeading());
 
                 if (DEBUG_PID_DRIVE)
                 {
-                    encoderXPidCtrl.displayPidInfo(3);
-                    encoderYPidCtrl.displayPidInfo(5);
-                    gyroTurnPidCtrl.displayPidInfo(7);
+                    encoderXPidCtrl.displayPidInfo(10);
+                    encoderYPidCtrl.displayPidInfo(12);
+                    gyroTurnPidCtrl.displayPidInfo(14);
                 }
                 HalDashboard.putNumber("DriveBase.X", driveBase.getXPosition());
                 HalDashboard.putNumber("DriveBase.Y", driveBase.getYPosition());
@@ -471,7 +471,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
                     {
                         for (int i = 0; i < targetRects.length; i++)
                         {
-                            dashboard.displayPrintf(1 + i, "x=%d, y=%d, width=%d, height=%d",
+                            dashboard.displayPrintf(8 + i, "x=%d, y=%d, width=%d, height=%d",
                                 targetRects[i].x, targetRects[i].y, targetRects[i].width, targetRects[i].height);
                             tracer.traceInfo("TargetRect", "%02d: x=%d, y=%d, width=%d, height=%d",
                                 i, targetRects[i].x, targetRects[i].y, targetRects[i].width, targetRects[i].height);
@@ -489,7 +489,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
                     {
                         for (int i = 0; i < faceRects.length; i++)
                         {
-                            dashboard.displayPrintf(1 + i, "x=%d, y=%d, width=%d, height=%d",
+                            dashboard.displayPrintf(8 + i, "x=%d, y=%d, width=%d, height=%d",
                                 faceRects[i].x, faceRects[i].y, faceRects[i].width, faceRects[i].height);
                             tracer.traceInfo("FaceRect", "%02d: x=%d, y=%d, width=%d, height=%d",
                                 i, faceRects[i].x, faceRects[i].y, faceRects[i].width, faceRects[i].height);
@@ -503,9 +503,9 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
                 PixyVision.TargetInfo targetInfo = frontPixy.getTargetInfo();
                 if (targetInfo != null)
                 {
-                    dashboard.displayPrintf(1, "x=%d, y=%d, width=%d, height=%d",
+                    dashboard.displayPrintf(8, "x=%d, y=%d, width=%d, height=%d",
                         targetInfo.rect.x, targetInfo.rect.y, targetInfo.rect.width, targetInfo.rect.height);
-                    dashboard.displayPrintf(2, "xDistance=%.1f, yDistance=%.1f, angle=%.1f",
+                    dashboard.displayPrintf(9, "xDistance=%.1f, yDistance=%.1f, angle=%.1f",
                         targetInfo.xDistance, targetInfo.yDistance, targetInfo.angle);
                     if (DEBUG_PIXY_VISION)
                     {

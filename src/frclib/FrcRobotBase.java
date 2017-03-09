@@ -60,14 +60,22 @@ public abstract class FrcRobotBase extends RobotBase
      * This method is called to initialize the robot.
      */
     public abstract void robotInit();
+
+    /**
+     * This method is called to prepare the robot before a robot mode is about to start.
+     */
     public abstract void robotStartMode();
+
+    /**
+     * This method is called to prepare the robot right after a robot mode has been stopped.
+     */
     public abstract void robotStopMode();
 
     private TrcTaskMgr taskMgr = new TrcTaskMgr();
     private HalDashboard dashboard = new HalDashboard();
 
     private static FrcRobotBase instance;
-    private String progName;
+    private final String progName;
     private RobotMode teleOpMode = null;
     private RobotMode autoMode = null;
     private RobotMode testMode = null;
@@ -197,7 +205,6 @@ public abstract class FrcRobotBase extends RobotBase
             "\n****************************************\n" +
             "Host Name: %s\n" +
             "  Program: %s\n"+
-//            " Compiled: %s, %s" +
             "\n****************************************\n" +
             HalDbgLog.ESC_NORMAL,
             getHostName(), progName);

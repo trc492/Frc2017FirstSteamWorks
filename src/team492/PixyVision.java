@@ -35,7 +35,7 @@ import trclib.TrcPixyCam.ObjectBlock;
 public class PixyVision
 {
     private static final String moduleName = "PixyVision";
-    private static final boolean debugEnabled = false;
+    private static final boolean debugEnabled = true;
     private static final boolean tracingEnabled = false;
     private static final TrcDbgTrace.TraceLevel traceLevel = TrcDbgTrace.TraceLevel.API;
     private static final TrcDbgTrace.MsgLevel msgLevel = TrcDbgTrace.MsgLevel.INFO;
@@ -208,6 +208,12 @@ public class PixyVision
                 {
                     double expectedWidth = PIXY_DISTANCE_SCALE/targetDistance/5.0;
                     double expectedHeight = PIXY_DISTANCE_SCALE/targetDistance/2.0;
+
+                    if (debugEnabled)
+                    {
+                        dbgTrace.traceInfo(moduleName, "Expected Object: distance=%.1f, width=%.1f, height=%.1f",
+                            targetDistance, expectedWidth, expectedHeight);
+                    }
 
                     for (int i = objectList.size() - 1; i >= 0; i--)
                     {

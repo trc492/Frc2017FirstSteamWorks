@@ -36,19 +36,19 @@ public class RobotInfo
     //
     public static final double FIELD_LENGTH                     = 54*12.0;
     public static final double FIELD_WIDTH                      = 27*12.0;
-    public static final double FIELD_BASELINE_DISTANCE          = 93.3;
+    public static final double FIELD_BASELINE_DISTANCE          = 114.3;
     public static final double FIELD_LAUNCHPAD_DISTANCE         = 185.3;
     public static final double FIELD_NEUTRAL_ZONE_LENGTH        = FIELD_LENGTH - FIELD_LAUNCHPAD_DISTANCE*2.0;
     public static final double FIELD_SIDELIFT_ANGLE             = 60.0;
     public static final double FIELD_AIRSHIP_PANEL_WIDTH        = 80.07/2;
     public static final double FIELD_SIDESTART_FROM_CENTER      = FIELD_AIRSHIP_PANEL_WIDTH;
-    public static final double FIELD_VISION_START_DISTANCE      = FIELD_AIRSHIP_PANEL_WIDTH/2.0;
+    public static final double FIELD_VISION_START_DISTANCE      = 36.0;
 
     //
     // Robot dimensions.
     //
-    public static final double ROBOT_LENGTH                     = 40.0;
-    public static final double ROBOT_WIDTH                      = 36.0;
+    public static final double ROBOT_LENGTH                     = 38.0;
+    public static final double ROBOT_WIDTH                      = 35.0;
     public static final double ROBOT_HEIGHT                     = 24.0;
 
     //
@@ -124,8 +124,10 @@ public class RobotInfo
     public static final double ENCODER_X_SETTLING               = 0.2;
 
     // 2017-02-21: 0.0159419007257628, 0.03, 0.0, 0.007
+    // 2017-03-07: 0.0159419007257628, 0.05, 0.0, 0.007
+    // 2017-03-08: 0.0159419007257628, 0.06, 0.0, 0.007
     public static final double ENCODER_Y_INCHES_PER_COUNT       = 0.0159419007257628;
-    public static final double ENCODER_Y_KP                     = 0.03;
+    public static final double ENCODER_Y_KP                     = 0.06;
     public static final double ENCODER_Y_KI                     = 0.0;
     public static final double ENCODER_Y_KD                     = 0.007;
     public static final double ENCODER_Y_KF                     = 0.0;
@@ -133,9 +135,11 @@ public class RobotInfo
     public static final double ENCODER_Y_SETTLING               = 0.2;
 
     // 2017-03-05: 0.15, 0.0, 0.01
-    public static final double GYRO_TURN_KP                     = 0.15;
+    // 2017-03-07: 0.15, 0.0, 0.02
+    // 2017-03-08: 0.1, 0.0, 0.007
+    public static final double GYRO_TURN_KP                     = 0.1;
     public static final double GYRO_TURN_KI                     = 0.0;
-    public static final double GYRO_TURN_KD                     = 0.01;
+    public static final double GYRO_TURN_KD                     = 0.007;
     public static final double GYRO_TURN_KF                     = 0.0;
     public static final double GYRO_TURN_TOLERANCE              = 1.0;
     public static final double GYRO_TURN_SETTLING               = 0.2;

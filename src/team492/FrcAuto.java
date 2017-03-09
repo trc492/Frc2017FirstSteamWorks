@@ -30,7 +30,7 @@ import trclib.TrcRobot;
 
 public class FrcAuto implements TrcRobot.RobotMode
 {
-    private static final boolean USE_TRACELOG = false;
+    private static final boolean USE_TRACELOG = true;
 
     public static enum AutoStrategy
     {
@@ -177,6 +177,7 @@ public class FrcAuto implements TrcRobot.RobotMode
         if (autoCommand != null)
         {
             autoCommand.cmdPeriodic(elapsedTime);
+            robot.updateDashboard();
         }
     }   //runContinuous
 

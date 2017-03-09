@@ -67,11 +67,10 @@ class CmdMidGearLift implements TrcRobot.RobotCommand
         //
 
         // approx. 33.3 inches.
-        midLiftDistance = HalDashboard.getNumber("MidLiftDistance",
-            RobotInfo.FIELD_BASELINE_DISTANCE - RobotInfo.FIELD_VISION_START_DISTANCE - RobotInfo.ROBOT_LENGTH);
+        midLiftDistance = HalDashboard.getNumber("MidLiftDistance", 36.0);
         midSidewallAngle = Math.abs(HalDashboard.getNumber("MidSidewallAngle", 90));
         // approx. 80 inches.
-        midSidewallDistance = HalDashboard.getNumber("MidSidewallDistance", RobotInfo.FIELD_AIRSHIP_PANEL_WIDTH*2.0);
+        midSidewallDistance = HalDashboard.getNumber("MidSidewallDistance", 72.0);//RobotInfo.FIELD_AIRSHIP_PANEL_WIDTH*2.0);
         midOppositeEndDistance = HalDashboard.getNumber("MidOppositeEndDistance", 33.0*12.0);
         midLoadingStationAngle = Math.abs(HalDashboard.getNumber("MidLoadingStationAngle", 0.0));
 
@@ -147,7 +146,7 @@ class CmdMidGearLift implements TrcRobot.RobotCommand
                         robot.alliance == Robot.Alliance.RED_ALLIANCE? -midSidewallAngle: midSidewallAngle; 
 
                     robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
-                    sm.waitForSingleEvent(event, State.DONE);//GO_TO_SIDEWALL);
+                    sm.waitForSingleEvent(event, State.GO_TO_SIDEWALL);
                     break;
 
                 case GO_TO_SIDEWALL:
@@ -157,7 +156,7 @@ class CmdMidGearLift implements TrcRobot.RobotCommand
                     xDistance = 0.0;
                     yDistance = midSidewallDistance;
 
-                    robot.encoderYPidCtrl.setOutputRange(-1.0, 1.0);
+//                    robot.encoderYPidCtrl.setOutputRange(-1.0, 1.0);
                     robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
                     sm.waitForSingleEvent(event, State.TURN_TO_OPPOSITE_END);
                     break;

@@ -187,7 +187,7 @@ public class FrcTest extends FrcTeleOp
     public void runContinuous(double elapsedTime)
     {
         State state = sm.getState();
-        robot.dashboard.displayPrintf(8, "%s: %s", test.toString(), state != null? state.toString(): "STOPPED!");
+        robot.dashboard.displayPrintf(1, "%s: %s", test.toString(), state != null? state.toString(): "STOPPED!");
 
         switch (test)
         {
@@ -197,10 +197,10 @@ public class FrcTest extends FrcTeleOp
                 double rfEnc = robot.rightFrontWheel.getPosition();
                 double lrEnc = robot.leftRearWheel.getPosition();
                 double rrEnc = robot.rightRearWheel.getPosition();
-                robot.dashboard.displayPrintf(9, "Enc:lf=%.0f,rf=%.0f", lfEnc, rfEnc);
-                robot.dashboard.displayPrintf(10, "Enc:lr=%.0f,rr=%.0f", lrEnc, rrEnc);
-                robot.dashboard.displayPrintf(11, "average=%f", (lfEnc + rfEnc + lrEnc + rrEnc)/4.0);
-                robot.dashboard.displayPrintf(12, "xPos=%.1f,yPos=%.1f,heading=%.1f",
+                robot.dashboard.displayPrintf(2, "Enc:lf=%.0f,rf=%.0f", lfEnc, rfEnc);
+                robot.dashboard.displayPrintf(3, "Enc:lr=%.0f,rr=%.0f", lrEnc, rrEnc);
+                robot.dashboard.displayPrintf(4, "average=%f", (lfEnc + rfEnc + lrEnc + rrEnc)/4.0);
+                robot.dashboard.displayPrintf(5, "xPos=%.1f,yPos=%.1f,heading=%.1f",
                     robot.driveBase.getXPosition(), robot.driveBase.getYPosition(), robot.driveBase.getHeading());
                 timedDriveCommand.cmdPeriodic(elapsedTime);
                 break;
@@ -208,12 +208,12 @@ public class FrcTest extends FrcTeleOp
             case X_DISTANCE_DRIVE:
             case Y_DISTANCE_DRIVE:
             case TURN_DEGREES:
-                robot.dashboard.displayPrintf(9, "xPos=%.1f,yPos=%.1f,heading=%.1f",
+                robot.dashboard.displayPrintf(2, "xPos=%.1f,yPos=%.1f,heading=%.1f",
                     robot.getInput(robot.encoderXPidCtrl), robot.getInput(robot.encoderYPidCtrl),
                     robot.getInput(robot.gyroTurnPidCtrl));
-                robot.encoderXPidCtrl.displayPidInfo(10);
-                robot.encoderYPidCtrl.displayPidInfo(12);
-                robot.gyroTurnPidCtrl.displayPidInfo(14);
+                robot.encoderXPidCtrl.displayPidInfo(3);
+                robot.encoderYPidCtrl.displayPidInfo(5);
+                robot.gyroTurnPidCtrl.displayPidInfo(7);
 
                 if (!pidDriveCommand.cmdPeriodic(elapsedTime))
                 {
@@ -244,19 +244,19 @@ public class FrcTest extends FrcTeleOp
      */
     private void doSensorsTest()
     {
-        robot.dashboard.displayPrintf(9, "DriveBase: lf=%.0f, rf=%.0f, lr=%.0f, rr=%.0f",
+        robot.dashboard.displayPrintf(1, "DriveBase: lf=%.0f, rf=%.0f, lr=%.0f, rr=%.0f",
             robot.leftFrontWheel.getPosition(), robot.rightFrontWheel.getPosition(),
             robot.leftRearWheel.getPosition(), robot.rightRearWheel.getPosition());
-        robot.dashboard.displayPrintf(10, "DriveBase: X=%.1f, Y=%.1f, Heading=%.1f",
+        robot.dashboard.displayPrintf(2, "DriveBase: X=%.1f, Y=%.1f, Heading=%.1f",
             robot.driveBase.getXPosition(), robot.driveBase.getYPosition(), robot.driveBase.getHeading());
-        robot.dashboard.displayPrintf(11, "Gyro: Rate=%.3f, Heading=%.1f",
+        robot.dashboard.displayPrintf(3, "Gyro: Rate=%.3f, Heading=%.1f",
             robot.gyro.getZRotationRate().value, robot.gyro.getZHeading().value);
-        robot.dashboard.displayPrintf(12, "Winch: position=%.1f, touch=%s/%s",
+        robot.dashboard.displayPrintf(4, "Winch: position=%.1f, touch=%s/%s",
             robot.winch.getPosition(), Boolean.toString(robot.winch.isFwdLimitSwitchActive()),
             Boolean.toString(robot.winch.isRevLimitSwitchActive()));
-        robot.dashboard.displayPrintf(13, "GearPickup: gear=%s", robot.gearPickup.gearDetected());
-        robot.dashboard.displayPrintf(14, "PressureSensor: pressure=%.1f", robot.getPressure());
-        robot.dashboard.displayPrintf(15, "Ultrasonic=%.1f inches", robot.getUltrasonicDistance());
+        robot.dashboard.displayPrintf(5, "GearPickup: gear=%s", robot.gearPickup.gearDetected());
+        robot.dashboard.displayPrintf(6, "PressureSensor: pressure=%.1f", robot.getPressure());
+        robot.dashboard.displayPrintf(7, "Ultrasonic=%.1f inches", robot.getUltrasonicDistance());
     }   //doSensorsTest
 
     /**
@@ -268,8 +268,8 @@ public class FrcTest extends FrcTeleOp
      */
     private void doDriveMotorsTest()
     {
-        robot.dashboard.displayPrintf(9, "Motors Test: index=%d", motorIndex);
-        robot.dashboard.displayPrintf(10, "Enc: lf=%.0f, rf=%.0f, lr=%.0f, rr=%.0f",
+        robot.dashboard.displayPrintf(1, "Motors Test: index=%d", motorIndex);
+        robot.dashboard.displayPrintf(2, "Enc: lf=%.0f, rf=%.0f, lr=%.0f, rr=%.0f",
             robot.leftFrontWheel.getPosition(), robot.rightFrontWheel.getPosition(),
             robot.leftRearWheel.getPosition(), robot.rightRearWheel.getPosition());
 

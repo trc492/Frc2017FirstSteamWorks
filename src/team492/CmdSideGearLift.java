@@ -37,6 +37,7 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
         MOVE_FORWARD_ON_SIDE,
         INITIAL_TURN_TOWARDS_AIRSHIP,
         SLOW_TURN_TOWARDS_AIRSHIP,
+        WAIT_FOR_CAMERA,
         SET_UP_VISION_DEPLOY,
         VISION_DEPLOY,
         BACKUP_FROM_AIRSHIP,
@@ -58,6 +59,7 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
     private double sideLiftAngle;
     private double sideLiftAngleIncrement;
     private double sideLiftMaxAngle;
+    private double sideCameraSettling;
     private double sideOrientedAirshipDistance;
     private double sideLoadingStationAngle;
     private double sideLoadingStationDistance;
@@ -80,10 +82,11 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
         //
         // Convert all distances to the unit of inches.
         //
-        sideAirshipDistance = HalDashboard.getNumber("SideAirshipDistance", 72.0);
+        sideAirshipDistance = HalDashboard.getNumber("SideAirshipDistance", 108.0 - RobotInfo.ROBOT_LENGTH);
         sideLiftAngle = Math.abs(HalDashboard.getNumber("SideLiftAngle", 45.0));
         sideLiftAngleIncrement = Math.abs(HalDashboard.getNumber("SideLiftAngleIncrement", 5.0));
         sideLiftMaxAngle = Math.abs(HalDashboard.getNumber("SideLiftMaxAngle", 60.0));
+        sideCameraSettling = Math.abs(HalDashboard.getNumber("SideCameraSettling", 0.2));
         sideOrientedAirshipDistance = HalDashboard.getNumber("SideOrientedAirshipDistance", 8.0);
         sideLoadingStationAngle = Math.abs(HalDashboard.getNumber("SideLoadingStationAngle", 0.0));
         sideLoadingStationDistance = HalDashboard.getNumber("SideLoadingStationDistance", 40.0*12.0);
@@ -159,6 +162,18 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
                     sm.waitForSingleEvent(event, State.SLOW_TURN_TOWARDS_AIRSHIP);
                     break;
 
+                case WAIT_FOR_CAMERA:
+                    if (sideCameraSettling == 0.0)
+                    {
+                        sm.setState(State.SLOW_TURN_TOWARDS_AIRSHIP);
+                    }
+                    else
+                    {
+                        timer.set(sideCameraSettling, event);
+                        sm.waitForSingleEvent(event, State.SLOW_TURN_TOWARDS_AIRSHIP);
+                    }
+                    break;
+
                 case SLOW_TURN_TOWARDS_AIRSHIP:
                     //
                     // Turn until vision target visible
@@ -176,7 +191,7 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
                         robot.targetHeading += rightSide?-sideLiftAngleIncrement:sideLiftAngleIncrement;
                         // Turn to the new target heading
                         robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
-                        sm.waitForSingleEvent(event, State.SLOW_TURN_TOWARDS_AIRSHIP);
+                        sm.waitForSingleEvent(event, State.WAIT_FOR_CAMERA);
                     }
                     break;
 
