@@ -42,6 +42,9 @@ public class PixyVision
     private TrcDbgTrace dbgTrace = null;
 
     private static final boolean FILTER_ENABLED = true;
+    private static final double PERCENT_TOLERANCE = 0.2;    // 20% tolerance
+    private static final double PERCENT_TOLERANCE_LOWER = 1.0 - PERCENT_TOLERANCE;
+    private static final double PERCENT_TOLERANCE_UPPER = 1.0 + PERCENT_TOLERANCE;
 
     public class TargetInfo
     {
@@ -223,8 +226,11 @@ public class PixyVision
 //                        //
 //                        // If either the width or the height of the object is in the ball park (+/- 20%), let it pass.
 //                        //
-//                        if (widthRatio >= 0.8 && widthRatio <= 1.2 || heightRatio >= 0.8 && heightRatio <= 1.2)
+//                        if (widthRatio >= PERCENT_TOLERANCE_LOWER && widthRatio <= PERCENT_TOLERANCE_UPPER ||
+//                            heightRatio >= PERCENT_TOLERANCE_LOWER && heightRatio <= PERCENT_TOLERANCE_UPPER)
+//                        {
 //                            continue;
+//                        }
 //
 //                        objectList.remove(i);
 //
@@ -263,15 +269,13 @@ public class PixyVision
                             int targetY2 = Math.max(r1.y + r1.height, r2.y + r2.height);
                             int targetWidth = targetX2 - targetX1;
                             int targetHeight = targetY2 - targetY1;
-                            int targetCenterX = targetX1 + targetWidth/2;
-                            int targetCenterY = targetY1 + targetHeight/2;
                             double widthRatio = targetWidth/expectedWidth;
                             double heightRatio = targetHeight/expectedHeight;
 
-                            if (widthRatio >= 0.8 && heightRatio <= 1.2)
+                            if (widthRatio >= PERCENT_TOLERANCE_LOWER && widthRatio <= PERCENT_TOLERANCE_UPPER &&
+                                heightRatio >= PERCENT_TOLERANCE_LOWER && heightRatio <= PERCENT_TOLERANCE_UPPER)
                             {
-                                targetRect = new Rect(targetCenterX - targetWidth/2, targetCenterY - targetHeight/2,
-                                    targetWidth, targetHeight);
+                                targetRect = new Rect(targetX1, targetY1, targetWidth, targetHeight);
 
                                 if (debugEnabled)
                                 {
