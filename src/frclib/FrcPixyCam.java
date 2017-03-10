@@ -71,6 +71,7 @@ public class FrcPixyCam extends TrcPixyCam
         }
 
         pixyCam = new FrcI2cDevice(instanceName, port, devAddress);
+        start();
     }   //FrcPixyCam
 
     /**
@@ -106,6 +107,7 @@ public class FrcPixyCam extends TrcPixyCam
         }
 
         pixyCam = new FrcSerialPortDevice(instanceName, port, baudRate, dataBits, parity, stopBits);
+        start();
     }   //FrcPixyCam
 
     /**
@@ -158,7 +160,6 @@ public class FrcPixyCam extends TrcPixyCam
     public void setEnabled(boolean enabled)
     {
         final String funcName = "setEnabled";
-        boolean wasEnabled = pixyCam.isTaskEnabled();
 
         if (debugEnabled)
         {
@@ -166,11 +167,6 @@ public class FrcPixyCam extends TrcPixyCam
         }
 
         pixyCam.setTaskEnabled(enabled);
-
-        if (!wasEnabled && enabled)
-        {
-            start();
-        }
 
         if (debugEnabled)
         {
