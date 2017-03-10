@@ -347,9 +347,8 @@ public class PixyVision
             if (debugEnabled)
             {
                 dbgTrace.traceInfo(
-                    moduleName, "###TargetInfo###: x=%d, y=%d, w=%d, h=%d, xDist=%.1f, yDist=%.1f, angle=%.1f",
-                    targetRect.x, targetRect.y, targetRect.width, targetRect.height, targetXDistance, targetYDistance,
-                    targetAngle);
+                    moduleName, "###TargetInfo###: xDist=%.1f, yDist=%.1f, angle=%.1f",
+                    targetXDistance, targetYDistance, targetAngle);
             }
         }
 
