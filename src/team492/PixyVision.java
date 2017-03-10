@@ -248,7 +248,7 @@ public class PixyVision
                 if (objectList.size() >= 2)
                 {
                     double expectedWidth = PIXY_DISTANCE_SCALE/targetDistance;
-                    double expectedHeight = PIXY_DISTANCE_SCALE/targetDistance;
+                    double expectedHeight = PIXY_DISTANCE_SCALE/targetDistance/2.0;
 
                     if (debugEnabled)
                     {
@@ -279,16 +279,15 @@ public class PixyVision
 
                                 if (debugEnabled)
                                 {
-                                    dbgTrace.traceInfo(moduleName, "***TargetRect***: x=%d, y=%d, w=%d, h=%d",
-                                        targetRect.x, targetRect.y, targetRect.width, targetRect.height);
+                                    dbgTrace.traceInfo(moduleName, "***TargetRect***: [%d,%d] x=%d, y=%d, w=%d, h=%d",
+                                        i, j, targetRect.x, targetRect.y, targetRect.width, targetRect.height);
                                 }
                             }
                         }
                     }
                 }
             }
-
-            if (targetRect == null && objectList.size() >= 2)
+            else if (objectList.size() >= 2)
             {
                 Rect r1 = objectList.get(0);
                 Rect r2 = objectList.get(1);
@@ -344,6 +343,14 @@ public class PixyVision
             double targetYDistance = PIXY_DISTANCE_SCALE/targetRect.width; 
             double targetAngle = Math.toDegrees(Math.atan(targetXDistance/targetYDistance));
             targetInfo = new TargetInfo(targetRect, targetXDistance, targetYDistance, targetAngle);
+
+            if (debugEnabled)
+            {
+                dbgTrace.traceInfo(
+                    moduleName, "###TargetInfo###: x=%d, y=%d, w=%d, h=%d, xDist=%.1f, yDist=%.1f, angle=%.1f",
+                    targetRect.x, targetRect.y, targetRect.width, targetRect.height, targetXDistance, targetYDistance,
+                    targetAngle);
+            }
         }
 
         return targetInfo;
