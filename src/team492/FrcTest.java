@@ -80,13 +80,13 @@ public class FrcTest extends FrcTeleOp
         //
         testMenu = new FrcChoiceMenu<>("Tests");
         testMenu.addChoice("Sensors Test", FrcTest.Test.SENSORS_TEST, true);
-        testMenu.addChoice("Drive Motors Test", FrcTest.Test.DRIVE_MOTORS_TEST);
-        testMenu.addChoice("X Timed Drive", FrcTest.Test.X_TIMED_DRIVE);
-        testMenu.addChoice("Y Timed Drive", FrcTest.Test.Y_TIMED_DRIVE);
-        testMenu.addChoice("X Distance Drive", FrcTest.Test.X_DISTANCE_DRIVE);
-        testMenu.addChoice("Y Distance Drive", FrcTest.Test.Y_DISTANCE_DRIVE);
-        testMenu.addChoice("Turn Degrees", FrcTest.Test.TURN_DEGREES);
-        testMenu.addChoice("Live Window", FrcTest.Test.LIVE_WINDOW);
+        testMenu.addChoice("Drive Motors Test", FrcTest.Test.DRIVE_MOTORS_TEST, false);
+        testMenu.addChoice("X Timed Drive", FrcTest.Test.X_TIMED_DRIVE, false);
+        testMenu.addChoice("Y Timed Drive", FrcTest.Test.Y_TIMED_DRIVE, false);
+        testMenu.addChoice("X Distance Drive", FrcTest.Test.X_DISTANCE_DRIVE, false);
+        testMenu.addChoice("Y Distance Drive", FrcTest.Test.Y_DISTANCE_DRIVE, false);
+        testMenu.addChoice("Turn Degrees", FrcTest.Test.TURN_DEGREES, false);
+        testMenu.addChoice("Live Window", FrcTest.Test.LIVE_WINDOW, false);
      }   //FrcTest
 
     //

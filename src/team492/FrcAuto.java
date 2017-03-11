@@ -69,14 +69,14 @@ public class FrcAuto implements TrcRobot.RobotMode
         // Populate Autonomous Mode menus.
         //
         autoStrategyMenu.addChoice("Middle Gear Lift", FrcAuto.AutoStrategy.MIDDLE_GEAR_LIFT, true);
-        autoStrategyMenu.addChoice("Left Gear Lift", FrcAuto.AutoStrategy.LEFT_GEAR_LIFT);
-        autoStrategyMenu.addChoice("Right Gear Lift", FrcAuto.AutoStrategy.RIGHT_GEAR_LIFT);
-        autoStrategyMenu.addChoice("X Timed Drive", FrcAuto.AutoStrategy.X_TIMED_DRIVE);
-        autoStrategyMenu.addChoice("Y Timed Drive", FrcAuto.AutoStrategy.Y_TIMED_DRIVE);
-        autoStrategyMenu.addChoice("X Distance Drive", FrcAuto.AutoStrategy.X_DISTANCE_DRIVE);
-        autoStrategyMenu.addChoice("Y Distance Drive", FrcAuto.AutoStrategy.Y_DISTANCE_DRIVE);
-        autoStrategyMenu.addChoice("Turn Degrees", FrcAuto.AutoStrategy.TURN_DEGREES);
-        autoStrategyMenu.addChoice("Do Nothing", FrcAuto.AutoStrategy.DO_NOTHING);
+        autoStrategyMenu.addChoice("Left Gear Lift", FrcAuto.AutoStrategy.LEFT_GEAR_LIFT, false);
+        autoStrategyMenu.addChoice("Right Gear Lift", FrcAuto.AutoStrategy.RIGHT_GEAR_LIFT, false);
+        autoStrategyMenu.addChoice("X Timed Drive", FrcAuto.AutoStrategy.X_TIMED_DRIVE, false);
+        autoStrategyMenu.addChoice("Y Timed Drive", FrcAuto.AutoStrategy.Y_TIMED_DRIVE, false);
+        autoStrategyMenu.addChoice("X Distance Drive", FrcAuto.AutoStrategy.X_DISTANCE_DRIVE, false);
+        autoStrategyMenu.addChoice("Y Distance Drive", FrcAuto.AutoStrategy.Y_DISTANCE_DRIVE, false);
+        autoStrategyMenu.addChoice("Turn Degrees", FrcAuto.AutoStrategy.TURN_DEGREES, false);
+        autoStrategyMenu.addChoice("Do Nothing", FrcAuto.AutoStrategy.DO_NOTHING, false);
     }   //FrcAuto
 
     //

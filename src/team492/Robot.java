@@ -346,13 +346,13 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         // Populate Global Menus.
         //
         matchTypeMenu.addChoice("Practice", MatchType.PRACTICE, true);
-        matchTypeMenu.addChoice("Qualification", MatchType.QUALIFICATION);
-        matchTypeMenu.addChoice("Quater-final", MatchType.QUATER_FINAL);
-        matchTypeMenu.addChoice("Semi-final", MatchType.SEMI_FINAL);
-        matchTypeMenu.addChoice("Final", MatchType.FINAL);
+        matchTypeMenu.addChoice("Qualification", MatchType.QUALIFICATION, false);
+        matchTypeMenu.addChoice("Quater-final", MatchType.QUATER_FINAL, false);
+        matchTypeMenu.addChoice("Semi-final", MatchType.SEMI_FINAL, false);
+        matchTypeMenu.addChoice("Final", MatchType.FINAL, false);
 
         allianceMenu.addChoice("Red", Alliance.RED_ALLIANCE, true);
-        allianceMenu.addChoice("Blue", Alliance.BLUE_ALLIANCE);
+        allianceMenu.addChoice("Blue", Alliance.BLUE_ALLIANCE, false);
 
         //
         // Robot Modes.
