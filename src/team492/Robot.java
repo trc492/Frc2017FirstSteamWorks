@@ -48,6 +48,7 @@ import frclib.FrcGyro;
 import frclib.FrcPneumatic;
 import frclib.FrcRobotBase;
 import hallib.HalDashboard;
+import team492.PixyVision.TargetInfo;
 import trclib.TrcDbgTrace;
 import trclib.TrcDriveBase;
 import trclib.TrcEvent;
@@ -69,6 +70,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     public static final String programName = "FirstSteamWorks";
     public static final String moduleName = "Robot";
 
+    public static final boolean USE_TRACELOG = true;
     public static final boolean USE_NAV_X = true;
     public static final boolean USE_ANALOG_GYRO = false;
     public static final boolean USE_GRIP_VISION = false;
@@ -135,6 +137,11 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     public TrcPidController encoderYPidCtrl;
     public TrcPidController gyroTurnPidCtrl;
     public TrcPidDrive pidDrive;
+
+    public TrcPidController sonarDrivePidCtrl;
+    public TrcPidController visionTurnPidCtrl;
+    public TrcPidDrive visionPidDrive;
+    public double lastTargetAngle = 0.0;
 
     //
     // Define our subsystems for Auto and TeleOp modes.
@@ -324,6 +331,18 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         gyroTurnPidCtrl.setAbsoluteSetPoint(true);
         pidDrive = new TrcPidDrive("pidDrive", driveBase, encoderXPidCtrl, encoderYPidCtrl, gyroTurnPidCtrl);
 
+        sonarDrivePidCtrl = new TrcPidController(
+            "sonarDrivePidCtrl",
+            RobotInfo.ENCODER_Y_KP, RobotInfo.ENCODER_Y_KI, RobotInfo.ENCODER_Y_KD, RobotInfo.ENCODER_Y_KF,
+            RobotInfo.ENCODER_Y_TOLERANCE, RobotInfo.ENCODER_Y_SETTLING, this);
+        sonarDrivePidCtrl.setAbsoluteSetPoint(true);
+        sonarDrivePidCtrl.setInverted(true);
+        visionTurnPidCtrl = new TrcPidController(
+            "visionTurnPidCtrl",
+            RobotInfo.GYRO_TURN_KP, RobotInfo.GYRO_TURN_KI, RobotInfo.GYRO_TURN_KD, RobotInfo.GYRO_TURN_KF,
+            RobotInfo.GYRO_TURN_TOLERANCE, RobotInfo.GYRO_TURN_SETTLING, this);
+        pidDrive = new TrcPidDrive("visionPidDrive", driveBase, null, sonarDrivePidCtrl, visionTurnPidCtrl);
+
         //
         // Create other subsystems.
         //
@@ -438,7 +457,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
 
         if (DEBUG_PID_DRIVE)
         {
-            tracer.traceInfo("setDrivePIDTarget", "x=%.1f, y=%.1f, heading=%.1f/%.1f, NoOscillation=%s",
+            tracer.traceInfo("setPidDriveTarget", "x=%.1f, y=%.1f, heading=%.1f/%.1f, NoOscillation=%s",
                 xDistance, yDistance, driveBase.getHeading(), heading, Boolean.toString(noOscillation));
         }
 
@@ -492,6 +511,75 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
 
         pidDrive.setTarget(xDistance, yDistance, heading, holdTarget, event);
     }   //setPidDriveTarget
+
+    void setVisionPidDriveTarget(
+        double xDistance, double yDistance, double heading, boolean holdTarget, TrcEvent event)
+{
+    double degrees = Math.abs(heading);
+    double xMag = Math.abs(xDistance);
+    double yMag = Math.abs(yDistance);
+    //
+    // No oscillation if turn-only.
+    //
+    boolean noOscillation = degrees != 0.0 && xMag == 0.0 && yMag == 0.0;
+    visionTurnPidCtrl.setNoOscillation(noOscillation);
+
+    if (DEBUG_PID_DRIVE)
+    {
+        tracer.traceInfo("setVisionPidDriveTarget", "x=%.1f, y=%.1f, heading=%.1f/%.1f, NoOscillation=%s",
+            xDistance, yDistance, driveBase.getHeading(), heading, Boolean.toString(noOscillation));
+    }
+
+    if (xMag != 0.0 && xMag < RobotInfo.ENCODER_X_SMALL_THRESHOLD)
+    {
+        //
+        // Small X movement, use stronger X PID to overcome friction.
+        //
+        encoderXPidCtrl.setPID(
+                RobotInfo.ENCODER_X_SMALL_KP, RobotInfo.ENCODER_X_SMALL_KI, RobotInfo.ENCODER_X_SMALL_KD, 0.0);
+    }
+    else
+    {
+        //
+        // Use normal X PID.
+        //
+        encoderXPidCtrl.setPID(RobotInfo.ENCODER_X_KP, RobotInfo.ENCODER_X_KI, RobotInfo.ENCODER_X_KD, 0.0);
+    }
+
+    if (yMag != 0.0 && yMag < RobotInfo.ENCODER_Y_SMALL_THRESHOLD)
+    {
+        //
+        // Small Y movement, use stronger Y PID to overcome friction.
+        //
+        encoderYPidCtrl.setPID(
+                RobotInfo.ENCODER_Y_SMALL_KP, RobotInfo.ENCODER_Y_SMALL_KI, RobotInfo.ENCODER_Y_SMALL_KD, 0.0);
+    }
+    else
+    {
+        //
+        // Use normal Y PID.
+        //
+        encoderYPidCtrl.setPID(RobotInfo.ENCODER_Y_KP, RobotInfo.ENCODER_Y_KI, RobotInfo.ENCODER_Y_KD, 0.0);
+    }
+
+    if (degrees != 0.0 && degrees < RobotInfo.GYRO_TURN_SMALL_THRESHOLD)
+    {
+        //
+        // Small turn, use stronger turn PID to overcome friction.
+        //
+        visionTurnPidCtrl.setPID(
+                RobotInfo.GYRO_TURN_SMALL_KP, RobotInfo.GYRO_TURN_SMALL_KI, RobotInfo.GYRO_TURN_SMALL_KD, 0.0);
+    }
+    else
+    {
+        //
+        // Use normal turn PID.
+        //
+        visionTurnPidCtrl.setPID(RobotInfo.GYRO_TURN_KP, RobotInfo.GYRO_TURN_KI, RobotInfo.GYRO_TURN_KD, 0.0);
+    }
+
+    visionPidDrive.setTarget(xDistance, yDistance, heading, holdTarget, event);
+}   //setVisionPidDriveTarget
 
     public void updateDashboard()
     {
@@ -626,6 +714,23 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         else if (pidCtrl == gyroTurnPidCtrl)
         {
             value = driveBase.getHeading();
+        }
+        else if (pidCtrl == sonarDrivePidCtrl)
+        {
+            value = getUltrasonicDistance();
+        }
+        else if (pidCtrl == visionTurnPidCtrl)
+        {
+            TargetInfo targetInfo = frontPixy.getTargetInfo();
+            if (targetInfo != null)
+            {
+                value = targetInfo.angle;
+                lastTargetAngle = value;
+            }
+            else
+            {
+                value = lastTargetAngle;
+            }
         }
 
         return value;

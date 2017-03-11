@@ -30,8 +30,6 @@ import trclib.TrcRobot;
 
 public class FrcAuto implements TrcRobot.RobotMode
 {
-    private static final boolean USE_TRACELOG = true;
-
     public static enum AutoStrategy
     {
         LEFT_GEAR_LIFT,
@@ -88,7 +86,8 @@ public class FrcAuto implements TrcRobot.RobotMode
     {
         HalDashboard.getInstance().clearDisplay();
 
-        if (USE_TRACELOG) robot.startTraceLog();
+        if (Robot.USE_TRACELOG) robot.startTraceLog();
+
         Date now = new Date();
         robot.tracer.traceInfo(Robot.programName, "%s: ***** Starting autonomous *****", now.toString());
 
@@ -163,7 +162,7 @@ public class FrcAuto implements TrcRobot.RobotMode
             robot.setVisionEnabled(false);
         }
 
-        if (USE_TRACELOG) robot.stopTraceLog();
+        if (Robot.USE_TRACELOG) robot.stopTraceLog();
     }   //stopMode
 
     @Override

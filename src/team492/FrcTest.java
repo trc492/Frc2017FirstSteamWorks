@@ -96,6 +96,7 @@ public class FrcTest extends FrcTeleOp
     @Override
     public void startMode()
     {
+        if (Robot.USE_TRACELOG) robot.startTraceLog();
         //
         // Call TeleOp startMode.
         //
@@ -152,6 +153,7 @@ public class FrcTest extends FrcTeleOp
         // Call TeleOp stopMode.
         //
         super.stopMode();
+        if (Robot.USE_TRACELOG) robot.stopTraceLog();
     }   //stopMode
 
     //

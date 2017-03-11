@@ -116,10 +116,11 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
 
                 case DRIVE_TOWARDS_TARGET:
                     xDistance = 0.0;
-                    yDistance = robot.getUltrasonicDistance() - visionFarDistance;
+                    yDistance = visionNearDistance;
+                    double heading = 0.0;
 
-                    robot.setPidDriveTarget(xDistance, yDistance, robot.targetHeading, false, event);
-                    sm.waitForSingleEvent(event, State.ALIGN_WITH_TARGET);
+                    robot.setVisionPidDriveTarget(xDistance, yDistance, heading, false, event);
+                    sm.waitForSingleEvent(event, State.DEPLOY_GEAR);
                     break;
 
                 case ALIGN_WITH_TARGET:
