@@ -40,10 +40,12 @@ class CmdPidDrive implements TrcRobot.RobotCommand
 
     private Robot robot;
     private double delay;
+
     private double xDistance;
     private double yDistance;
     private double heading;
     private double drivePowerLimit;
+
     private TrcEvent event;
     private TrcTimer timer;
     private TrcStateMachine<State> sm;
@@ -60,6 +62,9 @@ class CmdPidDrive implements TrcRobot.RobotCommand
         timer = new TrcTimer(moduleName);
         sm = new TrcStateMachine<>(moduleName);
         sm.start(State.DO_DELAY);
+
+        robot.tracer.traceInfo(moduleName, "delay=%.3f, xDist=%.1f, yDist=%.1f, heading=%.1f, powerLimit=%.1f",
+            delay, xDistance, yDistance, heading, drivePowerLimit);
     }   //CmdPidDrive
 
     //
@@ -101,9 +106,9 @@ class CmdPidDrive implements TrcRobot.RobotCommand
                     //
                     // Drive the set distance and heading.
                     //
-                    robot.gyroTurnPidCtrl.setOutputRange(-drivePowerLimit, drivePowerLimit);
                     robot.encoderXPidCtrl.setOutputRange(-drivePowerLimit, drivePowerLimit);
                     robot.encoderYPidCtrl.setOutputRange(-drivePowerLimit, drivePowerLimit);
+                    robot.gyroTurnPidCtrl.setOutputRange(-drivePowerLimit, drivePowerLimit);
                     robot.setPidDriveTarget(xDistance, yDistance, heading, false, event);
                     sm.waitForSingleEvent(event, State.DONE);
                     break;
@@ -113,29 +118,15 @@ class CmdPidDrive implements TrcRobot.RobotCommand
                     //
                     // We are done.
                     //
-                    robot.gyroTurnPidCtrl.setOutputRange(-1.0, 1.0);
                     robot.encoderXPidCtrl.setOutputRange(-1.0, 1.0);
                     robot.encoderYPidCtrl.setOutputRange(-1.0, 1.0);
+                    robot.gyroTurnPidCtrl.setOutputRange(-1.0, 1.0);
                     done = true;
                     sm.stop();
                     break;
             }
+
             robot.traceStateInfo(elapsedTime, state.toString());
-        }
-
-        if (robot.pidDrive.isActive())
-        {
-            if (xDistance != 0.0)
-            {
-                robot.encoderXPidCtrl.printPidInfo(robot.tracer);
-            }
-
-            if (yDistance != 0.0)
-            {
-                robot.encoderYPidCtrl.printPidInfo(robot.tracer);
-            }
-
-            robot.gyroTurnPidCtrl.printPidInfo(robot.tracer);
         }
 
         return done;

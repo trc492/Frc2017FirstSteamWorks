@@ -68,9 +68,9 @@ public class FrcAuto implements TrcRobot.RobotMode
         //
         // Populate Autonomous Mode menus.
         //
+        autoStrategyMenu.addChoice("Middle Gear Lift", FrcAuto.AutoStrategy.MIDDLE_GEAR_LIFT, true);
         autoStrategyMenu.addChoice("Left Gear Lift", FrcAuto.AutoStrategy.LEFT_GEAR_LIFT);
         autoStrategyMenu.addChoice("Right Gear Lift", FrcAuto.AutoStrategy.RIGHT_GEAR_LIFT);
-        autoStrategyMenu.addChoice("Middle Gear Lift", FrcAuto.AutoStrategy.MIDDLE_GEAR_LIFT);
         autoStrategyMenu.addChoice("X Timed Drive", FrcAuto.AutoStrategy.X_TIMED_DRIVE);
         autoStrategyMenu.addChoice("Y Timed Drive", FrcAuto.AutoStrategy.Y_TIMED_DRIVE);
         autoStrategyMenu.addChoice("X Distance Drive", FrcAuto.AutoStrategy.X_DISTANCE_DRIVE);
@@ -163,7 +163,7 @@ public class FrcAuto implements TrcRobot.RobotMode
             robot.setVisionEnabled(false);
         }
 
-        if (USE_TRACELOG) robot.tracer.closeTraceLog();
+        if (USE_TRACELOG) robot.stopTraceLog();
     }   //stopMode
 
     @Override

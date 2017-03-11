@@ -79,7 +79,7 @@ public class FrcTest extends FrcTeleOp
         // Create and populate Test Mode specific menus.
         //
         testMenu = new FrcChoiceMenu<>("Tests");
-        testMenu.addChoice("Sensors Test", FrcTest.Test.SENSORS_TEST);
+        testMenu.addChoice("Sensors Test", FrcTest.Test.SENSORS_TEST, true);
         testMenu.addChoice("Drive Motors Test", FrcTest.Test.DRIVE_MOTORS_TEST);
         testMenu.addChoice("X Timed Drive", FrcTest.Test.X_TIMED_DRIVE);
         testMenu.addChoice("Y Timed Drive", FrcTest.Test.Y_TIMED_DRIVE);

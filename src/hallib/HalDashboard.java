@@ -137,12 +137,13 @@ public class HalDashboard extends SmartDashboard
      */
     public static double getNumber(String key, double defaultValue)
     {
-        double value = SmartDashboard.getNumber(key, defaultValue);
-        //
-        // If we get the default value back, the key may not exist. Let's call putNumber to create it with the
-        // default value.
-        //
-        if (value == defaultValue)
+        double value = defaultValue;
+
+        if (SmartDashboard.containsKey(key))
+        {
+            value = SmartDashboard.getNumber(key, defaultValue);
+        }
+        else
         {
             SmartDashboard.putNumber(key, defaultValue);
         }

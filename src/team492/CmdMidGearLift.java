@@ -37,9 +37,8 @@ class CmdMidGearLift implements TrcRobot.RobotCommand
         VISION_GEAR_DEPLOY,
         TURN_TO_SIDEWALL,
         GO_TO_SIDEWALL,
-        TURN_TO_OPPOSITE_END,
-        GO_TO_OPPOSITE_END,
         TURN_TO_LOADING_STATION,
+        GO_TO_LOADING_STATION,
         DONE
     }   //enum State
 
@@ -47,11 +46,12 @@ class CmdMidGearLift implements TrcRobot.RobotCommand
 
     private Robot robot;
     private double delay;
+
     private double midLiftDistance;
     private double midSidewallAngle;
     private double midSidewallDistance;
-    private double midOppositeEndDistance;
-    private double midLoadingStationAngle;
+    private double midLoadingStationDistance;
+
     private CmdVisionGearDeploy cmdVisionDeploy;
     private TrcEvent event;
     private TrcTimer timer;
@@ -71,8 +71,7 @@ class CmdMidGearLift implements TrcRobot.RobotCommand
         midSidewallAngle = Math.abs(HalDashboard.getNumber("MidSidewallAngle", 90));
         // approx. 80 inches.
         midSidewallDistance = HalDashboard.getNumber("MidSidewallDistance", 72.0);//RobotInfo.FIELD_AIRSHIP_PANEL_WIDTH*2.0);
-        midOppositeEndDistance = HalDashboard.getNumber("MidOppositeEndDistance", 33.0*12.0);
-        midLoadingStationAngle = Math.abs(HalDashboard.getNumber("MidLoadingStationAngle", 0.0));
+        midLoadingStationDistance = HalDashboard.getNumber("MidLoadingStationDistance", 33.0*12.0);
 
         cmdVisionDeploy = new CmdVisionGearDeploy(robot);
 
@@ -80,6 +79,12 @@ class CmdMidGearLift implements TrcRobot.RobotCommand
         timer = new TrcTimer(moduleName);
         sm = new TrcStateMachine<>(moduleName);
         sm.start(State.DO_DELAY);
+
+        robot.tracer.traceInfo(
+            moduleName,
+            "delay=%.3f, alliance=%s, liftDist=%.1f, swAngle=%.1f, swDist=%.1f, lsEndDist=%.1f",
+            delay, robot.alliance.toString(), midLiftDistance, midSidewallAngle, midSidewallDistance,
+            midLoadingStationDistance);
     }   //CmdMidGearLift
 
     @Override
@@ -158,10 +163,10 @@ class CmdMidGearLift implements TrcRobot.RobotCommand
 
 //                    robot.encoderYPidCtrl.setOutputRange(-1.0, 1.0);
                     robot.setPidDriveTarget(xDistance, yDistance, robot.targetHeading, false, event);
-                    sm.waitForSingleEvent(event, State.TURN_TO_OPPOSITE_END);
+                    sm.waitForSingleEvent(event, State.TURN_TO_LOADING_STATION);
                     break;
 
-                case TURN_TO_OPPOSITE_END:
+                case TURN_TO_LOADING_STATION:
                     //
                     // Turn heading the opposite end.
                     //
@@ -169,26 +174,15 @@ class CmdMidGearLift implements TrcRobot.RobotCommand
                     robot.targetHeading = 0.0;
 
                     robot.setPidDriveTarget(xDistance, yDistance, robot.targetHeading, false, event);
-                    sm.waitForSingleEvent(event, State.GO_TO_OPPOSITE_END);
+                    sm.waitForSingleEvent(event, State.GO_TO_LOADING_STATION);
                     break;
 
-                case GO_TO_OPPOSITE_END:
+                case GO_TO_LOADING_STATION:
                     //
                     // Move towards the opposite end.
                     //
                     xDistance = 0.0;
-                    yDistance = midOppositeEndDistance;
-
-                    robot.setPidDriveTarget(xDistance, yDistance, robot.targetHeading, false, event);
-                    sm.waitForSingleEvent(event, State.TURN_TO_LOADING_STATION);
-                    break;
-
-                case TURN_TO_LOADING_STATION:
-                    //
-                    // Turn towards the loading station.
-                    //
-                    xDistance = yDistance = 0.0;
-                    robot.targetHeading = midLoadingStationAngle;
+                    yDistance = midLoadingStationDistance;
 
                     robot.setPidDriveTarget(xDistance, yDistance, robot.targetHeading, false, event);
                     sm.waitForSingleEvent(event, State.DONE);

@@ -34,7 +34,6 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
 {
     private static enum State
     {
-//        WAIT_FOR_CAMERA,
         TURN_TO_TARGET,
         DRIVE_TOWARDS_TARGET,
         ALIGN_WITH_TARGET,
@@ -49,8 +48,8 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
     private TrcDbgTrace tracer = FrcRobotBase.getGlobalTracer();
     private Robot robot;
 
-    private double visionSonarDistance;
-    private double visionTargetDistance;
+    private double visionFarDistance;
+    private double visionNearDistance;
     private double visionGearDeployTime;
     private double visionBackupDistance;
 
@@ -62,15 +61,19 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
     {
         this.robot = robot;
 
-        visionSonarDistance = HalDashboard.getNumber("VisionSonarDistance", 24.0);
-        visionTargetDistance = HalDashboard.getNumber("VisionTargetDistance", 6.0);
+        visionFarDistance = HalDashboard.getNumber("VisionFarDistance", 24.0);
+        visionNearDistance = HalDashboard.getNumber("VisionNearDistance", 12.0);
         visionGearDeployTime = HalDashboard.getNumber("VisionGearDeployTime", 0.3);
         visionBackupDistance = HalDashboard.getNumber("VisionBackupDistance", 36.0);
 
         event = new TrcEvent(moduleName);
-        timer = new TrcTimer("VisionGear");
+        timer = new TrcTimer(moduleName);
         sm = new TrcStateMachine<>(moduleName);
         sm.start(State.TURN_TO_TARGET);
+
+        robot.tracer.traceInfo(
+            moduleName, "farDist=%.1f, nearDist=%.1f, deployTime=%.1f, backupDist=%.1f",
+            visionFarDistance, visionNearDistance, visionGearDeployTime, visionBackupDistance);
     }   //CmdVisionGearDeploy
 
     //
@@ -96,18 +99,6 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
 
             switch (state)
             {
-//                case WAIT_FOR_CAMERA:
-//                    if (visionCameraSettling == 0.0)
-//                    {
-//                        sm.setState(State.TURN_TO_TARGET);
-//                    }
-//                    else
-//                    {
-//                        timer.set(visionCameraSettling, event);
-//                        sm.waitForSingleEvent(event, State.TURN_TO_TARGET);
-//                    }
-//                    break;
-//
                 case TURN_TO_TARGET:
                     targetInfo = robot.frontPixy.getTargetInfo();
                     double angle = targetInfo != null? targetInfo.angle: 0.0;
@@ -125,7 +116,7 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
 
                 case DRIVE_TOWARDS_TARGET:
                     xDistance = 0.0;
-                    yDistance = robot.getUltrasonicDistance() - visionSonarDistance;
+                    yDistance = robot.getUltrasonicDistance() - visionFarDistance;
 
                     robot.setPidDriveTarget(xDistance, yDistance, robot.targetHeading, false, event);
                     sm.waitForSingleEvent(event, State.ALIGN_WITH_TARGET);
@@ -147,7 +138,7 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
 
                 case DRIVE_TO_TARGET:
                     xDistance = 0.0;
-                    yDistance = robot.getUltrasonicDistance() - visionTargetDistance;
+                    yDistance = robot.getUltrasonicDistance() - visionNearDistance;
 
                     robot.setPidDriveTarget(xDistance, yDistance, robot.targetHeading, false, event);
                     sm.waitForSingleEvent(event, State.DEPLOY_GEAR);

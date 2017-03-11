@@ -54,6 +54,7 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
     private Robot robot;
     private double delay;
     private boolean rightSide;
+
     private boolean isRed;
     private double sideAirshipDistance;
     private double sideLiftAngle;
@@ -100,6 +101,14 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
         timer = new TrcTimer(moduleName);
         sm = new TrcStateMachine<>(moduleName);
         sm.start(State.DO_DELAY);
+
+        robot.tracer.traceInfo(
+            moduleName,
+            "delay=%.3f, alliance=%s, rightSide=%s, liftDist=%.1f, liftAngle=%.1f, angleInc=%.1f, maxAngle=%.1f" +
+            "backDist=%.1f, lsAngle=%.1f, lsDist=%.1f, launchPadDist=%.1f, diagAngle=%.1f, diagDist=%.1f",
+            delay, robot.alliance.toString(), Boolean.toString(rightSide), sideAirshipDistance, sideLiftAngle,
+            sideLiftAngleIncrement, sideLiftMaxAngle, sideOrientedAirshipDistance, sideLoadingStationAngle,
+            sideLoadingStationDistance, sideBaseLineToLaunchPadLine, sideDiagonalAngle, sideDiagonalDistance);
     }   //CmdPidDrive
 
     //

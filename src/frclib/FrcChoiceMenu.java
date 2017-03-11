@@ -22,7 +22,7 @@
 
 package frclib;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import hallib.HalDashboard;
@@ -41,52 +41,9 @@ public class FrcChoiceMenu<T>
     private static final TrcDbgTrace.MsgLevel msgLevel = TrcDbgTrace.MsgLevel.INFO;
     protected TrcDbgTrace dbgTrace = null;
 
-    /**
-     * This class defines a choice item in a choice menu.
-     */
-    private class ChoiceItem
-    {
-        private String choiceText;
-        private T choiceObject;
-
-        /**
-         * Constructor: Creates an instance of the object.
-         *
-         * @param choiceText specifies the text to be displayed in the choice menu.
-         * @param choiceObject specifies the object to be returned if the choice is selected.
-         */
-        public ChoiceItem(String choiceText, T choiceObject)
-        {
-            this.choiceText = choiceText;
-            this.choiceObject = choiceObject;
-        }   //ChoiceItem
-
-        /**
-         * This method returns the choice text.
-         *
-         * @return choice text.
-         */
-        public String getText()
-        {
-            return choiceText;
-        }   //getText;
-
-        /**
-         * This method returns the choice object.
-         *
-         * @return choice object.
-         */
-        public T getObject()
-        {
-            return choiceObject;
-        }   //getObject
-
-    }   //class ChoiceItem
-
     private final String menuTitle;
     private SendableChooser<T> chooser;
-    private ArrayList<ChoiceItem> choiceItems;
-    private ChoiceItem defChoice = null;
+    private HashMap<T, String> hashMap;
 
     /**
      * Constructor: Creates an instance of the object.
@@ -107,7 +64,7 @@ public class FrcChoiceMenu<T>
 
         this.menuTitle = menuTitle;
         chooser = new SendableChooser<>();
-        choiceItems = new ArrayList<>();
+        hashMap = new HashMap<>();
     }   //FrcChoiceMenu
 
     /**
@@ -133,26 +90,22 @@ public class FrcChoiceMenu<T>
      *
      * @param choiceText specifies the choice text that will be displayed on the dashboard.
      * @param choiceObject specifies the object to be returned if the choice is selected.
+     * @param defChoice specifies true to set it the default choice, false otherwise.
      */
-    public void addChoice(String choiceText, T choiceObject)
+    public void addChoice(String choiceText, T choiceObject, boolean defChoice)
     {
         final String funcName = "addChoice";
 
         if (debugEnabled)
         {
-            dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.API, "text=%s,obj=%s",
-                choiceText, choiceObject.toString());
+            dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.API, "text=%s,obj=%s,def=%s",
+                choiceText, choiceObject.toString(), Boolean.toString(defChoice));
         }
 
-        ChoiceItem choiceItem = new ChoiceItem(choiceText, choiceObject);
-        choiceItems.add(choiceItem);
-        if (defChoice == null)
+        hashMap.put(choiceObject, choiceText);
+        if (defChoice)
         {
-            //
-            // This is the first added choice in the menu. Make it the default choice.
-            //
             chooser.addDefault(choiceText, choiceObject);
-            defChoice = choiceItem;
         }
         else
         {
@@ -168,39 +121,35 @@ public class FrcChoiceMenu<T>
     }   //addChoice
 
     /**
-     * This method returns the current selected choice item. Every menu has a current choice even if the menu hasn't
-     * been displayed and the user hasn't picked a choice. In that case, the current choice is the default selection
-     * of the menu which is the first choice in the menu. If the menu is empty, the current choice is null.
+     * This method adds a choice to the menu. The choices will be displayed in the order of them being added.
      *
-     * @return current selected choice, null if menu is empty.
+     * @param choiceText specifies the choice text that will be displayed on the dashboard.
+     * @param choiceObject specifies the object to be returned if the choice is selected.
      */
-    public ChoiceItem getCurrentChoice()
+    public void addChoice(String choiceText, T choiceObject)
     {
-        final String funcName = "getCurrentChoice";
-        ChoiceItem currChoice = null;
+        addChoice(choiceText, choiceObject, false);
+    }   //addChoice
+
+    /**
+     * This method returns the current selected choice item. Every menu has a current choice even if the user hasn't
+     * picked a choice. In that case, the current choice is the default selection of the menu.
+     *
+     * @return current selected choice object.
+     */
+    public T getCurrentChoiceObject()
+    {
+        final String funcName = "getCurrentChoiceObject";
+        T currChoiceObject = chooser.getSelected();
 
         if (debugEnabled)
         {
             dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.API);
+            dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.API, "=%s", hashMap.get(currChoiceObject));
         }
 
-        T choiceObject = chooser.getSelected();
-        for (ChoiceItem choiceItem: choiceItems)
-        {
-            if (choiceItem.getObject() == choiceObject)
-            {
-                currChoice = choiceItem;
-                break;
-            }
-        }
-
-        if (debugEnabled)
-        {
-            dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.API, "=%s", currChoice.getText());
-        }
-
-        return currChoice;
-    }   //getCurrentChoice
+        return currChoiceObject;
+    }   //getCurrentChoiceObject
 
     /**
      * This method returns the text of the current choice. Every menu has a current choice even if the menu hasn't
@@ -211,21 +160,16 @@ public class FrcChoiceMenu<T>
      */
     public String getCurrentChoiceText()
     {
-        ChoiceItem choiceItem = getCurrentChoice();
-        return choiceItem != null? choiceItem.getText(): null;
-    }   //getCurrentChoiceText
+        final String funcName = "getCurrentChoiceText";
+        String currChoiceText = hashMap.get(chooser.getSelected());
 
-    /**
-     * This method returns the object of the current choice. Every menu has a current choice even if the menu hasn't
-     * been displayed and the user hasn't picked a choice. In that case, the current choice is the default selection
-     * of the menu which is the first choice in the menu. If the menu is empty, the current choice is null.
-     *
-     * @return current choice object, null if menu is empty.
-     */
-    public T getCurrentChoiceObject()
-    {
-        ChoiceItem choiceItem = getCurrentChoice();
-        return choiceItem != null? choiceItem.getObject(): null;
-    }   //getCurrentChoiceObject
+        if (debugEnabled)
+        {
+            dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.API);
+            dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.API, "=%s", currChoiceText);
+        }
+
+        return currChoiceText;
+    }   //getCurrentChoiceText
 
 }   //class FrcChoiceMenu

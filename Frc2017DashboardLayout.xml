@@ -21,10 +21,10 @@
 	<widget field="TurnDegrees" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="0" y="725"/>
 	</widget>
-	<widget field="VisionSonarDistance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+	<widget field="VisionFarDistance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="250" y="650"/>
 	</widget>
-	<widget field="VisionTargetDistance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+	<widget field="VisionNearDistance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="250" y="675"/>
 	</widget>
 	<widget field="VisionGearDeployTime" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
@@ -42,44 +42,41 @@
 	<widget field="MidSidewallDistance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="650" y="425"/>
 	</widget>
-	<widget field="MidOppositeEndDistance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+	<widget field="MidLoadingStationDistance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="650" y="450"/>
 	</widget>
-	<widget field="MidLoadingStationAngle" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="650" y="475"/>
-	</widget>
 	<widget field="SideAirshipDistance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="650" y="525"/>
+		<location x="650" y="500"/>
 	</widget>
 	<widget field="SideLiftAngle" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="650" y="550"/>
+		<location x="650" y="525"/>
 	</widget>
 	<widget field="SideCameraSettling" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="650" y="575"/>
+		<location x="650" y="550"/>
 	</widget>
 	<widget field="SideLiftAngleIncrement" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="650" y="600"/>
+		<location x="650" y="575"/>
 	</widget>
 	<widget field="SideLiftMaxAngle" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="650" y="625"/>
+		<location x="650" y="600"/>
 	</widget>
 	<widget field="SideOrientedAirshipDistance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="650" y="650"/>
+		<location x="650" y="625"/>
 	</widget>
 	<widget field="SideLoadingStationAngle" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="650" y="675"/>
+		<location x="650" y="650"/>
 	</widget>
 	<widget field="SideLoadingStationDistance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="650" y="700"/>
+		<location x="650" y="675"/>
 	</widget>
 	<widget field="SideBaselineToLaunchpadLine" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="650" y="725"/>
+		<location x="650" y="700"/>
 	</widget>
 	<widget field="SideDiagonalAngle" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="650" y="750"/>
+		<location x="650" y="725"/>
 	</widget>
 	<widget field="SideDiagonalDistance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="650" y="775"/>
+		<location x="650" y="750"/>
 	</widget>
 	<widget field="Match Type" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
 		<location x="0" y="400"/>

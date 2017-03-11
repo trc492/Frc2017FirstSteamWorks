@@ -77,7 +77,6 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     public static final boolean USE_FRONT_PIXY = true;
     public static final boolean USE_FRONT_PIXY_UART = false;
     public static final boolean USE_REAR_PIXY = false;
-//    public static final boolean USE_PIXY_TEST = true;
 
     private static final boolean DEBUG_DRIVE_BASE = false;
     private static final boolean DEBUG_PID_DRIVE = false;
@@ -122,7 +121,6 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     public FrcFaceDetector faceDetector = null;
     public PixyVision frontPixy = null;
     public PixyVision rearPixy = null;
-//    public PixyTest testPixy = null;
 
     //
     // DriveBase subsystem.
@@ -244,10 +242,6 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
             faceDetector = new FrcFaceDetector(
                 "FaceDetector", "/home/lvuser/cascade-files/haarcascade_frontalface_alt.xml", videoIn, videoOut);
         }
-//      else if (USE_PIXY_TEST)
-//      {
-//          testPixy = new PixyTest(I2C.Port.kOnboard, RobotInfo.PIXYCAM_FRONT_I2C_ADDRESS);
-//      }
         else
         {
             if (USE_FRONT_PIXY)
@@ -351,26 +345,14 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         //
         // Populate Global Menus.
         //
-        matchTypeMenu.addChoice("Practice", MatchType.PRACTICE);
+        matchTypeMenu.addChoice("Practice", MatchType.PRACTICE, true);
         matchTypeMenu.addChoice("Qualification", MatchType.QUALIFICATION);
         matchTypeMenu.addChoice("Quater-final", MatchType.QUATER_FINAL);
         matchTypeMenu.addChoice("Semi-final", MatchType.SEMI_FINAL);
         matchTypeMenu.addChoice("Final", MatchType.FINAL);
 
-        allianceMenu.addChoice("Red", Alliance.RED_ALLIANCE);
+        allianceMenu.addChoice("Red", Alliance.RED_ALLIANCE, true);
         allianceMenu.addChoice("Blue", Alliance.BLUE_ALLIANCE);
-
-        //
-        // Retrieve Global Choices.
-        //
-        matchType = matchTypeMenu.getCurrentChoiceObject();
-        matchNumber = (int)HalDashboard.getNumber("MatchNumber", 0.0);
-        alliance = allianceMenu.getCurrentChoiceObject();
-        driveTime = HalDashboard.getNumber("DriveTime", 5.0);
-        drivePower = HalDashboard.getNumber("DrivePower", 0.2);
-        driveDistance = HalDashboard.getNumber("DriveDistance", 6.0);
-        drivePowerLimit = HalDashboard.getNumber("DrivePowerLimit", 0.5);
-        turnDegrees = HalDashboard.getNumber("TurnDegrees", 90.0);
 
         //
         // Robot Modes.
@@ -383,6 +365,17 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
 
     public void robotStartMode()
     {
+        //
+        // Retrieve Global Choices.
+        //
+        matchType = matchTypeMenu.getCurrentChoiceObject();
+        matchNumber = (int)HalDashboard.getNumber("MatchNumber", 0.0);
+        alliance = allianceMenu.getCurrentChoiceObject();
+        driveTime = HalDashboard.getNumber("DriveTime", 5.0);
+        drivePower = HalDashboard.getNumber("DrivePower", 0.2);
+        driveDistance = HalDashboard.getNumber("DriveDistance", 6.0);
+        drivePowerLimit = HalDashboard.getNumber("DrivePowerLimit", 0.5);
+        turnDegrees = HalDashboard.getNumber("TurnDegrees", 90.0);
     }   //robotStartMode
 
     public void robotStopMode()

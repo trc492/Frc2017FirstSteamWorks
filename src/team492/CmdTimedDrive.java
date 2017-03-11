@@ -44,6 +44,7 @@ class CmdTimedDrive implements TrcRobot.RobotCommand
     private double xDrivePower;
     private double yDrivePower;
     private double turnPower;
+
     private TrcEvent event;
     private TrcTimer timer;
     private TrcStateMachine<State> sm;
@@ -60,6 +61,10 @@ class CmdTimedDrive implements TrcRobot.RobotCommand
         timer = new TrcTimer(moduleName);
         sm = new TrcStateMachine<>(moduleName);
         sm.start(State.DO_DELAY);
+
+        robot.tracer.traceInfo(
+            moduleName, "delay=%.3f, time=%.1f, xPower=%.1f, yPower=%.1f, turnPower=%.1f",
+            delay, driveTime, xDrivePower, yDrivePower, turnPower);
     }   //CmdTimedDrive
 
     //
