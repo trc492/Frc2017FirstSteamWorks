@@ -26,6 +26,7 @@ import com.ctre.CANTalon;
 
 import trclib.TrcDbgTrace;
 import trclib.TrcMotorController;
+import trclib.TrcUtil;
 
 /**
  * This class implements a platform independent CANTalon motor controller. It extends the CANTalon class and
@@ -59,7 +60,7 @@ public class FrcCANTalon extends CANTalon implements TrcMotorController
     private void commonInit(final String instanceName)
     {
         this.instanceName = instanceName;
-        resetPosition();
+        resetPosition(true);
 
         if (debugEnabled)
         {
@@ -240,11 +241,8 @@ public class FrcCANTalon extends CANTalon implements TrcMotorController
     {
         final String funcName = "getPosition";
         double pos = super.getPosition();
-        
-        if (feedbackDeviceIsPot)
-        {
-            pos -= zeroPosition;
-        }
+
+        pos -= zeroPosition;
 
         if (debugEnabled)
         {
@@ -320,25 +318,45 @@ public class FrcCANTalon extends CANTalon implements TrcMotorController
     /**
      * This method resets the motor position sensor, typically an encoder. This method emulates a reset for a
      * potentiometer.
+     *
+     * @param hardware specifies true for resetting hardware position, false for resetting software position.
      */
-    public void resetPosition()
+    public void resetPosition(boolean hardware)
     {
         final String funcName = "resetPosition";
 
         if (debugEnabled)
         {
-            dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.API);
+            dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.API, "hardware=%s", Boolean.toString(hardware));
             dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.API);
         }
 
-        if (feedbackDeviceIsPot)
+        if (feedbackDeviceIsPot || !hardware)
         {
+            //
+            // Potentiometer has no hardware position to reset. So clear the software one.
+            //
             zeroPosition = super.getPosition();
         }
-        else
+        else if (hardware)
         {
             super.setPosition(0.0);
+            while (super.getPosition() != 0.0)
+            {
+                System.out.printf("[%.3f] ***pos=%d\n", TrcUtil.getCurrentTime(), super.getPosition());
+                Thread.yield();
+            }
+            zeroPosition = 0.0;
         }
+    }   //resetPosition
+
+    /**
+     * This method resets the motor position sensor, typically an encoder. This method emulates a reset for a
+     * potentiometer.
+     */
+    public void resetPosition()
+    {
+        resetPosition(false);
     }   //resetPosition
 
     /**
