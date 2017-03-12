@@ -21,6 +21,12 @@
 	<widget field="TurnDegrees" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="0" y="725"/>
 	</widget>
+	<widget field="ultrasonicTarget" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="750"/>
+	</widget>
+	<widget field="visionAngleTarget" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="775"/>
+	</widget>
 	<widget field="VisionFarDistance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="250" y="650"/>
 	</widget>

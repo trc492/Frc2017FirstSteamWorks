@@ -26,7 +26,6 @@ import com.ctre.CANTalon;
 
 import trclib.TrcDbgTrace;
 import trclib.TrcMotorController;
-import trclib.TrcUtil;
 
 /**
  * This class implements a platform independent CANTalon motor controller. It extends the CANTalon class and

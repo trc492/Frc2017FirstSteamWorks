@@ -166,6 +166,8 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     public double driveDistance;
     public double drivePowerLimit;
     public double turnDegrees;
+    public double ultrasonicTarget;
+    public double visionAngleTarget;
 
     //
     // Robot Modes.
@@ -395,6 +397,8 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         driveDistance = HalDashboard.getNumber("DriveDistance", 6.0);
         drivePowerLimit = HalDashboard.getNumber("DrivePowerLimit", 0.5);
         turnDegrees = HalDashboard.getNumber("TurnDegrees", 90.0);
+        ultrasonicTarget = HalDashboard.getNumber("UltrasonicTarget", 12.0);
+        visionAngleTarget = HalDashboard.getNumber("VisionAngleTarget", 0.0);
     }   //robotStartMode
 
     public void robotStopMode()

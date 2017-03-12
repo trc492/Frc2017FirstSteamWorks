@@ -41,6 +41,7 @@ public class FrcTest extends FrcTeleOp
         X_DISTANCE_DRIVE,
         Y_DISTANCE_DRIVE,
         TURN_DEGREES,
+        VISION_DRIVE,
         LIVE_WINDOW
     }   //enum Test
 
@@ -62,6 +63,7 @@ public class FrcTest extends FrcTeleOp
 
     private CmdTimedDrive timedDriveCommand = null;
     private CmdPidDrive pidDriveCommand = null;
+    private CmdVisionPidDrive visionPidDriveCommand = null;
 
     private int motorIndex = 0;
 
@@ -86,6 +88,7 @@ public class FrcTest extends FrcTeleOp
         testMenu.addChoice("X Distance Drive", FrcTest.Test.X_DISTANCE_DRIVE, false);
         testMenu.addChoice("Y Distance Drive", FrcTest.Test.Y_DISTANCE_DRIVE, false);
         testMenu.addChoice("Turn Degrees", FrcTest.Test.TURN_DEGREES, false);
+        testMenu.addChoice("Vision Drive", FrcTest.Test.VISION_DRIVE, false);
         testMenu.addChoice("Live Window", FrcTest.Test.LIVE_WINDOW, false);
      }   //FrcTest
 
@@ -132,6 +135,11 @@ public class FrcTest extends FrcTeleOp
 
             case TURN_DEGREES:
                 pidDriveCommand = new CmdPidDrive(robot, 0.0, 0.0, 0.0, robot.turnDegrees, robot.drivePowerLimit);
+                break;
+
+            case VISION_DRIVE:
+                visionPidDriveCommand = new CmdVisionPidDrive(
+                    robot, 0.0, robot.ultrasonicTarget, robot.visionAngleTarget, robot.drivePowerLimit);
                 break;
 
             case LIVE_WINDOW:
@@ -231,6 +239,22 @@ public class FrcTest extends FrcTeleOp
                     {
                         robot.gyroTurnPidCtrl.printPidInfo(robot.tracer);
                     }
+                }
+                break;
+
+            case VISION_DRIVE:
+                robot.dashboard.displayPrintf(2, "xPos=%.1f,yPos=%.1f,heading=%.1f",
+                    robot.getInput(robot.encoderXPidCtrl), robot.getInput(robot.encoderYPidCtrl),
+                    robot.getInput(robot.gyroTurnPidCtrl));
+                robot.encoderXPidCtrl.displayPidInfo(3);
+                robot.sonarDrivePidCtrl.displayPidInfo(5);
+                robot.visionTurnPidCtrl.displayPidInfo(7);
+
+                if (!visionPidDriveCommand.cmdPeriodic(elapsedTime))
+                {
+                    robot.encoderXPidCtrl.printPidInfo(robot.tracer);
+                    robot.sonarDrivePidCtrl.printPidInfo(robot.tracer);
+                    robot.visionTurnPidCtrl.printPidInfo(robot.tracer);
                 }
                 break;
 
