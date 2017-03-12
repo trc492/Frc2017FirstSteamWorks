@@ -141,7 +141,6 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     public TrcPidController sonarDrivePidCtrl;
     public TrcPidController visionTurnPidCtrl;
     public TrcPidDrive visionPidDrive;
-    public double lastTargetAngle = 0.0;
 
     //
     // Define our subsystems for Auto and TeleOp modes.
@@ -729,15 +728,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         else if (pidCtrl == visionTurnPidCtrl)
         {
             TargetInfo targetInfo = frontPixy.getTargetInfo();
-            if (targetInfo != null)
-            {
-                value = targetInfo.angle;
-                lastTargetAngle = value;
-            }
-            else
-            {
-                value = lastTargetAngle;
-            }
+            value = targetInfo != null? targetInfo.angle: 0.0;
         }
 
         return value;
