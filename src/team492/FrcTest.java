@@ -259,6 +259,17 @@ public class FrcTest extends FrcTeleOp
         robot.dashboard.displayPrintf(6, "GearPickup: gear=%s", robot.gearPickup.gearDetected());
         robot.dashboard.displayPrintf(7, "PressureSensor: pressure=%.1f", robot.getPressure());
         robot.dashboard.displayPrintf(8, "Ultrasonic=%.1f inches", robot.getUltrasonicDistance());
+        if (robot.frontPixy != null && robot.frontPixy.isEnabled())
+        {
+            PixyVision.TargetInfo targetInfo = robot.frontPixy.getTargetInfo();
+            if (targetInfo != null)
+            {
+                robot.dashboard.displayPrintf(14, "x=%d, y=%d, width=%d, height=%d",
+                    targetInfo.rect.x, targetInfo.rect.y, targetInfo.rect.width, targetInfo.rect.height);
+                robot.dashboard.displayPrintf(15, "xDistance=%.1f, yDistance=%.1f, angle=%.1f",
+                    targetInfo.xDistance, targetInfo.yDistance, targetInfo.angle);
+            }
+        }
     }   //doSensorsTest
 
     /**

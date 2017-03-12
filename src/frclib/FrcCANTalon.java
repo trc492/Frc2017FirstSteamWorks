@@ -343,7 +343,6 @@ public class FrcCANTalon extends CANTalon implements TrcMotorController
             super.setPosition(0.0);
             while (super.getPosition() != 0.0)
             {
-                System.out.printf("[%.3f] ***pos=%d\n", TrcUtil.getCurrentTime(), super.getPosition());
                 Thread.yield();
             }
             zeroPosition = 0.0;

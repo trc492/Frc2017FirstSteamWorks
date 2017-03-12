@@ -649,21 +649,24 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
                 }
             }
 
-            if (frontPixy != null && frontPixy.isEnabled())
+            if (DEBUG_PIXY_VISION)
             {
-                PixyVision.TargetInfo targetInfo = frontPixy.getTargetInfo();
-                if (targetInfo != null)
+                if (frontPixy != null && frontPixy.isEnabled())
                 {
-                    dashboard.displayPrintf(8, "x=%d, y=%d, width=%d, height=%d",
-                        targetInfo.rect.x, targetInfo.rect.y, targetInfo.rect.width, targetInfo.rect.height);
-                    dashboard.displayPrintf(9, "xDistance=%.1f, yDistance=%.1f, angle=%.1f",
-                        targetInfo.xDistance, targetInfo.yDistance, targetInfo.angle);
-                    if (DEBUG_PIXY_VISION)
+                    PixyVision.TargetInfo targetInfo = frontPixy.getTargetInfo();
+                    if (targetInfo != null)
                     {
-                        tracer.traceInfo(
-                            "PixyVision", "x=%d, y=%d, width=%d, height=%d, xDistance=%.1f, yDistance=%.1f, angle=%.1f",
-                            targetInfo.rect.x, targetInfo.rect.y, targetInfo.rect.width, targetInfo.rect.height,
+                        dashboard.displayPrintf(14, "x=%d, y=%d, width=%d, height=%d",
+                            targetInfo.rect.x, targetInfo.rect.y, targetInfo.rect.width, targetInfo.rect.height);
+                        dashboard.displayPrintf(15, "xDistance=%.1f, yDistance=%.1f, angle=%.1f",
                             targetInfo.xDistance, targetInfo.yDistance, targetInfo.angle);
+                        if (DEBUG_PIXY_VISION)
+                        {
+                            tracer.traceInfo(
+                                "PixyVision", "x=%d, y=%d, width=%d, height=%d, xDistance=%.1f, yDistance=%.1f, angle=%.1f",
+                                targetInfo.rect.x, targetInfo.rect.y, targetInfo.rect.width, targetInfo.rect.height,
+                                targetInfo.xDistance, targetInfo.yDistance, targetInfo.angle);
+                        }
                     }
                 }
             }
