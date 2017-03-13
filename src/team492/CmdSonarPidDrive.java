@@ -27,7 +27,7 @@ import trclib.TrcRobot;
 import trclib.TrcStateMachine;
 import trclib.TrcTimer;
 
-class CmdPidDrive implements TrcRobot.RobotCommand
+class CmdSonarPidDrive implements TrcRobot.RobotCommand
 {
     private static enum State
     {
@@ -36,36 +36,32 @@ class CmdPidDrive implements TrcRobot.RobotCommand
         DONE
     }   //enum State
 
-    private static final String moduleName = "CmdPidDrive";
+    private static final String moduleName = "CmdSonarPidDrive";
 
     private Robot robot;
     private double delay;
 
-    private double xDistance;
-    private double yDistance;
-    private double heading;
+    private double targetDistance;
     private double drivePowerLimit;
 
     private TrcEvent event;
     private TrcTimer timer;
     private TrcStateMachine<State> sm;
 
-    CmdPidDrive(Robot robot, double delay, double xDistance, double yDistance, double heading, double drivePowerLimit)
+    CmdSonarPidDrive(Robot robot, double delay, double targetDistance, double drivePowerLimit)
     {
         this.robot = robot;
         this.delay = delay;
-        this.xDistance = xDistance;
-        this.yDistance = yDistance;
-        this.heading = heading;
+        this.targetDistance = targetDistance;
         this.drivePowerLimit = drivePowerLimit;
         event = new TrcEvent(moduleName);
         timer = new TrcTimer(moduleName);
         sm = new TrcStateMachine<>(moduleName);
         sm.start(State.DO_DELAY);
 
-        robot.tracer.traceInfo(moduleName, "delay=%.3f, xDist=%.1f, yDist=%.1f, heading=%.1f, powerLimit=%.1f",
-            delay, xDistance, yDistance, heading, drivePowerLimit);
-    }   //CmdPidDrive
+        robot.tracer.traceInfo(moduleName, "delay=%.3f, dist=%.1f, powerLimit=%.1f",
+            delay, targetDistance, drivePowerLimit);
+    }   //CmdSonarPidDrive
 
     //
     // Implements the TrcRobot.RobotCommand interface.
@@ -106,10 +102,8 @@ class CmdPidDrive implements TrcRobot.RobotCommand
                     //
                     // Drive the set distance and heading.
                     //
-                    robot.encoderXPidCtrl.setOutputRange(-drivePowerLimit, drivePowerLimit);
-                    robot.encoderYPidCtrl.setOutputRange(-drivePowerLimit, drivePowerLimit);
-                    robot.gyroTurnPidCtrl.setOutputRange(-drivePowerLimit, drivePowerLimit);
-                    robot.pidDrive.setTarget(xDistance, yDistance, heading, false, event);
+                    robot.sonarDrivePidCtrl.setOutputRange(-drivePowerLimit, drivePowerLimit);
+                    robot.sonarPidDrive.setTarget(0.0, targetDistance, 0.0, false, event);
                     sm.waitForSingleEvent(event, State.DONE);
                     break;
 
@@ -118,9 +112,7 @@ class CmdPidDrive implements TrcRobot.RobotCommand
                     //
                     // We are done.
                     //
-                    robot.encoderXPidCtrl.setOutputRange(-1.0, 1.0);
-                    robot.encoderYPidCtrl.setOutputRange(-1.0, 1.0);
-                    robot.gyroTurnPidCtrl.setOutputRange(-1.0, 1.0);
+                    robot.sonarDrivePidCtrl.setOutputRange(-1.0, 1.0);
                     done = true;
                     sm.stop();
                     break;
@@ -132,4 +124,4 @@ class CmdPidDrive implements TrcRobot.RobotCommand
         return done;
     }   //cmdPeriodic
 
-}   //class CmdPidDrive
+}   //class CmdSonarPidDrive

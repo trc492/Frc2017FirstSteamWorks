@@ -1,5 +1,4 @@
 /*
- * Copyright (c) 2017 Titan Robotics Club (http://www.titanrobotics.com)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -42,6 +41,8 @@ public class FrcTest extends FrcTeleOp
         Y_DISTANCE_DRIVE,
         TURN_DEGREES,
         VISION_DRIVE,
+        SONAR_DRIVE,
+        VISION_TURN,
         LIVE_WINDOW
     }   //enum Test
 
@@ -64,6 +65,8 @@ public class FrcTest extends FrcTeleOp
     private CmdTimedDrive timedDriveCommand = null;
     private CmdPidDrive pidDriveCommand = null;
     private CmdVisionPidDrive visionPidDriveCommand = null;
+    private CmdSonarPidDrive sonarPidDriveCommand = null;
+    private CmdVisionPidTurn visionPidTurnCommand = null;
 
     private int motorIndex = 0;
 
@@ -89,6 +92,8 @@ public class FrcTest extends FrcTeleOp
         testMenu.addChoice("Y Distance Drive", FrcTest.Test.Y_DISTANCE_DRIVE, false);
         testMenu.addChoice("Turn Degrees", FrcTest.Test.TURN_DEGREES, false);
         testMenu.addChoice("Vision Drive", FrcTest.Test.VISION_DRIVE, false);
+        testMenu.addChoice("Sonar Drive", FrcTest.Test.SONAR_DRIVE, false);
+        testMenu.addChoice("Vision Turn", FrcTest.Test.VISION_TURN, false);
         testMenu.addChoice("Live Window", FrcTest.Test.LIVE_WINDOW, false);
      }   //FrcTest
 
@@ -99,7 +104,7 @@ public class FrcTest extends FrcTeleOp
     @Override
     public void startMode()
     {
-        if (Robot.USE_TRACELOG) robot.startTraceLog();
+        if (Robot.USE_TRACELOG) robot.startTraceLog(false);
         //
         // Call TeleOp startMode.
         //
@@ -139,7 +144,16 @@ public class FrcTest extends FrcTeleOp
 
             case VISION_DRIVE:
                 visionPidDriveCommand = new CmdVisionPidDrive(
-                    robot, 0.0, robot.ultrasonicTarget, robot.visionAngleTarget, robot.drivePowerLimit);
+                    robot, 0.0, robot.ultrasonicTarget, robot.visionTurnTarget, robot.drivePowerLimit);
+                break;
+
+            case SONAR_DRIVE:
+                sonarPidDriveCommand = new CmdSonarPidDrive(
+                    robot, 0.0, robot.ultrasonicTarget, robot.drivePowerLimit);
+                break;
+
+            case VISION_TURN:
+                visionPidTurnCommand = new CmdVisionPidTurn(robot, 0.0, 0.0, robot.drivePowerLimit);
                 break;
 
             case LIVE_WINDOW:
@@ -196,9 +210,6 @@ public class FrcTest extends FrcTeleOp
     @Override
     public void runContinuous(double elapsedTime)
     {
-        State state = sm.getState();
-        robot.dashboard.displayPrintf(1, "%s: %s", test.toString(), state != null? state.toString(): "STOPPED!");
-
         switch (test)
         {
             case X_TIMED_DRIVE:
@@ -258,6 +269,30 @@ public class FrcTest extends FrcTeleOp
                 }
                 break;
 
+            case SONAR_DRIVE:
+                robot.dashboard.displayPrintf(2, "xPos=%.1f,yPos=%.1f,heading=%.1f",
+                    robot.getInput(robot.encoderXPidCtrl), robot.getInput(robot.encoderYPidCtrl),
+                    robot.getInput(robot.gyroTurnPidCtrl));
+                robot.sonarDrivePidCtrl.displayPidInfo(3);
+
+                if (!sonarPidDriveCommand.cmdPeriodic(elapsedTime))
+                {
+                    robot.sonarDrivePidCtrl.printPidInfo(robot.tracer);
+                }
+                break;
+
+            case VISION_TURN:
+                robot.dashboard.displayPrintf(2, "xPos=%.1f,yPos=%.1f,heading=%.1f",
+                    robot.getInput(robot.encoderXPidCtrl), robot.getInput(robot.encoderYPidCtrl),
+                    robot.getInput(robot.gyroTurnPidCtrl));
+                robot.visionTurnPidCtrl.displayPidInfo(3);
+
+                if (!visionPidTurnCommand.cmdPeriodic(elapsedTime))
+                {
+                    robot.visionTurnPidCtrl.printPidInfo(robot.tracer);
+                }
+                break;
+
             default:
                 break;
         }
@@ -270,6 +305,7 @@ public class FrcTest extends FrcTeleOp
      */
     private void doSensorsTest()
     {
+        robot.dashboard.displayPrintf(1, "Sensors Test:");
         robot.dashboard.displayPrintf(2, "DriveBase: lf=%.0f, rf=%.0f, lr=%.0f, rr=%.0f",
             robot.leftFrontWheel.getPosition(), robot.rightFrontWheel.getPosition(),
             robot.leftRearWheel.getPosition(), robot.rightRearWheel.getPosition());

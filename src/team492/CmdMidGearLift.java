@@ -35,9 +35,9 @@ class CmdMidGearLift implements TrcRobot.RobotCommand
         DO_DELAY,
         GO_TO_MID_LIFT,
         VISION_GEAR_DEPLOY,
-        TURN_TO_SIDEWALL,
+//        TURN_TO_SIDEWALL,
         GO_TO_SIDEWALL,
-        TURN_TO_LOADING_STATION,
+//        TURN_TO_LOADING_STATION,
         GO_TO_LOADING_STATION,
         DONE
     }   //enum State
@@ -48,7 +48,7 @@ class CmdMidGearLift implements TrcRobot.RobotCommand
     private double delay;
 
     private double midLiftDistance;
-    private double midSidewallAngle;
+//    private double midSidewallAngle;
     private double midSidewallDistance;
     private double midLoadingStationDistance;
 
@@ -66,11 +66,9 @@ class CmdMidGearLift implements TrcRobot.RobotCommand
         // Get parameters from the SmartDashboard. 
         //
 
-        // approx. 33.3 inches.
         midLiftDistance = HalDashboard.getNumber("MidLiftDistance", 36.0);
-        midSidewallAngle = Math.abs(HalDashboard.getNumber("MidSidewallAngle", 90));
-        // approx. 80 inches.
-        midSidewallDistance = HalDashboard.getNumber("MidSidewallDistance", 72.0);//RobotInfo.FIELD_AIRSHIP_PANEL_WIDTH*2.0);
+//        midSidewallAngle = Math.abs(HalDashboard.getNumber("MidSidewallAngle", 90));
+        midSidewallDistance = Math.abs(HalDashboard.getNumber("MidSidewallDistance", 84.0));
         midLoadingStationDistance = HalDashboard.getNumber("MidLoadingStationDistance", 33.0*12.0);
 
         cmdVisionDeploy = new CmdVisionGearDeploy(robot);
@@ -82,9 +80,8 @@ class CmdMidGearLift implements TrcRobot.RobotCommand
 
         robot.tracer.traceInfo(
             moduleName,
-            "delay=%.3f, alliance=%s, liftDist=%.1f, swAngle=%.1f, swDist=%.1f, lsEndDist=%.1f",
-            delay, robot.alliance.toString(), midLiftDistance, midSidewallAngle, midSidewallDistance,
-            midLoadingStationDistance);
+            "delay=%.3f, alliance=%s, liftDist=%.1f, swDist=%.1f, lsEndDist=%.1f",
+            delay, robot.alliance.toString(), midLiftDistance, midSidewallDistance, midLoadingStationDistance);
     }   //CmdMidGearLift
 
     @Override
@@ -127,7 +124,7 @@ class CmdMidGearLift implements TrcRobot.RobotCommand
                     xDistance = 0.0;
                     yDistance = midLiftDistance;
 
-                    robot.setPidDriveTarget(xDistance, yDistance, robot.targetHeading, false, event);
+                    robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
                     sm.waitForSingleEvent(event, State.VISION_GEAR_DEPLOY);
                     break;
 
@@ -138,53 +135,56 @@ class CmdMidGearLift implements TrcRobot.RobotCommand
                     printStateInfo = false;
                     if (cmdVisionDeploy.cmdPeriodic(elapsedTime))
                     {
-                        sm.setState(State.TURN_TO_SIDEWALL);
+                        sm.setState(State.GO_TO_SIDEWALL);
                     }
                     break;
 
-                case TURN_TO_SIDEWALL:
-                    //
-                    // Turn towards the loading station side wall.
-                    //
-                    xDistance = yDistance = 0.0;
-                    robot.targetHeading =
-                        robot.alliance == Robot.Alliance.RED_ALLIANCE? -midSidewallAngle: midSidewallAngle; 
-
-                    robot.setPidDriveTarget(xDistance, yDistance, robot.targetHeading, false, event);
-                    sm.waitForSingleEvent(event, State.GO_TO_SIDEWALL);
-                    break;
-
+//                case TURN_TO_SIDEWALL:
+//                    //
+//                    // Turn towards the loading station side wall.
+//                    //
+//                    xDistance = yDistance = 0.0;
+//                    robot.targetHeading =
+//                        robot.alliance == Robot.Alliance.RED_ALLIANCE? -midSidewallAngle: midSidewallAngle; 
+//
+//                    robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
+////                    robot.setPidDriveTarget(xDistance, yDistance, robot.targetHeading, false, event);
+//                    sm.waitForSingleEvent(event, State.GO_TO_SIDEWALL);
+//                    break;
+//
                 case GO_TO_SIDEWALL:
                     //
                     // Move towards the loading station side wall.
                     //
-                    xDistance = 0.0;
-                    yDistance = midSidewallDistance;
+                    xDistance = robot.alliance == Robot.Alliance.RED_ALLIANCE?
+                        -midSidewallDistance: midSidewallDistance;
+                    yDistance = 0.0;
 
-//                    robot.encoderYPidCtrl.setOutputRange(-1.0, 1.0);
-                    robot.setPidDriveTarget(xDistance, yDistance, robot.targetHeading, false, event);
-                    sm.waitForSingleEvent(event, State.TURN_TO_LOADING_STATION);
-                    break;
-
-                case TURN_TO_LOADING_STATION:
-                    //
-                    // Turn heading the opposite end.
-                    //
-                    xDistance = yDistance = 0.0;
-                    robot.targetHeading = 0.0;
-
-                    robot.setPidDriveTarget(xDistance, yDistance, robot.targetHeading, false, event);
+                    robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
                     sm.waitForSingleEvent(event, State.GO_TO_LOADING_STATION);
                     break;
 
+//                case TURN_TO_LOADING_STATION:
+//                    //
+//                    // Turn heading the opposite end.
+//                    //
+//                    xDistance = yDistance = 0.0;
+//                    robot.targetHeading = 0.0;
+//
+////                    robot.setPidDriveTarget(xDistance, yDistance, robot.targetHeading, false, event);
+//                    robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
+//                    sm.waitForSingleEvent(event, State.GO_TO_LOADING_STATION);
+//                    break;
+//
                 case GO_TO_LOADING_STATION:
                     //
-                    // Move towards the opposite end.
+                    // Move towards the loading station. 
                     //
                     xDistance = 0.0;
                     yDistance = midLoadingStationDistance;
 
-                    robot.setPidDriveTarget(xDistance, yDistance, robot.targetHeading, false, event);
+//                  robot.encoderYPidCtrl.setOutputRange(-1.0, 1.0);
+                    robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
                     sm.waitForSingleEvent(event, State.DONE);
                     break;
 

@@ -104,10 +104,9 @@ class CmdVisionPidDrive implements TrcRobot.RobotCommand
                     //
                     // Drive the set distance and heading.
                     //
-                    robot.encoderXPidCtrl.setOutputRange(-drivePowerLimit, drivePowerLimit);
                     robot.sonarDrivePidCtrl.setOutputRange(-drivePowerLimit, drivePowerLimit);
                     robot.visionTurnPidCtrl.setOutputRange(-drivePowerLimit, drivePowerLimit);
-                    robot.setVisionPidDriveTarget(0.0, targetDistance, targetAngle, false, event);
+                    robot.visionPidDrive.setTarget(0.0, targetDistance, targetAngle, false, event);
                     sm.waitForSingleEvent(event, State.DONE);
                     break;
 
@@ -116,7 +115,6 @@ class CmdVisionPidDrive implements TrcRobot.RobotCommand
                     //
                     // We are done.
                     //
-                    robot.encoderXPidCtrl.setOutputRange(-1.0, 1.0);
                     robot.sonarDrivePidCtrl.setOutputRange(-1.0, 1.0);
                     robot.visionTurnPidCtrl.setOutputRange(-1.0, 1.0);
                     done = true;

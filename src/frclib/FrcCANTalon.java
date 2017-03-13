@@ -320,6 +320,7 @@ public class FrcCANTalon extends CANTalon implements TrcMotorController
      *
      * @param hardware specifies true for resetting hardware position, false for resetting software position.
      */
+    @Override
     public void resetPosition(boolean hardware)
     {
         final String funcName = "resetPosition";
@@ -365,6 +366,7 @@ public class FrcCANTalon extends CANTalon implements TrcMotorController
      *
      * @param enabled specifies true to enable brake mode, false otherwise.
      */
+    @Override
     public void setBrakeModeEnabled(boolean enabled)
     {
         final String funcName = "setBrakeModeEnabled";
@@ -383,6 +385,7 @@ public class FrcCANTalon extends CANTalon implements TrcMotorController
      *
      * @param power specifies the output power for the motor controller in the range of -1.0 to 1.0.
      */
+    @Override
     public void setPower(double power)
     {
         final String funcName = "setPower";
@@ -414,6 +417,7 @@ public class FrcCANTalon extends CANTalon implements TrcMotorController
      *
      * @param inverted specifies true to invert position sensor direction, false otherwise.
      */
+    @Override
     public void setPositionSensorInverted(boolean inverted)
     {
         final String funcName = "setPositionSensorInverted";
@@ -433,6 +437,7 @@ public class FrcCANTalon extends CANTalon implements TrcMotorController
      * @param lowerLimitEnabled specifies true to enable lower soft limit switch, false otherwise.
      * @param upperLimitEnabled specifies true to enable upper soft limit switch, false otherwise.
      */
+    @Override
     public void setSoftLimitEnabled(boolean lowerLimitEnabled, boolean upperLimitEnabled)
     {
         final String funcName = "setSoftLimitEnabled";
@@ -453,6 +458,7 @@ public class FrcCANTalon extends CANTalon implements TrcMotorController
      *
      * @param position specifies the position of the lower limit.
      */
+    @Override
     public void setSoftLowerLimit(double position)
     {
         final String funcName = "setSoftLowerLimit";
@@ -471,6 +477,7 @@ public class FrcCANTalon extends CANTalon implements TrcMotorController
      *
      * @param position specifies the position of the upper limit.
      */
+    @Override
     public void setSoftUpperLimit(double position)
     {
         final String funcName = "setSoftUpperLimit";

@@ -46,8 +46,8 @@ public class GripVision extends FrcVisionTarget
     private static final TrcDbgTrace.MsgLevel msgLevel = TrcDbgTrace.MsgLevel.INFO;
     private TrcDbgTrace dbgTrace = null;
 
+    private TrcDbgTrace tracer = FrcRobotBase.getGlobalTracer();
     private GripPipeline pipeline;
-    private TrcDbgTrace tracer;
 
     public GripVision(final String instanceName, CvSink videoIn, CvSource videoOut)
     {
@@ -59,7 +59,6 @@ public class GripVision extends FrcVisionTarget
         }
 
         pipeline = new GripPipeline();
-        tracer = FrcRobotBase.getGlobalTracer();
     }   //GripVision
 
     public Rect getTargetRect()

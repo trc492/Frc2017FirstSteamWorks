@@ -77,7 +77,10 @@ public class PixyVision
     }   //enum Orientation
 
     private static final double PIXY_DISTANCE_SCALE = 2300.0;   //DistanceInInches*targetWidthdInPixels
+//    private static final double TAPE_WIDTH_INCHES = 2.0;
+    private static final double TAPE_HEIGHT_INCHES = 5.0;
     private static final double TARGET_WIDTH_INCHES = 10.0;
+    private static final double TARGET_HEIGHT_INCHES = TAPE_HEIGHT_INCHES;
 
     private FrcPixyCam pixyCamera;
     private Robot robot;
@@ -209,8 +212,10 @@ public class PixyVision
                 //
 //                if (objectList.size() >= 2)
 //                {
-//                    double expectedWidth = PIXY_DISTANCE_SCALE/targetDistance/5.0;
-//                    double expectedHeight = PIXY_DISTANCE_SCALE/targetDistance/2.0;
+//                    double expectedWidth =
+//                        (PIXY_DISTANCE_SCALE/targetDistance)/(TAPE_WIDTH_INCHES/TARGET_WIDTH_INCHES);
+//                    double expectedHeight =
+//                        (PIXY_DISTANCE_SCALE/targetDistance)/(TAPE_HEIGHT_INCHES/TARGET_WIDTH_INCHES);
 //
 //                    if (debugEnabled)
 //                    {
@@ -245,10 +250,10 @@ public class PixyVision
                 // For all remaining objects, pair them in all combinations and find the first pair that matches the
                 // expected size and aspect ratio.
                 //
-                if (objectList.size() >= 2)
+                if (objectList.size() > 2)
                 {
                     double expectedWidth = PIXY_DISTANCE_SCALE/targetDistance;
-                    double expectedHeight = PIXY_DISTANCE_SCALE/targetDistance/2.0;
+                    double expectedHeight = expectedWidth*TARGET_HEIGHT_INCHES/TARGET_WIDTH_INCHES;
 
                     if (debugEnabled)
                     {
@@ -287,7 +292,8 @@ public class PixyVision
                     }
                 }
             }
-            else if (objectList.size() >= 2)
+
+            if (targetRect == null && objectList.size() >= 2)
             {
                 Rect r1 = objectList.get(0);
                 Rect r2 = objectList.get(1);
@@ -340,7 +346,7 @@ public class PixyVision
             //
             double targetCenterX = targetRect.x + targetRect.width/2.0;
             double targetXDistance = (targetCenterX - RobotInfo.PIXYCAM_WIDTH/2.0)*TARGET_WIDTH_INCHES/targetRect.width;
-            double targetYDistance = PIXY_DISTANCE_SCALE/targetRect.width; 
+            double targetYDistance = PIXY_DISTANCE_SCALE/targetRect.width;
             double targetAngle = Math.toDegrees(Math.atan(targetXDistance/targetYDistance));
             targetInfo = new TargetInfo(targetRect, targetXDistance, targetYDistance, targetAngle);
 

@@ -86,7 +86,7 @@ public class FrcAuto implements TrcRobot.RobotMode
     {
         HalDashboard.getInstance().clearDisplay();
 
-        if (Robot.USE_TRACELOG) robot.startTraceLog();
+        if (Robot.USE_TRACELOG) robot.startTraceLog(true);
 
         Date now = new Date();
         robot.tracer.traceInfo(Robot.programName, "%s: ***** Starting autonomous *****", now.toString());
@@ -154,6 +154,8 @@ public class FrcAuto implements TrcRobot.RobotMode
         robot.gyroTurnPidCtrl.setOutputRange(-0.5, 0.5);
         robot.sonarDrivePidCtrl.setOutputRange(-0.5, 0.5);
         robot.visionTurnPidCtrl.setOutputRange(-0.5, 0.5);
+        robot.pidDrive.setStallTimeout(RobotInfo.DRIVE_STALL_TIMEOUT);
+        robot.visionPidDrive.setStallTimeout(RobotInfo.DRIVE_STALL_TIMEOUT);
     }   //startMode
 
     @Override
