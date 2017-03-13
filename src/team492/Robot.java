@@ -88,11 +88,11 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
 
     public static enum MatchType
     {
-        PRACTICE,
-        QUALIFICATION,
-        QUATER_FINAL,
-        SEMI_FINAL,
-        FINAL
+        Practice,
+        Qualification,
+        QuarterFinal,
+        SemiFinal,
+        Final
     }   //enum MatchType
 
     public static enum Alliance
@@ -369,11 +369,11 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         //
         // Populate Global Menus.
         //
-        matchTypeMenu.addChoice("Practice", MatchType.PRACTICE, true);
-        matchTypeMenu.addChoice("Qualification", MatchType.QUALIFICATION, false);
-        matchTypeMenu.addChoice("Quater-final", MatchType.QUATER_FINAL, false);
-        matchTypeMenu.addChoice("Semi-final", MatchType.SEMI_FINAL, false);
-        matchTypeMenu.addChoice("Final", MatchType.FINAL, false);
+        matchTypeMenu.addChoice("Practice", MatchType.Practice, true);
+        matchTypeMenu.addChoice("Qualification", MatchType.Qualification, false);
+        matchTypeMenu.addChoice("Quater-final", MatchType.QuarterFinal, false);
+        matchTypeMenu.addChoice("Semi-final", MatchType.SemiFinal, false);
+        matchTypeMenu.addChoice("Final", MatchType.Final, false);
 
         allianceMenu.addChoice("Red", Alliance.RED_ALLIANCE, true);
         allianceMenu.addChoice("Blue", Alliance.BLUE_ALLIANCE, false);
@@ -680,10 +680,10 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         }
     }   //updateDashboard
 
-    public void startTraceLog(boolean autonomous)
+    public void startTraceLog(String prefix)
     {
-        String filePrefix = autonomous? matchType.toString(): "TEST";
-        if (autonomous && matchType != MatchType.PRACTICE) filePrefix += matchNumber;
+        String filePrefix = prefix != null? prefix: matchType.toString();
+        if (prefix == null && matchType != MatchType.Practice) filePrefix += String.format("%02d", matchNumber);
         tracer.openTraceLog("/home/lvuser/tracelog", filePrefix);
     }   //startTraceLog
 
