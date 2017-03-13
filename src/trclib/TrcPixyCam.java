@@ -142,6 +142,17 @@ public abstract class TrcPixyCam implements TrcSerialBusDevice.CompletionHandler
         }
 
         this.instanceName = instanceName;
+        //
+        // Start by queuing the initial read request.
+        //
+        if (!USE_BYTE_TRANSACTION)
+        {
+            asyncReadData(RequestTag.SYNC, 2);
+        }
+        else
+        {
+            asyncReadData(RequestTag.SYNC_LOW, 1);
+        }
     }   //TrcPixyCam
 
     /**
@@ -153,21 +164,6 @@ public abstract class TrcPixyCam implements TrcSerialBusDevice.CompletionHandler
     {
         return instanceName;
     }   //toString
-
-    /**
-     * This method starts the pixy camera by sending the initial read request.
-     */
-    public void start()
-    {
-        if (!USE_BYTE_TRANSACTION)
-        {
-            asyncReadData(RequestTag.SYNC, 2);
-        }
-        else
-        {
-            asyncReadData(RequestTag.SYNC_LOW, 1);
-        }
-    }   //start
 
     /**
      * This method writes the data to the device one byte at a time.
