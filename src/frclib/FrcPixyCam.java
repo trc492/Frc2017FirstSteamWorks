@@ -71,6 +71,7 @@ public class FrcPixyCam extends TrcPixyCam
         }
 
         pixyCam = new FrcI2cDevice(instanceName, port, devAddress);
+        start();
     }   //FrcPixyCam
 
     /**
@@ -106,6 +107,7 @@ public class FrcPixyCam extends TrcPixyCam
         }
 
         pixyCam = new FrcSerialPortDevice(instanceName, port, baudRate, dataBits, parity, stopBits);
+        start();
     }   //FrcPixyCam
 
     /**
