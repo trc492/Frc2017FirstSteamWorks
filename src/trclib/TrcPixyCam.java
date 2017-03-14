@@ -128,6 +128,7 @@ public abstract class TrcPixyCam implements TrcSerialBusDevice.CompletionHandler
     private ObjectBlock currBlock = null;
     private Object objectLock = new Object();
     private int runningChecksum = 0;
+    private boolean started = false;
 
     /**
      * Constructor: Create an instance of the object.
@@ -155,17 +156,21 @@ public abstract class TrcPixyCam implements TrcSerialBusDevice.CompletionHandler
     }   //toString
 
     /**
-     * This method starts the pixy camera by queuing the initial read request.
+     * This method starts the pixy camera by queuing the initial read request if not already.
      */
     public void start()
     {
-        if (!USE_BYTE_TRANSACTION)
+        if (!started)
         {
-            asyncReadData(RequestTag.SYNC, 2);
-        }
-        else
-        {
-            asyncReadData(RequestTag.SYNC_LOW, 1);
+            started = true;
+            if (!USE_BYTE_TRANSACTION)
+            {
+                asyncReadData(RequestTag.SYNC, 2);
+            }
+            else
+            {
+                asyncReadData(RequestTag.SYNC_LOW, 1);
+            }
         }
     }   //start
 
