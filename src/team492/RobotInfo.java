@@ -128,7 +128,7 @@ public class RobotInfo
     // 2017-03-08: 0.0159419007257628, 0.06, 0.0, 0.007
     // 2017-03-12: 0.0159419007257628, 0.03, 0.0, 0.0005
     public static final double ENCODER_Y_INCHES_PER_COUNT       = 0.0159419007257628;
-    public static final double ENCODER_Y_KP                     = 0.03;
+    public static final double ENCODER_Y_KP                     = 0.05;
     public static final double ENCODER_Y_KI                     = 0.0;
     public static final double ENCODER_Y_KD                     = 0.0005;
     public static final double ENCODER_Y_KF                     = 0.0;
@@ -149,7 +149,7 @@ public class RobotInfo
     public static final double GYRO_TURN_SMALL_KI               = 0.0;
     public static final double GYRO_TURN_SMALL_KD               = 0.0;
 
-    public static final double DRIVE_STALL_TIMEOUT              = 0.5;  // Could this be 0.3???
+    public static final double DRIVE_STALL_TIMEOUT              = 0.3;  // Could this be 0.3???
     public static final double DRIVE_SLOW_XSCALE                = 3.0;
     public static final double DRIVE_SLOW_YSCALE                = 3.0;
     public static final double DRIVE_SLOW_TURNSCALE             = 3.0;

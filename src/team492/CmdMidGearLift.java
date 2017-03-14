@@ -148,7 +148,6 @@ class CmdMidGearLift implements TrcRobot.RobotCommand
 //                        robot.alliance == Robot.Alliance.RED_ALLIANCE? -midSidewallAngle: midSidewallAngle; 
 //
 //                    robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
-////                    robot.setPidDriveTarget(xDistance, yDistance, robot.targetHeading, false, event);
 //                    sm.waitForSingleEvent(event, State.GO_TO_SIDEWALL);
 //                    break;
 //
@@ -161,7 +160,7 @@ class CmdMidGearLift implements TrcRobot.RobotCommand
                     yDistance = 0.0;
 
                     robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
-                    sm.waitForSingleEvent(event, State.GO_TO_LOADING_STATION);
+                    sm.waitForSingleEvent(event, State.DONE);//GO_TO_LOADING_STATION);
                     break;
 
 //                case TURN_TO_LOADING_STATION:
@@ -171,7 +170,6 @@ class CmdMidGearLift implements TrcRobot.RobotCommand
 //                    xDistance = yDistance = 0.0;
 //                    robot.targetHeading = 0.0;
 //
-////                    robot.setPidDriveTarget(xDistance, yDistance, robot.targetHeading, false, event);
 //                    robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
 //                    sm.waitForSingleEvent(event, State.GO_TO_LOADING_STATION);
 //                    break;

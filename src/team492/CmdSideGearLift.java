@@ -23,6 +23,7 @@
 package team492;
 
 import hallib.HalDashboard;
+import team492.PixyVision.TargetInfo;
 import team492.Robot.Alliance;
 import trclib.TrcEvent;
 import trclib.TrcRobot;
@@ -169,14 +170,21 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
 
                 case SLOW_TURN_TOWARDS_AIRSHIP:
                     //
-                    // Turn until vision target visible
+                    // Turn until vision target is visible.
                     //
-                    robot.gyroTurnPidCtrl.setPID(
-                        RobotInfo.GYRO_TURN_SMALL_KP, RobotInfo.GYRO_TURN_SMALL_KI, RobotInfo.GYRO_TURN_SMALL_KD, 0.0);
+//                    robot.gyroTurnPidCtrl.setPID(
+//                        RobotInfo.GYRO_TURN_SMALL_KP, RobotInfo.GYRO_TURN_SMALL_KI, RobotInfo.GYRO_TURN_SMALL_KD, 0.0);
+                    TargetInfo targetInfo = robot.frontPixy.getTargetInfo();
                     xDistance = 0;
                     yDistance = 0;
-                    // If vision target detected, or if we hit the max turn angle, set the next state
-                    if (robot.frontPixy.getTargetInfo() != null || Math.abs(robot.targetHeading) >= sideLiftMaxAngle)
+
+                    if (targetInfo != null)
+                    {
+                        robot.targetHeading += targetInfo.angle;
+                        robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
+                        sm.waitForSingleEvent(event, State.VISION_DEPLOY);
+                    }
+                    else if (Math.abs(robot.targetHeading) >= sideLiftMaxAngle)
                     {
                         sm.setState(State.VISION_DEPLOY);
                     }
@@ -191,6 +199,8 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
                     break;
 
                 case VISION_DEPLOY:
+//                    robot.gyroTurnPidCtrl.setPID(
+//                        RobotInfo.GYRO_TURN_KP, RobotInfo.GYRO_TURN_KI, RobotInfo.GYRO_TURN_KD, 0.0);
                     //
                     // Execute visionDeploy to dispense gear on peg
                     //
