@@ -1,7 +1,16 @@
 <xml version="1.0">
 <dashboard>
 	<widget field="MatchNumber" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="560"/>
+		<location x="0" y="550"/>
+	</widget>
+	<widget field="tuneKp" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="600"/>
+	</widget>
+	<widget field="tuneKi" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="625"/>
+	</widget>
+	<widget field="tuneKd" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="650"/>
 	</widget>
 	<widget field="Delay" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="1000" y="0"/>

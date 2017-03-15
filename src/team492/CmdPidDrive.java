@@ -45,12 +45,15 @@ class CmdPidDrive implements TrcRobot.RobotCommand
     private double yDistance;
     private double heading;
     private double drivePowerLimit;
+    private boolean testMode;
 
     private TrcEvent event;
     private TrcTimer timer;
     private TrcStateMachine<State> sm;
 
-    CmdPidDrive(Robot robot, double delay, double xDistance, double yDistance, double heading, double drivePowerLimit)
+    CmdPidDrive(
+        Robot robot, double delay, double xDistance, double yDistance, double heading, double drivePowerLimit,
+        boolean testMode)
     {
         this.robot = robot;
         this.delay = delay;
@@ -58,13 +61,15 @@ class CmdPidDrive implements TrcRobot.RobotCommand
         this.yDistance = yDistance;
         this.heading = heading;
         this.drivePowerLimit = drivePowerLimit;
+        this.testMode = testMode;
         event = new TrcEvent(moduleName);
         timer = new TrcTimer(moduleName);
         sm = new TrcStateMachine<>(moduleName);
         sm.start(State.DO_DELAY);
 
-        robot.tracer.traceInfo(moduleName, "delay=%.3f, xDist=%.1f, yDist=%.1f, heading=%.1f, powerLimit=%.1f",
-            delay, xDistance, yDistance, heading, drivePowerLimit);
+        robot.tracer.traceInfo(
+            moduleName, "delay=%.3f, xDist=%.1f, yDist=%.1f, heading=%.1f, powerLimit=%.1f, testMode=%s",
+            delay, xDistance, yDistance, heading, drivePowerLimit, Boolean.toString(testMode));
     }   //CmdPidDrive
 
     //
@@ -106,9 +111,26 @@ class CmdPidDrive implements TrcRobot.RobotCommand
                     //
                     // Drive the set distance and heading.
                     //
+                    if (testMode)
+                    {
+                        if (xDistance != 0.0)
+                        {
+                            robot.encoderXPidCtrl.setPID(robot.tuneKp, robot.tuneKi, robot.tuneKd, 0.0);
+                        }
+                        else if (yDistance != 0.0)
+                        {
+                            robot.encoderYPidCtrl.setPID(robot.tuneKp, robot.tuneKi, robot.tuneKd, 0.0);
+                        }
+                        else if (heading != 0.0)
+                        {
+                            robot.gyroTurnPidCtrl.setPID(robot.tuneKp, robot.tuneKi, robot.tuneKd, 0.0);
+                        }
+                    }
+
                     robot.encoderXPidCtrl.setOutputRange(-drivePowerLimit, drivePowerLimit);
                     robot.encoderYPidCtrl.setOutputRange(-drivePowerLimit, drivePowerLimit);
                     robot.gyroTurnPidCtrl.setOutputRange(-drivePowerLimit, drivePowerLimit);
+
                     robot.pidDrive.setTarget(xDistance, yDistance, heading, false, event);
                     sm.waitForSingleEvent(event, State.DONE);
                     break;

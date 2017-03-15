@@ -29,15 +29,12 @@ import org.opencv.core.Rect;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.SerialPort;
 import frclib.FrcPixyCam;
-import frclib.FrcRobotBase;
-import trclib.TrcDbgTrace;
 import trclib.TrcPixyCam.ObjectBlock;
 
 public class PixyVision
 {
     private static final String moduleName = "PixyVision";
-    private static final boolean debugEnabled = false;
-    private TrcDbgTrace tracer = FrcRobotBase.getGlobalTracer();
+    private static final boolean debugEnabled = true;
 
     private static final boolean FILTER_ENABLED = true;
     private static final double PERCENT_TOLERANCE = 0.2;    // 20% tolerance
@@ -133,7 +130,7 @@ public class PixyVision
 
         if (debugEnabled)
         {
-            tracer.traceInfo(moduleName, "%s object(s) found",
+            robot.tracer.traceInfo(moduleName, "%s object(s) found",
                 detectedObjects != null? "" + detectedObjects.length: "null");
         }
         //
@@ -191,7 +188,7 @@ public class PixyVision
 
                     if (debugEnabled)
                     {
-                        tracer.traceInfo(moduleName, "[%d] %s", i, detectedObjects[i].toString());
+                        robot.tracer.traceInfo(moduleName, "[%d] %s", i, detectedObjects[i].toString());
                     }
                 }
             }
@@ -212,7 +209,7 @@ public class PixyVision
 //
 //                    if (debugEnabled)
 //                    {
-//                        tracer.traceInfo(moduleName, "Expected Object: distance=%.1f, width=%.1f, height=%.1f",
+//                        robot.tracer.traceInfo(moduleName, "Expected Object: distance=%.1f, width=%.1f, height=%.1f",
 //                            targetDistance, expectedWidth, expectedHeight);
 //                    }
 //
@@ -234,7 +231,7 @@ public class PixyVision
 //
 //                        if (debugEnabled)
 //                        {
-//                            tracer.traceInfo(moduleName, "Removing: x=%d, y=%d, width=%d, height=%d",
+//                            robot.tracer.traceInfo(moduleName, "Removing: x=%d, y=%d, width=%d, height=%d",
 //                                r.x, r.y, r.width, r.height);
 //                        }
 //                    }
@@ -250,7 +247,7 @@ public class PixyVision
 
                     if (debugEnabled)
                     {
-                        tracer.traceInfo(moduleName, "Expected Target: distance=%.1f, width=%.1f, height=%.1f",
+                        robot.tracer.traceInfo(moduleName, "Expected Target: distance=%.1f, width=%.1f, height=%.1f",
                             targetDistance, expectedWidth, expectedHeight);
                     }
 
@@ -277,7 +274,8 @@ public class PixyVision
 
                                 if (debugEnabled)
                                 {
-                                    tracer.traceInfo(moduleName, "***TargetRect***: [%d,%d] x=%d, y=%d, w=%d, h=%d",
+                                    robot.tracer.traceInfo(
+                                        moduleName, "***TargetRect***: [%d,%d] x=%d, y=%d, w=%d, h=%d",
                                         i, j, targetRect.x, targetRect.y, targetRect.width, targetRect.height);
                                 }
                             }
@@ -301,7 +299,7 @@ public class PixyVision
 
                 if (debugEnabled)
                 {
-                    tracer.traceInfo(moduleName, "===TargetRect===: x=%d, y=%d, w=%d, h=%d",
+                    robot.tracer.traceInfo(moduleName, "===TargetRect===: x=%d, y=%d, w=%d, h=%d",
                         targetRect.x, targetRect.y, targetRect.width, targetRect.height);
                 }
             }
@@ -345,7 +343,7 @@ public class PixyVision
 
             if (debugEnabled)
             {
-                tracer.traceInfo(
+                robot.tracer.traceInfo(
                     moduleName, "###TargetInfo###: xDist=%.1f, yDist=%.1f, angle=%.1f",
                     targetXDistance, targetYDistance, targetAngle);
             }

@@ -123,15 +123,18 @@ public class FrcAuto implements TrcRobot.RobotMode
                 break;
 
             case X_DISTANCE_DRIVE:
-                autoCommand = new CmdPidDrive(robot, delay, robot.driveDistance, 0.0, 0.0, robot.drivePowerLimit);
+                autoCommand = new CmdPidDrive(
+                    robot, delay, robot.driveDistance, 0.0, 0.0, robot.drivePowerLimit, false);
                 break;
 
             case Y_DISTANCE_DRIVE:
-                autoCommand = new CmdPidDrive(robot, delay, 0.0, robot.driveDistance, 0.0, robot.drivePowerLimit);
+                autoCommand = new CmdPidDrive(
+                    robot, delay, 0.0, robot.driveDistance, 0.0, robot.drivePowerLimit, false);
                 break;
 
             case TURN_DEGREES:
-                autoCommand = new CmdPidDrive(robot, delay, 0.0, 0.0, robot.turnDegrees, robot.drivePowerLimit);
+                autoCommand = new CmdPidDrive(
+                    robot, delay, 0.0, 0.0, robot.turnDegrees, robot.drivePowerLimit, false);
                 break;
 
             default:

@@ -168,6 +168,9 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     public double turnDegrees;
     public double ultrasonicTarget;
     public double visionTurnTarget;
+    public double tuneKp;
+    public double tuneKi;
+    public double tuneKd;
 
     //
     // Robot Modes.
@@ -402,6 +405,9 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         turnDegrees = HalDashboard.getNumber("TurnDegrees", 90.0);
         ultrasonicTarget = HalDashboard.getNumber("UltrasonicTarget", 7.0);
         visionTurnTarget = HalDashboard.getNumber("VisionTurnTarget", 0.0);
+        tuneKp = HalDashboard.getNumber("tuneKp", RobotInfo.GYRO_TURN_KP);
+        tuneKi = HalDashboard.getNumber("tuneKi", RobotInfo.GYRO_TURN_KI);
+        tuneKd = HalDashboard.getNumber("tuneKd", RobotInfo.GYRO_TURN_KD);
     }   //robotStartMode
 
     public void robotStopMode()

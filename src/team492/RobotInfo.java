@@ -127,10 +127,11 @@ public class RobotInfo
     // 2017-03-07: 0.0159419007257628, 0.05, 0.0, 0.007
     // 2017-03-08: 0.0159419007257628, 0.06, 0.0, 0.007
     // 2017-03-12: 0.0159419007257628, 0.03, 0.0, 0.0005
+    // 2017-03-14: 0.0159419007257628, 0.03, 0.0, 0.005
     public static final double ENCODER_Y_INCHES_PER_COUNT       = 0.0159419007257628;
-    public static final double ENCODER_Y_KP                     = 0.05;
+    public static final double ENCODER_Y_KP                     = 0.03;
     public static final double ENCODER_Y_KI                     = 0.0;
-    public static final double ENCODER_Y_KD                     = 0.0005;
+    public static final double ENCODER_Y_KD                     = 0.005;
     public static final double ENCODER_Y_KF                     = 0.0;
     public static final double ENCODER_Y_TOLERANCE              = 1.0;
     public static final double ENCODER_Y_SETTLING               = 0.2;
@@ -139,35 +140,38 @@ public class RobotInfo
     // 2017-03-07: 0.15, 0.0, 0.02
     // 2017-03-08: 0.1, 0.0, 0.007
     // 2017-03-12: 0.065, 0.0, 0.005/0.2, 0.0, 0.0
+    // 2017-03-14: 0.065, 0.0, 0.005/0.08, 0.0, 0.0001
     public static final double GYRO_TURN_KP                     = 0.065;
     public static final double GYRO_TURN_KI                     = 0.0;
     public static final double GYRO_TURN_KD                     = 0.005;
     public static final double GYRO_TURN_KF                     = 0.0;
     public static final double GYRO_TURN_TOLERANCE              = 1.0;
     public static final double GYRO_TURN_SETTLING               = 0.2;
-    public static final double GYRO_TURN_SMALL_KP               = 0.2;
+    public static final double GYRO_TURN_SMALL_KP               = 0.08;
     public static final double GYRO_TURN_SMALL_KI               = 0.0;
-    public static final double GYRO_TURN_SMALL_KD               = 0.0;
+    public static final double GYRO_TURN_SMALL_KD               = 0.0001;
 
-    public static final double DRIVE_STALL_TIMEOUT              = 0.3;  // Could this be 0.3???
+    public static final double DRIVE_STALL_TIMEOUT              = 0.3;
     public static final double DRIVE_SLOW_XSCALE                = 3.0;
     public static final double DRIVE_SLOW_YSCALE                = 3.0;
     public static final double DRIVE_SLOW_TURNSCALE             = 3.0;
 
     // 2017-03-12: 0.01, 0.0, 0.0
-    public static final double SONAR_KP                         = 0.01;
+    // 2017-03-14: 0.0165, 0.0, 0.002
+    public static final double SONAR_KP                         = 0.0165;
     public static final double SONAR_KI                         = 0.0;
-    public static final double SONAR_KD                         = 0.0;
+    public static final double SONAR_KD                         = 0.002;
     public static final double SONAR_KF                         = 0.0;
     public static final double SONAR_TOLERANCE                  = 1.0;
     public static final double SONAR_SETTLING                   = 0.2;
 
     // 2017-03-12: 0.025, 0.0, 0.0001
+    // 2017-03-14: 0.025, 0.0, 0.00015
     public static final double VISION_TURN_KP                   = 0.025;
     public static final double VISION_TURN_KI                   = 0.0;
-    public static final double VISION_TURN_KD                   = 0.0001;
+    public static final double VISION_TURN_KD                   = 0.00015;
     public static final double VISION_TURN_KF                   = 0.0;
-    public static final double VISION_TURN_TOLERANCE            = 2.0;
+    public static final double VISION_TURN_TOLERANCE            = 1.0;
     public static final double VISION_TURN_SETTLING             = 0.2;
     //
     // Vision subsystem.

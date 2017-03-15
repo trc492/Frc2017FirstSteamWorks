@@ -131,15 +131,18 @@ public class FrcTest extends FrcTeleOp
                 break;
 
             case X_DISTANCE_DRIVE:
-                pidDriveCommand = new CmdPidDrive(robot, 0.0, robot.driveDistance, 0.0, 0.0, robot.drivePowerLimit);
+                pidDriveCommand = new CmdPidDrive(
+                    robot, 0.0, robot.driveDistance, 0.0, 0.0, robot.drivePowerLimit, true);
                 break;
 
             case Y_DISTANCE_DRIVE:
-                pidDriveCommand = new CmdPidDrive(robot, 0.0, 0.0, robot.driveDistance, 0.0, robot.drivePowerLimit);
+                pidDriveCommand = new CmdPidDrive(
+                    robot, 0.0, 0.0, robot.driveDistance, 0.0, robot.drivePowerLimit, true);
                 break;
 
             case TURN_DEGREES:
-                pidDriveCommand = new CmdPidDrive(robot, 0.0, 0.0, 0.0, robot.turnDegrees, robot.drivePowerLimit);
+                pidDriveCommand = new CmdPidDrive(
+                    robot, 0.0, 0.0, 0.0, robot.turnDegrees, robot.drivePowerLimit, true);
                 break;
 
             case VISION_DRIVE:

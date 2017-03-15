@@ -23,6 +23,7 @@
 package team492;
 
 import hallib.HalDashboard;
+import team492.PixyVision.TargetInfo;
 import trclib.TrcEvent;
 import trclib.TrcRobot;
 import trclib.TrcStateMachine;
@@ -32,7 +33,7 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
 {
     private static enum State
     {
-//        TURN_TO_TARGET,
+        TURN_TO_TARGET,
         DRIVE_TOWARDS_TARGET,
         DEPLOY_GEAR,
         BACKUP,
@@ -62,7 +63,7 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
         event = new TrcEvent(moduleName);
         timer = new TrcTimer(moduleName);
         sm = new TrcStateMachine<>(moduleName);
-        sm.start(State.DRIVE_TOWARDS_TARGET);
+        sm.start(State.TURN_TO_TARGET);
 
         robot.tracer.traceInfo(
             moduleName, "dist=%.1f, deployTime=%.1f, backupDist=%.1f",
@@ -80,6 +81,7 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
         //
         // Print debug info.
         //
+        TargetInfo targetInfo;
         State state = sm.getState();
         robot.dashboard.displayPrintf(1, "State: %s", state != null ? state.toString() : "Disabled");
 
@@ -90,21 +92,21 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
 
             switch (state)
             {
-//                case TURN_TO_TARGET:
-//                    robot.gyroTurnPidCtrl.setPID(
-//                        RobotInfo.GYRO_TURN_SMALL_KP, RobotInfo.GYRO_TURN_SMALL_KI, RobotInfo.GYRO_TURN_SMALL_KD, 0.0);
-//                    targetInfo = robot.frontPixy.getTargetInfo();
-//                    double angle = targetInfo != null? targetInfo.angle: 0.0;
-//                    xDistance = yDistance = 0.0;
-//                    robot.targetHeading += angle;
-//
-//                    robot.tracer.traceInfo(
-//                        moduleName, "Target Info: %s", targetInfo != null? targetInfo.toString(): "not found");
-//
-//                    robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
-//                    sm.waitForSingleEvent(event, State.DRIVE_TOWARDS_TARGET);
-//                    break;
-//
+                case TURN_TO_TARGET:
+                    robot.gyroTurnPidCtrl.setPID(
+                        RobotInfo.GYRO_TURN_SMALL_KP, RobotInfo.GYRO_TURN_SMALL_KI, RobotInfo.GYRO_TURN_SMALL_KD, 0.0);
+                    targetInfo = robot.frontPixy.getTargetInfo();
+                    double angle = targetInfo != null? targetInfo.angle: 0.0;
+                    xDistance = yDistance = 0.0;
+                    robot.targetHeading += angle;
+
+                    robot.tracer.traceInfo(
+                        moduleName, "Target Info: %s", targetInfo != null? targetInfo.toString(): "not found");
+
+                    robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
+                    sm.waitForSingleEvent(event, State.DRIVE_TOWARDS_TARGET);
+                    break;
+
                 case DRIVE_TOWARDS_TARGET:
                     robot.gyroTurnPidCtrl.setPID(
                         RobotInfo.GYRO_TURN_KP, RobotInfo.GYRO_TURN_KI, RobotInfo.GYRO_TURN_KD, 0.0);
