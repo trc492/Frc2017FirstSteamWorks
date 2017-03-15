@@ -172,8 +172,6 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
                     //
                     // Turn until vision target is visible.
                     //
-//                    robot.gyroTurnPidCtrl.setPID(
-//                        RobotInfo.GYRO_TURN_SMALL_KP, RobotInfo.GYRO_TURN_SMALL_KI, RobotInfo.GYRO_TURN_SMALL_KD, 0.0);
                     TargetInfo targetInfo = robot.frontPixy.getTargetInfo();
                     xDistance = 0;
                     yDistance = 0;
@@ -190,6 +188,9 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
                     }
                     else
                     {
+                        robot.gyroTurnPidCtrl.setPID(
+                            RobotInfo.GYRO_TURN_SMALL_KP, RobotInfo.GYRO_TURN_SMALL_KI,
+                            RobotInfo.GYRO_TURN_SMALL_KD, 0.0);
                         // The vision target isn't visible, increment the targetHeading.
                         robot.targetHeading += rightSide?-sideLiftAngleIncrement:sideLiftAngleIncrement;
                         // Turn to the new target heading
@@ -199,8 +200,8 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
                     break;
 
                 case VISION_DEPLOY:
-//                    robot.gyroTurnPidCtrl.setPID(
-//                        RobotInfo.GYRO_TURN_KP, RobotInfo.GYRO_TURN_KI, RobotInfo.GYRO_TURN_KD, 0.0);
+                    robot.gyroTurnPidCtrl.setPID(
+                        RobotInfo.GYRO_TURN_KP, RobotInfo.GYRO_TURN_KI, RobotInfo.GYRO_TURN_KD, 0.0);
                     //
                     // Execute visionDeploy to dispense gear on peg
                     //
