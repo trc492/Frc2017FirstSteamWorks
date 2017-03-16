@@ -114,6 +114,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     public TrcGyro gyro = null;
     public AnalogInput pressureSensor = null;
     public AnalogInput ultrasonicSensor = null;
+    private double lastUltrasonicDistance = 0.0;
 
     //
     // VisionTarget subsystem.
@@ -739,6 +740,14 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         else if (pidCtrl == sonarDrivePidCtrl)
         {
             value = getUltrasonicDistance();
+            if (value == 0.0)
+            {
+                value = lastUltrasonicDistance;
+            }
+            else
+            {
+                lastUltrasonicDistance = value;
+            }
         }
         else if (pidCtrl == visionTurnPidCtrl)
         {

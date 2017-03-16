@@ -58,7 +58,7 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
 
         visionTargetDistance = HalDashboard.getNumber("VisionTargetDistance", 7.0);
         visionGearDeployTime = HalDashboard.getNumber("VisionGearDeployTime", 0.3);
-        visionBackupDistance = HalDashboard.getNumber("VisionBackupDistance", 24.0);
+        visionBackupDistance = HalDashboard.getNumber("VisionBackupDistance", 30.0);
 
         event = new TrcEvent(moduleName);
         timer = new TrcTimer(moduleName);
@@ -103,7 +103,7 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
                     robot.tracer.traceInfo(
                         moduleName, "Target Info: %s", targetInfo != null? targetInfo.toString(): "not found");
 
-                    robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
+                    robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event, 1.0);
                     sm.waitForSingleEvent(event, State.DRIVE_TOWARDS_TARGET);
                     break;
 
@@ -114,7 +114,7 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
                     yDistance = visionTargetDistance;
                     double heading = 0.0;
 
-                    robot.visionPidDrive.setTarget(xDistance, yDistance, heading, false, event);
+                    robot.visionPidDrive.setTarget(xDistance, yDistance, heading, false, event, 2.0);
                     sm.waitForSingleEvent(event, State.DEPLOY_GEAR);
                     break;
 
