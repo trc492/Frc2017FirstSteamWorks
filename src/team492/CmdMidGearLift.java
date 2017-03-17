@@ -128,7 +128,7 @@ class CmdMidGearLift implements TrcRobot.RobotCommand
                     //
                     // Have VisionGearDeploy aligning to the peg, deploy the gear and back up.
                     //
-                    printStateInfo = false;
+//                    printStateInfo = false;
                     if (cmdVisionDeploy.cmdPeriodic(elapsedTime))
                     {
                         sm.setState(State.GO_TO_SIDEWALL);

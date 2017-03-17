@@ -348,6 +348,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
             RobotInfo.VISION_TURN_KP, RobotInfo.VISION_TURN_KI, RobotInfo.VISION_TURN_KD, RobotInfo.VISION_TURN_KF,
             RobotInfo.VISION_TURN_TOLERANCE, RobotInfo.VISION_TURN_SETTLING, this);
         visionTurnPidCtrl.setInverted(true);
+        visionTurnPidCtrl.setAbsoluteSetPoint(true);
         visionPidDrive = new TrcPidDrive("visionPidDrive", driveBase, null, sonarDrivePidCtrl, visionTurnPidCtrl);
         sonarPidDrive = new TrcPidDrive("sonarPidDrive", driveBase, null, sonarDrivePidCtrl, null);
         visionPidTurn = new TrcPidDrive("cameraPidDrive", driveBase, null, null, gyroTurnPidCtrl);

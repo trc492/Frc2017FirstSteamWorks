@@ -81,7 +81,7 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
         //
         // Convert all distances to the unit of inches.
         //
-        sideAirshipDistance = HalDashboard.getNumber("SideAirshipDistance", 108.0 - RobotInfo.ROBOT_LENGTH);
+        sideAirshipDistance = HalDashboard.getNumber("SideAirshipDistance", 72.0);
         sideLiftAngle = Math.abs(HalDashboard.getNumber("SideLiftAngle", 45.0));
         sideLiftAngleIncrement = Math.abs(HalDashboard.getNumber("SideLiftAngleIncrement", 5.0));
         sideLiftMaxAngle = Math.abs(HalDashboard.getNumber("SideLiftMaxAngle", 60.0));
@@ -178,12 +178,16 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
 
                     if (targetInfo != null)
                     {
+                        robot.gyroTurnPidCtrl.setPID(
+                            RobotInfo.GYRO_TURN_KP, RobotInfo.GYRO_TURN_KI, RobotInfo.GYRO_TURN_KD, 0.0);
                         robot.targetHeading += targetInfo.angle;
                         robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
                         sm.waitForSingleEvent(event, State.VISION_DEPLOY);
                     }
                     else if (Math.abs(robot.targetHeading) >= sideLiftMaxAngle)
                     {
+                        robot.gyroTurnPidCtrl.setPID(
+                            RobotInfo.GYRO_TURN_KP, RobotInfo.GYRO_TURN_KI, RobotInfo.GYRO_TURN_KD, 0.0);
                         sm.setState(State.VISION_DEPLOY);
                     }
                     else
@@ -200,8 +204,6 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
                     break;
 
                 case VISION_DEPLOY:
-                    robot.gyroTurnPidCtrl.setPID(
-                        RobotInfo.GYRO_TURN_KP, RobotInfo.GYRO_TURN_KI, RobotInfo.GYRO_TURN_KD, 0.0);
                     //
                     // Execute visionDeploy to dispense gear on peg
                     //
