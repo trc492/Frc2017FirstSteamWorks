@@ -58,7 +58,7 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
 
         visionTargetDistance = HalDashboard.getNumber("VisionTargetDistance", 7.0);
         visionGearDeployTime = HalDashboard.getNumber("VisionGearDeployTime", 0.3);
-        visionBackupDistance = HalDashboard.getNumber("VisionBackupDistance", 30.0);
+        visionBackupDistance = HalDashboard.getNumber("VisionBackupDistance", 36.0);
 
         event = new TrcEvent(moduleName);
         timer = new TrcTimer(moduleName);

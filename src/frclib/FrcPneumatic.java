@@ -195,6 +195,7 @@ public class FrcPneumatic implements TrcTaskMgr.Task
             TrcEvent event)
     {
         final String funcName = "set";
+
         if (debugEnabled)
         {
             dbgTrace.traceEnter(
@@ -233,6 +234,7 @@ public class FrcPneumatic implements TrcTaskMgr.Task
     public void setState(boolean state, boolean toggleMode)
     {
         final String funcName = "setState";
+
         if (debugEnabled)
         {
             dbgTrace.traceEnter(
@@ -278,9 +280,15 @@ public class FrcPneumatic implements TrcTaskMgr.Task
         }
     }   //setState
 
+    public void setState(boolean state)
+    {
+        setState(state, false);
+    }   //setState
+
     public void extend()
     {
         final String funcName = "extend";
+
         if (debugEnabled)
         {
             dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.API);

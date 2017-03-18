@@ -101,6 +101,7 @@ public class RobotInfo
     public static final int SOL_GEARPICKUP_ARM_EXTEND           = 3;
     public static final int SOL_MAILBOX_RETRACT                 = 4;
     public static final int SOL_MAILBOX_EXTEND                  = 5;
+    public static final int SOL_FRONT_PIXY_LED                  = 7;
 
     //
     // Miscellaneous sensors and devices.

@@ -349,6 +349,11 @@ public class PixyVision
             }
         }
 
+        if (robot.frontPixyLED != null)
+        {
+            robot.frontPixyLED.setState(targetInfo != null && Math.abs(targetInfo.angle) <= 4.0);
+        }
+
         return targetInfo;
     }   //getTargetInfo
 

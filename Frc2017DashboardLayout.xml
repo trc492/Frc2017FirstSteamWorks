@@ -60,32 +60,23 @@
 	<widget field="SideLiftAngle" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="1275" y="125"/>
 	</widget>
-	<widget field="SideCameraSettling" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+	<widget field="SideOrientedAirshipDistance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="1275" y="150"/>
 	</widget>
-	<widget field="SideLiftAngleIncrement" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+	<widget field="SideLoadingStationAngle" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="1275" y="175"/>
 	</widget>
-	<widget field="SideLiftMaxAngle" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+	<widget field="SideLoadingStationDistance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="1275" y="200"/>
 	</widget>
-	<widget field="SideOrientedAirshipDistance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+	<widget field="SideBaselineToLaunchpadLine" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="1275" y="225"/>
 	</widget>
-	<widget field="SideLoadingStationAngle" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+	<widget field="SideDiagonalAngle" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="1275" y="250"/>
 	</widget>
-	<widget field="SideLoadingStationDistance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="1275" y="275"/>
-	</widget>
-	<widget field="SideBaselineToLaunchpadLine" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="1275" y="300"/>
-	</widget>
-	<widget field="SideDiagonalAngle" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="1275" y="325"/>
-	</widget>
 	<widget field="SideDiagonalDistance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="1275" y="350"/>
+		<location x="1275" y="275"/>
 	</widget>
 	<widget field="Match Type" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
 		<location x="0" y="400"/>

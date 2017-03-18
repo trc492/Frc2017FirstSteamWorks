@@ -123,6 +123,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     public FrcFaceDetector faceDetector = null;
     public PixyVision frontPixy = null;
     public PixyVision rearPixy = null;
+    public FrcPneumatic frontPixyLED = null;
 
     //
     // DriveBase subsystem.
@@ -271,6 +272,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
                         "FrontPixy", this, RobotInfo.PIXY_LIFT_SIGNATURE, RobotInfo.PIXY_FRONT_BRIGHTNESS,
                         RobotInfo.PIXY_FRONT_ORIENTATION, I2C.Port.kMXP, RobotInfo.PIXYCAM_FRONT_I2C_ADDRESS);
                 }
+                frontPixyLED = new FrcPneumatic("FrontPixyLED", RobotInfo.CANID_PCM1, RobotInfo.SOL_FRONT_PIXY_LED);
             }
 
             if (USE_REAR_PIXY)
