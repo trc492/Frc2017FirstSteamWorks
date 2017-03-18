@@ -1,94 +1,139 @@
 <xml version="1.0">
 <dashboard>
 	<widget field="MatchNumber" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="550"/>
+		<location x="0" y="575"/>
 	</widget>
-	<widget field="tuneKp" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.Label">
 		<location x="0" y="600"/>
-	</widget>
-	<widget field="tuneKi" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<width>200</width>
+		<property name="Text" value="PID Tuning"/>
+	</static-widget>
+	<widget field="TuneKp" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="0" y="625"/>
 	</widget>
-	<widget field="tuneKd" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+	<widget field="TuneKi" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="0" y="650"/>
 	</widget>
+	<widget field="TuneKd" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="675"/>
+	</widget>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.Label">
+		<location x="520" y="0"/>
+		<width>200</width>
+		<property name="Text" value="General/Tests"/>
+	</static-widget>
 	<widget field="Delay" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="1000" y="0"/>
+		<location x="520" y="25"/>
 	</widget>
 	<widget field="DriveTime" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="1000" y="25"/>
+		<location x="520" y="50"/>
 	</widget>
 	<widget field="DrivePower" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="1000" y="50"/>
+		<location x="520" y="75"/>
 	</widget>
 	<widget field="DriveDistance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="1000" y="75"/>
+		<location x="520" y="100"/>
 	</widget>
 	<widget field="DrivePowerLimit" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="1000" y="100"/>
+		<location x="520" y="125"/>
 	</widget>
 	<widget field="TurnDegrees" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="1000" y="125"/>
+		<location x="520" y="150"/>
 	</widget>
 	<widget field="UltrasonicTarget" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="1000" y="150"/>
+		<location x="520" y="175"/>
 	</widget>
 	<widget field="VisionTurnTarget" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="1000" y="175"/>
+		<location x="520" y="200"/>
 	</widget>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.Label">
+		<location x="520" y="225"/>
+		<width>200</width>
+		<property name="Text" value="Vision Deploy"/>
+	</static-widget>
 	<widget field="VisionTargetDistance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="1000" y="225"/>
+		<location x="520" y="250"/>
 	</widget>
 	<widget field="VisionGearDeployTime" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="1000" y="250"/>
+		<location x="520" y="275"/>
 	</widget>
 	<widget field="VisionBackupDistance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="1000" y="275"/>
+		<location x="520" y="300"/>
 	</widget>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.Label">
+		<location x="800" y="0"/>
+		<width>200</width>
+		<property name="Text" value="Mid Lift"/>
+	</static-widget>
 	<widget field="MidLiftDistance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="1275" y="0"/>
+		<location x="800" y="25"/>
 	</widget>
 	<widget field="MidSidewallDistance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="1275" y="25"/>
+		<location x="800" y="50"/>
 	</widget>
 	<widget field="MidLoadingStationDistance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="1275" y="50"/>
+		<location x="800" y="75"/>
 	</widget>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.Label">
+		<location x="800" y="100"/>
+		<width>200</width>
+		<property name="Text" value="Side Lift"/>
+	</static-widget>
 	<widget field="SideAirshipDistance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="1275" y="100"/>
+		<location x="800" y="125"/>
 	</widget>
 	<widget field="SideLiftAngle" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="1275" y="125"/>
+		<location x="800" y="150"/>
 	</widget>
 	<widget field="SideOrientedAirshipDistance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="1275" y="150"/>
+		<location x="800" y="175"/>
 	</widget>
 	<widget field="SideLoadingStationAngle" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="1275" y="175"/>
+		<location x="800" y="200"/>
 	</widget>
 	<widget field="SideLoadingStationDistance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="1275" y="200"/>
+		<location x="800" y="225"/>
 	</widget>
 	<widget field="SideBaselineToLaunchpadLine" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="1275" y="225"/>
+		<location x="800" y="250"/>
 	</widget>
 	<widget field="SideDiagonalAngle" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="1275" y="250"/>
+		<location x="800" y="275"/>
 	</widget>
 	<widget field="SideDiagonalDistance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="1275" y="275"/>
+		<location x="800" y="300"/>
 	</widget>
-	<widget field="Match Type" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.Label">
 		<location x="0" y="400"/>
+		<property name="Text" value="Match Type"/>
+		<property name="Horizontal Alignment" value="Left"/>
+	</static-widget>
+	<widget field="Match Type" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
+		<location x="51" y="475"/>
 	</widget>
-	<widget field="Alliance" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.Label">
 		<location x="150" y="400"/>
+		<property name="Text" value="Alliance"/>
+		<property name="Horizontal Alignment" value="Left"/>
+	</static-widget>
+	<widget field="Alliance" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
+		<location x="150" y="425"/>
 	</widget>
-	<widget field="Autonomous Strategies" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.Label">
 		<location x="280" y="400"/>
+		<property name="Text" value="Autonomous"/>
+		<property name="Horizontal Alignment" value="Left"/>
+	</static-widget>
+	<widget field="Autonomous Strategies" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
+		<location x="280" y="425"/>
 	</widget>
-	<widget field="Tests" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.Label">
 		<location x="460" y="400"/>
+		<property name="Text" value="Tests"/>
+		<property name="Horizontal Alignment" value="Left"/>
+	</static-widget>
+	<widget field="Tests" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
+		<location x="460" y="425"/>
 	</widget>
 	<widget field="00" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="0" y="0"/>
@@ -155,7 +200,7 @@
 		<width>512</width>
 	</widget>
 	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.CameraServerViewer">
-		<location x="520" y="0"/>
+		<location x="640" y="340"/>
 		<width>450</width>
 		<height>360</height>
 		<property name="Camera Choice" value="FaceDetector"/>
@@ -163,5 +208,4 @@
 </dashboard>
 <live-window>
 </live-window>
-	<hidden field="Auto Selector"/>
 </xml>

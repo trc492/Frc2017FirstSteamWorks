@@ -48,7 +48,6 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
     private boolean slowDriveOverride = false;
     private DriveMode driveMode = DriveMode.MECANUM_MODE;
 
-    private boolean visionEnabled = false;
     private boolean driveInverted = false;
     private boolean flashLightsOn = false;
 
@@ -234,11 +233,6 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
             switch (button)
             {
                 case FrcJoystick.LOGITECH_TRIGGER:
-                    if (pressed)
-                    {
-                        visionEnabled = !visionEnabled;
-                        robot.setVisionEnabled(visionEnabled);
-                    }
                     break;
 
                 case FrcJoystick.LOGITECH_BUTTON2:

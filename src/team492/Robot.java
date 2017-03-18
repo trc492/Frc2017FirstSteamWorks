@@ -83,7 +83,6 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     private static final boolean DEBUG_PID_DRIVE = false;
     private static final boolean DEBUG_GRIP_VISION = false;
     private static final boolean DEBUG_FACE_DETECTION = false;
-    private static final boolean DEBUG_PIXY_VISION = false;
     private static final double DASHBOARD_UPDATE_INTERVAL = 0.1;
 
     public static enum MatchType
@@ -666,25 +665,15 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
                 }
             }
 
-            if (DEBUG_PIXY_VISION)
+            if (frontPixy != null && frontPixy.isEnabled())
             {
-                if (frontPixy != null && frontPixy.isEnabled())
+                PixyVision.TargetInfo targetInfo = frontPixy.getTargetInfo();
+                if (targetInfo != null)
                 {
-                    PixyVision.TargetInfo targetInfo = frontPixy.getTargetInfo();
-                    if (targetInfo != null)
-                    {
-                        dashboard.displayPrintf(14, "x=%d, y=%d, width=%d, height=%d",
-                            targetInfo.rect.x, targetInfo.rect.y, targetInfo.rect.width, targetInfo.rect.height);
-                        dashboard.displayPrintf(15, "xDistance=%.1f, yDistance=%.1f, angle=%.1f",
-                            targetInfo.xDistance, targetInfo.yDistance, targetInfo.angle);
-                        if (DEBUG_PIXY_VISION)
-                        {
-                            tracer.traceInfo(
-                                "PixyVision", "x=%d, y=%d, width=%d, height=%d, xDistance=%.1f, yDistance=%.1f, angle=%.1f",
-                                targetInfo.rect.x, targetInfo.rect.y, targetInfo.rect.width, targetInfo.rect.height,
-                                targetInfo.xDistance, targetInfo.yDistance, targetInfo.angle);
-                        }
-                    }
+                    dashboard.displayPrintf(14, "x=%d, y=%d, width=%d, height=%d",
+                        targetInfo.rect.x, targetInfo.rect.y, targetInfo.rect.width, targetInfo.rect.height);
+                    dashboard.displayPrintf(15, "xDistance=%.1f, yDistance=%.1f, angle=%.1f",
+                        targetInfo.xDistance, targetInfo.yDistance, targetInfo.angle);
                 }
             }
         }
