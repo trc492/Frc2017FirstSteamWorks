@@ -149,7 +149,7 @@ public abstract class TrcRobotBattery implements TrcTaskMgr.Task
     {
         if (!voltageSupported)
         {
-            throw new UnsupportedOperationException("This system does not support voltage.");
+            throw new UnsupportedOperationException("This system does not support voltage info.");
         }
 
         return lowestVoltage;
@@ -165,7 +165,7 @@ public abstract class TrcRobotBattery implements TrcTaskMgr.Task
     {
         if (!voltageSupported)
         {
-            throw new UnsupportedOperationException("This system does not support voltage.");
+            throw new UnsupportedOperationException("This system does not support voltage info.");
         }
 
         return highestVoltage;
@@ -181,7 +181,7 @@ public abstract class TrcRobotBattery implements TrcTaskMgr.Task
     {
         if (!currentSupported)
         {
-            throw new UnsupportedOperationException("This system does not support current.");
+            throw new UnsupportedOperationException("This system does not support current info.");
         }
 
         return lowestCurrent;
@@ -197,7 +197,7 @@ public abstract class TrcRobotBattery implements TrcTaskMgr.Task
     {
         if (!currentSupported)
         {
-            throw new UnsupportedOperationException("This system does not support current.");
+            throw new UnsupportedOperationException("This system does not support current info.");
         }
 
         return highestCurrent;
@@ -213,7 +213,7 @@ public abstract class TrcRobotBattery implements TrcTaskMgr.Task
     {
         if (!powerSupported)
         {
-            throw new UnsupportedOperationException("This system does not support power.");
+            throw new UnsupportedOperationException("This system does not support power info.");
         }
 
         return lowestPower;
@@ -229,7 +229,7 @@ public abstract class TrcRobotBattery implements TrcTaskMgr.Task
     {
         if (!powerSupported)
         {
-            throw new UnsupportedOperationException("This system does not support power.");
+            throw new UnsupportedOperationException("This system does not support power info.");
         }
 
         return highestPower;
