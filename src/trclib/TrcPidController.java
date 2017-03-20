@@ -697,11 +697,11 @@ public class TrcPidController
             dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.API);
         }
 
+        double prevError = currError;
         double currTime = TrcUtil.getCurrentTime();
         double deltaTime = currTime - prevTime;
         prevTime = currTime;
         input = pidInput.getInput(this);
-        double prevError = currError;
         currError = setPoint - input;
         if (inverted)
         {

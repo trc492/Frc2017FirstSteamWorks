@@ -148,6 +148,7 @@ public class RobotInfo
     public static final double GYRO_TURN_KF                     = 0.0;
     public static final double GYRO_TURN_TOLERANCE              = 1.0;
     public static final double GYRO_TURN_SETTLING               = 0.2;
+    public static final double GYRO_TURN_SMALL_THRESHOLD        = 10.0;
     public static final double GYRO_TURN_SMALL_KP               = 0.08;
     public static final double GYRO_TURN_SMALL_KI               = 0.0;
     public static final double GYRO_TURN_SMALL_KD               = 0.0001;

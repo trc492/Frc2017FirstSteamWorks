@@ -93,13 +93,17 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
             switch (state)
             {
                 case TURN_TO_TARGET:
-                    robot.gyroTurnPidCtrl.setPID(
-                        RobotInfo.GYRO_TURN_SMALL_KP, RobotInfo.GYRO_TURN_SMALL_KI, RobotInfo.GYRO_TURN_SMALL_KD, 0.0);
                     targetInfo = robot.frontPixy.getTargetInfo();
                     double angle = targetInfo != null? targetInfo.angle: 0.0;
                     xDistance = yDistance = 0.0;
                     robot.targetHeading += angle;
 
+                    if (angle != 0.0 && Math.abs(angle) < RobotInfo.GYRO_TURN_SMALL_THRESHOLD)
+                    {
+                        robot.gyroTurnPidCtrl.setPID(
+                            RobotInfo.GYRO_TURN_SMALL_KP, RobotInfo.GYRO_TURN_SMALL_KI, RobotInfo.GYRO_TURN_SMALL_KD,
+                            0.0);
+                    }
                     robot.tracer.traceInfo(
                         moduleName, "Target Info: %s", targetInfo != null? targetInfo.toString(): "not found");
 
