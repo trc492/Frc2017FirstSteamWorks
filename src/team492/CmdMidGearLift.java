@@ -144,6 +144,7 @@ class CmdMidGearLift implements TrcRobot.RobotCommand
                     yDistance = 0.0;
 
                     robot.encoderXPidCtrl.setOutputRange(-1.0, 1.0);
+                    robot.encoderYPidCtrl.setOutputRange(-1.0, 1.0);
                     robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
                     sm.waitForSingleEvent(event, State.GO_TO_LOADING_STATION);
                     break;
@@ -155,7 +156,6 @@ class CmdMidGearLift implements TrcRobot.RobotCommand
                     xDistance = 0.0;
                     yDistance = midLoadingStationDistance;
 
-                    robot.encoderYPidCtrl.setOutputRange(-1.0, 1.0);
                     robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
                     sm.waitForSingleEvent(event, State.DONE);
                     break;
