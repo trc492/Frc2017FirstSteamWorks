@@ -29,6 +29,7 @@ import org.opencv.core.Rect;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.SerialPort;
 import frclib.FrcPixyCam;
+import frclib.FrcPneumatic;
 import trclib.TrcPixyCam.ObjectBlock;
 
 public class PixyVision
@@ -81,6 +82,8 @@ public class PixyVision
     private Robot robot;
     private int signature;
     private Orientation orientation;
+    private FrcPneumatic targetFoundLED = null;
+    private FrcPneumatic targetAlignedLED = null;
 
     private void commonInit(Robot robot, int signature, int brightness, Orientation orientation)
     {
@@ -88,6 +91,8 @@ public class PixyVision
         this.signature = signature;
         this.orientation = orientation;
         pixyCamera.setBrightness((byte)brightness);
+        targetFoundLED = new FrcPneumatic("TargetFoundLED", RobotInfo.CANID_PCM1, RobotInfo.SOL_TARGET_FOUND_LED);
+        targetAlignedLED = new FrcPneumatic("TargetAlignedLED", RobotInfo.CANID_PCM1, RobotInfo.SOL_TARGET_ALIGNED_LED);
     }   //commonInit
 
     public PixyVision(
@@ -349,9 +354,14 @@ public class PixyVision
             }
         }
 
-        if (robot.frontPixyLED != null)
+        if (targetFoundLED != null)
         {
-            robot.frontPixyLED.setState(targetInfo != null && Math.abs(targetInfo.angle) <= 4.0);
+            targetFoundLED.setState(targetInfo != null);
+        }
+
+        if (targetAlignedLED != null)
+        {
+            targetAlignedLED.setState(targetInfo != null && Math.abs(targetInfo.angle) <= 4.0);
         }
 
         return targetInfo;

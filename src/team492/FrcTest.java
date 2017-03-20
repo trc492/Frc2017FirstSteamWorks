@@ -308,7 +308,8 @@ public class FrcTest extends FrcTeleOp
      */
     private void doSensorsTest()
     {
-        robot.dashboard.displayPrintf(1, "Sensors Test:");
+        robot.dashboard.displayPrintf(1, "Sensors Test (Batt=%.1f/%.1f):",
+            robot.battery.getVoltage(), robot.battery.getLowestVoltage());
         robot.dashboard.displayPrintf(2, "DriveBase: lf=%.0f, rf=%.0f, lr=%.0f, rr=%.0f",
             robot.leftFrontWheel.getPosition(), robot.rightFrontWheel.getPosition(),
             robot.leftRearWheel.getPosition(), robot.rightRearWheel.getPosition());
@@ -325,7 +326,11 @@ public class FrcTest extends FrcTeleOp
         if (robot.frontPixy != null && robot.frontPixy.isEnabled())
         {
             PixyVision.TargetInfo targetInfo = robot.frontPixy.getTargetInfo();
-            if (targetInfo != null)
+            if (targetInfo == null)
+            {
+                robot.dashboard.displayPrintf(14, "Target not found!");
+            }
+            else
             {
                 robot.dashboard.displayPrintf(14, "x=%d, y=%d, width=%d, height=%d",
                     targetInfo.rect.x, targetInfo.rect.y, targetInfo.rect.width, targetInfo.rect.height);

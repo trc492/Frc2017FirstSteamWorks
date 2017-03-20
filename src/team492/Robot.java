@@ -47,6 +47,7 @@ import frclib.FrcFaceDetector;
 import frclib.FrcGyro;
 import frclib.FrcPneumatic;
 import frclib.FrcRobotBase;
+import frclib.FrcRobotBattery;
 import hallib.HalDashboard;
 import team492.PixyVision.TargetInfo;
 import trclib.TrcDbgTrace;
@@ -110,6 +111,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     //
     // Sensors.
     //
+    public FrcRobotBattery battery = null;
     public TrcGyro gyro = null;
     public AnalogInput pressureSensor = null;
     public AnalogInput ultrasonicSensor = null;
@@ -122,7 +124,6 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     public FrcFaceDetector faceDetector = null;
     public PixyVision frontPixy = null;
     public PixyVision rearPixy = null;
-    public FrcPneumatic frontPixyLED = null;
 
     //
     // DriveBase subsystem.
@@ -197,6 +198,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         //
         // Sensors.
         //
+        battery = new FrcRobotBattery(RobotInfo.CANID_PDP);
         if (USE_NAV_X)
         {
             gyro = new FrcAHRSGyro("NavX", SPI.Port.kMXP);
@@ -271,7 +273,6 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
                         "FrontPixy", this, RobotInfo.PIXY_LIFT_SIGNATURE, RobotInfo.PIXY_FRONT_BRIGHTNESS,
                         RobotInfo.PIXY_FRONT_ORIENTATION, I2C.Port.kMXP, RobotInfo.PIXYCAM_FRONT_I2C_ADDRESS);
                 }
-                frontPixyLED = new FrcPneumatic("FrontPixyLED", RobotInfo.CANID_PCM1, RobotInfo.SOL_FRONT_PIXY_LED);
             }
 
             if (USE_REAR_PIXY)
@@ -395,6 +396,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
 
     public void robotStartMode()
     {
+        battery.setEnabled(true);
         //
         // Retrieve Global Choices.
         //
@@ -416,6 +418,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     public void robotStopMode()
     {
         driveBase.stop();
+        battery.setEnabled(false);
     }   //robotStopMode
 
     public double getPressure()
@@ -693,9 +696,9 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
 
     public void traceStateInfo(double elapsedTime, String stateName)
     {
-        tracer.traceInfo(moduleName, "[%5.3f] %10s: xPos=%6.2f,yPos=%6.2f,heading=%6.1f/%6.1f",
+        tracer.traceInfo(moduleName, "[%5.3f] %10s: xPos=%6.2f,yPos=%6.2f,heading=%6.1f/%6.1f,volts=%.1f(%.1f)",
             elapsedTime, stateName, driveBase.getXPosition(), driveBase.getYPosition(), driveBase.getHeading(),
-            targetHeading);
+            targetHeading, battery.getVoltage(), battery.getLowestVoltage());
         if (pidDrive.isActive())
         {
             encoderXPidCtrl.printPidInfo(tracer);
