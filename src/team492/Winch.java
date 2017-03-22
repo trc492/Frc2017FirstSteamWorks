@@ -28,13 +28,11 @@ public class Winch
 {
     private FrcCANTalon motor;
     private boolean manualOverride = false;
-//    private DigitalInput proximitySensor;
 
     public Winch()
     {
         motor = new FrcCANTalon("WinchMotor", RobotInfo.CANID_WINCH);
         motor.setPositionSensorInverted(false);
-//        proximitySensor = new DigitalInput(RobotInfo.DIN_PROXIMITY_SENSOR);
     }
 
     public void setManualOverride(boolean override)
@@ -59,11 +57,8 @@ public class Winch
 
     public void setPower(double power)
     {
-        double scale = 1.0; 
-//        if (proximitySensor.get())
-//            scale = RobotInfo.WINCH_POWER_SCALE;
         if (manualOverride || !isFwdLimitSwitchActive() && !isRevLimitSwitchActive())
-            motor.setPower(power / scale);
+            motor.setPower(power);
         else
             motor.setPower(0.0);
     }

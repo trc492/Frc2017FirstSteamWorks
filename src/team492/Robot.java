@@ -31,7 +31,6 @@ import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.I2C;
@@ -72,7 +71,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
 
     public static final boolean USE_TRACELOG = true;
     public static final boolean USE_NAV_X = true;
-    public static final boolean USE_ANALOG_GYRO = false;
+    public static final boolean USE_SPI_GYRO = false;
     public static final boolean USE_GRIP_VISION = false;
     public static final boolean USE_AXIS_CAMERA = false;
     public static final boolean USE_FACE_DETECTOR = false;
@@ -203,11 +202,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         {
             gyro = new FrcAHRSGyro("NavX", SPI.Port.kMXP);
         }
-        else if (USE_ANALOG_GYRO)
-        {
-            gyro = new FrcGyro("AnalogGyro", new AnalogGyro(RobotInfo.AIN_ANALOG_GYRO));
-        }
-        else
+        else if (USE_SPI_GYRO)
         {
             gyro = new FrcGyro("ADXRS450", new ADXRS450_Gyro());
         }
@@ -438,13 +433,13 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
             ringLightsPower.set(enabled? Value.kOn: Value.kOff);
             gripVision.setVideoOutEnabled(enabled);
             gripVision.setEnabled(enabled);
-            tracer.traceInfo("TeleOp", "Grip Vision is %s!", Boolean.toString(enabled));
+            tracer.traceInfo("Vision", "Grip Vision is %s!", enabled? "enabled": "disabled");
         }
         else if (faceDetector != null)
         {
             faceDetector.setVideoOutEnabled(enabled);
             faceDetector.setEnabled(enabled);
-            tracer.traceInfo("TeleOp", "Face Detector is %s!", Boolean.toString(enabled));
+            tracer.traceInfo("Vision", "Face Detector is %s!", enabled? "enabled": "disabled");
         }
         else
         {
@@ -453,11 +448,13 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
             if (frontPixy != null)
             {
                 frontPixy.setEnabled(enabled);
+                tracer.traceInfo("Vision", "Front pixy is %s!", enabled? "enabled": "disabled");
             }
 
             if (rearPixy != null)
             {
                 rearPixy.setEnabled(enabled);
+                tracer.traceInfo("Vision", "Rear pixy is %s!", enabled? "enabled": "disabled");
             }
         }
     }   //setVisionEnabled

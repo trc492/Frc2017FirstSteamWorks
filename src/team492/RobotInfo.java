@@ -62,15 +62,11 @@ public class RobotInfo
     // Analog Input ports.
     //
     public static final int AIN_PRESSURE_SENSOR                 = 0;
-    public static final int AIN_ANALOG_GYRO                     = 1;
-    public static final int AIN_PIXYCAM_OBJECT_POS              = 2;
     public static final int AIN_ULTRASONIC_SENSOR               = 3;
     //
     // Digital Input ports.
     //
     public static final int DIN_GEAR_SENSOR                     = 0;
-    public static final int DIN_PROXIMITY_SENSOR                = 1;
-    public static final int DIN_PIXYCAM_OBJECTS_DETECTED        = 9;
 
     //
     // CAN IDs.
@@ -201,7 +197,6 @@ public class RobotInfo
     //
     // Winch subsystem.
     //
-    public static final double WINCH_POWER_SCALE                = 3.0;
     public static final double WINCH_POSITION_SCALE             = 1.0;
 
 }   // class RobotInfo
