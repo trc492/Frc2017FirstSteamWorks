@@ -114,6 +114,10 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
                 case DRIVE_TOWARDS_TARGET:
                     robot.gyroTurnPidCtrl.setPID(
                         RobotInfo.GYRO_TURN_KP, RobotInfo.GYRO_TURN_KI, RobotInfo.GYRO_TURN_KD, 0.0);
+                    robot.visionTurnPidCtrl.setNoOscillation(true);
+                    robot.sonarDrivePidCtrl.setNoOscillation(true);
+                    robot.encoderYPidCtrl.setNoOscillation(true);
+                    robot.gyroTurnPidCtrl.setNoOscillation(true);
                     xDistance = 0.0;
                     yDistance = visionTargetDistance;
                     double heading = 0.0;
