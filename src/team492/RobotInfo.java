@@ -32,17 +32,15 @@ public class RobotInfo
     //
 
     //
-    // Field dimensions.
+    // Field dimensions in inches.
     //
     public static final double FIELD_LENGTH                     = 54*12.0;
     public static final double FIELD_WIDTH                      = 27*12.0;
-    public static final double FIELD_BASELINE_DISTANCE          = 114.3;
+    public static final double FIELD_BASELINE_DISTANCE          = 93.3;
     public static final double FIELD_LAUNCHPAD_DISTANCE         = 185.3;
     public static final double FIELD_NEUTRAL_ZONE_LENGTH        = FIELD_LENGTH - FIELD_LAUNCHPAD_DISTANCE*2.0;
-    public static final double FIELD_SIDELIFT_ANGLE             = 60.0;
-    public static final double FIELD_AIRSHIP_PANEL_WIDTH        = 80.07/2;
-    public static final double FIELD_SIDESTART_FROM_CENTER      = FIELD_AIRSHIP_PANEL_WIDTH;
-    public static final double FIELD_VISION_START_DISTANCE      = 36.0;
+    public static final double FIELD_SIDELIFT_ANGLE             = 60.0;     //in degrees
+    public static final double FIELD_AIRSHIP_PANEL_WIDTH        = 40.755;   //70.59/2/sin(60)
 
     //
     // Robot dimensions.
