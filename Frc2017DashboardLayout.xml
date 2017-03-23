@@ -103,7 +103,7 @@
 		<property name="Horizontal Alignment" value="Left"/>
 	</static-widget>
 	<widget field="Match Type" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
-		<location x="51" y="475"/>
+		<location x="0" y="425"/>
 	</widget>
 	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.Label">
 		<location x="150" y="400"/>
@@ -202,4 +202,5 @@
 </dashboard>
 <live-window>
 </live-window>
+	<hidden field="Auto Selector"/>
 </xml>
