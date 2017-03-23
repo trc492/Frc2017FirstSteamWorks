@@ -61,47 +61,41 @@
 		<location x="520" y="300"/>
 	</widget>
 	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.Label">
-		<location x="800" y="0"/>
+		<location x="850" y="0"/>
 		<width>200</width>
 		<property name="Text" value="Mid Lift"/>
 	</static-widget>
 	<widget field="MidLiftDistance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="800" y="25"/>
+		<location x="850" y="25"/>
 	</widget>
 	<widget field="MidSidewallDistance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="800" y="50"/>
+		<location x="850" y="50"/>
 	</widget>
 	<widget field="MidLoadingStationDistance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="800" y="75"/>
+		<location x="850" y="75"/>
 	</widget>
 	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.Label">
-		<location x="800" y="100"/>
+		<location x="850" y="100"/>
 		<width>200</width>
 		<property name="Text" value="Side Lift"/>
 	</static-widget>
-	<widget field="SideAirshipDistance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="800" y="125"/>
+	<widget field="SideForwardDistance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="850" y="125"/>
 	</widget>
 	<widget field="SideLiftAngle" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="800" y="150"/>
+		<location x="850" y="150"/>
 	</widget>
-	<widget field="SideOrientedAirshipDistance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="800" y="175"/>
+	<widget field="SideBackupDistance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="850" y="175"/>
 	</widget>
 	<widget field="SideLoadingStationAngle" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="800" y="200"/>
+		<location x="850" y="200"/>
 	</widget>
 	<widget field="SideLoadingStationDistance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="800" y="225"/>
-	</widget>
-	<widget field="SideBaselineToLaunchpadLine" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="800" y="250"/>
-	</widget>
-	<widget field="SideDiagonalAngle" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="800" y="275"/>
+		<location x="850" y="225"/>
 	</widget>
 	<widget field="SideDiagonalDistance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="800" y="300"/>
+		<location x="850" y="250"/>
 	</widget>
 	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.Label">
 		<location x="0" y="400"/>
