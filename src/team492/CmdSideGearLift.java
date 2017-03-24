@@ -187,7 +187,7 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
                                           isRed? -sideLoadingStationAngle: sideLoadingStationAngle;
 
                     robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
-                    sm.waitForSingleEvent(event, State.DONE);//MOVE_TOWARDS_LOADING_STATION);
+                    sm.waitForSingleEvent(event, State.MOVE_TOWARDS_LOADING_STATION);
                     break;
 
                 case MOVE_TOWARDS_LOADING_STATION:
