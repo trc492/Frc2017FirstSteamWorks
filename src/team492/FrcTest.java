@@ -61,6 +61,7 @@ public class FrcTest extends FrcTeleOp
     //
     private FrcChoiceMenu<Test> testMenu;
     private Test test;
+    private boolean useTraceLog = false;
 
     private CmdTimedDrive timedDriveCommand = null;
     private CmdPidDrive pidDriveCommand = null;
@@ -104,7 +105,6 @@ public class FrcTest extends FrcTeleOp
     @Override
     public void startMode()
     {
-        if (Robot.USE_TRACELOG) robot.startTraceLog("Test");
         //
         // Call TeleOp startMode.
         //
@@ -131,31 +131,37 @@ public class FrcTest extends FrcTeleOp
                 break;
 
             case X_DISTANCE_DRIVE:
+                useTraceLog = true;
                 pidDriveCommand = new CmdPidDrive(
                     robot, 0.0, robot.driveDistance, 0.0, 0.0, robot.drivePowerLimit, true);
                 break;
 
             case Y_DISTANCE_DRIVE:
+                useTraceLog = true;
                 pidDriveCommand = new CmdPidDrive(
                     robot, 0.0, 0.0, robot.driveDistance, 0.0, robot.drivePowerLimit, true);
                 break;
 
             case TURN_DEGREES:
+                useTraceLog = true;
                 pidDriveCommand = new CmdPidDrive(
                     robot, 0.0, 0.0, 0.0, robot.turnDegrees, robot.drivePowerLimit, true);
                 break;
 
             case VISION_DRIVE:
+                useTraceLog = true;
                 visionPidDriveCommand = new CmdVisionPidDrive(
                     robot, 0.0, robot.ultrasonicTarget, robot.visionTurnTarget, robot.drivePowerLimit);
                 break;
 
             case SONAR_DRIVE:
+                useTraceLog = true;
                 sonarPidDriveCommand = new CmdSonarPidDrive(
                     robot, 0.0, robot.ultrasonicTarget, robot.drivePowerLimit);
                 break;
 
             case VISION_TURN:
+                useTraceLog = true;
                 visionPidTurnCommand = new CmdVisionPidTurn(robot, 0.0, 0.0, robot.drivePowerLimit);
                 break;
 
@@ -166,6 +172,8 @@ public class FrcTest extends FrcTeleOp
             default:
                 break;
         }
+
+        if (Robot.USE_TRACELOG && useTraceLog) robot.startTraceLog("Test");
 
         LiveWindow.setEnabled(liveWindowEnabled);
         sm.start(State.START);
@@ -178,7 +186,7 @@ public class FrcTest extends FrcTeleOp
         // Call TeleOp stopMode.
         //
         super.stopMode();
-        if (Robot.USE_TRACELOG) robot.stopTraceLog();
+        if (Robot.USE_TRACELOG && useTraceLog) robot.stopTraceLog();
     }   //stopMode
 
     //

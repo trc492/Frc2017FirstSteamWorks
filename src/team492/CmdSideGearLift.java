@@ -110,7 +110,6 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
 
         if (sm.isReady())
         {
-            boolean printStateInfo = true;
             state = sm.getState();
             double xDistance, yDistance;
 
@@ -212,10 +211,7 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
                     break;
             }
 
-            if(printStateInfo)
-            {
-                robot.traceStateInfo(elapsedTime, state.toString());
-            }
+            robot.traceStateInfo(elapsedTime, state.toString());
         }
 
         return done;

@@ -83,8 +83,8 @@ public class RobotInfo
     //
     // Relay channels.
     //
-    public static final int RELAY_RINGLIGHT_POWER               = 0;
-    public static final int RELAY_FLASHLIGHT_POWER              = 1;
+    public static final int RELAY_RINGLIGHT_POWER               = 0;    // 20A: White
+    public static final int RELAY_FLASHLIGHT_POWER              = 1;    // 20A: Yellow
 
     //
     // Solenoid channels.
@@ -95,8 +95,8 @@ public class RobotInfo
     public static final int SOL_GEARPICKUP_ARM_EXTEND           = 3;
     public static final int SOL_MAILBOX_RETRACT                 = 4;
     public static final int SOL_MAILBOX_EXTEND                  = 5;
-    public static final int SOL_TARGET_FOUND_LED                = 6;
-    public static final int SOL_TARGET_ALIGNED_LED              = 7;
+    public static final int SOL_TARGET_FOUND_LED                = 6;    // White LED
+    public static final int SOL_TARGET_ALIGNED_LED              = 7;    // Blue LED
 
     //
     // Miscellaneous sensors and devices.

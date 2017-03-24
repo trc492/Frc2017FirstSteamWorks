@@ -75,8 +75,7 @@ class CmdMidGearLift implements TrcRobot.RobotCommand
         sm.start(State.DO_DELAY);
 
         robot.tracer.traceInfo(
-            moduleName,
-            "delay=%.3f, alliance=%s, liftDist=%.1f, swDist=%.1f, lsEndDist=%.1f",
+            moduleName, "delay=%.3f, alliance=%s, liftDist=%.1f, sidewallDist=%.1f, loadingStationDist=%.1f",
             delay, robot.alliance.toString(), midLiftDistance, midSidewallDistance, midLoadingStationDistance);
     }   //CmdMidGearLift
 
@@ -92,7 +91,6 @@ class CmdMidGearLift implements TrcRobot.RobotCommand
 
         if (sm.isReady())
         {
-            boolean printStateInfo = true;
             state = sm.getState();
             double xDistance, yDistance;
 
@@ -128,7 +126,6 @@ class CmdMidGearLift implements TrcRobot.RobotCommand
                     //
                     // Have VisionGearDeploy aligning to the peg, deploy the gear and back up.
                     //
-//                    printStateInfo = false;
                     if (cmdVisionDeploy.cmdPeriodic(elapsedTime))
                     {
                         sm.setState(State.GO_TO_SIDEWALL);
@@ -170,10 +167,7 @@ class CmdMidGearLift implements TrcRobot.RobotCommand
                     break;
             }
 
-            if (printStateInfo)
-            {
-                robot.traceStateInfo(elapsedTime, state.toString());
-            }
+            robot.traceStateInfo(elapsedTime, state.toString());
         }
 
         return done;

@@ -128,7 +128,7 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
 
                 case DEPLOY_GEAR:
                     //
-                    // Place gear on axle.
+                    // Place gear on peg.
                     //
                     robot.mailbox.extend();
                     timer.set(visionGearDeployTime, event);
