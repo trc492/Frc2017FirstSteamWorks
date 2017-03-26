@@ -72,7 +72,7 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
         //
         // Convert all distances to the unit of inches.
         //
-        sideForwardDistance = HalDashboard.getNumber("SideForwardDistance", 72.0);
+        sideForwardDistance = HalDashboard.getNumber("SideForwardDistance", 85.0);
         sideLiftAngle = Math.abs(HalDashboard.getNumber("SideLiftAngle", 60.0));
         sideBackupDistance = Math.abs(HalDashboard.getNumber("SideBackupDistance", 12.0));
         sideLoadingStationAngle = Math.abs(HalDashboard.getNumber("SideLoadingStationAngle", 30.0));
