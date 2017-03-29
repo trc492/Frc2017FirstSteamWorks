@@ -63,7 +63,7 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
         event = new TrcEvent(moduleName);
         timer = new TrcTimer(moduleName);
         sm = new TrcStateMachine<>(moduleName);
-        sm.start(State.TURN_TO_TARGET);
+        sm.start(State.DRIVE_TOWARDS_TARGET);
 
         robot.tracer.traceInfo(
             moduleName, "dist=%.1f, deployTime=%.1f, backupDist=%.1f",

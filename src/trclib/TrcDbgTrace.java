@@ -343,11 +343,11 @@ public class TrcDbgTrace
             if (currTime >= nextTraceTime)
             {
                 nextTraceTime = currTime + traceInterval;
-                String msg = msgPrefix(funcName, level) + String.format(format, args) + "\n";
-                HalDbgLog.msg(level, msg);
+                String msg = msgPrefix(funcName, level) + String.format(format, args);
+                HalDbgLog.msg(level, msg + "\n");
                 if (traceLog != null)
                 {
-                    traceLog.print(msg);
+                    traceLog.print(msg + "\r\n");
                     traceLog.flush();
                 }
             }

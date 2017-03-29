@@ -77,7 +77,7 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
         sideBackupDistance = Math.abs(HalDashboard.getNumber("SideBackupDistance", 12.0));
         sideLoadingStationAngle = Math.abs(HalDashboard.getNumber("SideLoadingStationAngle", 30.0));
         sideLoadingStationDistance = HalDashboard.getNumber("SideLoadingStationDistance", 320.0);
-        sideDiagonalDistance = HalDashboard.getNumber("SideDiagonalDistance", 350.0); // 350 from calculations with schematics
+        sideDiagonalDistance = HalDashboard.getNumber("SideDiagonalDistance", 360.0);
 
         visionDeploy = new CmdVisionGearDeploy(robot);
 

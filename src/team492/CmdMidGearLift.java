@@ -63,9 +63,9 @@ class CmdMidGearLift implements TrcRobot.RobotCommand
         // Get parameters from the SmartDashboard. 
         //
 
-        midLiftDistance = HalDashboard.getNumber("MidLiftDistance", 36.0);
+        midLiftDistance = HalDashboard.getNumber("MidLiftDistance", 0.0);
         midSidewallDistance = Math.abs(HalDashboard.getNumber("MidSidewallDistance", 75.0));
-        midLoadingStationDistance = HalDashboard.getNumber("MidLoadingStationDistance", 28.0*12.0);
+        midLoadingStationDistance = HalDashboard.getNumber("MidLoadingStationDistance", 30.0*12.0);
 
         cmdVisionDeploy = new CmdVisionGearDeploy(robot);
 
