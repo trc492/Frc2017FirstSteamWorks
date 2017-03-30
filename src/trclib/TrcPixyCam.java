@@ -861,9 +861,10 @@ public abstract class TrcPixyCam implements TrcSerialBusDevice.CompletionHandler
      * @param address specifies the data address read from if any, can be -1 if none specified.
      * @param data specifies the byte array containing data read.
      * @param error specifies true if the request failed, false otherwise. When true, data is invalid.
+     * @return true if retry the read request, false otherwise (always no retry).
      */
     @Override
-    public void readCompletion(Object requestTag, int address, byte[] data, boolean error)
+    public boolean readCompletion(Object requestTag, int address, byte[] data, boolean error)
     {
         final String funcName = "readCompletion";
 
@@ -880,8 +881,10 @@ public abstract class TrcPixyCam implements TrcSerialBusDevice.CompletionHandler
 
         if (debugEnabled)
         {
-            dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.CALLBK);
+            dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.CALLBK, "false");
         }
+
+        return false;
     }   //readCompletion
 
     /**

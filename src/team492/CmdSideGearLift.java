@@ -70,7 +70,27 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
         this.isRed = robot.alliance == Alliance.RED_ALLIANCE;
 
         //
-        // Convert all distances to the unit of inches.
+        // RobotLength: length of robot (set to RobotInfo.ROBOT_LENGTH: 38 inches).
+        // RobotWidth: width of robot (set to RobotInfo.ROBOT_WIDTH: 35 inches).
+        // AirshipPanelWidth: width of airship panel (set to RobotInfo.FIELD_AIRSHIP_PANEL_WIDTH: 40 inches).
+        // SideLiftAngle: angle to turn for facing side lift (set to RobotInfo.FIELD_SIDELIFT_ANGLE: 60 degrees).
+        // AirshipBaseline: distance between driver station wall to baseline of the airship (approx. 114 inches).
+        // TargetDistance: distance from front of robot to vision target (set to 36 inches).
+        // StartPosition: robot start position from center peg line to side bumper edge of robot.
+        // ForwardDistance: initial distance to move forward before turning to find vision target.
+        //
+        // StartPosition
+        //  = (TargetDistance + RobotLength/2 - (AirshipPanelWidth/2)*tan(SideLiftAngle))*sin(SideLiftAngle) +
+        //    1.5*AirshipPanelWidth - RobotWidht/2
+        //  = (36 + 19 - 20*tan(60))*sin(60) + 60 - 17.5
+        //  = 60 inches (approx.)
+        //
+        // ForwardDistance
+        //  = AirshipBaseline -
+        //    (TargetDistance + RobotLength/2 - (AirshipPanelWidth/2)*tan(SideLiftAngle))*cos(SideLiftAngle) -
+        //    RobotLength/2
+        //  = 114 - (36 + 19 - 20*tan(60))*cos(60) - 19
+        //  = 85 inches (approx.)
         //
         sideForwardDistance = HalDashboard.getNumber("SideForwardDistance", 85.0);
         sideLiftAngle = Math.abs(HalDashboard.getNumber("SideLiftAngle", 60.0));

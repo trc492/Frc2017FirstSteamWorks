@@ -77,8 +77,9 @@ public abstract class TrcSerialBusDevice implements Runnable
          * @param address specifies the data address read from if any, can be -1 if none specified.
          * @param data specifies the byte array containing data read.
          * @param error specifies true if the request failed, false otherwise. When true, data is invalid.
+         * @return true if retry the read request, false otherwise.
          */
-        void readCompletion(Object requestTag, int address, byte[] data, boolean error);
+        boolean readCompletion(Object requestTag, int address, byte[] data, boolean error);
 
         /**
          * This method is called when the write operation has been completed.
@@ -272,13 +273,6 @@ public abstract class TrcSerialBusDevice implements Runnable
     {
         perfTracer = tracer;
     }   //setPerformanceTracer
-
-    protected void queueRequest(
-        Object requestTag, boolean readRequest, int address, byte[] buffer, int length, boolean repeat, TrcEvent event,
-        CompletionHandler handler)
-    {
-        requestQueue.add(new Request(requestTag, readRequest, address, buffer, length, repeat, event, handler));
-    }   //queueRequest
 
     /**
      * This method is doing a synchronous read from the device with the specified length to read.
@@ -496,6 +490,11 @@ public abstract class TrcSerialBusDevice implements Runnable
         }
     }   //asyncWrite
 
+    public void preemptiveWrite(int address, byte[] data, int length)
+    {
+        writeData(address, data, data.length);
+    }   //preemptiveWrite
+
     /**
      * This method is doing an asynchronous write to the device with the specified data and length
      *
@@ -609,7 +608,11 @@ public abstract class TrcSerialBusDevice implements Runnable
 
             if (isTaskEnabled())
             {
-                Request request = requestQueue.poll();
+                //
+                // Don't remove the request yet. If it is a read request and the handler is rejecting the data, let
+                // the request stays at the head of the queue so it can retry the read request.
+                //
+                Request request = requestQueue.peek();
 
                 if (request != null)
                 {
@@ -645,18 +648,38 @@ public abstract class TrcSerialBusDevice implements Runnable
                     {
                         if (request.readRequest)
                         {
-                            request.handler.readCompletion(
-                                request.requestTag, request.address, request.buffer, request.error);
+                            if (!request.handler.readCompletion(
+                                    request.requestTag, request.address, request.buffer, request.error))
+                            {
+                                //
+                                // The handler accepted the data, so remove the request from the head of the queue.
+                                //
+                                request = requestQueue.poll();
+                            }
                         }
                         else
                         {
                             request.handler.writeCompletion(
                                 request.requestTag, request.address, request.length, request.error);
+                            //
+                            // Write request completed, remove it from head of the queue.
+                            //
+                            request = requestQueue.poll();
                         }
+                    }
+                    else
+                    {
+                        //
+                        // There is no handler, we are done. Remove the request from the head of the queue.
+                        //
+                        request = requestQueue.poll();
                     }
 
                     if (request.readRequest && request.repeat)
                     {
+                        //
+                        // This is a repeat request, add it back to the tail of the queue.
+                        //
                         requestQueue.add(request);
                     }
                 }

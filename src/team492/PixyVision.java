@@ -38,9 +38,10 @@ public class PixyVision
     private static final boolean debugEnabled = true;
 
     private static final boolean FILTER_ENABLED = true;
-    private static final double PERCENT_TOLERANCE = 0.2;    // 20% tolerance
+    private static final double PERCENT_TOLERANCE = 0.3;    // 30% tolerance
     private static final double PERCENT_TOLERANCE_LOWER = 1.0 - PERCENT_TOLERANCE;
     private static final double PERCENT_TOLERANCE_UPPER = 1.0 + PERCENT_TOLERANCE;
+    private static final double PERCENT_TOLERANCE_CENTERY = 0.9;
 
     public class TargetInfo
     {
@@ -198,6 +199,15 @@ public class PixyVision
                 }
             }
 
+            double expectedWidth = PIXY_DISTANCE_SCALE/targetDistance;
+            double expectedHeight = expectedWidth*TARGET_HEIGHT_INCHES/TARGET_WIDTH_INCHES;
+
+            if (debugEnabled)
+            {
+                robot.tracer.traceInfo(moduleName, "Expected Target: distance=%.1f, width=%.1f, height=%.1f",
+                    targetDistance, expectedWidth, expectedHeight);
+            }
+
             if (FILTER_ENABLED)
             {
                 //
@@ -207,22 +217,22 @@ public class PixyVision
                 //
 //                if (objectList.size() >= 2)
 //                {
-//                    double expectedWidth =
+//                    double expectedObjWidth =
 //                        (PIXY_DISTANCE_SCALE/targetDistance)/(TAPE_WIDTH_INCHES/TARGET_WIDTH_INCHES);
-//                    double expectedHeight =
+//                    double expectedObjHeight =
 //                        (PIXY_DISTANCE_SCALE/targetDistance)/(TAPE_HEIGHT_INCHES/TARGET_WIDTH_INCHES);
 //
 //                    if (debugEnabled)
 //                    {
 //                        robot.tracer.traceInfo(moduleName, "Expected Object: distance=%.1f, width=%.1f, height=%.1f",
-//                            targetDistance, expectedWidth, expectedHeight);
+//                            targetDistance, expectedObjWidth, expectedObjHeight);
 //                    }
 //
 //                    for (int i = objectList.size() - 1; i >= 0; i--)
 //                    {
 //                        Rect r = objectList.get(i);
-//                        double widthRatio = r.width/expectedWidth;
-//                        double heightRatio = r.height/expectedHeight;
+//                        double widthRatio = r.width/expectedObjWidth;
+//                        double heightRatio = r.height/expectedObjHeight;
 //                        //
 //                        // If either the width or the height of the object is in the ball park (+/- 20%), let it pass.
 //                        //
@@ -247,15 +257,6 @@ public class PixyVision
                 //
                 if (objectList.size() > 2)
                 {
-                    double expectedWidth = PIXY_DISTANCE_SCALE/targetDistance;
-                    double expectedHeight = expectedWidth*TARGET_HEIGHT_INCHES/TARGET_WIDTH_INCHES;
-
-                    if (debugEnabled)
-                    {
-                        robot.tracer.traceInfo(moduleName, "Expected Target: distance=%.1f, width=%.1f, height=%.1f",
-                            targetDistance, expectedWidth, expectedHeight);
-                    }
-
                     for (int i = 0; targetRect == null && i < objectList.size() - 1; i++)
                     {
                         Rect r1 = objectList.get(i);
@@ -263,6 +264,8 @@ public class PixyVision
                         for (int j = i + 1; targetRect == null && j < objectList.size(); j++)
                         {
                             Rect r2 = objectList.get(j);
+                            int r1CenterY = (r1.y + r1.height)/2;
+                            int r2CenterY = (r2.y + r2.height)/2;
                             int targetX1 = Math.min(r1.x, r2.x);
                             int targetY1 = Math.min(r1.y, r2.y);
                             int targetX2 = Math.max(r1.x + r1.width,  r2.x + r2.width);
@@ -271,9 +274,12 @@ public class PixyVision
                             int targetHeight = targetY2 - targetY1;
                             double widthRatio = targetWidth/expectedWidth;
                             double heightRatio = targetHeight/expectedHeight;
+                            double minCenterY = Math.min(r1CenterY, r2CenterY);
+                            double maxCenterY = Math.max(r1CenterY, r2CenterY);
 
                             if (widthRatio >= PERCENT_TOLERANCE_LOWER && widthRatio <= PERCENT_TOLERANCE_UPPER &&
-                                heightRatio >= PERCENT_TOLERANCE_LOWER && heightRatio <= PERCENT_TOLERANCE_UPPER)
+                                heightRatio >= PERCENT_TOLERANCE_LOWER && heightRatio <= PERCENT_TOLERANCE_UPPER ||
+                                minCenterY/maxCenterY >= PERCENT_TOLERANCE_CENTERY)
                             {
                                 targetRect = new Rect(targetX1, targetY1, targetWidth, targetHeight);
 
@@ -361,7 +367,7 @@ public class PixyVision
 
         if (targetAlignedLED != null)
         {
-            targetAlignedLED.setState(targetInfo != null && Math.abs(targetInfo.angle) <= 4.0);
+            targetAlignedLED.setState(targetInfo != null && Math.abs(targetInfo.angle) <= 2.0);
         }
 
         return targetInfo;

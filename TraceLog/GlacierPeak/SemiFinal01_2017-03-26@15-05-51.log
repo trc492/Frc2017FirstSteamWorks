@@ -1,0 +1,935 @@
+FrcRobotBase.FirstSteamWorks_Info: Sun Mar 26 15:05:51 PDT 2017: ***** Starting autonomous *****
+FrcRobotBase.CmdVisionGearDeploy_Info: dist=7.0, deployTime=0.3, backupDist=36.0
+FrcRobotBase.CmdMidGearLift_Info: delay=0.000, alliance=BLUE_ALLIANCE, liftDist=36.0, sidewallDist=75.0, loadingStationDist=336.0
+FrcRobotBase.Vision_Info: Front pixy is enabled!
+FrcRobotBase.Robot_Info: [0.321]   DO_DELAY: xPos=  0.00,yPos=  0.00,heading=   0.0/   0.0,volts=12.5(12.5)
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.Robot_Info: [0.339] GO_TO_MID_LIFT: xPos=  0.00,yPos=  0.00,heading=  -1.0/   0.0,volts=12.5(12.5)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=   0.0, Error=   0.0, PIDTerms= 0.000/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  36.0, Input=   0.0, Error=  36.0, PIDTerms= 0.000/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.0, Error=   1.0, PIDTerms= 0.000/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500)
+FrcRobotBase.PixyVision_Info: 1 object(s) found
+FrcRobotBase.PixyVision_Info: 2 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x00f8, sig=1, centerX=161, centerY= 78, width=  2, height=  6, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x00e0, sig=1, centerX=140, centerY= 75, width=  2, height=  6, angle=  0
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=139, y=72, w=23, h=9
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=-4.1, yDist=100.0, angle=-2.4
+FrcRobotBase.PixyVision_Info: 1 object(s) found
+FrcRobotBase.PixyVision_Info: 2 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x00f7, sig=1, centerX=161, centerY= 76, width=  3, height=  6, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x00e7, sig=1, centerX=139, centerY= 83, width=  2, height=  6, angle=  0
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=138, y=73, w=25, h=13
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=-3.8, yDist=92.0, angle=-2.4
+FrcRobotBase.PixyVision_Info: 2 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x00e8, sig=1, centerX=138, centerY= 83, width=  2, height=  8, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x00f7, sig=1, centerX=161, centerY= 75, width=  3, height=  7, angle=  0
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=137, y=72, w=26, h=15
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=-3.8, yDist=88.5, angle=-2.5
+FrcRobotBase.PixyVision_Info: 2 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x0105, sig=1, centerX=163, centerY= 80, width=  5, height= 12, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x00ee, sig=1, centerX=139, centerY= 85, width=  4, height=  9, angle=  0
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=137, y=74, w=29, h=16
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=-2.9, yDist=79.3, angle=-2.1
+FrcRobotBase.PixyVision_Info: 3 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x010b, sig=1, centerX=164, centerY= 82, width=  5, height= 15, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x00ea, sig=1, centerX=137, centerY= 88, width=  2, height=  6, angle=  0
+FrcRobotBase.PixyVision_Info: [2] sync=0xaa55, chksum=0x00e4, sig=1, centerX=138, centerY= 81, width=  6, height=  2, angle=  0
+FrcRobotBase.PixyVision_Info: Expected Target: distance=60.3, width=38.2, height=19.1
+FrcRobotBase.PixyVision_Info: ***TargetRect***: [0,1] x=136, y=75, w=31, h=16
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=-2.7, yDist=74.2, angle=-2.1
+FrcRobotBase.PixyVision_Info: 2 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x010e, sig=1, centerX=164, centerY= 84, width=  5, height= 16, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x00f6, sig=1, centerX=137, centerY= 85, width=  6, height= 17, angle=  0
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=134, y=76, w=33, h=18
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=-2.9, yDist=69.7, angle=-2.4
+FrcRobotBase.PixyVision_Info: 2 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x00f8, sig=1, centerX=136, centerY= 86, width=  7, height= 18, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x0113, sig=1, centerX=166, centerY= 85, width=  6, height= 17, angle=  0
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=133, y=77, w=36, h=18
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=-2.5, yDist=63.9, angle=-2.2
+FrcRobotBase.PixyVision_Info: 2 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x00fb, sig=1, centerX=137, centerY= 89, width=  6, height= 18, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x0116, sig=1, centerX=167, centerY= 86, width=  5, height= 19, angle=  0
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=134, y=77, w=36, h=21
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=-2.2, yDist=63.9, angle=-2.0
+FrcRobotBase.PixyVision_Info: 2 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x00f8, sig=1, centerX=135, centerY= 88, width=  6, height= 18, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x011c, sig=1, centerX=168, centerY= 87, width=  8, height= 20, angle=  0
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=132, y=77, w=40, h=20
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=-2.0, yDist=57.5, angle=-2.0
+FrcRobotBase.PixyVision_Info: 2 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x00fb, sig=1, centerX=136, centerY= 89, width=  6, height= 19, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x011c, sig=1, centerX=169, centerY= 87, width=  6, height= 21, angle=  0
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=133, y=77, w=39, h=22
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=-1.9, yDist=59.0, angle=-1.9
+FrcRobotBase.PixyVision_Info: 2 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x00fd, sig=1, centerX=135, centerY= 90, width=  7, height= 20, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x0119, sig=1, centerX=168, centerY= 88, width=  5, height= 19, angle=  0
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=132, y=79, w=39, h=21
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=-2.2, yDist=59.0, angle=-2.1
+FrcRobotBase.PixyVision_Info: 2 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x00fd, sig=1, centerX=135, centerY= 90, width=  7, height= 20, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x011c, sig=1, centerX=169, centerY= 88, width=  6, height= 20, angle=  0
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=132, y=78, w=40, h=22
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=-2.0, yDist=57.5, angle=-2.0
+FrcRobotBase.PixyVision_Info: 2 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x00fc, sig=1, centerX=135, centerY= 90, width=  6, height= 20, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x011c, sig=1, centerX=169, centerY= 88, width=  6, height= 20, angle=  0
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=132, y=78, w=40, h=22
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=-2.0, yDist=57.5, angle=-2.0
+FrcRobotBase.PixyVision_Info: 2 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x00ff, sig=1, centerX=136, centerY= 90, width=  8, height= 20, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x0119, sig=1, centerX=168, centerY= 88, width=  5, height= 19, angle=  0
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=132, y=79, w=39, h=21
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=-2.2, yDist=59.0, angle=-2.1
+FrcRobotBase.PixyVision_Info: 2 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x011b, sig=1, centerX=168, centerY= 88, width=  6, height= 20, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x00fe, sig=1, centerX=135, centerY= 89, width=  8, height= 21, angle=  0
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=131, y=78, w=40, h=22
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=-2.3, yDist=57.5, angle=-2.2
+FrcRobotBase.PixyVision_Info: 2 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x00fa, sig=1, centerX=134, centerY= 90, width=  5, height= 20, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x011b, sig=1, centerX=168, centerY= 88, width=  7, height= 19, angle=  0
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=132, y=79, w=40, h=21
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=-2.0, yDist=57.5, angle=-2.0
+FrcRobotBase.PixyVision_Info: 2 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x00fb, sig=1, centerX=134, centerY= 90, width=  6, height= 20, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x011b, sig=1, centerX=168, centerY= 88, width=  7, height= 19, angle=  0
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=131, y=79, w=41, h=21
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=-2.1, yDist=56.1, angle=-2.1
+FrcRobotBase.CmdVisionGearDeploy_Info: Target Info: Rect[131,79,41,21], xDistance=-2.1, yDistance=56.1, angle=-2.1
+FrcRobotBase.Robot_Info: [2.353] TURN_TO_TARGET: xPos= -0.02,yPos= 34.86,heading=   0.1/  -2.1,volts=12.4(11.1)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.002/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  34.9, Input=  34.9, Error=   0.0, PIDTerms= 0.040/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=   0.1, Error=  -2.3, PIDTerms=-0.009/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500)
+FrcRobotBase.Robot_Info: [2.353] VISION_GEAR_DEPLOY: xPos= -0.02,yPos= 34.86,heading=   0.1/  -2.1,volts=12.4(11.1)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.002/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  34.9, Input=  34.9, Error=   0.0, PIDTerms= 0.040/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=   0.1, Error=  -2.3, PIDTerms=-0.009/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500)
+FrcRobotBase.PixyVision_Info: 2 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x00fc, sig=1, centerX=134, centerY= 90, width=  7, height= 20, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x011b, sig=1, centerX=168, centerY= 88, width=  7, height= 19, angle=  0
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=131, y=79, w=41, h=21
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=-2.1, yDist=56.1, angle=-2.1
+FrcRobotBase.Robot_Info: [2.397] VISION_GEAR_DEPLOY: xPos= -0.02,yPos= 34.86,heading=   0.1/  -2.1,volts=12.4(11.1)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.002/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  34.9, Input=  34.9, Error=   0.0, PIDTerms= 0.040/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=   0.1, Error=  -2.3, PIDTerms=-0.135/ 0.000/ 0.000/-0.000, Output=-0.135(-0.500/0.500)
+FrcRobotBase.Robot_Info: [2.414] VISION_GEAR_DEPLOY: xPos= -0.02,yPos= 34.86,heading=   0.1/  -2.1,volts=12.5(11.1)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.002/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  34.9, Input=  34.9, Error=   0.0, PIDTerms= 0.040/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=   0.1, Error=  -2.3, PIDTerms=-0.135/ 0.000/ 0.000/-0.000, Output=-0.135(-0.500/0.500)
+FrcRobotBase.Robot_Info: [2.431] VISION_GEAR_DEPLOY: xPos= -0.01,yPos= 34.90,heading=   0.1/  -2.1,volts=12.3(11.1)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.002/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  34.9, Input=  34.9, Error=   0.0, PIDTerms= 0.040/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=   0.1, Error=  -2.3, PIDTerms=-0.135/ 0.000/ 0.000/-0.000, Output=-0.135(-0.500/0.500)
+FrcRobotBase.Robot_Info: [2.448] VISION_GEAR_DEPLOY: xPos=  0.00,yPos= 34.90,heading=   0.1/  -2.1,volts=12.3(11.1)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.002/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  34.9, Input=  34.9, Error=   0.0, PIDTerms= 0.040/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=   0.1, Error=  -2.3, PIDTerms=-0.135/ 0.000/ 0.000/-0.000, Output=-0.135(-0.500/0.500)
+FrcRobotBase.Robot_Info: [2.461] VISION_GEAR_DEPLOY: xPos= -0.05,yPos= 34.88,heading=   0.1/  -2.1,volts=12.3(11.1)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.002/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  34.9, Input=  34.9, Error=   0.0, PIDTerms= 0.040/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=   0.1, Error=  -2.2, PIDTerms=-0.135/ 0.000/ 0.001/-0.000, Output=-0.134(-0.500/0.500)
+FrcRobotBase.Robot_Info: [2.479] VISION_GEAR_DEPLOY: xPos= -0.02,yPos= 34.92,heading=   0.0/  -2.1,volts=12.3(11.1)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.002/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  34.9, Input=  34.9, Error=   0.0, PIDTerms= 0.040/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=   0.1, Error=  -2.2, PIDTerms=-0.132/ 0.000/ 0.004/-0.000, Output=-0.128(-0.500/0.500)
+FrcRobotBase.PixyVision_Info: 2 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x00fa, sig=1, centerX=134, centerY= 90, width=  5, height= 20, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x011a, sig=1, centerX=168, centerY= 89, width=  7, height= 17, angle=  0
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=132, y=80, w=40, h=20
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=-2.0, yDist=57.5, angle=-2.0
+FrcRobotBase.Robot_Info: [2.502] VISION_GEAR_DEPLOY: xPos= -0.03,yPos= 34.89,heading=  -0.2/  -2.1,volts=12.3(11.1)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.002/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  34.9, Input=  34.9, Error=   0.0, PIDTerms= 0.040/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=   0.0, Error=  -2.1, PIDTerms=-0.129/ 0.000/ 0.005/-0.000, Output=-0.124(-0.500/0.500)
+FrcRobotBase.Robot_Info: [2.519] VISION_GEAR_DEPLOY: xPos= -0.03,yPos= 34.88,heading=  -0.3/  -2.1,volts=12.3(11.1)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.002/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  34.9, Input=  34.9, Error=   0.0, PIDTerms= 0.040/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=  -0.2, Error=  -1.9, PIDTerms=-0.115/ 0.000/ 0.024/-0.000, Output=-0.091(-0.500/0.500)
+FrcRobotBase.Robot_Info: [2.536] VISION_GEAR_DEPLOY: xPos= -0.03,yPos= 34.87,heading=  -0.4/  -2.1,volts=12.3(11.1)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.002/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  34.9, Input=  34.9, Error=   0.0, PIDTerms= 0.040/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=  -0.3, Error=  -1.8, PIDTerms=-0.108/ 0.000/ 0.011/-0.000, Output=-0.097(-0.500/0.500)
+FrcRobotBase.Robot_Info: [2.553] VISION_GEAR_DEPLOY: xPos= -0.02,yPos= 34.86,heading=  -0.5/  -2.1,volts=12.3(11.1)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.002/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  34.9, Input=  34.9, Error=   0.0, PIDTerms= 0.040/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=  -0.4, Error=  -1.7, PIDTerms=-0.102/ 0.000/ 0.012/-0.000, Output=-0.090(-0.500/0.500)
+FrcRobotBase.Robot_Info: [2.570] VISION_GEAR_DEPLOY: xPos= -0.03,yPos= 34.85,heading=  -0.6/  -2.1,volts=12.3(11.1)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.002/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  34.9, Input=  34.9, Error=   0.0, PIDTerms= 0.040/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=  -0.5, Error=  -1.6, PIDTerms=-0.096/ 0.000/ 0.010/-0.000, Output=-0.087(-0.500/0.500)
+FrcRobotBase.Robot_Info: [2.586] VISION_GEAR_DEPLOY: xPos= -0.03,yPos= 34.84,heading=  -0.6/  -2.1,volts=12.3(11.1)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.002/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  34.9, Input=  34.9, Error=   0.0, PIDTerms= 0.040/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=  -0.6, Error=  -1.6, PIDTerms=-0.093/ 0.000/ 0.006/-0.000, Output=-0.087(-0.500/0.500)
+FrcRobotBase.PixyVision_Info: 2 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x0100, sig=1, centerX=138, centerY= 90, width=  7, height= 20, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x011e, sig=1, centerX=172, centerY= 88, width=  6, height= 19, angle=  0
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=135, y=79, w=40, h=21
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=-1.3, yDist=57.5, angle=-1.2
+FrcRobotBase.Robot_Info: [2.610] VISION_GEAR_DEPLOY: xPos= -0.03,yPos= 34.83,heading=  -0.6/  -2.1,volts=12.4(11.1)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.002/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  34.9, Input=  34.9, Error=   0.0, PIDTerms= 0.040/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=  -0.6, Error=  -1.5, PIDTerms=-0.092/ 0.000/ 0.001/-0.000, Output=-0.091(-0.500/0.500)
+FrcRobotBase.Robot_Info: [2.627] VISION_GEAR_DEPLOY: xPos= -0.04,yPos= 34.82,heading=  -0.6/  -2.1,volts=12.3(11.1)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.002/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  34.9, Input=  34.9, Error=   0.0, PIDTerms= 0.040/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=  -0.6, Error=  -1.5, PIDTerms=-0.091/ 0.000/ 0.003/-0.000, Output=-0.088(-0.500/0.500)
+FrcRobotBase.Robot_Info: [2.641] VISION_GEAR_DEPLOY: xPos= -0.03,yPos= 34.82,heading=  -0.6/  -2.1,volts=12.3(11.1)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.002/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  34.9, Input=  34.9, Error=   0.0, PIDTerms= 0.040/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=  -0.6, Error=  -1.5, PIDTerms=-0.090/ 0.000/ 0.001/-0.000, Output=-0.089(-0.500/0.500)
+FrcRobotBase.Robot_Info: [2.658] VISION_GEAR_DEPLOY: xPos= -0.03,yPos= 34.82,heading=  -0.6/  -2.1,volts=12.3(11.1)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.002/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  34.9, Input=  34.9, Error=   0.0, PIDTerms= 0.040/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=  -0.6, Error=  -1.5, PIDTerms=-0.090/ 0.000/ 0.001/-0.000, Output=-0.089(-0.500/0.500)
+FrcRobotBase.Robot_Info: [2.683] VISION_GEAR_DEPLOY: xPos= -0.04,yPos= 34.81,heading=  -0.6/  -2.1,volts=12.3(11.1)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.002/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  34.9, Input=  34.9, Error=   0.0, PIDTerms= 0.040/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=  -0.6, Error=  -1.5, PIDTerms=-0.089/ 0.000/ 0.002/-0.000, Output=-0.087(-0.500/0.500)
+FrcRobotBase.PixyVision_Info: 2 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x0100, sig=1, centerX=138, centerY= 90, width=  7, height= 20, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x011f, sig=1, centerX=172, centerY= 88, width=  7, height= 19, angle=  0
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=135, y=79, w=41, h=21
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=-1.1, yDist=56.1, angle=-1.1
+FrcRobotBase.PixyVision_Info: 2 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x011e, sig=1, centerX=172, centerY= 88, width=  6, height= 19, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x0100, sig=1, centerX=138, centerY= 89, width=  7, height= 21, angle=  0
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=135, y=79, w=40, h=21
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=-1.3, yDist=57.5, angle=-1.2
+FrcRobotBase.Robot_Info: [2.720] DRIVE_TOWARDS_TARGET: xPos= -0.04,yPos= 34.81,heading=  -0.6/  -2.1,volts=12.4(11.1)
+FrcRobotBase.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=   0.0, Error=  38.6, PIDTerms= 0.000/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=   0.0, Error=  -1.2, PIDTerms= 0.000/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500)
+FrcRobotBase.Robot_Info: [2.720] VISION_GEAR_DEPLOY: xPos= -0.04,yPos= 34.81,heading=  -0.6/  -2.1,volts=12.4(11.1)
+FrcRobotBase.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=   0.0, Error=  38.6, PIDTerms= 0.000/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=   0.0, Error=  -1.2, PIDTerms= 0.000/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500)
+FrcRobotBase.PixyVision_Info: 2 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x0100, sig=1, centerX=138, centerY= 90, width=  7, height= 20, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x011f, sig=1, centerX=172, centerY= 88, width=  6, height= 20, angle=  0
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=135, y=78, w=40, h=22
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=-1.3, yDist=57.5, angle=-1.2
+FrcRobotBase.Robot_Info: [2.774] VISION_GEAR_DEPLOY: xPos= -0.04,yPos= 34.81,heading=  -0.5/  -2.1,volts=11.2(11.1)
+FrcRobotBase.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=  45.6, Error=  38.6, PIDTerms= 0.637/ 0.000/ 0.000/ 0.000, Output= 0.500(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=  -1.2, Error=  -1.2, PIDTerms=-0.031/ 0.000/ 0.000/ 0.000, Output=-0.031(-0.500/0.500)
+FrcRobotBase.PixyVision_Info: 2 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x011e, sig=1, centerX=172, centerY= 88, width=  6, height= 19, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x00fe, sig=1, centerX=138, centerY= 89, width=  7, height= 19, angle=  0
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=135, y=79, w=40, h=20
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=-1.3, yDist=57.5, angle=-1.2
+FrcRobotBase.PixyVision_Info: 2 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x00ff, sig=1, centerX=138, centerY= 90, width=  6, height= 20, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x011e, sig=1, centerX=172, centerY= 88, width=  6, height= 19, angle=  0
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=135, y=79, w=40, h=21
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=-1.3, yDist=57.5, angle=-1.2
+FrcRobotBase.Robot_Info: [2.841] VISION_GEAR_DEPLOY: xPos= -0.11,yPos= 35.41,heading=  -0.8/  -2.1,volts=10.9(10.9)
+FrcRobotBase.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=  45.5, Error=  38.5, PIDTerms= 0.635/ 0.000/-0.003/ 0.000, Output= 0.500(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=  -1.2, Error=  -1.2, PIDTerms=-0.031/ 0.000/ 0.000/ 0.000, Output=-0.031(-0.500/0.500)
+FrcRobotBase.PixyVision_Info: 2 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x00ff, sig=1, centerX=138, centerY= 89, width=  6, height= 21, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x011e, sig=1, centerX=172, centerY= 88, width=  6, height= 19, angle=  0
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=135, y=79, w=40, h=21
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=-1.3, yDist=57.5, angle=-1.2
+FrcRobotBase.Robot_Info: [2.876] VISION_GEAR_DEPLOY: xPos= -0.24,yPos= 35.88,heading=  -0.8/  -2.1,volts=11.0(10.9)
+FrcRobotBase.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=  45.5, Error=  38.5, PIDTerms= 0.635/ 0.000/ 0.000/ 0.000, Output= 0.500(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=  -1.2, Error=  -1.2, PIDTerms=-0.031/ 0.000/ 0.000/ 0.000, Output=-0.031(-0.500/0.500)
+FrcRobotBase.PixyVision_Info: 2 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x0122, sig=1, centerX=173, centerY= 89, width=  7, height= 20, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x0102, sig=1, centerX=139, centerY= 91, width=  7, height= 20, angle=  0
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=136, y=79, w=41, h=22
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=-0.9, yDist=56.1, angle=-0.9
+FrcRobotBase.Robot_Info: [2.910] VISION_GEAR_DEPLOY: xPos= -0.29,yPos= 36.50,heading=  -1.0/  -2.1,volts=11.1(10.9)
+FrcRobotBase.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=  45.5, Error=  38.5, PIDTerms= 0.635/ 0.000/ 0.000/ 0.000, Output= 0.500(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=  -0.9, Error=  -0.9, PIDTerms=-0.022/ 0.000/ 0.002/ 0.000, Output=-0.020(-0.500/0.500)
+FrcRobotBase.PixyVision_Info: 2 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x0101, sig=1, centerX=139, centerY= 90, width=  6, height= 21, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x0122, sig=1, centerX=174, centerY= 89, width=  6, height= 20, angle=  0
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=136, y=79, w=41, h=22
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=-0.9, yDist=56.1, angle=-0.9
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.Robot_Info: [2.949] VISION_GEAR_DEPLOY: xPos= -0.20,yPos= 37.05,heading=  -1.3/  -2.1,volts=11.3(10.9)
+FrcRobotBase.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=  45.6, Error=  38.6, PIDTerms= 0.637/ 0.000/ 0.006/ 0.000, Output= 0.500(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=   0.0, Error=  -0.0, PIDTerms=-0.000/ 0.000/ 0.003/ 0.000, Output= 0.003(-0.500/0.500)
+FrcRobotBase.PixyVision_Info: 2 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x0102, sig=1, centerX=140, centerY= 90, width=  6, height= 21, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x0122, sig=1, centerX=174, centerY= 89, width=  6, height= 20, angle=  0
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=137, y=79, w=40, h=22
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=-0.8, yDist=57.5, angle=-0.7
+FrcRobotBase.Robot_Info: [2.980] VISION_GEAR_DEPLOY: xPos= -0.20,yPos= 38.11,heading=  -1.4/  -2.1,volts=11.4(10.9)
+FrcRobotBase.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=  45.5, Error=  38.5, PIDTerms= 0.635/ 0.000/-0.010/ 0.000, Output= 0.500(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=  -0.7, Error=  -0.7, PIDTerms=-0.019/ 0.000/-0.005/ 0.000, Output=-0.023(-0.500/0.500)
+FrcRobotBase.PixyVision_Info: 2 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x0105, sig=1, centerX=141, centerY= 91, width=  7, height= 21, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x0125, sig=1, centerX=176, centerY= 89, width=  6, height= 21, angle=  0
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=138, y=79, w=41, h=23
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=-0.4, yDist=56.1, angle=-0.4
+FrcRobotBase.Robot_Info: [3.016] VISION_GEAR_DEPLOY: xPos= -0.32,yPos= 39.23,heading=  -1.5/  -2.1,volts=11.3(10.9)
+FrcRobotBase.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=  45.2, Error=  38.2, PIDTerms= 0.631/ 0.000/-0.014/ 0.000, Output= 0.500(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=  -0.4, Error=  -0.4, PIDTerms=-0.009/ 0.000/ 0.002/ 0.000, Output=-0.008(-0.500/0.500)
+FrcRobotBase.PixyVision_Info: 2 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x0107, sig=1, centerX=142, centerY= 91, width=  8, height= 21, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x0129, sig=1, centerX=178, centerY= 90, width=  8, height= 20, angle=  0
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=138, y=80, w=44, h=22
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=0.0, yDist=52.3, angle=0.0
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.Robot_Info: [3.056] VISION_GEAR_DEPLOY: xPos= -0.32,yPos= 40.66,heading=  -1.7/  -2.1,volts=11.4(10.9)
+FrcRobotBase.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=  44.0, Error=  37.0, PIDTerms= 0.610/ 0.000/-0.049/ 0.000, Output= 0.500(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=   0.0, Error=  -0.0, PIDTerms=-0.000/ 0.000/ 0.001/ 0.000, Output= 0.001(-0.500/0.500)
+FrcRobotBase.PixyVision_Info: 2 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x0107, sig=1, centerX=142, centerY= 92, width=  7, height= 21, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x0129, sig=1, centerX=178, centerY= 92, width=  6, height= 20, angle=  0
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=139, y=82, w=42, h=21
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=0.0, yDist=54.8, angle=0.0
+FrcRobotBase.Robot_Info: [3.093] VISION_GEAR_DEPLOY: xPos= -0.15,yPos= 41.64,heading=  -1.8/  -2.1,volts=11.3(10.9)
+FrcRobotBase.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=  43.6, Error=  36.6, PIDTerms= 0.604/ 0.000/-0.028/ 0.000, Output= 0.500(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=   0.0, Error=  -0.0, PIDTerms=-0.000/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500)
+FrcRobotBase.PixyVision_Info: 2 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x012c, sig=1, centerX=179, centerY= 91, width=  7, height= 22, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x0109, sig=1, centerX=142, centerY= 93, width=  7, height= 22, angle=  0
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=139, y=80, w=44, h=24
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=0.2, yDist=52.3, angle=0.2
+FrcRobotBase.Robot_Info: [3.130] VISION_GEAR_DEPLOY: xPos= -0.14,yPos= 43.36,heading=  -2.0/  -2.1,volts=11.3(10.9)
+FrcRobotBase.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=  40.7, Error=  33.7, PIDTerms= 0.557/ 0.000/-0.180/ 0.000, Output= 0.377(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=   0.2, Error=   0.2, PIDTerms= 0.006/ 0.000/ 0.001/ 0.000, Output= 0.007(-0.500/0.500)
+FrcRobotBase.PixyVision_Info: 2 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x0109, sig=1, centerX=143, centerY= 92, width=  6, height= 23, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x012e, sig=1, centerX=180, centerY= 92, width=  7, height= 22, angle=  0
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=140, y=81, w=44, h=23
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=0.5, yDist=52.3, angle=0.5
+FrcRobotBase.PixyVision_Info: 2 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x010e, sig=1, centerX=143, centerY= 94, width=  8, height= 24, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x0131, sig=1, centerX=181, centerY= 92, width=  7, height= 24, angle=  0
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=139, y=80, w=46, h=26
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=0.4, yDist=50.0, angle=0.5
+FrcRobotBase.Robot_Info: [3.177] VISION_GEAR_DEPLOY: xPos= -0.12,yPos= 45.11,heading=  -2.1/  -2.1,volts=11.9(10.9)
+FrcRobotBase.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=  39.0, Error=  32.0, PIDTerms= 0.528/ 0.000/-0.070/ 0.000, Output= 0.458(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=   0.5, Error=   0.5, PIDTerms= 0.012/ 0.000/ 0.001/ 0.000, Output= 0.013(-0.500/0.500)
+FrcRobotBase.PixyVision_Info: 2 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x010b, sig=1, centerX=143, centerY= 94, width=  6, height= 23, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x0134, sig=1, centerX=183, centerY= 93, width=  7, height= 24, angle=  0
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=140, y=81, w=47, h=25
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=0.7, yDist=48.9, angle=0.9
+FrcRobotBase.Robot_Info: [3.213] VISION_GEAR_DEPLOY: xPos= -0.07,yPos= 46.99,heading=  -2.1/  -2.1,volts=11.7(10.9)
+FrcRobotBase.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=  38.5, Error=  31.5, PIDTerms= 0.520/ 0.000/-0.026/ 0.000, Output= 0.494(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=   0.9, Error=   0.9, PIDTerms= 0.022/ 0.000/ 0.001/ 0.000, Output= 0.023(-0.500/0.500)
+FrcRobotBase.PixyVision_Info: 3 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x0111, sig=1, centerX=144, centerY= 95, width=  9, height= 24, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x0138, sig=1, centerX=184, centerY= 94, width=  9, height= 24, angle=  0
+FrcRobotBase.PixyVision_Info: [2] sync=0xaa55, chksum=0x00da, sig=1, centerX=146, centerY= 58, width= 11, height=  2, angle=  0
+FrcRobotBase.PixyVision_Info: Expected Target: distance=37.9, width=60.7, height=30.4
+FrcRobotBase.PixyVision_Info: ***TargetRect***: [0,1] x=140, y=82, w=49, h=25
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=0.9, yDist=46.9, angle=1.1
+FrcRobotBase.Robot_Info: [3.249] VISION_GEAR_DEPLOY: xPos= -0.06,yPos= 48.98,heading=  -2.1/  -2.1,volts=11.6(10.9)
+FrcRobotBase.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=  37.9, Error=  30.9, PIDTerms= 0.509/ 0.000/-0.033/ 0.000, Output= 0.476(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=   1.1, Error=   1.1, PIDTerms= 0.028/ 0.000/ 0.001/ 0.000, Output= 0.029(-0.500/0.500)
+FrcRobotBase.PixyVision_Info: 2 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x0116, sig=1, centerX=144, centerY= 96, width= 10, height= 27, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x0139, sig=1, centerX=186, centerY= 94, width= 10, height= 22, angle=  0
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=139, y=83, w=52, h=27
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=1.0, yDist=44.2, angle=1.2
+FrcRobotBase.PixyVision_Info: 2 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x013e, sig=1, centerX=186, centerY= 96, width=  9, height= 26, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x0117, sig=1, centerX=144, centerY= 98, width= 10, height= 26, angle=  0
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=139, y=83, w=52, h=28
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=1.0, yDist=44.2, angle=1.2
+FrcRobotBase.Robot_Info: [3.300] VISION_GEAR_DEPLOY: xPos= -0.01,yPos= 51.08,heading=  -2.0/  -2.1,volts=11.6(10.9)
+FrcRobotBase.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=  35.9, Error=  28.9, PIDTerms= 0.476/ 0.000/-0.081/ 0.000, Output= 0.395(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=   1.2, Error=   1.2, PIDTerms= 0.031/ 0.000/ 0.000/ 0.000, Output= 0.032(-0.500/0.500)
+FrcRobotBase.PixyVision_Info: 2 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x0144, sig=1, centerX=188, centerY= 97, width= 10, height= 28, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x0117, sig=1, centerX=143, centerY= 98, width= 10, height= 27, angle=  0
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=138, y=83, w=55, h=29
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=1.0, yDist=41.8, angle=1.4
+FrcRobotBase.Robot_Info: [3.334] VISION_GEAR_DEPLOY: xPos=  0.01,yPos= 53.19,heading=  -1.9/  -2.1,volts=11.8(10.9)
+FrcRobotBase.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=  33.0, Error=  26.0, PIDTerms= 0.429/ 0.000/-0.156/ 0.000, Output= 0.274(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=   1.4, Error=   1.4, PIDTerms= 0.034/ 0.000/ 0.001/ 0.000, Output= 0.035(-0.500/0.500)
+FrcRobotBase.PixyVision_Info: 2 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x0119, sig=1, centerX=143, centerY=100, width= 10, height= 27, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x0143, sig=1, centerX=188, centerY= 98, width=  9, height= 27, angle=  0
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=138, y=85, w=55, h=29
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=1.0, yDist=41.8, angle=1.4
+FrcRobotBase.Robot_Info: [3.356] VISION_GEAR_DEPLOY: xPos=  0.03,yPos= 54.21,heading=  -1.8/  -2.1,volts=12.1(10.9)
+FrcRobotBase.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=  32.3, Error=  25.3, PIDTerms= 0.417/ 0.000/-0.055/ 0.000, Output= 0.362(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=   1.4, Error=   1.4, PIDTerms= 0.034/ 0.000/ 0.000/ 0.000, Output= 0.034(-0.500/0.500)
+FrcRobotBase.PixyVision_Info: 3 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x011b, sig=1, centerX=142, centerY=101, width= 11, height= 28, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x0145, sig=1, centerX=189, centerY= 99, width= 10, height= 26, angle=  0
+FrcRobotBase.PixyVision_Info: [2] sync=0xaa55, chksum=0x00da, sig=1, centerX=142, centerY= 56, width= 14, height=  5, angle=  0
+FrcRobotBase.PixyVision_Info: Expected Target: distance=31.0, width=74.2, height=37.1
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=137, y=86, w=57, h=29
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=1.0, yDist=40.4, angle=1.4
+FrcRobotBase.Robot_Info: [3.400] VISION_GEAR_DEPLOY: xPos=  0.06,yPos= 56.31,heading=  -1.6/  -2.1,volts=12.0(10.9)
+FrcRobotBase.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=  31.1, Error=  24.1, PIDTerms= 0.398/ 0.000/-0.098/ 0.000, Output= 0.300(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=   1.4, Error=   1.4, PIDTerms= 0.034/ 0.000/ 0.000/ 0.000, Output= 0.034(-0.500/0.500)
+FrcRobotBase.PixyVision_Info: 2 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x0120, sig=1, centerX=142, centerY=102, width= 12, height= 31, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x014b, sig=1, centerX=190, centerY=100, width= 11, height= 29, angle=  0
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=136, y=86, w=60, h=32
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=1.0, yDist=38.3, angle=1.5
+FrcRobotBase.PixyVision_Info: 3 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x011f, sig=1, centerX=140, centerY=104, width= 11, height= 31, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x0153, sig=1, centerX=192, centerY=102, width= 12, height= 32, angle=  0
+FrcRobotBase.PixyVision_Info: [2] sync=0xaa55, chksum=0x00de, sig=1, centerX=137, centerY= 59, width= 15, height= 10, angle=  0
+FrcRobotBase.PixyVision_Info: Expected Target: distance=28.3, width=81.3, height=40.7
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=135, y=86, w=63, h=34
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=1.0, yDist=36.5, angle=1.6
+FrcRobotBase.Robot_Info: [3.460] VISION_GEAR_DEPLOY: xPos=  0.05,yPos= 59.48,heading=  -1.2/  -2.1,volts=12.2(10.9)
+FrcRobotBase.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=  28.3, Error=  21.3, PIDTerms= 0.351/ 0.000/-0.098/ 0.000, Output= 0.253(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=   1.6, Error=   1.6, PIDTerms= 0.040/ 0.000/ 0.001/ 0.000, Output= 0.041(-0.500/0.500)
+FrcRobotBase.PixyVision_Info: 3 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x0124, sig=1, centerX=139, centerY=107, width= 12, height= 33, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x0156, sig=1, centerX=192, centerY=105, width= 12, height= 32, angle=  0
+FrcRobotBase.PixyVision_Info: [2] sync=0xaa55, chksum=0x00d3, sig=1, centerX=135, centerY= 67, width=  6, height=  2, angle=  0
+FrcRobotBase.PixyVision_Info: Expected Target: distance=26.3, width=87.5, height=43.8
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=133, y=89, w=65, h=35
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=0.8, yDist=35.4, angle=1.4
+FrcRobotBase.Robot_Info: [3.503] VISION_GEAR_DEPLOY: xPos=  0.06,yPos= 61.58,heading=  -0.9/  -2.1,volts=12.2(10.9)
+FrcRobotBase.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=  26.3, Error=  19.3, PIDTerms= 0.318/ 0.000/-0.075/ 0.000, Output= 0.243(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=   1.4, Error=   1.4, PIDTerms= 0.034/ 0.000/-0.001/ 0.000, Output= 0.034(-0.500/0.500)
+FrcRobotBase.PixyVision_Info: 3 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x0127, sig=1, centerX=137, centerY=110, width= 13, height= 34, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x015e, sig=1, centerX=194, centerY=108, width= 13, height= 34, angle=  0
+FrcRobotBase.PixyVision_Info: [2] sync=0xaa55, chksum=0x00c5, sig=1, centerX=125, centerY= 62, width=  7, height=  2, angle=  0
+FrcRobotBase.PixyVision_Info: Expected Target: distance=23.3, width=98.7, height=49.4
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=131, y=91, w=70, h=36
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=0.9, yDist=32.9, angle=1.5
+FrcRobotBase.PixyVision_Info: 3 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x012a, sig=1, centerX=137, centerY=112, width= 14, height= 34, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x0162, sig=1, centerX=195, centerY=109, width= 14, height= 35, angle=  0
+FrcRobotBase.PixyVision_Info: [2] sync=0xaa55, chksum=0x00cf, sig=1, centerX=128, centerY= 64, width=  6, height=  8, angle=  0
+FrcRobotBase.PixyVision_Info: Expected Target: distance=23.0, width=99.8, height=49.9
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=130, y=92, w=72, h=37
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=0.8, yDist=31.9, angle=1.5
+FrcRobotBase.Robot_Info: [3.560] VISION_GEAR_DEPLOY: xPos= -0.19,yPos= 64.35,heading=  -0.6/  -2.1,volts=12.3(10.9)
+FrcRobotBase.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=  23.2, Error=  16.2, PIDTerms= 0.267/ 0.000/-0.109/ 0.000, Output= 0.158(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=   1.5, Error=   1.5, PIDTerms= 0.037/ 0.000/ 0.000/ 0.000, Output= 0.038(-0.500/0.500)
+FrcRobotBase.PixyVision_Info: 4 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x012e, sig=1, centerX=134, centerY=115, width= 15, height= 37, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x016a, sig=1, centerX=197, centerY=113, width= 15, height= 36, angle=  0
+FrcRobotBase.PixyVision_Info: [2] sync=0xaa55, chksum=0x00f1, sig=1, centerX=191, centerY= 33, width=  6, height= 10, angle=  0
+FrcRobotBase.PixyVision_Info: [3] sync=0xaa55, chksum=0x00d2, sig=1, centerX=121, centerY= 62, width= 11, height= 15, angle=  0
+FrcRobotBase.PixyVision_Info: Expected Target: distance=21.3, width=108.0, height=54.0
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=127, y=95, w=78, h=39
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=0.8, yDist=29.5, angle=1.5
+FrcRobotBase.Robot_Info: [3.612] VISION_GEAR_DEPLOY: xPos= -0.01,yPos= 66.48,heading=  -0.3/  -2.1,volts=12.3(10.9)
+FrcRobotBase.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=  21.3, Error=  14.3, PIDTerms= 0.236/ 0.000/-0.087/ 0.000, Output= 0.149(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=   1.5, Error=   1.5, PIDTerms= 0.037/ 0.000/ 0.000/ 0.000, Output= 0.037(-0.500/0.500)
+FrcRobotBase.PixyVision_Info: 5 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x013b, sig=1, centerX=132, centerY=122, width= 18, height= 42, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x0173, sig=1, centerX=202, centerY=114, width= 17, height= 37, angle=  0
+FrcRobotBase.PixyVision_Info: [2] sync=0xaa55, chksum=0x00d6, sig=1, centerX=125, centerY= 67, width= 18, height=  3, angle=  0
+FrcRobotBase.PixyVision_Info: [3] sync=0xaa55, chksum=0x00dc, sig=1, centerX=147, centerY= 57, width=  9, height=  6, angle=  0
+FrcRobotBase.PixyVision_Info: [4] sync=0xaa55, chksum=0x00ec, sig=1, centerX=195, centerY= 28, width=  9, height=  3, angle=  0
+FrcRobotBase.PixyVision_Info: Expected Target: distance=18.4, width=124.8, height=62.4
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=123, y=96, w=88, h=47
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=0.8, yDist=26.1, angle=1.7
+FrcRobotBase.PixyVision_Info: 4 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x013d, sig=1, centerX=131, centerY=125, width= 18, height= 42, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x0177, sig=1, centerX=203, centerY=116, width= 18, height= 37, angle=  0
+FrcRobotBase.PixyVision_Info: [2] sync=0xaa55, chksum=0x00da, sig=1, centerX=120, centerY= 63, width= 21, height= 13, angle=  0
+FrcRobotBase.PixyVision_Info: [3] sync=0xaa55, chksum=0x00f5, sig=1, centerX=196, centerY= 29, width= 11, height=  8, angle=  0
+FrcRobotBase.PixyVision_Info: Expected Target: distance=17.1, width=134.8, height=67.4
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=122, y=98, w=90, h=48
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=0.8, yDist=25.6, angle=1.7
+FrcRobotBase.Robot_Info: [3.675] VISION_GEAR_DEPLOY: xPos= -0.04,yPos= 69.19,heading=   0.3/  -2.1,volts=12.3(10.9)
+FrcRobotBase.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=  17.2, Error=  10.2, PIDTerms= 0.168/ 0.000/-0.118/ 0.000, Output= 0.050(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=   1.7, Error=   1.7, PIDTerms= 0.044/ 0.000/ 0.001/ 0.000, Output= 0.044(-0.500/0.500)
+FrcRobotBase.PixyVision_Info: 3 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x0144, sig=1, centerX=127, centerY=129, width= 20, height= 47, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x0188, sig=1, centerX=206, centerY=123, width= 18, height= 44, angle=  0
+FrcRobotBase.PixyVision_Info: [2] sync=0xaa55, chksum=0x00e2, sig=1, centerX=119, centerY= 69, width= 19, height= 18, angle=  0
+FrcRobotBase.PixyVision_Info: Expected Target: distance=14.4, width=159.2, height=79.6
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=117, y=101, w=98, h=52
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=0.6, yDist=23.5, angle=1.5
+FrcRobotBase.Robot_Info: [3.715] VISION_GEAR_DEPLOY: xPos= -0.10,yPos= 70.89,heading=   0.8/  -2.1,volts=12.4(10.9)
+FrcRobotBase.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=  14.6, Error=   7.6, PIDTerms= 0.125/ 0.000/-0.122/ 0.000, Output= 0.003(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=   1.5, Error=   1.5, PIDTerms= 0.037/ 0.000/-0.001/ 0.000, Output= 0.036(-0.500/0.500)
+FrcRobotBase.PixyVision_Info: 3 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x0148, sig=1, centerX=123, centerY=133, width= 21, height= 50, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x018b, sig=1, centerX=209, centerY=127, width= 20, height= 38, angle=  0
+FrcRobotBase.PixyVision_Info: [2] sync=0xaa55, chksum=0x00dd, sig=1, centerX=142, centerY= 56, width= 17, height=  5, angle=  0
+FrcRobotBase.PixyVision_Info: Expected Target: distance=13.3, width=172.6, height=86.3
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=113, y=108, w=106, h=50
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=0.6, yDist=21.7, angle=1.5
+FrcRobotBase.PixyVision_Info: 2 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x014f, sig=1, centerX=122, centerY=139, width= 23, height= 50, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x0173, sig=1, centerX=210, centerY=120, width= 20, height= 20, angle=  0
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=111, y=110, w=109, h=54
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=0.5, yDist=21.1, angle=1.4
+FrcRobotBase.Robot_Info: [3.770] VISION_GEAR_DEPLOY: xPos= -0.33,yPos= 72.81,heading=   1.5/  -2.1,volts=12.4(10.9)
+FrcRobotBase.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=  12.5, Error=   5.5, PIDTerms= 0.090/ 0.000/-0.072/ 0.000, Output= 0.018(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=   1.4, Error=   1.4, PIDTerms= 0.034/ 0.000/-0.000/ 0.000, Output= 0.034(-0.500/0.500)
+FrcRobotBase.PixyVision_Info: 3 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x0141, sig=1, centerX=117, centerY=135, width= 25, height= 43, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x0114, sig=1, centerX=120, centerY= 70, width= 68, height= 17, angle=  0
+FrcRobotBase.PixyVision_Info: [2] sync=0xaa55, chksum=0x0188, sig=1, centerX=214, centerY=125, width= 24, height= 28, angle=  0
+FrcRobotBase.PixyVision_Info: Expected Target: distance=11.1, width=207.5, height=103.7
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=86, y=62, w=68, h=95
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=-5.9, yDist=33.8, angle=-9.9
+FrcRobotBase.Robot_Info: [3.811] VISION_GEAR_DEPLOY: xPos= -0.21,yPos= 73.62,heading=   1.9/  -2.1,volts=12.4(10.9)
+FrcRobotBase.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=  11.1, Error=   4.1, PIDTerms= 0.067/ 0.000/-0.071/ 0.000, Output=-0.004(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=  -9.9, Error=  -9.9, PIDTerms=-0.247/ 0.000/-0.044/ 0.000, Output=-0.290(-0.500/0.500)
+FrcRobotBase.PixyVision_Info: 4 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x0135, sig=1, centerX=115, centerY=132, width= 27, height= 34, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x017b, sig=1, centerX=214, centerY=125, width= 23, height= 16, angle=  0
+FrcRobotBase.PixyVision_Info: [2] sync=0xaa55, chksum=0x00da, sig=1, centerX=102, centerY= 78, width= 22, height= 15, angle=  0
+FrcRobotBase.PixyVision_Info: [3] sync=0xaa55, chksum=0x00f6, sig=1, centerX=150, centerY= 62, width= 19, height= 14, angle=  0
+FrcRobotBase.PixyVision_Info: Expected Target: distance=10.6, width=217.2, height=108.6
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=102, y=115, w=124, h=34
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=0.3, yDist=18.5, angle=1.0
+FrcRobotBase.Robot_Info: [3.853] VISION_GEAR_DEPLOY: xPos= -0.16,yPos= 74.89,heading=   2.2/  -2.1,volts=11.8(10.9)
+FrcRobotBase.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=  10.6, Error=   3.6, PIDTerms= 0.059/ 0.000/-0.025/ 0.000, Output= 0.034(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=   1.0, Error=   1.0, PIDTerms= 0.025/ 0.000/ 0.041/ 0.000, Output= 0.066(-0.500/0.500)
+FrcRobotBase.PixyVision_Info: 4 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x0132, sig=1, centerX=111, centerY=135, width= 26, height= 33, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x0188, sig=1, centerX=216, centerY=127, width= 22, height= 26, angle=  0
+FrcRobotBase.PixyVision_Info: [2] sync=0xaa55, chksum=0x00ca, sig=1, centerX= 93, centerY= 79, width= 13, height= 16, angle=  0
+FrcRobotBase.PixyVision_Info: [3] sync=0xaa55, chksum=0x0102, sig=1, centerX=137, centerY= 80, width= 27, height= 13, angle=  0
+FrcRobotBase.PixyVision_Info: Expected Target: distance=9.0, width=256.5, height=128.2
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=98, y=114, w=129, h=38
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=0.2, yDist=17.8, angle=0.6
+FrcRobotBase.PixyVision_Info: 4 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x0148, sig=1, centerX=110, centerY=145, width= 28, height= 44, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x019a, sig=1, centerX=219, centerY=133, width= 26, height= 31, angle=  0
+FrcRobotBase.PixyVision_Info: [2] sync=0xaa55, chksum=0x00b8, sig=1, centerX= 86, centerY= 63, width= 16, height= 18, angle=  0
+FrcRobotBase.PixyVision_Info: [3] sync=0xaa55, chksum=0x0159, sig=1, centerX=226, centerY= 96, width= 12, height= 10, angle=  0
+FrcRobotBase.PixyVision_Info: Expected Target: distance=8.5, width=271.5, height=135.8
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=96, y=118, w=136, h=49
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=0.3, yDist=16.9, angle=1.0
+FrcRobotBase.Robot_Info: [3.914] VISION_GEAR_DEPLOY: xPos= -0.25,yPos= 76.18,heading=   1.1/  -2.1,volts=12.3(10.9)
+FrcRobotBase.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=   8.6, Error=   1.6, PIDTerms= 0.026/ 0.000/-0.066/ 0.000, Output=-0.039(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=   1.0, Error=   1.0, PIDTerms= 0.025/ 0.000/ 0.000/ 0.000, Output= 0.025(-0.500/0.500)
+FrcRobotBase.PixyVision_Info: 4 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x014d, sig=1, centerX=113, centerY=147, width= 32, height= 40, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x018b, sig=1, centerX=225, centerY=133, width= 23, height= 13, angle=  0
+FrcRobotBase.PixyVision_Info: [2] sync=0xaa55, chksum=0x00d1, sig=1, centerX= 89, centerY= 81, width= 26, height= 12, angle=  0
+FrcRobotBase.PixyVision_Info: [3] sync=0xaa55, chksum=0x013e, sig=1, centerX=182, centerY=114, width=  8, height= 13, angle=  0
+FrcRobotBase.PixyVision_Info: Expected Target: distance=7.5, width=307.7, height=153.9
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=97, y=127, w=140, h=40
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=0.5, yDist=16.4, angle=1.7
+FrcRobotBase.Robot_Info: [3.957] DEPLOY_GEAR: xPos= -0.27,yPos= 76.99,heading=   0.7/  -2.1,volts=12.3(10.9)
+FrcRobotBase.Robot_Info: [3.957] VISION_GEAR_DEPLOY: xPos= -0.27,yPos= 76.99,heading=   0.7/  -2.1,volts=12.3(10.9)
+FrcRobotBase.PixyVision_Info: 5 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x0139, sig=1, centerX=115, centerY=144, width= 31, height= 22, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x01a5, sig=1, centerX=238, centerY=140, width= 26, height= 16, angle=  0
+FrcRobotBase.PixyVision_Info: [2] sync=0xaa55, chksum=0x00ec, sig=1, centerX=100, centerY= 82, width= 40, height= 13, angle=  0
+FrcRobotBase.PixyVision_Info: [3] sync=0xaa55, chksum=0x01b2, sig=1, centerX=236, centerY=162, width= 23, height= 12, angle=  0
+FrcRobotBase.PixyVision_Info: [4] sync=0xaa55, chksum=0x0135, sig=1, centerX=112, centerY=167, width= 21, height=  8, angle=  0
+FrcRobotBase.PixyVision_Info: Expected Target: distance=6.7, width=341.9, height=171.0
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=100, y=132, w=151, h=23
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=1.0, yDist=15.2, angle=3.9
+FrcRobotBase.Robot_Info: [3.999] VISION_GEAR_DEPLOY: xPos= -0.32,yPos= 77.67,heading=   0.8/  -2.1,volts=12.4(10.9)
+FrcRobotBase.Robot_Info: [4.026] VISION_GEAR_DEPLOY: xPos= -0.31,yPos= 78.28,heading=   0.8/  -2.1,volts=12.3(10.9)
+FrcRobotBase.Robot_Info: [4.041] VISION_GEAR_DEPLOY: xPos= -0.26,yPos= 78.35,heading=   0.8/  -2.1,volts=12.3(10.9)
+FrcRobotBase.Robot_Info: [4.055] VISION_GEAR_DEPLOY: xPos= -0.31,yPos= 78.55,heading=   0.9/  -2.1,volts=12.3(10.9)
+FrcRobotBase.Robot_Info: [4.072] VISION_GEAR_DEPLOY: xPos= -0.32,yPos= 78.78,heading=   0.9/  -2.1,volts=12.3(10.9)
+FrcRobotBase.PixyVision_Info: 4 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x0152, sig=1, centerX=111, centerY=160, width= 36, height= 30, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x009e, sig=1, centerX= 42, centerY= 31, width= 40, height= 44, angle=  0
+FrcRobotBase.PixyVision_Info: [2] sync=0xaa55, chksum=0x01b0, sig=1, centerX=239, centerY=164, width= 14, height= 14, angle=  0
+FrcRobotBase.PixyVision_Info: [3] sync=0xaa55, chksum=0x019f, sig=1, centerX=244, centerY=142, width= 19, height=  9, angle=  0
+FrcRobotBase.PixyVision_Info: Expected Target: distance=6.6, width=348.4, height=174.2
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=22, y=9, w=107, h=166
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=-7.9, yDist=21.5, angle=-20.2
+FrcRobotBase.Robot_Info: [4.101] VISION_GEAR_DEPLOY: xPos= -0.33,yPos= 78.99,heading=   0.9/  -2.1,volts=12.4(10.9)
+FrcRobotBase.Robot_Info: [4.117] VISION_GEAR_DEPLOY: xPos= -0.34,yPos= 79.15,heading=   0.9/  -2.1,volts=12.4(10.9)
+FrcRobotBase.Robot_Info: [4.132] VISION_GEAR_DEPLOY: xPos= -0.34,yPos= 79.24,heading=   1.0/  -2.1,volts=12.4(10.9)
+FrcRobotBase.Robot_Info: [4.147] VISION_GEAR_DEPLOY: xPos= -0.35,yPos= 79.26,heading=   1.0/  -2.1,volts=12.4(10.9)
+FrcRobotBase.Robot_Info: [4.159] VISION_GEAR_DEPLOY: xPos= -0.35,yPos= 79.29,heading=   1.1/  -2.1,volts=12.3(10.9)
+FrcRobotBase.Robot_Info: [4.174] VISION_GEAR_DEPLOY: xPos= -0.37,yPos= 79.26,heading=   1.1/  -2.1,volts=12.4(10.9)
+FrcRobotBase.PixyVision_Info: 3 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x0155, sig=1, centerX=105, centerY=168, width= 29, height= 38, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x0085, sig=1, centerX= 19, centerY= 37, width= 38, height= 38, angle=  0
+FrcRobotBase.PixyVision_Info: [2] sync=0xaa55, chksum=0x00e8, sig=1, centerX= 79, centerY= 76, width= 57, height= 19, angle=  0
+FrcRobotBase.PixyVision_Info: Expected Target: distance=6.6, width=348.4, height=174.2
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=0, y=18, w=120, h=169
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=-8.3, yDist=19.2, angle=-23.5
+FrcRobotBase.Robot_Info: [4.202] VISION_GEAR_DEPLOY: xPos= -0.40,yPos= 79.19,heading=   1.2/  -2.1,volts=12.4(10.9)
+FrcRobotBase.Robot_Info: [4.217] VISION_GEAR_DEPLOY: xPos= -0.39,yPos= 79.12,heading=   1.2/  -2.1,volts=12.4(10.9)
+FrcRobotBase.Robot_Info: [4.233] VISION_GEAR_DEPLOY: xPos= -0.35,yPos= 79.08,heading=   1.1/  -2.1,volts=12.3(10.9)
+FrcRobotBase.Robot_Info: [4.249] VISION_GEAR_DEPLOY: xPos= -0.38,yPos= 79.04,heading=   1.1/  -2.1,volts=12.3(10.9)
+FrcRobotBase.Robot_Info: [4.261]     BACKUP: xPos= -0.33,yPos= 78.92,heading=   1.0/  -2.1,volts=12.3(10.9)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  -0.3, Input=  -0.0, Error=   0.0, PIDTerms= 0.002/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  42.9, Input=  34.9, Error= -36.0, PIDTerms= 0.040/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=  -0.6, Error=  -3.1, PIDTerms=-0.088/ 0.000/ 0.000/-0.000, Output= 0.000(-0.500/0.500)
+FrcRobotBase.Robot_Info: [4.261] VISION_GEAR_DEPLOY: xPos= -0.33,yPos= 78.92,heading=   1.0/  -2.1,volts=12.3(10.9)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  -0.3, Input=  -0.0, Error=   0.0, PIDTerms= 0.002/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  42.9, Input=  34.9, Error= -36.0, PIDTerms= 0.040/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=  -0.6, Error=  -3.1, PIDTerms=-0.088/ 0.000/ 0.000/-0.000, Output= 0.000(-0.500/0.500)
+FrcRobotBase.PixyVision_Info: 4 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x013f, sig=1, centerX=107, centerY=166, width= 27, height= 18, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x0088, sig=1, centerX= 30, centerY= 37, width= 34, height= 34, angle=  0
+FrcRobotBase.PixyVision_Info: [2] sync=0xaa55, chksum=0x012e, sig=1, centerX=110, centerY=150, width= 34, height=  7, angle=  0
+FrcRobotBase.PixyVision_Info: [3] sync=0xaa55, chksum=0x00ad, sig=1, centerX= 63, centerY= 74, width= 16, height= 19, angle=  0
+FrcRobotBase.PixyVision_Info: Expected Target: distance=6.7, width=341.9, height=171.0
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=13, y=20, w=108, h=155
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=-8.6, yDist=21.3, angle=-22.0
+FrcRobotBase.Robot_Info: [4.318] VISION_GEAR_DEPLOY: xPos= -0.39,yPos= 78.73,heading=   0.9/  -2.1,volts=12.4(10.9)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  -0.3, Input=  -0.3, Error=   0.0, PIDTerms= 0.000/ 0.000/ 0.000/-0.000, Output= 0.000(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  42.9, Input=  78.9, Error= -36.0, PIDTerms=-1.260/ 0.000/ 0.000/ 0.000, Output=-0.500(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=   1.0, Error=  -3.1, PIDTerms=-0.203/ 0.000/ 0.000/-0.000, Output=-0.203(-0.500/0.500)
+FrcRobotBase.Robot_Info: [4.349] VISION_GEAR_DEPLOY: xPos= -0.43,yPos= 78.42,heading=   0.9/  -2.1,volts=11.1(10.9)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  -0.3, Input=  -0.4, Error=   0.1, PIDTerms= 0.009/ 0.000/ 0.000/-0.000, Output= 0.009(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  42.9, Input=  78.7, Error= -35.8, PIDTerms=-1.253/ 0.000/ 0.057/ 0.000, Output=-0.500(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=   0.9, Error=  -3.0, PIDTerms=-0.198/ 0.000/ 0.013/-0.000, Output=-0.185(-0.500/0.500)
+FrcRobotBase.Robot_Info: [4.375] VISION_GEAR_DEPLOY: xPos= -0.44,yPos= 77.91,heading=   0.8/  -2.1,volts=10.9(10.9)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  -0.3, Input=  -0.4, Error=   0.1, PIDTerms= 0.014/ 0.000/ 0.000/-0.000, Output= 0.014(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  42.9, Input=  78.4, Error= -35.5, PIDTerms=-1.242/ 0.000/ 0.098/ 0.000, Output=-0.500(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=   0.9, Error=  -3.1, PIDTerms=-0.199/ 0.000/-0.004/-0.000, Output=-0.203(-0.500/0.500)
+FrcRobotBase.PixyVision_Info: 4 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x014c, sig=1, centerX=114, centerY=155, width= 36, height= 26, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x0066, sig=1, centerX= 18, centerY= 47, width= 24, height= 12, angle=  0
+FrcRobotBase.PixyVision_Info: [2] sync=0xaa55, chksum=0x00ce, sig=1, centerX=108, centerY= 72, width= 16, height=  9, angle=  0
+FrcRobotBase.PixyVision_Info: [3] sync=0xaa55, chksum=0x00cf, sig=1, centerX= 89, centerY= 91, width= 19, height=  7, angle=  0
+FrcRobotBase.PixyVision_Info: Expected Target: distance=6.6, width=348.4, height=174.2
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=6, y=41, w=126, h=127
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=-7.2, yDist=18.3, angle=-21.6
+FrcRobotBase.Robot_Info: [4.418] VISION_GEAR_DEPLOY: xPos= -0.38,yPos= 76.98,heading=  -0.2/  -2.1,volts=10.8(10.9)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  -0.3, Input=  -0.4, Error=   0.1, PIDTerms= 0.016/ 0.000/ 0.000/-0.000, Output= 0.016(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  42.9, Input=  77.9, Error= -35.0, PIDTerms=-1.225/ 0.000/ 0.085/ 0.000, Output=-0.500(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=   0.8, Error=  -2.9, PIDTerms=-0.190/ 0.000/ 0.016/-0.000, Output=-0.174(-0.500/0.500)
+FrcRobotBase.Robot_Info: [4.449] VISION_GEAR_DEPLOY: xPos= -0.36,yPos= 75.98,heading=  -0.6/  -2.1,volts=11.0(10.8)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  -0.3, Input=  -0.4, Error=   0.0, PIDTerms= 0.007/ 0.000/-0.000/-0.000, Output= 0.007(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  42.9, Input=  77.0, Error= -34.1, PIDTerms=-1.192/ 0.000/ 0.279/ 0.000, Output=-0.500(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=  -0.2, Error=  -1.9, PIDTerms=-0.124/ 0.000/ 0.189/-0.000, Output= 0.065(-0.500/0.500)
+FrcRobotBase.Robot_Info: [4.475] VISION_GEAR_DEPLOY: xPos= -0.37,yPos= 75.39,heading=  -1.9/  -2.1,volts=11.0(10.8)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  -0.3, Input=  -0.4, Error=   0.0, PIDTerms= 0.005/ 0.000/-0.000/-0.000, Output= 0.005(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  42.9, Input=  76.0, Error= -33.1, PIDTerms=-1.157/ 0.000/ 0.273/ 0.000, Output=-0.500(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=  -0.6, Error=  -1.5, PIDTerms=-0.099/ 0.000/ 0.066/-0.000, Output=-0.032(-0.500/0.500)
+FrcRobotBase.Robot_Info: [4.500] VISION_GEAR_DEPLOY: xPos= -0.36,yPos= 74.71,heading=  -2.3/  -2.1,volts=11.2(10.8)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  -0.3, Input=  -0.4, Error=   0.0, PIDTerms= 0.006/ 0.000/ 0.000/-0.000, Output= 0.006(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  42.9, Input=  75.4, Error= -32.5, PIDTerms=-1.137/ 0.000/ 0.183/ 0.000, Output=-0.500(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=  -1.9, Error=  -0.3, PIDTerms=-0.017/ 0.000/ 0.247/-0.000, Output= 0.230(-0.500/0.500)
+FrcRobotBase.PixyVision_Info: 4 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x014b, sig=1, centerX=135, centerY=140, width= 32, height= 23, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x0085, sig=1, centerX= 66, centerY= 26, width= 30, height= 10, angle=  0
+FrcRobotBase.PixyVision_Info: [2] sync=0xaa55, chksum=0x01af, sig=1, centerX=244, centerY=160, width= 14, height= 12, angle=  0
+FrcRobotBase.PixyVision_Info: [3] sync=0xaa55, chksum=0x007a, sig=1, centerX= 49, centerY= 43, width= 21, height=  8, angle=  0
+FrcRobotBase.PixyVision_Info: Expected Target: distance=7.6, width=302.7, height=151.4
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=51, y=21, w=100, h=131
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=-5.9, yDist=23.0, angle=-14.4
+FrcRobotBase.Robot_Info: [4.544] VISION_GEAR_DEPLOY: xPos= -0.33,yPos= 72.71,heading=  -2.9/  -2.1,volts=11.3(10.8)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  -0.3, Input=  -0.4, Error=   0.0, PIDTerms= 0.004/ 0.000/-0.000/-0.000, Output= 0.004(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  42.9, Input=  74.7, Error= -31.8, PIDTerms=-1.113/ 0.000/ 0.123/ 0.000, Output=-0.500(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=  -2.3, Error=   0.1, PIDTerms= 0.009/ 0.000/ 0.044/-0.000, Output= 0.053(-0.500/0.500)
+FrcRobotBase.Robot_Info: [4.574] VISION_GEAR_DEPLOY: xPos= -0.49,yPos= 71.84,heading=  -2.8/  -2.1,volts=11.3(10.8)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  -0.3, Input=  -0.3, Error=  -0.0, PIDTerms=-0.001/ 0.000/-0.000/-0.000, Output=-0.001(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  42.9, Input=  72.7, Error= -29.8, PIDTerms=-1.043/ 0.000/ 0.542/ 0.000, Output=-0.500(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=  -2.9, Error=   0.8, PIDTerms= 0.049/ 0.000/ 0.105/-0.000, Output= 0.154(-0.500/0.500)
+FrcRobotBase.Robot_Info: [4.601] VISION_GEAR_DEPLOY: xPos= -0.55,yPos= 70.95,heading=  -2.4/  -2.1,volts=11.3(10.8)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  -0.3, Input=  -0.5, Error=   0.2, PIDTerms= 0.023/ 0.000/ 0.000/-0.000, Output= 0.023(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  42.9, Input=  71.8, Error= -28.9, PIDTerms=-1.012/ 0.000/ 0.263/ 0.000, Output=-0.500(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=  -2.8, Error=   0.6, PIDTerms= 0.042/ 0.000/-0.021/-0.000, Output= 0.021(-0.500/0.500)
+FrcRobotBase.PixyVision_Info: 4 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x015b, sig=1, centerX=142, centerY=136, width= 28, height= 40, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x01a3, sig=1, centerX=236, centerY=135, width= 22, height= 25, angle=  0
+FrcRobotBase.PixyVision_Info: [2] sync=0xaa55, chksum=0x01a6, sig=1, centerX=235, centerY=160, width= 22, height=  4, angle=  0
+FrcRobotBase.PixyVision_Info: [3] sync=0xaa55, chksum=0x00e3, sig=1, centerX=113, centerY= 79, width= 29, height=  5, angle=  0
+FrcRobotBase.PixyVision_Info: Expected Target: distance=11.2, width=205.2, height=102.6
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=128, y=116, w=119, h=40
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=2.3, yDist=19.3, angle=6.8
+FrcRobotBase.Robot_Info: [4.648] VISION_GEAR_DEPLOY: xPos= -0.62,yPos= 69.15,heading=  -1.9/  -2.1,volts=11.3(10.8)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  -0.3, Input=  -0.5, Error=   0.2, PIDTerms= 0.033/ 0.000/ 0.000/-0.000, Output= 0.033(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  42.9, Input=  71.0, Error= -28.0, PIDTerms=-0.981/ 0.000/ 0.160/ 0.000, Output=-0.500(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=  -2.4, Error=   0.3, PIDTerms= 0.021/ 0.000/-0.036/-0.000, Output=-0.015(-0.500/0.500)
+FrcRobotBase.Robot_Info: [4.674] VISION_GEAR_DEPLOY: xPos= -0.42,yPos= 67.54,heading=  -1.7/  -2.1,volts=11.3(10.8)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  -0.3, Input=  -0.6, Error=   0.3, PIDTerms= 0.043/ 0.000/ 0.000/-0.000, Output= 0.043(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  42.9, Input=  69.2, Error= -26.2, PIDTerms=-0.918/ 0.000/ 0.550/ 0.000, Output=-0.369(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=  -1.9, Error=  -0.2, PIDTerms=-0.014/ 0.000/-0.103/-0.000, Output=-0.117(-0.500/0.500)
+FrcRobotBase.Robot_Info: [4.715] VISION_GEAR_DEPLOY: xPos= -0.60,yPos= 66.35,heading=  -1.3/  -2.1,volts=11.7(10.8)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  -0.3, Input=  -0.4, Error=   0.1, PIDTerms= 0.014/ 0.000/-0.000/-0.000, Output= 0.014(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  42.9, Input=  67.5, Error= -24.6, PIDTerms=-0.862/ 0.000/ 0.282/ 0.000, Output=-0.500(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=  -1.7, Error=  -0.4, PIDTerms=-0.028/ 0.000/-0.023/-0.000, Output=-0.051(-0.500/0.500)
+FrcRobotBase.PixyVision_Info: 3 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x0142, sig=1, centerX=136, centerY=128, width= 20, height= 37, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x0180, sig=1, centerX=218, centerY=128, width= 22, height= 15, angle=  0
+FrcRobotBase.PixyVision_Info: [2] sync=0xaa55, chksum=0x015e, sig=1, centerX=217, centerY=107, width= 18, height=  7, angle=  0
+FrcRobotBase.PixyVision_Info: Expected Target: distance=16.2, width=142.0, height=71.0
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=126, y=110, w=103, h=37
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=1.7, yDist=22.3, angle=4.4
+FrcRobotBase.Robot_Info: [4.754] VISION_GEAR_DEPLOY: xPos= -0.58,yPos= 64.43,heading=  -1.4/  -2.1,volts=11.5(10.8)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  -0.3, Input=  -0.6, Error=   0.3, PIDTerms= 0.041/ 0.000/ 0.000/-0.000, Output= 0.041(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  42.9, Input=  66.4, Error= -23.4, PIDTerms=-0.820/ 0.000/ 0.258/ 0.000, Output=-0.500(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=  -1.3, Error=  -0.8, PIDTerms=-0.051/ 0.000/-0.049/-0.000, Output=-0.100(-0.500/0.500)
+FrcRobotBase.Robot_Info: [4.779] VISION_GEAR_DEPLOY: xPos= -0.34,yPos= 62.61,heading=  -1.6/  -2.1,volts=11.4(10.8)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  -0.3, Input=  -0.6, Error=   0.2, PIDTerms= 0.037/ 0.000/-0.000/-0.000, Output= 0.037(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  42.9, Input=  64.4, Error= -21.5, PIDTerms=-0.753/ 0.000/ 0.605/ 0.000, Output=-0.147(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=  -1.4, Error=  -0.8, PIDTerms=-0.050/ 0.000/ 0.004/-0.000, Output=-0.046(-0.500/0.500)
+FrcRobotBase.Robot_Info: [4.808] VISION_GEAR_DEPLOY: xPos= -0.52,yPos= 61.36,heading=  -1.8/  -2.1,volts=12.3(10.8)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  -0.3, Input=  -0.3, Error=   0.0, PIDTerms= 0.001/ 0.000/-0.000/-0.000, Output= 0.001(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  42.9, Input=  62.6, Error= -19.7, PIDTerms=-0.689/ 0.000/ 0.558/ 0.000, Output=-0.131(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=  -1.6, Error=  -0.5, PIDTerms=-0.034/ 0.000/ 0.046/-0.000, Output= 0.012(-0.500/0.500)
+FrcRobotBase.Robot_Info: [4.836] VISION_GEAR_DEPLOY: xPos= -0.45,yPos= 60.51,heading=  -2.2/  -2.1,volts=12.3(10.8)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  -0.3, Input=  -0.5, Error=   0.2, PIDTerms= 0.028/ 0.000/ 0.000/-0.000, Output= 0.028(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  42.9, Input=  61.4, Error= -18.4, PIDTerms=-0.645/ 0.000/ 0.318/ 0.000, Output=-0.328(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=  -1.8, Error=  -0.3, PIDTerms=-0.019/ 0.000/ 0.037/-0.000, Output= 0.017(-0.500/0.500)
+FrcRobotBase.PixyVision_Info: 3 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x0138, sig=1, centerX=140, centerY=117, width= 17, height= 37, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x016e, sig=1, centerX=207, centerY=116, width= 15, height= 27, angle=  0
+FrcRobotBase.PixyVision_Info: [2] sync=0xaa55, chksum=0x00de, sig=1, centerX=146, centerY= 55, width= 17, height=  3, angle=  0
+FrcRobotBase.PixyVision_Info: Expected Target: distance=21.1, width=109.3, height=54.6
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=132, y=99, w=83, h=37
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=1.6, yDist=27.7, angle=3.4
+FrcRobotBase.Robot_Info: [4.880] VISION_GEAR_DEPLOY: xPos= -0.49,yPos= 58.70,heading=  -2.5/  -2.1,volts=12.1(10.8)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  -0.3, Input=  -0.4, Error=   0.1, PIDTerms= 0.018/ 0.000/-0.000/-0.000, Output= 0.018(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  42.9, Input=  60.5, Error= -17.6, PIDTerms=-0.615/ 0.000/ 0.159/ 0.000, Output=-0.456(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=  -2.2, Error=   0.0, PIDTerms= 0.002/ 0.000/ 0.038/-0.000, Output= 0.041(-0.500/0.500)
+FrcRobotBase.Robot_Info: [4.909] VISION_GEAR_DEPLOY: xPos= -0.43,yPos= 56.52,heading=  -2.5/  -2.1,volts=11.9(10.8)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  -0.3, Input=  -0.5, Error=   0.2, PIDTerms= 0.023/ 0.000/ 0.000/-0.000, Output= 0.023(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  42.9, Input=  58.7, Error= -15.8, PIDTerms=-0.552/ 0.000/ 0.547/ 0.000, Output=-0.005(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=  -2.5, Error=   0.4, PIDTerms= 0.024/ 0.000/ 0.064/-0.000, Output= 0.088(-0.500/0.500)
+FrcRobotBase.Robot_Info: [4.937] VISION_GEAR_DEPLOY: xPos= -0.46,yPos= 55.48,heading=  -2.7/  -2.1,volts=12.3(10.8)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  -0.3, Input=  -0.4, Error=   0.1, PIDTerms= 0.015/ 0.000/-0.000/-0.000, Output= 0.015(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  42.9, Input=  56.5, Error= -13.6, PIDTerms=-0.476/ 0.000/ 0.555/ 0.000, Output= 0.079(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=  -2.5, Error=   0.4, PIDTerms= 0.028/ 0.000/ 0.008/-0.000, Output= 0.035(-0.500/0.500)
+FrcRobotBase.PixyVision_Info: 3 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x012e, sig=1, centerX=146, centerY=108, width= 15, height= 32, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x0147, sig=1, centerX=203, centerY= 97, width= 12, height= 14, angle=  0
+FrcRobotBase.PixyVision_Info: [2] sync=0xaa55, chksum=0x00da, sig=1, centerX=138, centerY= 66, width=  9, height=  4, angle=  0
+FrcRobotBase.PixyVision_Info: Expected Target: distance=24.9, width=92.3, height=46.2
+FrcRobotBase.PixyVision_Info: ***TargetRect***: [1,2] x=134, y=64, w=75, h=40
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=1.5, yDist=30.7, angle=2.9
+FrcRobotBase.Robot_Info: [4.981] VISION_GEAR_DEPLOY: xPos= -0.46,yPos= 54.21,heading=  -2.3/  -2.1,volts=12.2(10.8)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  -0.3, Input=  -0.5, Error=   0.1, PIDTerms= 0.019/ 0.000/ 0.000/-0.000, Output= 0.019(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  42.9, Input=  55.5, Error= -12.6, PIDTerms=-0.439/ 0.000/ 0.192/ 0.000, Output=-0.247(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=  -2.7, Error=   0.6, PIDTerms= 0.037/ 0.000/ 0.017/-0.000, Output= 0.055(-0.500/0.500)
+FrcRobotBase.Robot_Info: [5.012] VISION_GEAR_DEPLOY: xPos= -0.24,yPos= 52.82,heading=  -2.2/  -2.1,volts=12.3(10.8)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  -0.3, Input=  -0.5, Error=   0.1, PIDTerms= 0.019/ 0.000/ 0.000/-0.000, Output= 0.019(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  42.9, Input=  54.2, Error= -11.3, PIDTerms=-0.395/ 0.000/ 0.368/ 0.000, Output=-0.027(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=  -2.3, Error=   0.2, PIDTerms= 0.015/ 0.000/-0.062/-0.000, Output=-0.047(-0.500/0.500)
+FrcRobotBase.Robot_Info: [5.038] VISION_GEAR_DEPLOY: xPos= -0.37,yPos= 51.88,heading=  -1.9/  -2.1,volts=12.3(10.8)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  -0.3, Input=  -0.2, Error=  -0.1, PIDTerms=-0.014/ 0.000/-0.000/-0.000, Output=-0.014(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  42.9, Input=  52.8, Error=  -9.9, PIDTerms=-0.347/ 0.000/ 0.372/ 0.000, Output= 0.026(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=  -2.2, Error=   0.1, PIDTerms= 0.005/ 0.000/-0.027/-0.000, Output=-0.022(-0.500/0.500)
+FrcRobotBase.Robot_Info: [5.062] VISION_GEAR_DEPLOY: xPos= -0.37,yPos= 51.26,heading=  -1.7/  -2.1,volts=12.3(10.8)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  -0.3, Input=  -0.4, Error=   0.0, PIDTerms= 0.005/ 0.000/ 0.000/-0.000, Output= 0.005(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  42.9, Input=  51.9, Error=  -9.0, PIDTerms=-0.314/ 0.000/ 0.312/ 0.000, Output=-0.001(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=  -1.9, Error=  -0.2, PIDTerms=-0.014/ 0.000/-0.060/-0.000, Output=-0.074(-0.500/0.500)
+FrcRobotBase.PixyVision_Info: 4 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x0111, sig=1, centerX=140, centerY= 99, width= 11, height= 22, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x0139, sig=1, centerX=188, centerY= 95, width= 11, height= 18, angle=  0
+FrcRobotBase.PixyVision_Info: [2] sync=0xaa55, chksum=0x0111, sig=1, centerX=185, centerY= 61, width= 13, height= 13, angle=  0
+FrcRobotBase.PixyVision_Info: [3] sync=0xaa55, chksum=0x00ca, sig=1, centerX=136, centerY= 58, width=  5, height=  2, angle=  0
+FrcRobotBase.PixyVision_Info: Expected Target: distance=30.8, width=74.8, height=37.4
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=135, y=86, w=59, h=24
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=0.8, yDist=39.0, angle=1.1
+FrcRobotBase.Robot_Info: [5.113] VISION_GEAR_DEPLOY: xPos= -0.40,yPos= 50.07,heading=  -1.6/  -2.1,volts=12.2(10.8)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  -0.3, Input=  -0.4, Error=   0.0, PIDTerms= 0.005/ 0.000/ 0.000/-0.000, Output= 0.005(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  42.9, Input=  51.3, Error=  -8.3, PIDTerms=-0.292/ 0.000/ 0.096/ 0.000, Output=-0.196(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=  -1.7, Error=  -0.4, PIDTerms=-0.028/ 0.000/-0.020/-0.000, Output=-0.048(-0.500/0.500)
+FrcRobotBase.Robot_Info: [5.140] VISION_GEAR_DEPLOY: xPos= -0.34,yPos= 48.86,heading=  -1.9/  -2.1,volts=12.2(10.8)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  -0.3, Input=  -0.4, Error=   0.1, PIDTerms= 0.010/ 0.000/ 0.000/-0.000, Output= 0.010(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  42.9, Input=  50.1, Error=  -7.1, PIDTerms=-0.250/ 0.000/ 0.369/ 0.000, Output= 0.119(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=  -1.6, Error=  -0.5, PIDTerms=-0.030/ 0.000/-0.008/-0.000, Output=-0.038(-0.500/0.500)
+FrcRobotBase.Robot_Info: [5.170] VISION_GEAR_DEPLOY: xPos= -0.34,yPos= 48.34,heading=  -2.2/  -2.1,volts=12.2(10.8)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  -0.3, Input=  -0.3, Error=   0.0, PIDTerms= 0.001/ 0.000/-0.000/-0.000, Output= 0.001(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  42.9, Input=  48.9, Error=  -5.9, PIDTerms=-0.208/ 0.000/ 0.357/ 0.000, Output= 0.149(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=  -1.9, Error=  -0.2, PIDTerms=-0.012/ 0.000/ 0.052/-0.000, Output= 0.040(-0.500/0.500)
+FrcRobotBase.PixyVision_Info: 3 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x0107, sig=1, centerX=142, centerY= 92, width= 11, height= 17, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x0137, sig=1, centerX=187, centerY= 93, width= 10, height= 20, angle=  0
+FrcRobotBase.PixyVision_Info: [2] sync=0xaa55, chksum=0x00d7, sig=1, centerX=144, centerY= 56, width=  9, height=  5, angle=  0
+FrcRobotBase.PixyVision_Info: Expected Target: distance=31.9, width=72.1, height=36.1
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=137, y=83, w=55, h=20
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=0.8, yDist=41.8, angle=1.1
+FrcRobotBase.Robot_Info: [5.210] VISION_GEAR_DEPLOY: xPos= -0.29,yPos= 47.61,heading=  -2.7/  -2.1,volts=12.3(10.8)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  -0.3, Input=  -0.3, Error=   0.0, PIDTerms= 0.002/ 0.000/ 0.000/-0.000, Output= 0.002(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  42.9, Input=  48.3, Error=  -5.4, PIDTerms=-0.189/ 0.000/ 0.106/ 0.000, Output=-0.084(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=  -2.2, Error=   0.1, PIDTerms= 0.006/ 0.000/ 0.035/-0.000, Output= 0.041(-0.500/0.500)
+FrcRobotBase.Robot_Info: [5.236] VISION_GEAR_DEPLOY: xPos= -0.22,yPos= 47.27,heading=  -2.9/  -2.1,volts=12.3(10.8)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  -0.3, Input=  -0.3, Error=  -0.0, PIDTerms=-0.007/ 0.000/-0.000/-0.000, Output=-0.007(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  42.9, Input=  47.6, Error=  -4.7, PIDTerms=-0.164/ 0.000/ 0.197/ 0.000, Output= 0.033(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=  -2.7, Error=   0.6, PIDTerms= 0.037/ 0.000/ 0.080/-0.000, Output= 0.117(-0.500/0.500)
+FrcRobotBase.Robot_Info: [5.260] VISION_GEAR_DEPLOY: xPos= -0.18,yPos= 46.63,heading=  -2.9/  -2.1,volts=12.2(10.8)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  -0.3, Input=  -0.2, Error=  -0.1, PIDTerms=-0.017/ 0.000/-0.000/-0.000, Output=-0.017(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  42.9, Input=  47.3, Error=  -4.3, PIDTerms=-0.152/ 0.000/ 0.112/ 0.000, Output=-0.041(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=  -2.9, Error=   0.8, PIDTerms= 0.049/ 0.000/ 0.039/-0.000, Output= 0.088(-0.500/0.500)
+FrcRobotBase.Robot_Info: [5.295] VISION_GEAR_DEPLOY: xPos= -0.19,yPos= 46.18,heading=  -2.8/  -2.1,volts=12.3(10.8)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  -0.3, Input=  -0.2, Error=  -0.1, PIDTerms=-0.022/ 0.000/-0.000/-0.000, Output=-0.022(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  42.9, Input=  46.6, Error=  -3.7, PIDTerms=-0.130/ 0.000/ 0.147/ 0.000, Output= 0.017(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=  -2.9, Error=   0.8, PIDTerms= 0.051/ 0.000/ 0.004/-0.000, Output= 0.055(-0.500/0.500)
+FrcRobotBase.PixyVision_Info: 1 object(s) found
+FrcRobotBase.Robot_Info: [5.370] VISION_GEAR_DEPLOY: xPos= -0.21,yPos= 45.17,heading=  -2.1/  -2.1,volts=12.3(10.8)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  -0.3, Input=  -0.2, Error=  -0.1, PIDTerms=-0.021/ 0.000/ 0.000/-0.000, Output=-0.021(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  42.9, Input=  46.2, Error=  -3.3, PIDTerms=-0.114/ 0.000/ 0.072/ 0.000, Output=-0.043(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=  -2.8, Error=   0.7, PIDTerms= 0.044/ 0.000/-0.011/-0.000, Output= 0.033(-0.500/0.500)
+FrcRobotBase.Robot_Info: [5.413] VISION_GEAR_DEPLOY: xPos= -0.20,yPos= 44.72,heading=  -1.8/  -2.1,volts=12.4(10.8)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  -0.3, Input=  -0.2, Error=  -0.1, PIDTerms=-0.019/ 0.000/ 0.000/-0.000, Output=-0.019(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  42.9, Input=  45.2, Error=  -2.2, PIDTerms=-0.079/ 0.000/ 0.136/ 0.000, Output= 0.057(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=  -2.1, Error=  -0.0, PIDTerms=-0.000/ 0.000/-0.057/-0.000, Output=-0.057(-0.500/0.500)
+FrcRobotBase.PixyVision_Info: 3 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x00fb, sig=1, centerX=181, centerY= 56, width=  9, height=  4, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x011a, sig=1, centerX=186, centerY= 83, width=  9, height=  3, angle=  0
+FrcRobotBase.PixyVision_Info: [2] sync=0xaa55, chksum=0x00d6, sig=1, centerX=146, centerY= 56, width=  7, height=  4, angle=  0
+FrcRobotBase.PixyVision_Info: Expected Target: distance=32.8, width=70.2, height=35.1
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=177, y=54, w=14, h=31
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=17.1, yDist=164.3, angle=6.0
+FrcRobotBase.Robot_Info: [5.472] VISION_GEAR_DEPLOY: xPos= -0.19,yPos= 44.39,heading=  -1.4/  -2.1,volts=12.2(10.8)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  -0.3, Input=  -0.2, Error=  -0.1, PIDTerms=-0.019/ 0.000/-0.000/-0.000, Output=-0.019(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  42.9, Input=  44.7, Error=  -1.8, PIDTerms=-0.063/ 0.000/ 0.062/ 0.000, Output=-0.001(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=  -1.8, Error=  -0.3, PIDTerms=-0.018/ 0.000/-0.023/-0.000, Output=-0.041(-0.500/0.500)
+FrcRobotBase.Robot_Info: [5.492] VISION_GEAR_DEPLOY: xPos= -0.27,yPos= 44.30,heading=  -1.5/  -2.1,volts=12.3(10.8)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  -0.3, Input=  -0.2, Error=  -0.1, PIDTerms=-0.022/ 0.000/-0.000/-0.000, Output=-0.022(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  42.9, Input=  44.4, Error=  -1.5, PIDTerms=-0.051/ 0.000/ 0.086/ 0.000, Output= 0.035(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=  -1.4, Error=  -0.7, PIDTerms=-0.044/ 0.000/-0.066/-0.000, Output=-0.110(-0.500/0.500)
+FrcRobotBase.Robot_Info: [5.515] VISION_GEAR_DEPLOY: xPos= -0.21,yPos= 44.12,heading=  -1.6/  -2.1,volts=12.2(10.8)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  -0.3, Input=  -0.3, Error=  -0.1, PIDTerms=-0.009/ 0.000/ 0.000/-0.000, Output=-0.009(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  42.9, Input=  44.3, Error=  -1.4, PIDTerms=-0.048/ 0.000/ 0.035/ 0.000, Output=-0.014(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=  -1.5, Error=  -0.6, PIDTerms=-0.039/ 0.000/ 0.016/-0.000, Output=-0.023(-0.500/0.500)
+FrcRobotBase.Robot_Info: [5.536] VISION_GEAR_DEPLOY: xPos= -0.22,yPos= 44.03,heading=  -1.8/  -2.1,volts=12.3(10.8)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  -0.3, Input=  -0.2, Error=  -0.1, PIDTerms=-0.018/ 0.000/-0.000/-0.000, Output=-0.018(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  42.9, Input=  44.1, Error=  -1.2, PIDTerms=-0.042/ 0.000/ 0.064/ 0.000, Output= 0.022(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=  -1.6, Error=  -0.5, PIDTerms=-0.032/ 0.000/ 0.024/-0.000, Output=-0.008(-0.500/0.500)
+FrcRobotBase.PixyVision_Info: 2 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x0104, sig=1, centerX=140, centerY= 98, width=  6, height= 15, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x0129, sig=1, centerX=181, centerY= 95, width=  7, height= 13, angle=  0
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=137, y=89, w=48, h=17
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=0.2, yDist=47.9, angle=0.2
+FrcRobotBase.Robot_Info: [5.554] VISION_GEAR_DEPLOY: xPos= -0.26,yPos= 43.99,heading=  -1.9/  -2.1,volts=12.3(10.8)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  -0.3, Input=  -0.2, Error=  -0.1, PIDTerms=-0.017/ 0.000/ 0.000/-0.000, Output=-0.017(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  42.9, Input=  44.0, Error=  -1.1, PIDTerms=-0.039/ 0.000/ 0.036/ 0.000, Output=-0.003(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=  -1.8, Error=  -0.3, PIDTerms=-0.019/ 0.000/ 0.053/-0.000, Output= 0.034(-0.500/0.500)
+FrcRobotBase.Robot_Info: [5.569] VISION_GEAR_DEPLOY: xPos= -0.26,yPos= 43.93,heading=  -2.0/  -2.1,volts=12.3(10.8)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  -0.3, Input=  -0.3, Error=  -0.1, PIDTerms=-0.011/ 0.000/ 0.000/-0.000, Output=-0.011(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  42.9, Input=  44.0, Error=  -1.1, PIDTerms=-0.037/ 0.000/ 0.031/ 0.000, Output=-0.006(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=  -1.9, Error=  -0.2, PIDTerms=-0.011/ 0.000/ 0.054/-0.000, Output= 0.043(-0.500/0.500)
+FrcRobotBase.Robot_Info: [5.582] VISION_GEAR_DEPLOY: xPos= -0.28,yPos= 43.87,heading=  -2.1/  -2.1,volts=12.3(10.8)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  -0.3, Input=  -0.3, Error=  -0.1, PIDTerms=-0.011/ 0.000/ 0.000/-0.000, Output=-0.011(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  42.9, Input=  43.9, Error=  -1.0, PIDTerms=-0.035/ 0.000/ 0.032/ 0.000, Output=-0.004(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=  -2.0, Error=  -0.1, PIDTerms=-0.005/ 0.000/ 0.031/-0.000, Output= 0.026(-0.500/0.500)
+FrcRobotBase.Robot_Info: [5.597]       DONE: xPos= -0.28,yPos= 43.87,heading=  -2.2/  -2.1,volts=12.3(10.8)
+FrcRobotBase.Robot_Info: [5.597] VISION_GEAR_DEPLOY: xPos= -0.28,yPos= 43.87,heading=  -2.2/  -2.1,volts=12.3(10.8)
+FrcRobotBase.Robot_Info: [5.608] GO_TO_SIDEWALL: xPos= -0.27,yPos= 43.82,heading=  -2.2/  -2.1,volts=12.3(10.8)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  74.7, Input=  -0.3, Error=  75.0, PIDTerms=-0.008/ 0.000/ 0.000/-0.000, Output= 0.000(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target=  43.8, Input=  43.9, Error=   0.0, PIDTerms=-0.033/ 0.000/ 0.030/ 0.000, Output= 0.000(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=  -2.1, Error=   0.0, PIDTerms=-0.000/ 0.000/ 0.024/-0.000, Output= 0.000(-0.500/0.500)
+FrcRobotBase.PixyVision_Info: 2 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x010b, sig=1, centerX=142, centerY= 94, width=  7, height= 23, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x0130, sig=1, centerX=182, centerY= 95, width=  8, height= 18, angle=  0
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=139, y=83, w=47, h=23
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=0.5, yDist=48.9, angle=0.6
+FrcRobotBase.PixyVision_Info: 2 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x010b, sig=1, centerX=140, centerY= 94, width=  9, height= 23, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x0132, sig=1, centerX=180, centerY= 92, width= 10, height= 23, angle=  0
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=136, y=81, w=49, h=25
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=0.1, yDist=46.9, angle=0.1
+FrcRobotBase.PixyVision_Info: 2 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x0105, sig=1, centerX=134, centerY= 95, width=  9, height= 22, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x012d, sig=1, centerX=174, centerY= 92, width=  9, height= 25, angle=  0
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=130, y=80, w=49, h=26
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=-1.1, yDist=46.9, angle=-1.4
+FrcRobotBase.PixyVision_Info: 2 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x0126, sig=1, centerX=168, centerY= 93, width=  8, height= 24, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x00ff, sig=1, centerX=128, centerY= 94, width=  8, height= 24, angle=  0
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=124, y=81, w=48, h=25
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=-2.5, yDist=47.9, angle=-3.0
+FrcRobotBase.PixyVision_Info: 2 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x00f7, sig=1, centerX=122, centerY= 94, width=  6, height= 24, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x0121, sig=1, centerX=162, centerY= 93, width=  9, height= 24, angle=  0
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=119, y=81, w=48, h=25
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=-3.5, yDist=47.9, angle=-4.2
+FrcRobotBase.PixyVision_Info: 2 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x0114, sig=1, centerX=150, centerY= 94, width= 10, height= 21, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x00ee, sig=1, centerX=111, centerY= 95, width=  8, height= 23, angle=  0
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=107, y=84, w=48, h=23
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=-6.0, yDist=47.9, angle=-7.2
+FrcRobotBase.PixyVision_Info: 2 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x0105, sig=1, centerX=133, centerY= 94, width=  9, height= 24, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x00d8, sig=1, centerX= 95, centerY=102, width=  9, height=  9, angle=  0
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=91, y=82, w=47, h=25
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=-9.7, yDist=48.9, angle=-11.2
+FrcRobotBase.PixyVision_Info: 1 object(s) found
+FrcRobotBase.PixyVision_Info: 1 object(s) found
+FrcRobotBase.PixyVision_Info: 1 object(s) found
+FrcRobotBase.PixyVision_Info: 1 object(s) found
+FrcRobotBase.PixyVision_Info: 1 object(s) found
+FrcRobotBase.PixyVision_Info: 2 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x0083, sig=1, centerX= 28, centerY= 80, width= 18, height=  4, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x0084, sig=1, centerX= 23, centerY= 98, width=  7, height=  3, angle=  0
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=19, y=78, w=18, h=22
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=-73.3, yDist=127.8, angle=-29.9
+FrcRobotBase.PixyVision_Info: 1 object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: 2 object(s) found
+FrcRobotBase.PixyVision_Info: [0] sync=0xaa55, chksum=0x0085, sig=1, centerX= 27, centerY= 97, width=  5, height=  3, angle=  0
+FrcRobotBase.PixyVision_Info: [1] sync=0xaa55, chksum=0x007b, sig=1, centerX= 28, centerY= 85, width=  6, height=  3, angle=  0
+FrcRobotBase.PixyVision_Info: ===TargetRect===: x=25, y=84, w=6, h=15
+FrcRobotBase.PixyVision_Info: ###TargetInfo###: xDist=-220.0, yDist=383.3, angle=-29.9
+FrcRobotBase.PixyVision_Info: 1 object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: 1 object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: 1 object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.Robot_Info: [8.711] GO_TO_LOADING_STATION: xPos= 75.02,yPos= 43.79,heading=  -1.1/  -2.1,volts=12.3(10.5)
+FrcRobotBase.printPidInfo_Info: encoderXPidCtrl: Target=  75.0, Input=  75.0, Error=   0.0, PIDTerms=-0.047/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: encoderYPidCtrl: Target= 379.8, Input=  43.8, Error= 336.0, PIDTerms= 0.000/ 0.000/ 0.004/ 0.000, Output= 0.000(-0.500/0.500)
+FrcRobotBase.printPidInfo_Info: gyroTurnPidCtrl: Target=  -2.1, Input=  -1.1, Error=  -1.0, PIDTerms=-0.067/ 0.000/-0.061/-0.000, Output= 0.000(-0.500/0.500)
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: 1 object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: 1 object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: 1 object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.Robot_Info: [13.603]       DONE: xPos= 74.97,yPos=378.92,heading=  -2.1/  -2.1,volts=12.3(10.5)
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.PixyVision_Info: null object(s) found
+FrcRobotBase.Vision_Info: Front pixy is disabled!

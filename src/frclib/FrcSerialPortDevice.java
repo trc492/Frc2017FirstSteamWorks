@@ -101,18 +101,27 @@ public class FrcSerialPortDevice extends TrcSerialBusDevice
      * This method is called to read data from the device with the specified length.
      *
      * @param address specifies the data address if any (not applicable for SerialPort).
-     * @param length specifies the number of bytes to read.
+     * @param length specifies the number of bytes to read. If zero, read all that has been received.
      * @return a byte array containing the data read.
      */
     @Override
     public byte[] readData(int address, int length)
     {
         final String funcName = "readData";
-        byte[] data = device.read(length);
 
         if (debugEnabled)
         {
             dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.CALLBK, "addr=%d,len=%d", address, length);
+        }
+
+        if (length == 0)
+        {
+            length = device.getBytesReceived();
+        }
+        byte[] data = device.read(length);
+
+        if (debugEnabled)
+        {
             dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.CALLBK, "=%s", Arrays.toString(data));
         }
 
