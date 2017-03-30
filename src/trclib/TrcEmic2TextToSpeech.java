@@ -22,6 +22,7 @@
 
 package trclib;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 
 /**
@@ -315,6 +316,7 @@ public abstract class TrcEmic2TextToSpeech implements TrcSerialBusDevice.Complet
     {
         final String funcName = "readCompletion";
         boolean retry = false;
+        String reply = null;
 
         if (debugEnabled)
         {
@@ -324,13 +326,26 @@ public abstract class TrcEmic2TextToSpeech implements TrcSerialBusDevice.Complet
 
         if (!error && data != null)
         {
-            String reply = "";
-
-            for (int i = 0; i < data.length; i++)
+            try
             {
-                reply += (char)data[i];
+                reply = new String(data, "US-ASCII");
+                if (debugEnabled)
+                {
+                    dbgTrace.traceInfo(funcName, "reply=<%s>", reply);
+                }
             }
+            catch (UnsupportedEncodingException e)
+            {
+                if (debugEnabled)
+                {
+                    dbgTrace.traceErr(funcName, "Unsupported Encoding: %s", e.getMessage());
+                }
+                e.printStackTrace();
+            }
+        }
 
+        if (reply != null)
+        {
             switch ((RequestTag)requestTag)
             {
                 case PROMPT:
