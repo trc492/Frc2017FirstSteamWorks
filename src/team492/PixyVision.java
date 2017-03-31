@@ -145,7 +145,7 @@ public class PixyVision
         if (detectedObjects != null && detectedObjects.length >= 2)
         {
             ArrayList<Rect> objectList = new ArrayList<>();
-            double targetDistance = robot.getUltrasonicDistance();
+            double targetDistance = robot.getUltrasonicDistance() + 8.0;
             //
             // Filter out objects that don't have the correct signature.
             //
