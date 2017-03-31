@@ -126,7 +126,8 @@ public class RobotInfo
     // 2017-03-12: 0.0159419007257628, 0.03, 0.0, 0.0005
     // 2017-03-14: 0.0159419007257628, 0.03, 0.0, 0.005
     // 2017-03-21: 0.0171280999395813, 0.035, 0.0, 0.008
-    public static final double ENCODER_Y_INCHES_PER_COUNT       = 0.0171280999395813;
+    // 2017-03-30: 0.01778656, 0.035, 0.0, 0.008
+    public static final double ENCODER_Y_INCHES_PER_COUNT       = 0.01778656;
     public static final double ENCODER_Y_KP                     = 0.035;
     public static final double ENCODER_Y_KI                     = 0.0;
     public static final double ENCODER_Y_KD                     = 0.008;
