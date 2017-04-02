@@ -26,7 +26,6 @@ import java.util.Date;
 
 import frclib.FrcChoiceMenu;
 import hallib.HalDashboard;
-import trclib.TrcPidDrive;
 import trclib.TrcRobot;
 
 public class FrcAuto implements TrcRobot.RobotMode
