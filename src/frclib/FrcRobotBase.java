@@ -228,6 +228,8 @@ public abstract class FrcRobotBase extends RobotBase
 
         while (true)
         {
+            double timeSliceStart = Timer.getFPGATimestamp();
+
             prevMode = currMode;
 
             //
@@ -346,7 +348,6 @@ public abstract class FrcRobotBase extends RobotBase
                 //
                 // Run periodic mode.
                 //
-                double timeSliceStart = Timer.getFPGATimestamp();
                 taskMgr.executeTaskType(TrcTaskMgr.TaskType.PREPERIODIC_TASK, currMode);
                 if (currMode == RunMode.DISABLED_MODE)
                 {
@@ -385,19 +386,6 @@ public abstract class FrcRobotBase extends RobotBase
                 // Run post periodic tasks.
                 //
                 taskMgr.executeTaskType(TrcTaskMgr.TaskType.POSTPERIODIC_TASK, currMode);
-
-                //
-                // Do house keeping statistics.
-                //
-                double timeSliceUsed = Timer.getFPGATimestamp() - timeSliceStart;
-                if (debugEnabled)
-                {
-                    if (timeSliceUsed > timesliceThreshold)
-                    {
-                        dbgTrace.traceWarn(funcName, "%s takes too long (%5.3fs)\n",
-                            currMode.toString(), timeSliceUsed);
-                    }
-                }
             }
 
             //
@@ -426,6 +414,16 @@ public abstract class FrcRobotBase extends RobotBase
             {
                 dashboard.displayPrintf(0, "[%3d:%06.3f] %s",
                     (int)(modeElapsedTime/60), modeElapsedTime%60, currMode.toString());
+            }
+
+            //
+            // Do house keeping statistics.
+            //
+            double timeSliceUsed = Timer.getFPGATimestamp() - timeSliceStart;
+            if (timeSliceUsed > timesliceThreshold)
+            {
+                getGlobalTracer().traceWarn(funcName, "%s takes too long (%5.3fs)\n",
+                    currMode.toString(), timeSliceUsed);
             }
         }
     }   //startCompetition

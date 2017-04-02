@@ -126,6 +126,7 @@ public class TrcDriveBase implements TrcTaskMgr.Task
         yScale = 1.0;
         rotScale = 1.0;
         resetPosition(true);
+        stallStartTime = TrcUtil.getCurrentTime();
 
         TrcTaskMgr taskMgr = TrcTaskMgr.getInstance();
         taskMgr.registerTask(moduleName, this, TrcTaskMgr.TaskType.STOP_TASK);
