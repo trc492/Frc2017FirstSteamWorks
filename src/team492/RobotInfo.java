@@ -152,7 +152,7 @@ public class RobotInfo
     public static final double GYRO_TURN_SMALL_KI               = 0.0;
     public static final double GYRO_TURN_SMALL_KD               = 0.0018;
 
-    public static final double DRIVE_STALL_TIMEOUT              = 0.3;
+    public static final double DRIVE_STALL_TIMEOUT              = 0.5;
     public static final double DRIVE_SLOW_XSCALE                = 3.0;
     public static final double DRIVE_SLOW_YSCALE                = 3.0;
     public static final double DRIVE_SLOW_TURNSCALE             = 3.0;

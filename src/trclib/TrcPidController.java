@@ -83,6 +83,7 @@ public class TrcPidController
     private double output = 0.0;
 
     private TrcDbgTrace debugTracer = null;
+
     private double pTerm;
     private double iTerm;
     private double dTerm;
@@ -191,8 +192,9 @@ public class TrcPidController
      * use the debug tracer in this module but if the debug tracer is not enabled, no output will be produced.
      *
      * @param tracer specifies the tracer object to print the PID info to.
+     * @param battery specifies the battery object to get battery info.
      */
-    public void printPidInfo(TrcDbgTrace tracer)
+    public void printPidInfo(TrcDbgTrace tracer, TrcRobotBattery battery)
     {
         final String funcName = "printPidInfo";
 
@@ -203,11 +205,35 @@ public class TrcPidController
 
         if (tracer != null)
         {
-            tracer.traceInfo(
+            if (battery != null)
+            {
+                tracer.traceInfo(
                     funcName,
-                    "%s: Target=%6.1f, Input=%6.1f, Error=%6.1f, PIDTerms=%6.3f/%6.3f/%6.3f/%6.3f, Output=%6.3f(%6.3f/%5.3f)",
+                    "%s: Target=%6.1f, Input=%6.1f, Error=%6.1f, PIDTerms=%6.3f/%6.3f/%6.3f/%6.3f, " +
+                    "Output=%6.3f(%6.3f/%5.3f), Volt=%.1f (%.1f)",
+                    instanceName, setPoint, input, currError, pTerm, iTerm, dTerm, fTerm, output, minOutput, maxOutput,
+                    battery.getVoltage(), battery.getLowestVoltage());
+            }
+            else
+            {
+                tracer.traceInfo(
+                    funcName,
+                    "%s: Target=%6.1f, Input=%6.1f, Error=%6.1f, PIDTerms=%6.3f/%6.3f/%6.3f/%6.3f, " +
+                    "Output=%6.3f(%6.3f/%5.3f)",
                     instanceName, setPoint, input, currError, pTerm, iTerm, dTerm, fTerm, output, minOutput, maxOutput);
+            }
         }
+    }   //printPidInfo
+
+    /**
+     * This method prints the PID information to the tracer console. If no tracer is provided, it will attempt to
+     * use the debug tracer in this module but if the debug tracer is not enabled, no output will be produced.
+     *
+     * @param tracer specifies the tracer object to print the PID info to.
+     */
+    public void printPidInfo(TrcDbgTrace tracer)
+    {
+        printPidInfo(tracer, null);
     }   //printPidInfo
 
     /**
@@ -215,7 +241,7 @@ public class TrcPidController
      */
     public void printPidInfo()
     {
-        printPidInfo(null);
+        printPidInfo(null, null);
     }   //printPidInfo
 
     /**
@@ -681,6 +707,16 @@ public class TrcPidController
 
         return onTarget;
     }   //isOnTarget
+
+//    /**
+//     * This method checks if it is close to target.
+//     *
+//     * @return true if it is close to target, false otherwise.
+//     */
+//    public boolean isCloseToTarget()
+//    {
+//        return Math.abs(currError) < 3*tolerance;
+//    }   //isCloseToTarget
 
     /**
      * This method calculates the PID output applying the PID equation to the given set point target and current

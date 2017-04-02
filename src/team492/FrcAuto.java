@@ -26,6 +26,7 @@ import java.util.Date;
 
 import frclib.FrcChoiceMenu;
 import hallib.HalDashboard;
+import trclib.TrcPidDrive;
 import trclib.TrcRobot;
 
 public class FrcAuto implements TrcRobot.RobotMode
@@ -183,6 +184,19 @@ public class FrcAuto implements TrcRobot.RobotMode
         if (autoCommand != null)
         {
             autoCommand.cmdPeriodic(elapsedTime);
+
+            if (robot.pidDrive.isActive())
+            {
+                robot.encoderXPidCtrl.printPidInfo(robot.tracer, robot.battery);
+                robot.encoderYPidCtrl.printPidInfo(robot.tracer, robot.battery);
+                robot.gyroTurnPidCtrl.printPidInfo(robot.tracer, robot.battery);
+            }
+            else if (robot.visionPidDrive.isActive())
+            {
+                robot.sonarDrivePidCtrl.printPidInfo(robot.tracer, robot.battery);
+                robot.visionTurnPidCtrl.printPidInfo(robot.tracer, robot.battery);
+            }
+
             robot.updateDashboard();
         }
     }   //runContinuous

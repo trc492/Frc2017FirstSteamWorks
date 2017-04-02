@@ -251,15 +251,15 @@ public class FrcTest extends FrcTeleOp
                 {
                     if (test == Test.X_DISTANCE_DRIVE)
                     {
-                        robot.encoderXPidCtrl.printPidInfo(robot.tracer);
+                        robot.encoderXPidCtrl.printPidInfo(robot.tracer, robot.battery);
                     }
                     else if (test == Test.Y_DISTANCE_DRIVE)
                     {
-                        robot.encoderYPidCtrl.printPidInfo(robot.tracer);
+                        robot.encoderYPidCtrl.printPidInfo(robot.tracer, robot.battery);
                     }
                     else if (test == Test.TURN_DEGREES)
                     {
-                        robot.gyroTurnPidCtrl.printPidInfo(robot.tracer);
+                        robot.gyroTurnPidCtrl.printPidInfo(robot.tracer, robot.battery);
                     }
                 }
                 break;
@@ -274,9 +274,9 @@ public class FrcTest extends FrcTeleOp
 
                 if (!visionPidDriveCommand.cmdPeriodic(elapsedTime))
                 {
-                    robot.encoderXPidCtrl.printPidInfo(robot.tracer);
-                    robot.sonarDrivePidCtrl.printPidInfo(robot.tracer);
-                    robot.visionTurnPidCtrl.printPidInfo(robot.tracer);
+                    robot.encoderXPidCtrl.printPidInfo(robot.tracer, robot.battery);
+                    robot.sonarDrivePidCtrl.printPidInfo(robot.tracer, robot.battery);
+                    robot.visionTurnPidCtrl.printPidInfo(robot.tracer, robot.battery);
                 }
                 break;
 
@@ -288,7 +288,7 @@ public class FrcTest extends FrcTeleOp
 
                 if (!sonarPidDriveCommand.cmdPeriodic(elapsedTime))
                 {
-                    robot.sonarDrivePidCtrl.printPidInfo(robot.tracer);
+                    robot.sonarDrivePidCtrl.printPidInfo(robot.tracer, robot.battery);
                 }
                 break;
 
@@ -300,7 +300,7 @@ public class FrcTest extends FrcTeleOp
 
                 if (!visionPidTurnCommand.cmdPeriodic(elapsedTime))
                 {
-                    robot.visionTurnPidCtrl.printPidInfo(robot.tracer);
+                    robot.visionTurnPidCtrl.printPidInfo(robot.tracer, robot.battery);
                 }
                 break;
 

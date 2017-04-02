@@ -39,6 +39,7 @@ public class TrcPidDrive implements TrcTaskMgr.Task
     private static final TrcDbgTrace.TraceLevel traceLevel = TrcDbgTrace.TraceLevel.API;
     private static final TrcDbgTrace.MsgLevel msgLevel = TrcDbgTrace.MsgLevel.INFO;
     private TrcDbgTrace dbgTrace = null;
+    private TrcDbgTrace msgTracer = null;
 
     /**
      * Turn mode specifies how PID controlled drive is turning the robot.
@@ -108,6 +109,16 @@ public class TrcPidDrive implements TrcTaskMgr.Task
     {
         return instanceName;
     }   //toString
+
+    /**
+     * This method sets the message tracer for logging trace messages.
+     *
+     * @param tracer specifies the tracer for logging messages.
+     */
+    public void setMsgTracer(TrcDbgTrace tracer)
+    {
+        this.msgTracer = tracer;
+    }   //setMsgTracer
 
     /**
      * This methods sets the turn mode. Supported modes are in-place (default), pivot and curve.
@@ -580,13 +591,26 @@ public class TrcPidDrive implements TrcTaskMgr.Task
 
         boolean expired = expiredTime != 0.0 && TrcUtil.getCurrentTime() >= expiredTime;
         boolean stalled = pidDriveStarted && stallTimeout != 0.0 && driveBase.isStalled(stallTimeout);
+//        boolean stalled = pidDriveStarted && stallTimeout != 0.0 && driveBase.isStalled(stallTimeout) &&
+//                          (xPidCtrl == null || xPidCtrl.isCloseToTarget()) &&
+//                          (yPidCtrl == null || yPidCtrl.isCloseToTarget()) &&
+//                          (turnPidCtrl == null || turnPidCtrl.isCloseToTarget());
         boolean xOnTarget = xPidCtrl == null || xPidCtrl.isOnTarget();
         boolean yOnTarget = yPidCtrl == null || yPidCtrl.isOnTarget();
         boolean turnOnTarget = turnPidCtrl == null || turnPidCtrl.isOnTarget();
 
-        if ((stalled || expired) && beepDevice != null)
+        if ((stalled || expired) && (beepDevice != null || msgTracer != null))
         {
-            beepDevice.playTone(beepFrequency, beepDuration);
+            if (beepDevice != null)
+            {
+                beepDevice.playTone(beepFrequency, beepDuration);
+            }
+
+            if (msgTracer != null)
+            {
+                msgTracer.traceInfo(funcName, "Stalled=%s, Expired=%s",
+                    Boolean.toString(stalled), Boolean.toString(expired));
+            }
         }
 
         if (maintainHeading)

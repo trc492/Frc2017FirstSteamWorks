@@ -55,6 +55,7 @@ import trclib.TrcGyro;
 import trclib.TrcPidController;
 import trclib.TrcPidDrive;
 import trclib.TrcRobot.RobotMode;
+import trclib.TrcRobotBattery;
 import trclib.TrcUtil;
 
 /**
@@ -110,7 +111,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     //
     // Sensors.
     //
-    public FrcRobotBattery battery = null;
+    public TrcRobotBattery battery = null;
     public TrcGyro gyro = null;
     public AnalogInput pressureSensor = null;
     public AnalogInput ultrasonicSensor = null;
@@ -333,6 +334,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
             RobotInfo.GYRO_TURN_TOLERANCE, RobotInfo.GYRO_TURN_SETTLING, this);
         gyroTurnPidCtrl.setAbsoluteSetPoint(true);
         pidDrive = new TrcPidDrive("pidDrive", driveBase, encoderXPidCtrl, encoderYPidCtrl, gyroTurnPidCtrl);
+        pidDrive.setMsgTracer(tracer);
 
         sonarDrivePidCtrl = new TrcPidController(
             "sonarDrivePidCtrl",
@@ -347,8 +349,11 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         visionTurnPidCtrl.setInverted(true);
         visionTurnPidCtrl.setAbsoluteSetPoint(true);
         visionPidDrive = new TrcPidDrive("visionPidDrive", driveBase, null, sonarDrivePidCtrl, visionTurnPidCtrl);
+        visionPidDrive.setMsgTracer(tracer);
         sonarPidDrive = new TrcPidDrive("sonarPidDrive", driveBase, null, sonarDrivePidCtrl, null);
+        sonarPidDrive.setMsgTracer(tracer);
         visionPidTurn = new TrcPidDrive("cameraPidDrive", driveBase, null, null, gyroTurnPidCtrl);
+        visionPidTurn.setMsgTracer(tracer);
 
         //
         // Create other subsystems.
@@ -696,17 +701,6 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         tracer.traceInfo(moduleName, "[%5.3f] %10s: xPos=%6.2f,yPos=%6.2f,heading=%6.1f/%6.1f,volts=%.1f(%.1f)",
             elapsedTime, stateName, driveBase.getXPosition(), driveBase.getYPosition(), driveBase.getHeading(),
             targetHeading, battery.getVoltage(), battery.getLowestVoltage());
-        if (pidDrive.isActive())
-        {
-            encoderXPidCtrl.printPidInfo(tracer);
-            encoderYPidCtrl.printPidInfo(tracer);
-            gyroTurnPidCtrl.printPidInfo(tracer);
-        }
-        else if (visionPidDrive.isActive())
-        {
-            sonarDrivePidCtrl.printPidInfo(tracer);
-            visionTurnPidCtrl.printPidInfo(tracer);
-        }
     }   //traceStateInfo
 
     //
