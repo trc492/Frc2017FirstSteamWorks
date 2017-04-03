@@ -141,9 +141,10 @@ public class RobotInfo
     // 2017-03-12: 0.065, 0.0, 0.005/0.2, 0.0, 0.0
     // 2017-03-14: 0.065, 0.0, 0.005/0.08, 0.0, 0.0001
     // 2017-03-21: 0.065, 0.0, 0.005/0.06, 0.0, 0.0018 (Competition Robot)
-    public static final double GYRO_TURN_KP                     = 0.065;
+    // 2017-04-02: 0.05, 0.0, 0.003
+    public static final double GYRO_TURN_KP                     = 0.05;
     public static final double GYRO_TURN_KI                     = 0.0;
-    public static final double GYRO_TURN_KD                     = 0.005;
+    public static final double GYRO_TURN_KD                     = 0.003;
     public static final double GYRO_TURN_KF                     = 0.0;
     public static final double GYRO_TURN_TOLERANCE              = 2.0;
     public static final double GYRO_TURN_SETTLING               = 0.2;
