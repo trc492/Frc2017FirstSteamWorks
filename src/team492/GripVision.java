@@ -33,7 +33,6 @@ import org.opencv.imgproc.Imgproc;
 
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
-import frclib.FrcRobotBase;
 import frclib.FrcVisionTarget;
 import trclib.TrcDbgTrace;
 
@@ -46,7 +45,7 @@ public class GripVision extends FrcVisionTarget
     private static final TrcDbgTrace.MsgLevel msgLevel = TrcDbgTrace.MsgLevel.INFO;
     private TrcDbgTrace dbgTrace = null;
 
-    private TrcDbgTrace tracer = FrcRobotBase.getGlobalTracer();
+    private TrcDbgTrace tracer = TrcDbgTrace.getGlobalTracer();
     private GripPipeline pipeline;
 
     public GripVision(final String instanceName, CvSink videoIn, CvSource videoOut)

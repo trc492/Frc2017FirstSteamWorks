@@ -39,6 +39,7 @@ public abstract class TrcPixyCam implements TrcSerialBusDevice.CompletionHandler
     private static final TrcDbgTrace.TraceLevel traceLevel = TrcDbgTrace.TraceLevel.API;
     private static final TrcDbgTrace.MsgLevel msgLevel = TrcDbgTrace.MsgLevel.INFO;
     private TrcDbgTrace dbgTrace = null;
+    private TrcDbgTrace tracer = TrcDbgTrace.getGlobalTracer();
 
     private static final boolean USE_BYTE_TRANSACTION = false;
 
@@ -370,10 +371,7 @@ public abstract class TrcPixyCam implements TrcSerialBusDevice.CompletionHandler
                         // another read for SYNC.
                         //
                         asyncReadData(RequestTag.SYNC, 2);
-                        if (debugEnabled)
-                        {
-                            dbgTrace.traceWarn(funcName, "Unexpected data length %d in %s", length, requestTag);
-                        }
+                        tracer.traceWarn(funcName, "Unexpected data length %d in %s", length, requestTag);
                     }
                     else
                     {
@@ -405,12 +403,9 @@ public abstract class TrcPixyCam implements TrcSerialBusDevice.CompletionHandler
                             // We don't find the sync word, throw it away and initiate another read for SYNC.
                             //
                             asyncReadData(RequestTag.SYNC, 2);
-                            if (debugEnabled)
+                            if (word != 0)
                             {
-                                if (word != 0)
-                                {
-                                    dbgTrace.traceWarn(funcName, "Unexpected word 0x%04x read in %s", word, requestTag);
-                                }
+                                tracer.traceWarn(funcName, "Unexpected word 0x%04x read in %s", word, requestTag);
                             }
                         }
                     }
@@ -439,10 +434,7 @@ public abstract class TrcPixyCam implements TrcSerialBusDevice.CompletionHandler
                         // now word aligned again.
                         //
                         asyncReadData(RequestTag.SYNC, 2);
-                        if (debugEnabled)
-                        {
-                            dbgTrace.traceWarn(funcName, "Unexpected data byte 0x%02x in %s", data[0], requestTag);
-                        }
+                        tracer.traceWarn(funcName, "Unexpected data byte 0x%02x in %s", data[0], requestTag);
                     }
                     break;
 
@@ -583,9 +575,9 @@ public abstract class TrcPixyCam implements TrcSerialBusDevice.CompletionHandler
                             objects.add(currBlock);
                             currBlock = null;
                         }
-                        else if (debugEnabled)
+                        else
                         {
-                            dbgTrace.traceWarn(funcName, "Incorrect checksum %d (expecting %d).",
+                            tracer.traceWarn(funcName, "Incorrect checksum %d (expecting %d).",
                                 runningChecksum, currBlock.checksum);
                         }
                         //
@@ -609,10 +601,7 @@ public abstract class TrcPixyCam implements TrcSerialBusDevice.CompletionHandler
             // read for the SYNC_LOW byte.
             //
             asyncReadData(RequestTag.SYNC_LOW, 1);
-            if (debugEnabled)
-            {
-                dbgTrace.traceWarn(funcName, "Unexpected data length %d in %s", length, requestTag);
-            }
+            tracer.traceWarn(funcName, "Unexpected data length %d in %s", length, requestTag);
         }
         else
         {
@@ -641,12 +630,9 @@ public abstract class TrcPixyCam implements TrcSerialBusDevice.CompletionHandler
                         // We don't find the sync low byte, throw it away and initiate another read for SYNC_LOW.
                         //
                         asyncReadData(RequestTag.SYNC_LOW, 1);
-                        if (debugEnabled)
+                        if (data[0] != 0)
                         {
-                            if (data[0] != 0)
-                            {
-                                dbgTrace.traceWarn(funcName, "Unexpected byte 0x%02x read in %s", data[0], requestTag);
-                            }
+                            tracer.traceWarn(funcName, "Unexpected byte 0x%02x read in %s", data[0], requestTag);
                         }
                     }
                     break;
@@ -666,10 +652,7 @@ public abstract class TrcPixyCam implements TrcSerialBusDevice.CompletionHandler
                         // It's not a sync word after all, discard it and initiate the read for SYNC_LOW again.
                         //
                         asyncReadData(RequestTag.SYNC_LOW, 1);
-                        if (debugEnabled)
-                        {
-                            dbgTrace.traceWarn(funcName, "Unexpected byte 0x%02x read in %s", data[0], requestTag);
-                        }
+                        tracer.traceWarn(funcName, "Unexpected byte 0x%02x read in %s", data[0], requestTag);
                     }
                     break;
 
@@ -732,11 +715,7 @@ public abstract class TrcPixyCam implements TrcSerialBusDevice.CompletionHandler
                         // This is not a valid signature, discard it and initiate a read for SYNC_LOW.
                         //
                         asyncReadData(RequestTag.SYNC_LOW, 1);
-                        if (debugEnabled)
-                        {
-                            dbgTrace.traceWarn(funcName, "Unexpected signature %x in %s",
-                                currBlock.signature, requestTag);
-                        }
+                        tracer.traceWarn(funcName, "Unexpected signature %x in %s", currBlock.signature, requestTag);
                     }
                     else
                     {
@@ -802,9 +781,9 @@ public abstract class TrcPixyCam implements TrcSerialBusDevice.CompletionHandler
                             objects.add(currBlock);
                             currBlock = null;
                         }
-                        else if (debugEnabled)
+                        else
                         {
-                            dbgTrace.traceWarn(funcName, "Incorrect checksum %d (expecting %d).",
+                            tracer.traceWarn(funcName, "Incorrect checksum %d (expecting %d).",
                                 runningChecksum, currBlock.checksum);
                         }
                         //
@@ -830,9 +809,9 @@ public abstract class TrcPixyCam implements TrcSerialBusDevice.CompletionHandler
                         objects.add(currBlock);
                         currBlock = null;
                     }
-                    else if (debugEnabled)
+                    else
                     {
-                        dbgTrace.traceWarn(funcName, "Incorrect checksum %d (expecting %d).",
+                        tracer.traceWarn(funcName, "Incorrect checksum %d (expecting %d).",
                             runningChecksum, currBlock.checksum);
                     }
                     //

@@ -102,7 +102,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     }   //enum Alliance
 
     public HalDashboard dashboard = HalDashboard.getInstance();
-    public TrcDbgTrace tracer = FrcRobotBase.getGlobalTracer();
+    public TrcDbgTrace tracer = TrcDbgTrace.getGlobalTracer();
 
     public double targetHeading = 0.0;
 

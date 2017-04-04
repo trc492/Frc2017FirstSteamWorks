@@ -338,7 +338,7 @@ public abstract class TrcEmic2TextToSpeech implements TrcSerialBusDevice.Complet
             {
                 if (debugEnabled)
                 {
-                    dbgTrace.traceErr(funcName, "Unsupported Encoding: %s", e.getMessage());
+                    TrcDbgTrace.getGlobalTracer().traceErr(funcName, "Unsupported Encoding: %s", e.getMessage());
                 }
                 e.printStackTrace();
             }
