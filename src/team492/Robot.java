@@ -42,6 +42,7 @@ import edu.wpi.first.wpilibj.Relay.Value;
 import frclib.FrcAHRSGyro;
 import frclib.FrcCANTalon;
 import frclib.FrcChoiceMenu;
+import frclib.FrcEmic2TextToSpeech;
 import frclib.FrcFaceDetector;
 import frclib.FrcGyro;
 import frclib.FrcPneumatic;
@@ -51,6 +52,7 @@ import hallib.HalDashboard;
 import team492.PixyVision.TargetInfo;
 import trclib.TrcDbgTrace;
 import trclib.TrcDriveBase;
+import trclib.TrcEmic2TextToSpeech.Voice;
 import trclib.TrcGyro;
 import trclib.TrcPidController;
 import trclib.TrcPidDrive;
@@ -79,6 +81,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     public static final boolean USE_FRONT_PIXY = true;
     public static final boolean USE_FRONT_PIXY_UART = false;
     public static final boolean USE_REAR_PIXY = false;
+    public static final boolean USE_TEXT_TO_SPEECH = true;
 
     private static final boolean DEBUG_DRIVE_BASE = false;
     private static final boolean DEBUG_PID_DRIVE = false;
@@ -124,6 +127,11 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     public FrcFaceDetector faceDetector = null;
     public PixyVision frontPixy = null;
     public PixyVision rearPixy = null;
+
+    //
+    // Sound subsystem.
+    //
+    public FrcEmic2TextToSpeech tts = null;
 
     //
     // DriveBase subsystem.
@@ -277,6 +285,17 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
                     "RearPixy", this, RobotInfo.PIXY_GEAR_SIGNATURE, RobotInfo.PIXY_REAR_BRIGHTNESS,
                     RobotInfo.PIXY_REAR_ORIENTATION, I2C.Port.kMXP, RobotInfo.PIXYCAM_REAR_I2C_ADDRESS);
             }
+        }
+
+        //
+        // Sound subsystem.
+        //
+        if (USE_TEXT_TO_SPEECH)
+        {
+            tts = new FrcEmic2TextToSpeech("TextToSpeech", SerialPort.Port.kMXP, 9600);
+            tts.setEnabled(true);
+            tts.selectVoice(Voice.FrailFrank);
+            tts.setVolume(1.0);
         }
 
         //

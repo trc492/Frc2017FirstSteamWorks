@@ -171,12 +171,24 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
                     break;
 
                 case FrcJoystick.LOGITECH_BUTTON6:
+                    if (pressed && robot.tts != null)
+                    {
+                        robot.tts.speak("Kevin, drop the rope!");
+                    }
                     break;
 
                 case FrcJoystick.LOGITECH_BUTTON7:
+                    if (pressed && robot.tts != null)
+                    {
+                        robot.tts.speak("Kevin, pick up the gear!");
+                    }
                     break;
 
                 case FrcJoystick.LOGITECH_BUTTON8:
+                    if (pressed && robot.tts != null)
+                    {
+                        robot.tts.speak("Kevin, pick up the free gear!");
+                    }
                     break;
 
                 case FrcJoystick.LOGITECH_BUTTON9:

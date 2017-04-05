@@ -39,6 +39,69 @@ public abstract class TrcEmic2TextToSpeech implements TrcSerialBusDevice.Complet
     private static final TrcDbgTrace.MsgLevel msgLevel = TrcDbgTrace.MsgLevel.INFO;
     private TrcDbgTrace dbgTrace = null;
 
+    public static final int MIN_VOLUME = -48;
+    public static final int MAX_VOLUME = 18;
+    public enum Voice
+    {
+        PerfectPaul(0),
+        HugeHarry(1),
+        BeautifulBetty(2),
+        UppityUrsula(3),
+        DoctorDennis(4),
+        KitTheKid(5),
+        FrailFrank(6),
+        RoughRita(7),
+        WhisperingWendy(8);
+
+        public int value;
+
+        Voice(int value)
+        {
+            this.value = value;
+        }
+    }   //enum Voice
+
+    public enum DemoMsg
+    {
+        Speaking(0),
+        Singing(1),
+        Spanish(2);
+
+        public int value;
+
+        DemoMsg(int value)
+        {
+            this.value = value;
+        }
+    }   //enum DemoMsg
+
+    public enum Language
+    {
+        USEnglish(0),
+        CastilianSpanish(1),
+        LatinSpanish(2);
+
+        public int value;
+
+        Language(int value)
+        {
+            this.value = value;
+        }
+    }   //enum Language
+
+    public enum Parser
+    {
+        DECTalk(0),
+        Epson(1);
+
+        public int value;
+
+        Parser(int value)
+        {
+            this.value = value;
+        }
+    }   //enum Parser
+
     /**
      * This method issues an asynchronous read of a text string from the device.
      *
@@ -114,17 +177,17 @@ public abstract class TrcEmic2TextToSpeech implements TrcSerialBusDevice.Complet
         asyncReadString(RequestTag.PROMPT);
     }   //speak
 
-    public void playDemoMessage(int msgNum)
+    public void playDemoMessage(DemoMsg msg)
     {
         final String funcName = "playDemoMessage";
 
         if (debugEnabled)
         {
-            dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.API, "msgNum=%d", msgNum);
+            dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.API, "msg=%s", msg);
             dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.API);
         }
 
-        asyncWriteString(String.format("D%d\n", msgNum), false);
+        asyncWriteString(String.format("D%d\n", msg.value), false);
         asyncReadString(RequestTag.PROMPT);
     }   //playDemoMessage
 
@@ -154,17 +217,17 @@ public abstract class TrcEmic2TextToSpeech implements TrcSerialBusDevice.Complet
         asyncWriteString("Z\n", true);
     }   //togglePlayback
 
-    public void selectVoice(int voiceNum)
+    public void selectVoice(Voice voice)
     {
         final String funcName = "selectVoice";
 
         if (debugEnabled)
         {
-            dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.API, "voice=%d", voiceNum);
+            dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.API, "voice=%s", voice);
             dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.API);
         }
 
-        asyncWriteString(String.format("N%d\n", voiceNum), false);
+        asyncWriteString(String.format("N%d\n", voice.value), false);
         asyncReadString(RequestTag.PROMPT);
     }   //selectVoice
 
@@ -178,8 +241,19 @@ public abstract class TrcEmic2TextToSpeech implements TrcSerialBusDevice.Complet
             dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.API);
         }
 
+        if (vol < MIN_VOLUME)
+            vol = MIN_VOLUME;
+        else if (vol > MAX_VOLUME)
+            vol = MAX_VOLUME;
+
         asyncWriteString(String.format("V%d\n", vol), false);
         asyncReadString(RequestTag.PROMPT);
+    }   //setVolume
+
+    public void setVolume(double vol)
+    {
+        vol = TrcUtil.clipRange(vol);
+        setVolume((int)((MAX_VOLUME - MIN_VOLUME)*vol + MIN_VOLUME));
     }   //setVolume
 
     public void setSpeakingRate(int rate)
@@ -192,35 +266,40 @@ public abstract class TrcEmic2TextToSpeech implements TrcSerialBusDevice.Complet
             dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.API);
         }
 
+        if (rate < 75 || rate > 600)
+        {
+            throw new IllegalArgumentException("Invalid speaking rate, must be between 75 to 600 words/min.");
+        }
+
         asyncWriteString(String.format("W%d\n", rate), false);
         asyncReadString(RequestTag.PROMPT);
     }   //setSpeakingRate
 
-    public void setLanguage(int lang)
+    public void setLanguage(Language lang)
     {
         final String funcName = "setLanguage";
 
         if (debugEnabled)
         {
-            dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.API, "lang=%d", lang);
+            dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.API, "lang=%s", lang);
             dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.API);
         }
 
-        asyncWriteString(String.format("L%d\n", lang), false);
+        asyncWriteString(String.format("L%d\n", lang.value), false);
         asyncReadString(RequestTag.PROMPT);
     }   //setLanguage
 
-    public void selectParser(int parser)
+    public void selectParser(Parser parser)
     {
         final String funcName = "selectParser";
 
         if (debugEnabled)
         {
-            dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.API, "parser=%d", parser);
+            dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.API, "parser=%s", parser);
             dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.API);
         }
 
-        asyncWriteString(String.format("P%d\n", parser), false);
+        asyncWriteString(String.format("P%d\n", parser.value), false);
         asyncReadString(RequestTag.PROMPT);
     }   //selectParser
 
