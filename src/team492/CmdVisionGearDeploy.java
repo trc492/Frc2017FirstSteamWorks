@@ -63,12 +63,25 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
         event = new TrcEvent(moduleName);
         timer = new TrcTimer(moduleName);
         sm = new TrcStateMachine<>(moduleName);
-        sm.start(State.DRIVE_TOWARDS_TARGET);
+        start();
 
         robot.tracer.traceInfo(
             moduleName, "dist=%.1f, deployTime=%.1f, backupDist=%.1f",
             visionTargetDistance, visionGearDeployTime, visionBackupDistance);
     }   //CmdVisionGearDeploy
+
+    public void start()
+    {
+        sm.start(State.DRIVE_TOWARDS_TARGET);
+    }   //start
+
+    public void stop()
+    {
+        sm.stop();
+        robot.mailbox.retract();
+        robot.pidDrive.cancel();
+        robot.visionPidDrive.cancel();
+    }   //start
 
     //
     // Implements the TrcRobot.RobotCommand interface.
@@ -141,7 +154,7 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
                     //
                     xDistance = 0.0;
                     yDistance = -visionBackupDistance;
-                    robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
+                    robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event, 1.5);
                     sm.waitForSingleEvent(event, State.DONE);
                     break;
 

@@ -127,10 +127,11 @@ public class RobotInfo
     // 2017-03-14: 0.0159419007257628, 0.03, 0.0, 0.005
     // 2017-03-21: 0.0171280999395813, 0.035, 0.0, 0.008
     // 2017-03-30: 0.01778656, 0.035, 0.0, 0.008
+    // 2017-04-06: 0.01778656, 0.04, 0.0, 0.004
     public static final double ENCODER_Y_INCHES_PER_COUNT       = 0.01778656;
-    public static final double ENCODER_Y_KP                     = 0.035;
+    public static final double ENCODER_Y_KP                     = 0.04;
     public static final double ENCODER_Y_KI                     = 0.0;
-    public static final double ENCODER_Y_KD                     = 0.008;
+    public static final double ENCODER_Y_KD                     = 0.004;
     public static final double ENCODER_Y_KF                     = 0.0;
     public static final double ENCODER_Y_TOLERANCE              = 1.0;
     public static final double ENCODER_Y_SETTLING               = 0.2;
@@ -142,7 +143,8 @@ public class RobotInfo
     // 2017-03-14: 0.065, 0.0, 0.005/0.08, 0.0, 0.0001
     // 2017-03-21: 0.065, 0.0, 0.005/0.06, 0.0, 0.0018 (Competition Robot)
     // 2017-04-02: 0.05, 0.0, 0.003
-    public static final double GYRO_TURN_KP                     = 0.05;
+    // 2017-04-05: 0.03, 0.0, 0.003
+    public static final double GYRO_TURN_KP                     = 0.03;
     public static final double GYRO_TURN_KI                     = 0.0;
     public static final double GYRO_TURN_KD                     = 0.003;
     public static final double GYRO_TURN_KF                     = 0.0;

@@ -192,7 +192,7 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
 
 //                    robot.encoderXPidCtrl.setOutputRange(-1.0, 1.0);
 //                    robot.encoderYPidCtrl.setOutputRange(-1.0, 1.0);
-                    robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
+                    robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event, 1.0);
                     sm.waitForSingleEvent(event, State.TURN_TOWARDS_LOADING_STATION);
                     break;
 
