@@ -706,7 +706,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     public void startTraceLog(String prefix)
     {
         String filePrefix = prefix != null? prefix: matchType.toString();
-        if (prefix == null && matchType != MatchType.Practice) filePrefix += String.format("%02d", matchNumber);
+        if (prefix == null) filePrefix += String.format("%03d", matchNumber);
         tracer.openTraceLog("/home/lvuser/tracelog", filePrefix);
     }   //startTraceLog
 
