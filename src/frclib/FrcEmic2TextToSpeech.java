@@ -129,7 +129,10 @@ public class FrcEmic2TextToSpeech extends TrcEmic2TextToSpeech
         }
 
         tts.setTaskEnabled(enabled);
-        start();
+        if (enabled)
+        {
+            start();
+        }
 
         if (debugEnabled)
         {

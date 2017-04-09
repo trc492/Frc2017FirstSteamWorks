@@ -41,6 +41,7 @@ public abstract class TrcEmic2TextToSpeech implements TrcSerialBusDevice.Complet
 
     public static final int MIN_VOLUME = -48;
     public static final int MAX_VOLUME = 18;
+
     public enum Voice
     {
         PerfectPaul(0),
@@ -158,11 +159,19 @@ public abstract class TrcEmic2TextToSpeech implements TrcSerialBusDevice.Complet
         return instanceName;
     }   //toString
 
+    /**
+     * This method is called to start the device in which it would send a read request for the prompt string.
+     */
     public void start()
     {
         asyncReadString(RequestTag.PROMPT);
     }   //start
 
+    /**
+     * This method speaks the specified message.
+     *
+     * @param msg specifies the message to be spoken.
+     */
     public void speak(String msg)
     {
         final String funcName = "speak";
@@ -177,6 +186,11 @@ public abstract class TrcEmic2TextToSpeech implements TrcSerialBusDevice.Complet
         asyncReadString(RequestTag.PROMPT);
     }   //speak
 
+    /**
+     * This method plays the specified demo message.
+     *
+     * @param msg specifies the demo message.
+     */
     public void playDemoMessage(DemoMsg msg)
     {
         final String funcName = "playDemoMessage";
@@ -191,6 +205,9 @@ public abstract class TrcEmic2TextToSpeech implements TrcSerialBusDevice.Complet
         asyncReadString(RequestTag.PROMPT);
     }   //playDemoMessage
 
+    /**
+     * This method aborts the spoken sentence in progress.
+     */
     public void stopPlayback()
     {
         final String funcName = "stopPlayback";
@@ -204,6 +221,9 @@ public abstract class TrcEmic2TextToSpeech implements TrcSerialBusDevice.Complet
         asyncWriteString("X\n", true);
     }   //stopPlayback
 
+    /**
+     * This method is called to pause/resume the spoken sentence in progress.
+     */
     public void togglePlayback()
     {
         final String funcName = "togglePlayback";
@@ -217,6 +237,11 @@ public abstract class TrcEmic2TextToSpeech implements TrcSerialBusDevice.Complet
         asyncWriteString("Z\n", true);
     }   //togglePlayback
 
+    /**
+     * This method selects the spoken voice.
+     *
+     * @param voice specifies the voice to be used.
+     */
     public void selectVoice(Voice voice)
     {
         final String funcName = "selectVoice";
@@ -229,8 +254,14 @@ public abstract class TrcEmic2TextToSpeech implements TrcSerialBusDevice.Complet
 
         asyncWriteString(String.format("N%d\n", voice.value), false);
         asyncReadString(RequestTag.PROMPT);
+        configMsg = null;
     }   //selectVoice
 
+    /**
+     * This method sets the speaking volume. Valid value is between -48 to 18.
+     *
+     * @param vol specifies the speaking volume.
+     */
     public void setVolume(int vol)
     {
         final String funcName = "setVolume";
@@ -248,14 +279,25 @@ public abstract class TrcEmic2TextToSpeech implements TrcSerialBusDevice.Complet
 
         asyncWriteString(String.format("V%d\n", vol), false);
         asyncReadString(RequestTag.PROMPT);
+        configMsg = null;
     }   //setVolume
 
+    /**
+     * This method sets the speaking volume. Valid value is between 0 and 1.0. 0 for mute and 1.0 for full volume.
+     *
+     * @param vol specifies the speaking volume.
+     */
     public void setVolume(double vol)
     {
         vol = TrcUtil.clipRange(vol);
         setVolume((int)((MAX_VOLUME - MIN_VOLUME)*vol + MIN_VOLUME));
     }   //setVolume
 
+    /**
+     * This method sets the speaking rate in words per minute.
+     *
+     * @param rate specifies the speaking rate.
+     */
     public void setSpeakingRate(int rate)
     {
         final String funcName = "setSpeakingRate";
@@ -273,8 +315,14 @@ public abstract class TrcEmic2TextToSpeech implements TrcSerialBusDevice.Complet
 
         asyncWriteString(String.format("W%d\n", rate), false);
         asyncReadString(RequestTag.PROMPT);
+        configMsg = null;
     }   //setSpeakingRate
 
+    /**
+     * This method sets the spoken language.
+     *
+     * @param lang specifies the spoken language.
+     */
     public void setLanguage(Language lang)
     {
         final String funcName = "setLanguage";
@@ -287,8 +335,14 @@ public abstract class TrcEmic2TextToSpeech implements TrcSerialBusDevice.Complet
 
         asyncWriteString(String.format("L%d\n", lang.value), false);
         asyncReadString(RequestTag.PROMPT);
+        configMsg = null;
     }   //setLanguage
 
+    /**
+     * This method selects the parser that parses the sentence.
+     *
+     * @param parser specifies the parser to use.
+     */
     public void selectParser(Parser parser)
     {
         final String funcName = "selectParser";
@@ -301,8 +355,12 @@ public abstract class TrcEmic2TextToSpeech implements TrcSerialBusDevice.Complet
 
         asyncWriteString(String.format("P%d\n", parser.value), false);
         asyncReadString(RequestTag.PROMPT);
+        configMsg = null;
     }   //selectParser
 
+    /**
+     * This method sets the text-to-speech back to default configuration.
+     */
     public void revertDefaultConfig()
     {
         final String funcName = "revertDefaultConfig";
@@ -315,8 +373,15 @@ public abstract class TrcEmic2TextToSpeech implements TrcSerialBusDevice.Complet
 
         asyncWriteString("R\n", false);
         asyncReadString(RequestTag.PROMPT);
+        configMsg = null;
     }   //revertDefaultConfig
 
+    /**
+     * This method returns the current text-to-speech configuration.
+     *
+     * @param wait specifies true for synchronous access.
+     * @return current configuration string if wait is true, null otherwise.
+     */
     public String getCurrentConfig(boolean wait)
     {
         if (configMsg == null)
@@ -337,6 +402,12 @@ public abstract class TrcEmic2TextToSpeech implements TrcSerialBusDevice.Complet
         return configMsg;
     }   //getCurrentConfig
 
+    /**
+     * This method returns the firmware version.
+     *
+     * @param wait specifies true for synchronous access.
+     * @return firmware version string if wait is true, null otherwise.
+     */
     public String getVersion(boolean wait)
     {
         if (versionMsg == null)
@@ -357,6 +428,12 @@ public abstract class TrcEmic2TextToSpeech implements TrcSerialBusDevice.Complet
         return versionMsg;
     }   //getVersion
 
+    /**
+     * This method returns the help message.
+     *
+     * @param wait specifies true for synchronous access.
+     * @return help message string if wait is true, null otherwise.
+     */
     public String getHelpMessage(boolean wait)
     {
         if (helpMsg == null)
