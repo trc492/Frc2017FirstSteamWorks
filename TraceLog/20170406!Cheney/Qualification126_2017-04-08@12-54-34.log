@@ -1,0 +1,1402 @@
+GlobalTracer.FirstSteamWorks_Info: Sat Apr 08 12:54:35 PDT 2017: ***** Starting autonomous *****
+GlobalTracer.CmdVisionGearDeploy_Info: dist=7.0, deployTime=0.3, backupDist=36.0
+GlobalTracer.CmdSideGearLift_Info: delay=0.000, alliance=RED_ALLIANCE, rightSide=false, forwardDist=85.0, liftAngle=60.0, backupDist=12.0, lsAngle=30.0, lsDist=320.0, diagDist=360.0
+GlobalTracer.Vision_Info: Front pixy is enabled!
+GlobalTracer.Robot_Info: [0.197]   DO_DELAY: xPos=  0.00,yPos=  0.00,heading=   0.0/   0.0,volts=12.5(12.5)
+GlobalTracer.PixyVision_Info: null object(s) found
+GlobalTracer.startCompetition_Warn: AUTO_MODE takes too long (0.216s)
+
+GlobalTracer.Robot_Info: [0.216] MOVE_FORWARD_ON_SIDE: xPos=  0.00,yPos=  0.00,heading=   0.0/   0.0,volts=12.5(12.5)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=   0.0, Error=   0.0, PIDTerms= 0.000/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.5 (12.5)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=   0.0, Error=  85.0, PIDTerms= 0.000/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.5 (12.5)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.0, Error=   0.0, PIDTerms= 0.000/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.4 (12.5)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=   0.0, Error=   0.0, PIDTerms= 0.000/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.4 (12.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=   0.0, Error=  85.0, PIDTerms= 3.400/ 0.000/ 0.000/ 0.000, Output= 0.500(-0.500/0.500), Volt=12.4 (12.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.0, Error=   0.0, PIDTerms= 0.000/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=11.4 (12.4)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=   0.0, Error=   0.0, PIDTerms= 0.000/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=11.7 (11.7)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=   0.0, Error=  85.0, PIDTerms= 3.400/ 0.000/ 0.000/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.7 (11.7)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.0, Error=   0.0, PIDTerms= 0.000/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=11.7 (11.7)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=  -0.1, Error=   0.1, PIDTerms= 0.015/ 0.000/ 0.000/ 0.000, Output= 0.015(-0.500/0.500), Volt=11.1 (11.1)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=   0.2, Error=  84.8, PIDTerms= 3.392/ 0.000/-0.031/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.1 (11.1)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.0, Error=   0.0, PIDTerms= 0.000/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=11.1 (11.1)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=  -0.2, Error=   0.2, PIDTerms= 0.025/ 0.000/ 0.000/ 0.000, Output= 0.025(-0.500/0.500), Volt=10.9 (10.9)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=   0.7, Error=  84.3, PIDTerms= 3.374/ 0.000/-0.060/ 0.000, Output= 0.500(-0.500/0.500), Volt=10.9 (10.9)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.001/ 0.000/ 0.002/ 0.000, Output= 0.003(-0.500/0.500), Volt=10.9 (10.9)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=  -0.2, Error=   0.2, PIDTerms= 0.037/ 0.000/ 0.000/ 0.000, Output= 0.037(-0.500/0.500), Volt=11.0 (10.9)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=   0.9, Error=  84.1, PIDTerms= 3.362/ 0.000/-0.042/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.0 (10.9)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.000/ 0.000/-0.001/ 0.000, Output=-0.001(-0.500/0.500), Volt=11.0 (10.9)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=  -0.5, Error=   0.5, PIDTerms= 0.076/ 0.000/ 0.000/ 0.000, Output= 0.076(-0.500/0.500), Volt=11.0 (10.9)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=   1.6, Error=  83.4, PIDTerms= 3.336/ 0.000/-0.085/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.0 (10.9)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.1, Error=  -0.1, PIDTerms=-0.002/ 0.000/-0.006/ 0.000, Output=-0.007(-0.500/0.500), Volt=11.0 (10.9)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=  -0.3, Error=   0.3, PIDTerms= 0.046/ 0.000/-0.000/ 0.000, Output= 0.046(-0.500/0.500), Volt=10.8 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=   2.2, Error=  82.8, PIDTerms= 3.313/ 0.000/-0.054/ 0.000, Output= 0.500(-0.500/0.500), Volt=10.8 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.1, Error=   0.1, PIDTerms= 0.003/ 0.000/ 0.011/ 0.000, Output= 0.015(-0.500/0.500), Volt=10.8 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=  -0.4, Error=   0.4, PIDTerms= 0.064/ 0.000/ 0.000/ 0.000, Output= 0.064(-0.500/0.500), Volt=11.0 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=   3.0, Error=  82.0, PIDTerms= 3.279/ 0.000/-0.124/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.0 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.3, Error=   0.3, PIDTerms= 0.010/ 0.000/ 0.024/ 0.000, Output= 0.034(-0.500/0.500), Volt=11.0 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=  -0.5, Error=   0.5, PIDTerms= 0.073/ 0.000/ 0.000/ 0.000, Output= 0.073(-0.500/0.500), Volt=11.1 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=   4.0, Error=  81.0, PIDTerms= 3.240/ 0.000/-0.157/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.1 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.5, Error=   0.5, PIDTerms= 0.015/ 0.000/ 0.021/ 0.000, Output= 0.037(-0.500/0.500), Volt=11.1 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=  -0.3, Error=   0.3, PIDTerms= 0.046/ 0.000/-0.000/ 0.000, Output= 0.046(-0.500/0.500), Volt=11.3 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=   4.9, Error=  80.1, PIDTerms= 3.205/ 0.000/-0.115/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.3 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.6, Error=   0.6, PIDTerms= 0.017/ 0.000/ 0.007/ 0.000, Output= 0.024(-0.500/0.500), Volt=11.3 (10.8)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=  -0.2, Error=   0.2, PIDTerms= 0.035/ 0.000/-0.000/ 0.000, Output= 0.035(-0.500/0.500), Volt=11.3 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=   5.7, Error=  79.3, PIDTerms= 3.174/ 0.000/-0.120/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.3 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.6, Error=   0.6, PIDTerms= 0.019/ 0.000/ 0.008/ 0.000, Output= 0.027(-0.500/0.500), Volt=11.3 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=  -0.3, Error=   0.3, PIDTerms= 0.049/ 0.000/ 0.000/ 0.000, Output= 0.049(-0.500/0.500), Volt=11.3 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=   7.0, Error=  78.0, PIDTerms= 3.118/ 0.000/-0.156/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.3 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.8, Error=   0.8, PIDTerms= 0.023/ 0.000/ 0.009/ 0.000, Output= 0.032(-0.500/0.500), Volt=11.3 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=  -0.1, Error=   0.1, PIDTerms= 0.011/ 0.000/-0.000/ 0.000, Output= 0.011(-0.500/0.500), Volt=11.3 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=   8.1, Error=  76.9, PIDTerms= 3.075/ 0.000/-0.181/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.3 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.7, Error=   0.7, PIDTerms= 0.022/ 0.000/-0.003/ 0.000, Output= 0.020(-0.500/0.500), Volt=11.3 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.005/ 0.000/-0.000/ 0.000, Output= 0.005(-0.500/0.500), Volt=11.2 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=   9.0, Error=  76.0, PIDTerms= 3.040/ 0.000/-0.144/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.2 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.8, Error=   0.8, PIDTerms= 0.024/ 0.000/ 0.009/ 0.000, Output= 0.033(-0.500/0.500), Volt=11.2 (10.8)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=   0.0, Error=   0.0, PIDTerms= 0.000/ 0.000/-0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=11.2 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=   9.9, Error=  75.1, PIDTerms= 3.003/ 0.000/-0.105/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.2 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.8, Error=   0.8, PIDTerms= 0.023/ 0.000/-0.003/ 0.000, Output= 0.021(-0.500/0.500), Volt=11.2 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=   0.0, Error=  -0.0, PIDTerms=-0.007/ 0.000/-0.000/ 0.000, Output=-0.007(-0.500/0.500), Volt=11.2 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=  11.9, Error=  73.1, PIDTerms= 2.923/ 0.000/-0.337/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.2 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.9, Error=   0.9, PIDTerms= 0.026/ 0.000/ 0.009/ 0.000, Output= 0.034(-0.500/0.500), Volt=11.2 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=   0.1, Error=  -0.1, PIDTerms=-0.012/ 0.000/-0.000/ 0.000, Output=-0.012(-0.500/0.500), Volt=11.2 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=  12.9, Error=  72.1, PIDTerms= 2.883/ 0.000/-0.139/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.2 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.8, Error=   0.8, PIDTerms= 0.024/ 0.000/-0.006/ 0.000, Output= 0.017(-0.500/0.500), Volt=11.2 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=   0.1, Error=  -0.1, PIDTerms=-0.013/ 0.000/-0.000/ 0.000, Output=-0.013(-0.500/0.500), Volt=11.3 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=  14.0, Error=  71.0, PIDTerms= 2.840/ 0.000/-0.172/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.3 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.8, Error=   0.8, PIDTerms= 0.025/ 0.000/ 0.005/ 0.000, Output= 0.030(-0.500/0.500), Volt=11.3 (10.8)
+GlobalTracer.PixyVision_Info: 2 object(s) found
+GlobalTracer.PixyVision_Info: [0] sync=0xaa55, chksum=0x00e7, sig=1, centerX=190, centerY= 29, width=  9, height=  2, angle=  0
+GlobalTracer.PixyVision_Info: [1] sync=0xaa55, chksum=0x00f9, sig=1, centerX=239, centerY=  2, width=  5, height=  2, angle=  0
+GlobalTracer.PixyVision_Info: Expected Target: distance=254.3, width=9.0, height=4.5
+GlobalTracer.PixyVision_Info: ===TargetRect===: x=186, y=1, w=56, h=29
+GlobalTracer.PixyVision_Info: ###TargetInfo###: xDist=9.6, yDist=41.1, angle=13.2
+GlobalTracer.startCompetition_Warn: AUTO_MODE takes too long (0.063s)
+
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=  -0.1, Error=   0.1, PIDTerms= 0.015/ 0.000/ 0.000/ 0.000, Output= 0.015(-0.500/0.500), Volt=11.4 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=  15.9, Error=  69.1, PIDTerms= 2.764/ 0.000/-0.119/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.5 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.8, Error=   0.8, PIDTerms= 0.024/ 0.000/-0.002/ 0.000, Output= 0.022(-0.500/0.500), Volt=11.5 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=   0.1, Error=  -0.1, PIDTerms=-0.021/ 0.000/-0.000/ 0.000, Output=-0.021(-0.500/0.500), Volt=11.4 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=  19.6, Error=  65.4, PIDTerms= 2.615/ 0.000/-0.269/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.5 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.8, Error=   0.8, PIDTerms= 0.023/ 0.000/-0.002/ 0.000, Output= 0.020(-0.500/0.500), Volt=11.5 (10.8)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.startCompetition_Warn: AUTO_MODE takes too long (0.054s)
+
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=  -0.1, Error=   0.1, PIDTerms= 0.019/ 0.000/ 0.000/ 0.000, Output= 0.019(-0.500/0.500), Volt=11.6 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=  22.9, Error=  62.1, PIDTerms= 2.482/ 0.000/-0.248/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.6 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.7, Error=   0.7, PIDTerms= 0.021/ 0.000/-0.003/ 0.000, Output= 0.018(-0.500/0.500), Volt=11.6 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=   0.2, Error=  -0.2, PIDTerms=-0.026/ 0.000/-0.000/ 0.000, Output=-0.026(-0.500/0.500), Volt=11.5 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=  25.8, Error=  59.2, PIDTerms= 2.367/ 0.000/-0.245/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.5 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.6, Error=   0.6, PIDTerms= 0.019/ 0.000/-0.005/ 0.000, Output= 0.013(-0.500/0.500), Volt=11.5 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=   0.5, Error=  -0.5, PIDTerms=-0.071/ 0.000/-0.000/ 0.000, Output=-0.071(-0.500/0.500), Volt=11.6 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=  28.8, Error=  56.2, PIDTerms= 2.249/ 0.000/-0.270/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.6 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.5, Error=   0.5, PIDTerms= 0.016/ 0.000/-0.007/ 0.000, Output= 0.009(-0.500/0.500), Volt=11.6 (10.8)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=   0.5, Error=  -0.5, PIDTerms=-0.074/ 0.000/-0.000/ 0.000, Output=-0.074(-0.500/0.500), Volt=11.6 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=  31.5, Error=  53.5, PIDTerms= 2.140/ 0.000/-0.221/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.6 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.5, Error=   0.5, PIDTerms= 0.015/ 0.000/-0.002/ 0.000, Output= 0.013(-0.500/0.500), Volt=11.6 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=  -0.2, Error=   0.2, PIDTerms= 0.024/ 0.000/ 0.000/ 0.000, Output= 0.024(-0.500/0.500), Volt=11.6 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=  35.0, Error=  50.0, PIDTerms= 1.999/ 0.000/-0.327/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.6 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.5, Error=   0.5, PIDTerms= 0.014/ 0.000/-0.002/ 0.000, Output= 0.012(-0.500/0.500), Volt=11.6 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=   0.1, Error=  -0.1, PIDTerms=-0.011/ 0.000/-0.000/ 0.000, Output=-0.011(-0.500/0.500), Volt=11.6 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=  38.3, Error=  46.7, PIDTerms= 1.869/ 0.000/-0.308/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.6 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.4, Error=   0.4, PIDTerms= 0.013/ 0.000/-0.001/ 0.000, Output= 0.013(-0.500/0.500), Volt=11.6 (10.8)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=   0.1, Error=  -0.1, PIDTerms=-0.014/ 0.000/-0.000/ 0.000, Output=-0.014(-0.500/0.500), Volt=11.6 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=  41.2, Error=  43.8, PIDTerms= 1.752/ 0.000/-0.266/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.6 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.4, Error=   0.4, PIDTerms= 0.012/ 0.000/-0.003/ 0.000, Output= 0.010(-0.500/0.500), Volt=11.6 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=  -0.3, Error=   0.3, PIDTerms= 0.038/ 0.000/ 0.000/ 0.000, Output= 0.038(-0.500/0.500), Volt=11.6 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=  43.8, Error=  41.2, PIDTerms= 1.647/ 0.000/-0.212/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.6 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.4, Error=   0.4, PIDTerms= 0.012/ 0.000/ 0.000/ 0.000, Output= 0.012(-0.500/0.500), Volt=11.6 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=   0.0, Error=  -0.0, PIDTerms=-0.005/ 0.000/-0.000/ 0.000, Output=-0.005(-0.500/0.500), Volt=11.6 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=  47.2, Error=  37.8, PIDTerms= 1.511/ 0.000/-0.464/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.6 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.4, Error=   0.4, PIDTerms= 0.011/ 0.000/-0.003/ 0.000, Output= 0.008(-0.500/0.500), Volt=11.6 (10.8)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.startCompetition_Warn: AUTO_MODE takes too long (0.055s)
+
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=   0.0, Error=  -0.0, PIDTerms=-0.005/ 0.000/ 0.000/ 0.000, Output=-0.005(-0.500/0.500), Volt=11.6 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=  49.6, Error=  35.4, PIDTerms= 1.417/ 0.000/-0.198/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.6 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.4, Error=   0.4, PIDTerms= 0.011/ 0.000/-0.001/ 0.000, Output= 0.010(-0.500/0.500), Volt=11.6 (10.8)
+GlobalTracer.startCompetition_Warn: AUTO_MODE takes too long (0.051s)
+
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=   0.0, Error=  -0.0, PIDTerms=-0.005/ 0.000/ 0.000/ 0.000, Output=-0.005(-0.500/0.500), Volt=11.7 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=  53.5, Error=  31.5, PIDTerms= 1.261/ 0.000/-0.284/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.7 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.3, Error=   0.3, PIDTerms= 0.010/ 0.000/-0.003/ 0.000, Output= 0.007(-0.500/0.500), Volt=11.7 (10.8)
+GlobalTracer.PixyVision_Info: null object(s) found
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=   0.0, Error=  -0.0, PIDTerms=-0.004/ 0.000/ 0.000/ 0.000, Output=-0.004(-0.500/0.500), Volt=11.7 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=  58.3, Error=  26.7, PIDTerms= 1.070/ 0.000/-0.356/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.7 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.3, Error=   0.3, PIDTerms= 0.009/ 0.000/-0.001/ 0.000, Output= 0.008(-0.500/0.500), Volt=11.7 (10.8)
+GlobalTracer.startCompetition_Warn: AUTO_MODE takes too long (0.052s)
+
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=   0.0, Error=  -0.0, PIDTerms=-0.003/ 0.000/ 0.000/ 0.000, Output=-0.003(-0.500/0.500), Volt=11.8 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=  61.5, Error=  23.5, PIDTerms= 0.940/ 0.000/-0.292/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.8 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.3, Error=   0.3, PIDTerms= 0.008/ 0.000/-0.003/ 0.000, Output= 0.004(-0.500/0.500), Volt=11.8 (10.8)
+GlobalTracer.PixyVision_Info: null object(s) found
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=   0.4, Error=  -0.4, PIDTerms=-0.055/ 0.000/-0.000/ 0.000, Output=-0.055(-0.500/0.500), Volt=11.7 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=  65.2, Error=  19.8, PIDTerms= 0.793/ 0.000/-0.265/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.7 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.2, Error=   0.2, PIDTerms= 0.006/ 0.000/-0.002/ 0.000, Output= 0.004(-0.500/0.500), Volt=11.7 (10.8)
+GlobalTracer.startCompetition_Warn: AUTO_MODE takes too long (0.053s)
+
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=   0.0, Error=  -0.0, PIDTerms=-0.006/ 0.000/ 0.000/ 0.000, Output=-0.006(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=  69.7, Error=  15.3, PIDTerms= 0.613/ 0.000/-0.390/ 0.000, Output= 0.223(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.2, Error=   0.2, PIDTerms= 0.006/ 0.000/ 0.000/ 0.000, Output= 0.006(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.PixyVision_Info: null object(s) found
+GlobalTracer.startCompetition_Warn: AUTO_MODE takes too long (0.055s)
+
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.003/ 0.000/ 0.000/ 0.000, Output= 0.003(-0.500/0.500), Volt=12.3 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=  73.0, Error=  12.0, PIDTerms= 0.479/ 0.000/-0.230/ 0.000, Output= 0.248(-0.500/0.500), Volt=12.3 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.3, Error=   0.3, PIDTerms= 0.008/ 0.000/ 0.003/ 0.000, Output= 0.010(-0.500/0.500), Volt=12.3 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.001/ 0.000/-0.000/ 0.000, Output= 0.001(-0.500/0.500), Volt=12.3 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=  77.6, Error=   7.4, PIDTerms= 0.296/ 0.000/-0.346/ 0.000, Output=-0.049(-0.500/0.500), Volt=12.3 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.3, Error=   0.3, PIDTerms= 0.010/ 0.000/ 0.003/ 0.000, Output= 0.013(-0.500/0.500), Volt=12.3 (10.8)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.startCompetition_Warn: AUTO_MODE takes too long (0.053s)
+
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=   0.0, Error=  -0.0, PIDTerms=-0.007/ 0.000/-0.000/ 0.000, Output=-0.007(-0.500/0.500), Volt=12.1 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=  80.4, Error=   4.6, PIDTerms= 0.182/ 0.000/-0.227/ 0.000, Output=-0.045(-0.500/0.500), Volt=12.1 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.2, Error=   0.2, PIDTerms= 0.007/ 0.000/-0.005/ 0.000, Output= 0.002(-0.500/0.500), Volt=12.1 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=   0.0, Error=  -0.0, PIDTerms=-0.005/ 0.000/ 0.000/ 0.000, Output=-0.005(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=  84.1, Error=   0.9, PIDTerms= 0.037/ 0.000/-0.341/ 0.000, Output=-0.303(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.1, Error=   0.1, PIDTerms= 0.003/ 0.000/-0.011/ 0.000, Output=-0.008(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.003/ 0.000/ 0.000/ 0.000, Output= 0.003(-0.500/0.500), Volt=11.3 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=  86.0, Error=  -1.0, PIDTerms=-0.039/ 0.000/-0.169/ 0.000, Output=-0.208(-0.500/0.500), Volt=11.3 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.5, Error=  -0.5, PIDTerms=-0.014/ 0.000/-0.038/ 0.000, Output=-0.052(-0.500/0.500), Volt=11.6 (10.8)
+GlobalTracer.PixyVision_Info: 2 object(s) found
+GlobalTracer.PixyVision_Info: [0] sync=0xaa55, chksum=0x0144, sig=1, centerX=150, centerY=121, width= 50, height=  2, angle=  0
+GlobalTracer.PixyVision_Info: [1] sync=0xaa55, chksum=0x00e0, sig=1, centerX=188, centerY= 19, width= 13, height=  3, angle=  0
+GlobalTracer.PixyVision_Info: Expected Target: distance=256.6, width=9.0, height=4.5
+GlobalTracer.PixyVision_Info: ===TargetRect===: x=125, y=18, w=70, h=104
+GlobalTracer.PixyVision_Info: ###TargetInfo###: xDist=0.0, yDist=32.9, angle=0.0
+GlobalTracer.startCompetition_Warn: AUTO_MODE takes too long (0.063s)
+
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.005/ 0.000/ 0.000/ 0.000, Output= 0.005(-0.500/0.500), Volt=11.7 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=  87.3, Error=  -2.3, PIDTerms=-0.094/ 0.000/-0.086/ 0.000, Output=-0.180(-0.500/0.500), Volt=11.7 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   1.2, Error=  -1.2, PIDTerms=-0.035/ 0.000/-0.033/ 0.000, Output=-0.068(-0.500/0.500), Volt=11.7 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=  -0.2, Error=   0.2, PIDTerms= 0.033/ 0.000/ 0.000/ 0.000, Output= 0.033(-0.500/0.500), Volt=11.8 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=  88.7, Error=  -3.7, PIDTerms=-0.149/ 0.000/-0.127/ 0.000, Output=-0.276(-0.500/0.500), Volt=11.8 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   2.0, Error=  -2.0, PIDTerms=-0.061/ 0.000/-0.060/ 0.000, Output=-0.121(-0.500/0.500), Volt=11.8 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=  -0.3, Error=   0.3, PIDTerms= 0.047/ 0.000/ 0.000/ 0.000, Output= 0.047(-0.500/0.500), Volt=11.4 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=  89.5, Error=  -4.5, PIDTerms=-0.181/ 0.000/-0.136/ 0.000, Output=-0.317(-0.500/0.500), Volt=11.4 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   2.1, Error=  -2.1, PIDTerms=-0.064/ 0.000/-0.012/ 0.000, Output=-0.077(-0.500/0.500), Volt=11.4 (10.8)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=  -0.3, Error=   0.3, PIDTerms= 0.042/ 0.000/-0.000/ 0.000, Output= 0.042(-0.500/0.500), Volt=11.3 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=  89.8, Error=  -4.8, PIDTerms=-0.192/ 0.000/-0.035/ 0.000, Output=-0.227(-0.500/0.500), Volt=11.3 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   2.2, Error=  -2.2, PIDTerms=-0.065/ 0.000/-0.003/ 0.000, Output=-0.068(-0.500/0.500), Volt=11.6 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=  -0.2, Error=   0.2, PIDTerms= 0.035/ 0.000/-0.000/ 0.000, Output= 0.035(-0.500/0.500), Volt=11.6 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=  90.0, Error=  -5.0, PIDTerms=-0.199/ 0.000/-0.031/ 0.000, Output=-0.230(-0.500/0.500), Volt=11.6 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   2.2, Error=  -2.2, PIDTerms=-0.065/ 0.000/-0.001/ 0.000, Output=-0.067(-0.500/0.500), Volt=11.7 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=  -0.2, Error=   0.2, PIDTerms= 0.036/ 0.000/ 0.000/ 0.000, Output= 0.036(-0.500/0.500), Volt=11.7 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=  90.0, Error=  -5.0, PIDTerms=-0.202/ 0.000/-0.011/ 0.000, Output=-0.213(-0.500/0.500), Volt=11.7 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   2.0, Error=  -2.0, PIDTerms=-0.060/ 0.000/ 0.020/ 0.000, Output=-0.040(-0.500/0.500), Volt=11.7 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=  -0.2, Error=   0.2, PIDTerms= 0.031/ 0.000/-0.000/ 0.000, Output= 0.031(-0.500/0.500), Volt=11.7 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=  90.2, Error=  -5.2, PIDTerms=-0.206/ 0.000/-0.019/ 0.000, Output=-0.225(-0.500/0.500), Volt=11.7 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   1.9, Error=  -1.9, PIDTerms=-0.057/ 0.000/ 0.015/ 0.000, Output=-0.042(-0.500/0.500), Volt=11.7 (10.8)
+GlobalTracer.PixyVision_Info: 2 object(s) found
+GlobalTracer.PixyVision_Info: [0] sync=0xaa55, chksum=0x015c, sig=1, centerX=176, centerY=123, width= 46, height=  2, angle=  0
+GlobalTracer.PixyVision_Info: [1] sync=0xaa55, chksum=0x00da, sig=1, centerX=186, centerY= 19, width= 10, height=  2, angle=  0
+GlobalTracer.PixyVision_Info: Expected Target: distance=256.7, width=9.0, height=4.5
+GlobalTracer.PixyVision_Info: ===TargetRect===: x=153, y=18, w=46, h=106
+GlobalTracer.PixyVision_Info: ###TargetInfo###: xDist=3.5, yDist=50.0, angle=4.0
+GlobalTracer.startCompetition_Warn: AUTO_MODE takes too long (0.051s)
+
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=  -0.2, Error=   0.2, PIDTerms= 0.027/ 0.000/-0.000/ 0.000, Output= 0.027(-0.500/0.500), Volt=11.8 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=  90.1, Error=  -5.1, PIDTerms=-0.205/ 0.000/ 0.002/ 0.000, Output=-0.203(-0.500/0.500), Volt=11.8 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   1.8, Error=  -1.8, PIDTerms=-0.055/ 0.000/ 0.003/ 0.000, Output=-0.052(-0.500/0.500), Volt=11.8 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=  -0.2, Error=   0.2, PIDTerms= 0.023/ 0.000/-0.000/ 0.000, Output= 0.023(-0.500/0.500), Volt=11.8 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=  89.9, Error=  -4.9, PIDTerms=-0.197/ 0.000/ 0.040/ 0.000, Output=-0.158(-0.500/0.500), Volt=11.9 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   1.7, Error=  -1.7, PIDTerms=-0.052/ 0.000/ 0.015/ 0.000, Output=-0.037(-0.500/0.500), Volt=11.9 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=  -0.2, Error=   0.2, PIDTerms= 0.026/ 0.000/ 0.000/ 0.000, Output= 0.026(-0.500/0.500), Volt=11.9 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=  89.8, Error=  -4.8, PIDTerms=-0.191/ 0.000/ 0.019/ 0.000, Output=-0.172(-0.500/0.500), Volt=11.9 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   1.7, Error=  -1.7, PIDTerms=-0.051/ 0.000/ 0.003/ 0.000, Output=-0.048(-0.500/0.500), Volt=11.9 (10.8)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=  -0.1, Error=   0.1, PIDTerms= 0.021/ 0.000/-0.000/ 0.000, Output= 0.021(-0.500/0.500), Volt=12.0 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=  89.5, Error=  -4.5, PIDTerms=-0.180/ 0.000/ 0.042/ 0.000, Output=-0.138(-0.500/0.500), Volt=12.0 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   1.7, Error=  -1.7, PIDTerms=-0.050/ 0.000/ 0.004/ 0.000, Output=-0.045(-0.500/0.500), Volt=12.0 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=  -0.1, Error=   0.1, PIDTerms= 0.020/ 0.000/-0.000/ 0.000, Output= 0.020(-0.500/0.500), Volt=12.1 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=  89.3, Error=  -4.3, PIDTerms=-0.172/ 0.000/ 0.029/ 0.000, Output=-0.143(-0.500/0.500), Volt=12.1 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   1.5, Error=  -1.5, PIDTerms=-0.044/ 0.000/ 0.022/ 0.000, Output=-0.022(-0.500/0.500), Volt=12.1 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=  -0.1, Error=   0.1, PIDTerms= 0.019/ 0.000/-0.000/ 0.000, Output= 0.019(-0.500/0.500), Volt=12.0 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=  89.0, Error=  -4.0, PIDTerms=-0.161/ 0.000/ 0.040/ 0.000, Output=-0.120(-0.500/0.500), Volt=12.0 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   1.4, Error=  -1.4, PIDTerms=-0.043/ 0.000/ 0.004/ 0.000, Output=-0.039(-0.500/0.500), Volt=12.0 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=  -0.1, Error=   0.1, PIDTerms= 0.018/ 0.000/-0.000/ 0.000, Output= 0.018(-0.500/0.500), Volt=12.1 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=  88.7, Error=  -3.7, PIDTerms=-0.148/ 0.000/ 0.050/ 0.000, Output=-0.098(-0.500/0.500), Volt=12.1 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   1.4, Error=  -1.4, PIDTerms=-0.041/ 0.000/ 0.007/ 0.000, Output=-0.034(-0.500/0.500), Volt=12.1 (10.8)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=  -0.1, Error=   0.1, PIDTerms= 0.018/ 0.000/ 0.000/ 0.000, Output= 0.018(-0.500/0.500), Volt=12.1 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=  88.5, Error=  -3.5, PIDTerms=-0.140/ 0.000/ 0.031/ 0.000, Output=-0.109(-0.500/0.500), Volt=12.1 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   1.3, Error=  -1.3, PIDTerms=-0.040/ 0.000/ 0.006/ 0.000, Output=-0.034(-0.500/0.500), Volt=12.1 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=  -0.1, Error=   0.1, PIDTerms= 0.017/ 0.000/-0.000/ 0.000, Output= 0.017(-0.500/0.500), Volt=12.0 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=  88.3, Error=  -3.3, PIDTerms=-0.132/ 0.000/ 0.029/ 0.000, Output=-0.103(-0.500/0.500), Volt=12.0 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   1.3, Error=  -1.3, PIDTerms=-0.038/ 0.000/ 0.004/ 0.000, Output=-0.034(-0.500/0.500), Volt=12.0 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=  -0.1, Error=   0.1, PIDTerms= 0.010/ 0.000/-0.000/ 0.000, Output= 0.010(-0.500/0.500), Volt=12.1 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=  87.9, Error=  -2.9, PIDTerms=-0.117/ 0.000/ 0.059/ 0.000, Output=-0.059(-0.500/0.500), Volt=12.1 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   1.3, Error=  -1.3, PIDTerms=-0.038/ 0.000/ 0.002/ 0.000, Output=-0.035(-0.500/0.500), Volt=12.1 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=  -0.1, Error=   0.1, PIDTerms= 0.015/ 0.000/ 0.000/ 0.000, Output= 0.015(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=  87.7, Error=  -2.7, PIDTerms=-0.107/ 0.000/ 0.042/ 0.000, Output=-0.065(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   1.2, Error=  -1.2, PIDTerms=-0.037/ 0.000/ 0.005/ 0.000, Output=-0.032(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=  -0.1, Error=   0.1, PIDTerms= 0.014/ 0.000/-0.000/ 0.000, Output= 0.014(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=  87.5, Error=  -2.5, PIDTerms=-0.099/ 0.000/ 0.027/ 0.000, Output=-0.071(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   1.1, Error=  -1.1, PIDTerms=-0.034/ 0.000/ 0.008/ 0.000, Output=-0.026(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=  -0.1, Error=   0.1, PIDTerms= 0.015/ 0.000/ 0.000/ 0.000, Output= 0.015(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=  87.3, Error=  -2.3, PIDTerms=-0.091/ 0.000/ 0.033/ 0.000, Output=-0.058(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   1.1, Error=  -1.1, PIDTerms=-0.032/ 0.000/ 0.010/ 0.000, Output=-0.022(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=  -0.1, Error=   0.1, PIDTerms= 0.011/ 0.000/-0.000/ 0.000, Output= 0.011(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=  87.0, Error=  -2.0, PIDTerms=-0.082/ 0.000/ 0.035/ 0.000, Output=-0.047(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   1.0, Error=  -1.0, PIDTerms=-0.031/ 0.000/ 0.004/ 0.000, Output=-0.027(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.007/ 0.000/-0.000/ 0.000, Output= 0.007(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=  86.8, Error=  -1.8, PIDTerms=-0.072/ 0.000/ 0.041/ 0.000, Output=-0.031(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   1.0, Error=  -1.0, PIDTerms=-0.029/ 0.000/ 0.009/ 0.000, Output=-0.020(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.007/ 0.000/ 0.000/ 0.000, Output= 0.007(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=  86.6, Error=  -1.6, PIDTerms=-0.066/ 0.000/ 0.019/ 0.000, Output=-0.047(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.9, Error=  -0.9, PIDTerms=-0.028/ 0.000/ 0.004/ 0.000, Output=-0.024(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=  -0.1, Error=   0.1, PIDTerms= 0.010/ 0.000/ 0.000/ 0.000, Output= 0.010(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=  86.5, Error=  -1.5, PIDTerms=-0.060/ 0.000/ 0.023/ 0.000, Output=-0.037(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.9, Error=  -0.9, PIDTerms=-0.026/ 0.000/ 0.007/ 0.000, Output=-0.019(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=  -0.1, Error=   0.1, PIDTerms= 0.009/ 0.000/-0.000/ 0.000, Output= 0.009(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=  86.2, Error=  -1.2, PIDTerms=-0.047/ 0.000/ 0.047/ 0.000, Output=-0.001(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.8, Error=  -0.8, PIDTerms=-0.025/ 0.000/ 0.003/ 0.000, Output=-0.022(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=  -0.1, Error=   0.1, PIDTerms= 0.009/ 0.000/ 0.000/ 0.000, Output= 0.009(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=  86.1, Error=  -1.1, PIDTerms=-0.042/ 0.000/ 0.019/ 0.000, Output=-0.023(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.8, Error=  -0.8, PIDTerms=-0.023/ 0.000/ 0.006/ 0.000, Output=-0.018(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=  -0.1, Error=   0.1, PIDTerms= 0.009/ 0.000/-0.000/ 0.000, Output= 0.009(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=  85.9, Error=  -0.9, PIDTerms=-0.037/ 0.000/ 0.020/ 0.000, Output=-0.017(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.7, Error=  -0.7, PIDTerms=-0.021/ 0.000/ 0.010/ 0.000, Output=-0.011(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.004/ 0.000/-0.000/ 0.000, Output= 0.004(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=  85.7, Error=  -0.7, PIDTerms=-0.029/ 0.000/ 0.029/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.6, Error=  -0.6, PIDTerms=-0.017/ 0.000/ 0.012/ 0.000, Output=-0.006(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.007/ 0.000/ 0.000/ 0.000, Output= 0.007(-0.500/0.500), Volt=12.3 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=  85.6, Error=  -0.6, PIDTerms=-0.024/ 0.000/ 0.019/ 0.000, Output=-0.005(-0.500/0.500), Volt=12.3 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.5, Error=  -0.5, PIDTerms=-0.015/ 0.000/ 0.008/ 0.000, Output=-0.007(-0.500/0.500), Volt=12.3 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.006/ 0.000/-0.000/ 0.000, Output= 0.006(-0.500/0.500), Volt=12.3 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=  85.5, Error=  -0.5, PIDTerms=-0.021/ 0.000/ 0.011/ 0.000, Output=-0.010(-0.500/0.500), Volt=12.3 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.5, Error=  -0.5, PIDTerms=-0.015/ 0.000/ 0.002/ 0.000, Output=-0.012(-0.500/0.500), Volt=12.3 (10.8)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.004/ 0.000/-0.000/ 0.000, Output= 0.004(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=  85.5, Error=  -0.5, PIDTerms=-0.019/ 0.000/ 0.007/ 0.000, Output=-0.012(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.5, Error=  -0.5, PIDTerms=-0.014/ 0.000/ 0.003/ 0.000, Output=-0.011(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=   0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.003/ 0.000/-0.000/ 0.000, Output= 0.003(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.0, Input=  85.4, Error=  -0.4, PIDTerms=-0.016/ 0.000/ 0.005/ 0.000, Output=-0.011(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.4, Error=  -0.4, PIDTerms=-0.013/ 0.000/ 0.001/ 0.000, Output=-0.012(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.startCompetition_Warn: AUTO_MODE takes too long (0.054s)
+
+GlobalTracer.Robot_Info: [2.826] INITIAL_TURN_TOWARDS_AIRSHIP: xPos= -0.05,yPos= 85.35,heading=   0.4/  60.0,volts=12.3(10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.006/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.3, Input=  85.4, Error=   0.0, PIDTerms=-0.014/ 0.000/ 0.005/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=   0.4, Error=  59.6, PIDTerms=-0.012/ 0.000/ 0.002/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.startCompetition_Warn: AUTO_MODE takes too long (0.075s)
+
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.006/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.3, Input=  85.4, Error=   0.0, PIDTerms=-0.014/ 0.000/ 0.005/ 0.000, Output= 0.000(-0.500/0.500), Volt=11.0 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=   0.4, Error=  59.6, PIDTerms= 1.788/ 0.000/ 0.000/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.0 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.006/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=10.8 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.3, Input=  85.4, Error=   0.0, PIDTerms=-0.014/ 0.000/ 0.005/ 0.000, Output= 0.000(-0.500/0.500), Volt=10.8 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=   0.4, Error=  59.6, PIDTerms= 1.788/ 0.000/ 0.000/ 0.000, Output= 0.500(-0.500/0.500), Volt=10.8 (10.8)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.startCompetition_Warn: AUTO_MODE takes too long (0.051s)
+
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.006/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=10.8 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.3, Input=  85.4, Error=   0.0, PIDTerms=-0.014/ 0.000/ 0.005/ 0.000, Output= 0.000(-0.500/0.500), Volt=10.9 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=   0.7, Error=  59.3, PIDTerms= 1.780/ 0.000/-0.017/ 0.000, Output= 0.500(-0.500/0.500), Volt=10.9 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.006/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=11.1 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.3, Input=  85.4, Error=   0.0, PIDTerms=-0.014/ 0.000/ 0.005/ 0.000, Output= 0.000(-0.500/0.500), Volt=11.1 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=   2.5, Error=  57.5, PIDTerms= 1.724/ 0.000/-0.129/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.1 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.006/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=11.2 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.3, Input=  85.4, Error=   0.0, PIDTerms=-0.014/ 0.000/ 0.005/ 0.000, Output= 0.000(-0.500/0.500), Volt=11.2 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=   5.7, Error=  54.3, PIDTerms= 1.628/ 0.000/-0.202/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.2 (10.8)
+GlobalTracer.PixyVision_Info: 2 object(s) found
+GlobalTracer.PixyVision_Info: [0] sync=0xaa55, chksum=0x00ee, sig=1, centerX=184, centerY= 35, width=  9, height=  9, angle=  0
+GlobalTracer.PixyVision_Info: [1] sync=0xaa55, chksum=0x00bf, sig=1, centerX=154, centerY= 21, width= 13, height=  2, angle=  0
+GlobalTracer.PixyVision_Info: Expected Target: distance=256.9, width=9.0, height=4.5
+GlobalTracer.PixyVision_Info: ===TargetRect===: x=148, y=20, w=41, h=20
+GlobalTracer.PixyVision_Info: ###TargetInfo###: xDist=2.1, yDist=56.1, angle=2.1
+GlobalTracer.startCompetition_Warn: AUTO_MODE takes too long (0.066s)
+
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.006/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=11.2 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.3, Input=  85.4, Error=   0.0, PIDTerms=-0.014/ 0.000/ 0.005/ 0.000, Output= 0.000(-0.500/0.500), Volt=11.2 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=   9.9, Error=  50.1, PIDTerms= 1.504/ 0.000/-0.189/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.2 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.006/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=11.3 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.3, Input=  85.4, Error=   0.0, PIDTerms=-0.014/ 0.000/ 0.005/ 0.000, Output= 0.000(-0.500/0.500), Volt=11.3 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=  18.4, Error=  41.6, PIDTerms= 1.249/ 0.000/-0.557/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.3 (10.8)
+GlobalTracer.PixyVision_Info: 3 object(s) found
+GlobalTracer.PixyVision_Info: [0] sync=0xaa55, chksum=0x0093, sig=1, centerX=105, centerY= 24, width= 14, height=  3, angle=  0
+GlobalTracer.PixyVision_Info: [1] sync=0xaa55, chksum=0x00bc, sig=1, centerX=134, centerY= 41, width= 10, height=  2, angle=  0
+GlobalTracer.PixyVision_Info: [2] sync=0xaa55, chksum=0x008c, sig=1, centerX= 62, centerY= 66, width=  9, height=  2, angle=  0
+GlobalTracer.PixyVision_Info: Expected Target: distance=61.7, width=37.3, height=18.6
+GlobalTracer.PixyVision_Info: ***TargetRect***: [0,1] x=98, y=23, w=41, h=19
+GlobalTracer.PixyVision_Info: ###TargetInfo###: xDist=-10.1, yDist=56.1, angle=-10.2
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.006/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=11.4 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.3, Input=  85.4, Error=   0.0, PIDTerms=-0.014/ 0.000/ 0.005/ 0.000, Output= 0.000(-0.500/0.500), Volt=11.4 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=  22.2, Error=  37.8, PIDTerms= 1.133/ 0.000/-0.234/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.4 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.006/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=11.4 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.3, Input=  85.4, Error=   0.0, PIDTerms=-0.014/ 0.000/ 0.005/ 0.000, Output= 0.000(-0.500/0.500), Volt=11.4 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=  30.6, Error=  29.4, PIDTerms= 0.883/ 0.000/-0.964/ 0.000, Output=-0.081(-0.500/0.500), Volt=11.4 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.006/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.0 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.3, Input=  85.4, Error=   0.0, PIDTerms=-0.014/ 0.000/ 0.005/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.0 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=  35.0, Error=  25.0, PIDTerms= 0.749/ 0.000/-0.519/ 0.000, Output= 0.230(-0.500/0.500), Volt=12.0 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.006/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=11.9 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.3, Input=  85.4, Error=   0.0, PIDTerms=-0.014/ 0.000/ 0.005/ 0.000, Output= 0.000(-0.500/0.500), Volt=11.9 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=  37.3, Error=  22.7, PIDTerms= 0.682/ 0.000/-0.231/ 0.000, Output= 0.451(-0.500/0.500), Volt=11.9 (10.8)
+GlobalTracer.PixyVision_Info: 2 object(s) found
+GlobalTracer.PixyVision_Info: [0] sync=0xaa55, chksum=0x007a, sig=1, centerX= 60, centerY= 48, width= 10, height=  3, angle=  0
+GlobalTracer.PixyVision_Info: [1] sync=0xaa55, chksum=0x0054, sig=1, centerX= 37, centerY= 31, width= 12, height=  3, angle=  0
+GlobalTracer.PixyVision_Info: Expected Target: distance=54.0, width=42.6, height=21.3
+GlobalTracer.PixyVision_Info: ===TargetRect===: x=31, y=30, w=34, h=20
+GlobalTracer.PixyVision_Info: ###TargetInfo###: xDist=-32.9, yDist=67.6, angle=-26.0
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.006/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.1 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.3, Input=  85.4, Error=   0.0, PIDTerms=-0.014/ 0.000/ 0.005/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.1 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=  41.7, Error=  18.3, PIDTerms= 0.548/ 0.000/-0.333/ 0.000, Output= 0.215(-0.500/0.500), Volt=12.1 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.006/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.0 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.3, Input=  85.4, Error=   0.0, PIDTerms=-0.014/ 0.000/ 0.005/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.0 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=  47.4, Error=  12.6, PIDTerms= 0.377/ 0.000/-0.650/ 0.000, Output=-0.273(-0.500/0.500), Volt=12.0 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.006/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=11.5 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.3, Input=  85.4, Error=   0.0, PIDTerms=-0.014/ 0.000/ 0.005/ 0.000, Output= 0.000(-0.500/0.500), Volt=11.5 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=  50.9, Error=   9.1, PIDTerms= 0.272/ 0.000/-0.407/ 0.000, Output=-0.135(-0.500/0.500), Volt=11.5 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.006/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=11.9 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.3, Input=  85.4, Error=   0.0, PIDTerms=-0.014/ 0.000/ 0.005/ 0.000, Output= 0.000(-0.500/0.500), Volt=11.9 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=  52.7, Error=   7.3, PIDTerms= 0.219/ 0.000/-0.183/ 0.000, Output= 0.036(-0.500/0.500), Volt=11.9 (10.8)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.006/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.3, Input=  85.4, Error=   0.0, PIDTerms=-0.014/ 0.000/ 0.005/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=  56.0, Error=   4.0, PIDTerms= 0.121/ 0.000/-0.348/ 0.000, Output=-0.226(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.006/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=11.7 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.3, Input=  85.4, Error=   0.0, PIDTerms=-0.014/ 0.000/ 0.005/ 0.000, Output= 0.000(-0.500/0.500), Volt=11.7 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=  57.8, Error=   2.2, PIDTerms= 0.065/ 0.000/-0.193/ 0.000, Output=-0.128(-0.500/0.500), Volt=11.7 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.006/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=11.9 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.3, Input=  85.4, Error=   0.0, PIDTerms=-0.014/ 0.000/ 0.005/ 0.000, Output= 0.000(-0.500/0.500), Volt=11.9 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=  58.9, Error=   1.1, PIDTerms= 0.033/ 0.000/-0.075/ 0.000, Output=-0.042(-0.500/0.500), Volt=11.9 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.006/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.1 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.3, Input=  85.4, Error=   0.0, PIDTerms=-0.014/ 0.000/ 0.005/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.1 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=  59.1, Error=   0.9, PIDTerms= 0.028/ 0.000/-0.024/ 0.000, Output= 0.005(-0.500/0.500), Volt=12.1 (10.8)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.006/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.3, Input=  85.4, Error=   0.0, PIDTerms=-0.014/ 0.000/ 0.005/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=  58.4, Error=   1.6, PIDTerms= 0.047/ 0.000/ 0.050/ 0.000, Output= 0.097(-0.500/0.500), Volt=12.1 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.006/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.1 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.3, Input=  85.4, Error=   0.0, PIDTerms=-0.014/ 0.000/ 0.005/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.1 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=  58.2, Error=   1.8, PIDTerms= 0.053/ 0.000/ 0.022/ 0.000, Output= 0.074(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.006/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.3, Input=  85.4, Error=   0.0, PIDTerms=-0.014/ 0.000/ 0.005/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.1 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=  57.9, Error=   2.1, PIDTerms= 0.064/ 0.000/ 0.040/ 0.000, Output= 0.104(-0.500/0.500), Volt=12.1 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.006/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.1 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.3, Input=  85.4, Error=   0.0, PIDTerms=-0.014/ 0.000/ 0.005/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.1 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=  57.8, Error=   2.2, PIDTerms= 0.066/ 0.000/ 0.006/ 0.000, Output= 0.072(-0.500/0.500), Volt=12.1 (10.8)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.006/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.1 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.3, Input=  85.4, Error=   0.0, PIDTerms=-0.014/ 0.000/ 0.005/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.1 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=  57.8, Error=   2.2, PIDTerms= 0.066/ 0.000/ 0.000/ 0.000, Output= 0.066(-0.500/0.500), Volt=12.1 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.006/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.1 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.3, Input=  85.4, Error=   0.0, PIDTerms=-0.014/ 0.000/ 0.005/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.1 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=  57.9, Error=   2.1, PIDTerms= 0.062/ 0.000/-0.013/ 0.000, Output= 0.049(-0.500/0.500), Volt=12.1 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.006/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.3, Input=  85.4, Error=   0.0, PIDTerms=-0.014/ 0.000/ 0.005/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=  58.0, Error=   2.0, PIDTerms= 0.060/ 0.000/-0.008/ 0.000, Output= 0.052(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.006/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.3, Input=  85.4, Error=   0.0, PIDTerms=-0.014/ 0.000/ 0.005/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=  58.2, Error=   1.8, PIDTerms= 0.054/ 0.000/-0.021/ 0.000, Output= 0.033(-0.500/0.500), Volt=12.1 (10.8)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.006/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.1 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.3, Input=  85.4, Error=   0.0, PIDTerms=-0.014/ 0.000/ 0.005/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.1 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=  58.2, Error=   1.8, PIDTerms= 0.054/ 0.000/-0.001/ 0.000, Output= 0.053(-0.500/0.500), Volt=12.1 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.006/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.1 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.3, Input=  85.4, Error=   0.0, PIDTerms=-0.014/ 0.000/ 0.005/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.1 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=  58.2, Error=   1.8, PIDTerms= 0.054/ 0.000/ 0.001/ 0.000, Output= 0.055(-0.500/0.500), Volt=12.1 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.006/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.3, Input=  85.4, Error=   0.0, PIDTerms=-0.014/ 0.000/ 0.005/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=  58.2, Error=   1.8, PIDTerms= 0.055/ 0.000/ 0.002/ 0.000, Output= 0.057(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.006/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  85.3, Input=  85.4, Error=   0.0, PIDTerms=-0.014/ 0.000/ 0.005/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=  58.2, Error=   1.8, PIDTerms= 0.055/ 0.000/ 0.000/ 0.000, Output= 0.055(-0.500/0.500), Volt=12.2 (10.8)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.Robot_Info: [3.949] DRIVE_TOWARDS_TARGET: xPos= -0.10,yPos= 85.18,heading=  58.2/  60.0,volts=12.1(10.8)
+GlobalTracer.Robot_Info: [3.949] VISION_DEPLOY: xPos= -0.10,yPos= 85.18,heading=  58.2/  60.0,volts=12.1(10.8)
+GlobalTracer.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=   0.0, Error=  32.9, PIDTerms= 0.000/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.1 (10.8)
+GlobalTracer.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=   0.0, Error=  -0.0, PIDTerms= 0.000/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.1 (10.8)
+GlobalTracer.PixyVision_Info: null object(s) found
+GlobalTracer.Robot_Info: [3.992] VISION_DEPLOY: xPos= -0.10,yPos= 85.18,heading=  58.2/  60.0,volts=12.1(10.8)
+GlobalTracer.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=  39.7, Error=  32.7, PIDTerms= 0.540/ 0.000/-0.014/ 0.000, Output= 0.500(-0.500/0.500), Volt=12.1 (10.8)
+GlobalTracer.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=   0.0, Error=  -0.0, PIDTerms=-0.000/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.1 (10.8)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.Robot_Info: [4.024] VISION_DEPLOY: xPos= -0.13,yPos= 85.53,heading=  58.2/  60.0,volts=10.9(10.8)
+GlobalTracer.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=  39.9, Error=  32.9, PIDTerms= 0.542/ 0.000/ 0.009/ 0.000, Output= 0.500(-0.500/0.500), Volt=10.9 (10.8)
+GlobalTracer.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=   0.0, Error=  -0.0, PIDTerms=-0.000/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=10.9 (10.8)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.PixyVision_Info: null object(s) found
+GlobalTracer.Robot_Info: [4.059] VISION_DEPLOY: xPos= -0.15,yPos= 85.91,heading=  58.3/  60.0,volts=10.7(10.7)
+GlobalTracer.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=  39.7, Error=  32.7, PIDTerms= 0.540/ 0.000/-0.007/ 0.000, Output= 0.500(-0.500/0.500), Volt=10.7 (10.7)
+GlobalTracer.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=   0.0, Error=  -0.0, PIDTerms=-0.000/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=10.5 (10.7)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.Robot_Info: [4.087] VISION_DEPLOY: xPos= -0.16,yPos= 86.33,heading=  58.3/  60.0,volts=10.6(10.6)
+GlobalTracer.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=  39.0, Error=  32.0, PIDTerms= 0.528/ 0.000/-0.047/ 0.000, Output= 0.481(-0.500/0.500), Volt=10.6 (10.6)
+GlobalTracer.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=   0.0, Error=  -0.0, PIDTerms=-0.000/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=10.6 (10.6)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.Robot_Info: [4.119] VISION_DEPLOY: xPos= -0.14,yPos= 86.80,heading=  58.2/  60.0,volts=10.7(10.6)
+GlobalTracer.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=  38.7, Error=  31.7, PIDTerms= 0.524/ 0.000/-0.018/ 0.000, Output= 0.500(-0.500/0.500), Volt=10.7 (10.6)
+GlobalTracer.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=   0.0, Error=  -0.0, PIDTerms=-0.000/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=10.7 (10.6)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.Robot_Info: [4.147] VISION_DEPLOY: xPos= -0.16,yPos= 87.23,heading=  58.1/  60.0,volts=10.7(10.6)
+GlobalTracer.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=  38.7, Error=  31.7, PIDTerms= 0.524/ 0.000/ 0.000/ 0.000, Output= 0.500(-0.500/0.500), Volt=10.7 (10.6)
+GlobalTracer.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=   0.0, Error=  -0.0, PIDTerms=-0.000/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=10.7 (10.6)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.PixyVision_Info: null object(s) found
+GlobalTracer.Robot_Info: [4.181] VISION_DEPLOY: xPos= -0.14,yPos= 88.27,heading=  58.0/  60.0,volts=10.6(10.6)
+GlobalTracer.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=  38.9, Error=  31.9, PIDTerms= 0.526/ 0.000/ 0.008/ 0.000, Output= 0.500(-0.500/0.500), Volt=10.6 (10.6)
+GlobalTracer.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=   0.0, Error=  -0.0, PIDTerms=-0.000/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=10.7 (10.6)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.Robot_Info: [4.209] VISION_DEPLOY: xPos= -0.03,yPos= 89.04,heading=  57.8/  60.0,volts=11.4(10.6)
+GlobalTracer.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=  36.7, Error=  29.7, PIDTerms= 0.491/ 0.000/-0.138/ 0.000, Output= 0.353(-0.500/0.500), Volt=11.4 (10.6)
+GlobalTracer.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=   0.0, Error=  -0.0, PIDTerms=-0.000/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=11.4 (10.6)
+GlobalTracer.PixyVision_Info: null object(s) found
+GlobalTracer.Robot_Info: [4.258] VISION_DEPLOY: xPos= -0.16,yPos= 90.84,heading=  57.6/  60.0,volts=11.4(10.6)
+GlobalTracer.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=  36.0, Error=  29.0, PIDTerms= 0.478/ 0.000/-0.052/ 0.000, Output= 0.427(-0.500/0.500), Volt=11.4 (10.6)
+GlobalTracer.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=   0.0, Error=  -0.0, PIDTerms=-0.000/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=11.4 (10.6)
+GlobalTracer.PixyVision_Info: null object(s) found
+GlobalTracer.PixyVision_Info: null object(s) found
+GlobalTracer.Robot_Info: [4.289] VISION_DEPLOY: xPos= -0.18,yPos= 91.59,heading=  57.5/  60.0,volts=11.3(10.6)
+GlobalTracer.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=  34.9, Error=  27.9, PIDTerms= 0.460/ 0.000/-0.043/ 0.000, Output= 0.417(-0.500/0.500), Volt=11.3 (10.6)
+GlobalTracer.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=   0.0, Error=  -0.0, PIDTerms=-0.000/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=11.3 (10.6)
+GlobalTracer.PixyVision_Info: null object(s) found
+GlobalTracer.Robot_Info: [4.323] VISION_DEPLOY: xPos= -0.17,yPos= 93.13,heading=  57.4/  60.0,volts=11.4(10.6)
+GlobalTracer.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=  35.0, Error=  28.0, PIDTerms= 0.462/ 0.000/ 0.009/ 0.000, Output= 0.471(-0.500/0.500), Volt=11.4 (10.6)
+GlobalTracer.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=   0.0, Error=  -0.0, PIDTerms=-0.000/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=11.4 (10.6)
+GlobalTracer.PixyVision_Info: null object(s) found
+GlobalTracer.Robot_Info: [4.356] VISION_DEPLOY: xPos= -0.16,yPos= 94.01,heading=  57.2/  60.0,volts=11.1(10.6)
+GlobalTracer.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=  34.0, Error=  27.0, PIDTerms= 0.446/ 0.000/-0.057/ 0.000, Output= 0.388(-0.500/0.500), Volt=11.1 (10.6)
+GlobalTracer.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=   0.0, Error=  -0.0, PIDTerms=-0.000/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=11.1 (10.6)
+GlobalTracer.PixyVision_Info: null object(s) found
+GlobalTracer.Robot_Info: [4.386] VISION_DEPLOY: xPos= -0.17,yPos= 95.74,heading=  57.1/  60.0,volts=11.6(10.6)
+GlobalTracer.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=  32.9, Error=  25.9, PIDTerms= 0.427/ 0.000/-0.072/ 0.000, Output= 0.356(-0.500/0.500), Volt=11.6 (10.6)
+GlobalTracer.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=   0.0, Error=  -0.0, PIDTerms=-0.000/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=11.6 (10.6)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.PixyVision_Info: null object(s) found
+GlobalTracer.Robot_Info: [4.424] VISION_DEPLOY: xPos= -0.31,yPos= 97.31,heading=  56.9/  60.0,volts=11.7(10.6)
+GlobalTracer.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=  32.1, Error=  25.1, PIDTerms= 0.415/ 0.000/-0.043/ 0.000, Output= 0.372(-0.500/0.500), Volt=11.7 (10.6)
+GlobalTracer.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=   0.0, Error=  -0.0, PIDTerms=-0.000/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=11.7 (10.6)
+GlobalTracer.PixyVision_Info: null object(s) found
+GlobalTracer.Robot_Info: [4.459] VISION_DEPLOY: xPos= -0.13,yPos= 98.47,heading=  56.9/  60.0,volts=11.6(10.6)
+GlobalTracer.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=  30.1, Error=  23.1, PIDTerms= 0.382/ 0.000/-0.113/ 0.000, Output= 0.269(-0.500/0.500), Volt=11.6 (10.6)
+GlobalTracer.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=   0.0, Error=  -0.0, PIDTerms=-0.000/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=11.6 (10.6)
+GlobalTracer.PixyVision_Info: null object(s) found
+GlobalTracer.Robot_Info: [4.491] VISION_DEPLOY: xPos= -0.13,yPos=100.29,heading=  56.8/  60.0,volts=11.9(10.6)
+GlobalTracer.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=  29.0, Error=  22.0, PIDTerms= 0.363/ 0.000/-0.065/ 0.000, Output= 0.298(-0.500/0.500), Volt=11.9 (10.6)
+GlobalTracer.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=   0.0, Error=  -0.0, PIDTerms=-0.000/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=11.9 (10.6)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.PixyVision_Info: null object(s) found
+GlobalTracer.Robot_Info: [4.530] VISION_DEPLOY: xPos= -0.32,yPos=101.90,heading=  56.7/  60.0,volts=11.9(10.6)
+GlobalTracer.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=  28.6, Error=  21.6, PIDTerms= 0.357/ 0.000/-0.019/ 0.000, Output= 0.338(-0.500/0.500), Volt=11.9 (10.6)
+GlobalTracer.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=   0.0, Error=  -0.0, PIDTerms=-0.000/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=11.9 (10.6)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.Robot_Info: [4.564] VISION_DEPLOY: xPos= -0.11,yPos=103.09,heading=  56.7/  60.0,volts=11.9(10.6)
+GlobalTracer.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=  27.2, Error=  20.2, PIDTerms= 0.333/ 0.000/-0.096/ 0.000, Output= 0.237(-0.500/0.500), Volt=11.9 (10.6)
+GlobalTracer.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=   0.0, Error=  -0.0, PIDTerms=-0.000/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=11.9 (10.6)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.Robot_Info: [4.599] VISION_DEPLOY: xPos= -0.12,yPos=104.96,heading=  56.7/  60.0,volts=12.0(10.6)
+GlobalTracer.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=  25.2, Error=  18.2, PIDTerms= 0.300/ 0.000/-0.116/ 0.000, Output= 0.184(-0.500/0.500), Volt=12.0 (10.6)
+GlobalTracer.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=   0.0, Error=  -0.0, PIDTerms=-0.000/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.0 (10.6)
+GlobalTracer.PixyVision_Info: null object(s) found
+GlobalTracer.PixyVision_Info: null object(s) found
+GlobalTracer.Robot_Info: [4.637] VISION_DEPLOY: xPos= -0.12,yPos=106.77,heading=  56.6/  60.0,volts=12.0(10.6)
+GlobalTracer.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=  24.4, Error=  17.4, PIDTerms= 0.287/ 0.000/-0.039/ 0.000, Output= 0.248(-0.500/0.500), Volt=12.0 (10.6)
+GlobalTracer.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=   0.0, Error=  -0.0, PIDTerms=-0.000/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.0 (10.6)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.Robot_Info: [4.668] VISION_DEPLOY: xPos= -0.12,yPos=107.68,heading=  56.6/  60.0,volts=12.0(10.6)
+GlobalTracer.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=  23.3, Error=  16.3, PIDTerms= 0.269/ 0.000/-0.064/ 0.000, Output= 0.205(-0.500/0.500), Volt=12.0 (10.6)
+GlobalTracer.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=   0.0, Error=  -0.0, PIDTerms=-0.000/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.0 (10.6)
+GlobalTracer.PixyVision_Info: null object(s) found
+GlobalTracer.Robot_Info: [4.704] VISION_DEPLOY: xPos= -0.12,yPos=109.49,heading=  56.6/  60.0,volts=12.1(10.6)
+GlobalTracer.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=  21.3, Error=  14.3, PIDTerms= 0.236/ 0.000/-0.127/ 0.000, Output= 0.109(-0.500/0.500), Volt=12.1 (10.6)
+GlobalTracer.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=   0.0, Error=  -0.0, PIDTerms=-0.000/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.1 (10.6)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.Robot_Info: [4.743] VISION_DEPLOY: xPos= -0.12,yPos=111.06,heading=  56.6/  60.0,volts=12.0(10.6)
+GlobalTracer.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=  19.9, Error=  12.9, PIDTerms= 0.213/ 0.000/-0.069/ 0.000, Output= 0.145(-0.500/0.500), Volt=12.0 (10.6)
+GlobalTracer.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=   0.0, Error=  -0.0, PIDTerms=-0.000/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.0 (10.6)
+GlobalTracer.PixyVision_Info: null object(s) found
+GlobalTracer.Robot_Info: [4.777] VISION_DEPLOY: xPos= -0.14,yPos=111.77,heading=  56.6/  60.0,volts=12.0(10.6)
+GlobalTracer.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=  19.2, Error=  12.2, PIDTerms= 0.201/ 0.000/-0.043/ 0.000, Output= 0.158(-0.500/0.500), Volt=12.0 (10.6)
+GlobalTracer.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=   0.0, Error=  -0.0, PIDTerms=-0.000/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.0 (10.6)
+GlobalTracer.PixyVision_Info: null object(s) found
+GlobalTracer.Robot_Info: [4.806] VISION_DEPLOY: xPos= -0.12,yPos=113.35,heading=  56.6/  60.0,volts=12.1(10.6)
+GlobalTracer.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=  17.3, Error=  10.3, PIDTerms= 0.170/ 0.000/-0.128/ 0.000, Output= 0.042(-0.500/0.500), Volt=12.1 (10.6)
+GlobalTracer.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=   0.0, Error=  -0.0, PIDTerms=-0.000/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.1 (10.6)
+GlobalTracer.PixyVision_Info: null object(s) found
+GlobalTracer.Robot_Info: [4.837] VISION_DEPLOY: xPos= -0.11,yPos=114.08,heading=  56.6/  60.0,volts=12.1(10.6)
+GlobalTracer.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=  16.4, Error=   9.4, PIDTerms= 0.156/ 0.000/-0.055/ 0.000, Output= 0.101(-0.500/0.500), Volt=12.1 (10.6)
+GlobalTracer.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=   0.0, Error=  -0.0, PIDTerms=-0.000/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.2 (10.6)
+GlobalTracer.PixyVision_Info: null object(s) found
+GlobalTracer.PixyVision_Info: null object(s) found
+GlobalTracer.Robot_Info: [4.869] VISION_DEPLOY: xPos= -0.14,yPos=115.55,heading=  56.6/  60.0,volts=12.2(10.6)
+GlobalTracer.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=  15.4, Error=   8.4, PIDTerms= 0.139/ 0.000/-0.057/ 0.000, Output= 0.082(-0.500/0.500), Volt=12.2 (10.6)
+GlobalTracer.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=   0.0, Error=  -0.0, PIDTerms=-0.000/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.2 (10.6)
+GlobalTracer.PixyVision_Info: null object(s) found
+GlobalTracer.Robot_Info: [4.900] VISION_DEPLOY: xPos= -0.11,yPos=116.21,heading=  56.6/  60.0,volts=12.1(10.6)
+GlobalTracer.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=  13.8, Error=   6.8, PIDTerms= 0.113/ 0.000/-0.114/ 0.000, Output=-0.001(-0.500/0.500), Volt=12.1 (10.6)
+GlobalTracer.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=   0.0, Error=  -0.0, PIDTerms=-0.000/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.1 (10.6)
+GlobalTracer.PixyVision_Info: null object(s) found
+GlobalTracer.Robot_Info: [4.930] VISION_DEPLOY: xPos= -0.13,yPos=117.50,heading=  56.7/  60.0,volts=12.0(10.6)
+GlobalTracer.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=  13.0, Error=   6.0, PIDTerms= 0.098/ 0.000/-0.054/ 0.000, Output= 0.044(-0.500/0.500), Volt=12.0 (10.6)
+GlobalTracer.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=   0.0, Error=  -0.0, PIDTerms=-0.000/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.0 (10.6)
+GlobalTracer.PixyVision_Info: null object(s) found
+GlobalTracer.Robot_Info: [4.962] VISION_DEPLOY: xPos= -0.15,yPos=118.08,heading=  56.7/  60.0,volts=12.1(10.6)
+GlobalTracer.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=  12.7, Error=   5.7, PIDTerms= 0.094/ 0.000/-0.017/ 0.000, Output= 0.077(-0.500/0.500), Volt=12.2 (10.6)
+GlobalTracer.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=   0.0, Error=  -0.0, PIDTerms=-0.000/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.2 (10.6)
+GlobalTracer.PixyVision_Info: null object(s) found
+GlobalTracer.PixyVision_Info: null object(s) found
+GlobalTracer.Robot_Info: [4.997] VISION_DEPLOY: xPos= -0.14,yPos=119.19,heading=  56.8/  60.0,volts=12.1(10.6)
+GlobalTracer.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=  11.3, Error=   4.3, PIDTerms= 0.072/ 0.000/-0.077/ 0.000, Output=-0.006(-0.500/0.500), Volt=12.1 (10.6)
+GlobalTracer.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=   0.0, Error=  -0.0, PIDTerms=-0.000/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.1 (10.6)
+GlobalTracer.PixyVision_Info: null object(s) found
+GlobalTracer.Robot_Info: [5.025] VISION_DEPLOY: xPos= -0.24,yPos=120.03,heading=  56.8/  60.0,volts=12.1(10.6)
+GlobalTracer.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=  10.5, Error=   3.5, PIDTerms= 0.057/ 0.000/-0.056/ 0.000, Output= 0.001(-0.500/0.500), Volt=12.0 (10.6)
+GlobalTracer.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=   0.0, Error=  -0.0, PIDTerms=-0.000/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.0 (10.6)
+GlobalTracer.PixyVision_Info: null object(s) found
+GlobalTracer.Robot_Info: [5.068] VISION_DEPLOY: xPos= -0.07,yPos=120.68,heading=  56.8/  60.0,volts=12.1(10.6)
+GlobalTracer.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=   9.6, Error=   2.6, PIDTerms= 0.043/ 0.000/-0.042/ 0.000, Output= 0.001(-0.500/0.500), Volt=12.1 (10.6)
+GlobalTracer.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=   0.0, Error=  -0.0, PIDTerms=-0.000/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.1 (10.6)
+GlobalTracer.PixyVision_Info: null object(s) found
+GlobalTracer.PixyVision_Info: null object(s) found
+GlobalTracer.Robot_Info: [5.111] VISION_DEPLOY: xPos= -0.11,yPos=121.51,heading=  56.8/  60.0,volts=12.1(10.6)
+GlobalTracer.printPidInfo_Info: sonarDrivePidCtrl: Target=   7.0, Input=   8.7, Error=   1.7, PIDTerms= 0.028/ 0.000/-0.041/ 0.000, Output=-0.013(-0.500/0.500), Volt=12.1 (10.6)
+GlobalTracer.printPidInfo_Info: visionTurnPidCtrl: Target=   0.0, Input=   0.0, Error=  -0.0, PIDTerms=-0.000/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.1 (10.6)
+GlobalTracer.PixyVision_Info: null object(s) found
+GlobalTracer.Robot_Info: [5.143] DEPLOY_GEAR: xPos= -0.13,yPos=121.99,heading=  56.8/  60.0,volts=12.1(10.6)
+GlobalTracer.Robot_Info: [5.143] VISION_DEPLOY: xPos= -0.13,yPos=121.99,heading=  56.8/  60.0,volts=12.1(10.6)
+GlobalTracer.Robot_Info: [5.166] VISION_DEPLOY: xPos= -0.13,yPos=122.29,heading=  56.8/  60.0,volts=12.1(10.6)
+GlobalTracer.Robot_Info: [5.182] VISION_DEPLOY: xPos= -0.18,yPos=122.49,heading=  56.8/  60.0,volts=12.1(10.6)
+GlobalTracer.Robot_Info: [5.198] VISION_DEPLOY: xPos= -0.13,yPos=122.55,heading=  56.8/  60.0,volts=12.0(10.6)
+GlobalTracer.PixyVision_Info: null object(s) found
+GlobalTracer.Robot_Info: [5.216] VISION_DEPLOY: xPos= -0.13,yPos=122.81,heading=  56.9/  60.0,volts=12.0(10.6)
+GlobalTracer.Robot_Info: [5.229] VISION_DEPLOY: xPos= -0.14,yPos=123.03,heading=  56.9/  60.0,volts=12.1(10.6)
+GlobalTracer.Robot_Info: [5.245] VISION_DEPLOY: xPos= -0.18,yPos=123.17,heading=  56.9/  60.0,volts=12.1(10.6)
+GlobalTracer.Robot_Info: [5.260] VISION_DEPLOY: xPos= -0.14,yPos=123.22,heading=  56.9/  60.0,volts=12.1(10.6)
+GlobalTracer.Robot_Info: [5.273] VISION_DEPLOY: xPos= -0.14,yPos=123.38,heading=  57.0/  60.0,volts=12.1(10.6)
+GlobalTracer.Robot_Info: [5.288] VISION_DEPLOY: xPos= -0.14,yPos=123.51,heading=  57.0/  60.0,volts=12.1(10.6)
+GlobalTracer.Robot_Info: [5.304] VISION_DEPLOY: xPos= -0.15,yPos=123.55,heading=  57.0/  60.0,volts=12.1(10.6)
+GlobalTracer.PixyVision_Info: null object(s) found
+GlobalTracer.Robot_Info: [5.322] VISION_DEPLOY: xPos= -0.16,yPos=123.59,heading=  57.0/  60.0,volts=12.2(10.6)
+GlobalTracer.Robot_Info: [5.338] VISION_DEPLOY: xPos= -0.16,yPos=123.63,heading=  57.0/  60.0,volts=12.2(10.6)
+GlobalTracer.Robot_Info: [5.350] VISION_DEPLOY: xPos= -0.16,yPos=123.63,heading=  57.0/  60.0,volts=12.1(10.6)
+GlobalTracer.Robot_Info: [5.366] VISION_DEPLOY: xPos= -0.16,yPos=123.63,heading=  57.1/  60.0,volts=12.1(10.6)
+GlobalTracer.Robot_Info: [5.382] VISION_DEPLOY: xPos= -0.15,yPos=123.58,heading=  57.1/  60.0,volts=12.1(10.6)
+GlobalTracer.Robot_Info: [5.398] VISION_DEPLOY: xPos= -0.15,yPos=123.50,heading=  57.0/  60.0,volts=12.1(10.6)
+GlobalTracer.Robot_Info: [5.410] VISION_DEPLOY: xPos= -0.16,yPos=123.45,heading=  57.0/  60.0,volts=12.1(10.6)
+GlobalTracer.PixyVision_Info: null object(s) found
+GlobalTracer.Robot_Info: [5.429] VISION_DEPLOY: xPos= -0.15,yPos=123.39,heading=  57.0/  60.0,volts=12.1(10.6)
+GlobalTracer.Robot_Info: [5.445] VISION_DEPLOY: xPos= -0.11,yPos=123.33,heading=  57.0/  60.0,volts=12.2(10.6)
+GlobalTracer.Robot_Info: [5.462]     BACKUP: xPos= -0.08,yPos=123.27,heading=  57.0/  60.0,volts=12.1(10.6)
+GlobalTracer.Robot_Info: [5.462] VISION_DEPLOY: xPos= -0.08,yPos=123.27,heading=  57.0/  60.0,volts=12.1(10.6)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.1, Input=  -0.0, Error=   0.0, PIDTerms= 0.006/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.1 (10.6)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  87.3, Input=  85.4, Error= -36.0, PIDTerms=-0.014/ 0.000/ 0.005/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.1 (10.6)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=  58.2, Error=   3.0, PIDTerms= 0.055/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.0 (10.6)
+GlobalTracer.startCompetition_Warn: AUTO_MODE takes too long (0.060s)
+
+GlobalTracer.Robot_Info: [5.524] VISION_DEPLOY: xPos= -0.19,yPos=123.03,heading=  57.0/  60.0,volts=11.0(10.6)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.1, Input=  -0.1, Error=   0.0, PIDTerms= 0.000/ 0.000/ 0.000/-0.000, Output= 0.000(-0.500/0.500), Volt=11.0 (10.6)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  87.3, Input= 123.3, Error= -36.0, PIDTerms=-1.440/ 0.000/ 0.000/ 0.000, Output=-0.500(-0.500/0.500), Volt=11.0 (10.6)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=  57.0, Error=   3.0, PIDTerms= 0.090/ 0.000/ 0.000/ 0.000, Output= 0.090(-0.500/0.500), Volt=11.0 (10.6)
+GlobalTracer.PixyVision_Info: null object(s) found
+GlobalTracer.startCompetition_Warn: AUTO_MODE takes too long (0.055s)
+
+GlobalTracer.Robot_Info: [5.583] VISION_DEPLOY: xPos= -0.24,yPos=121.83,heading=  57.2/  60.0,volts=10.8(10.6)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.1, Input=  -0.2, Error=   0.1, PIDTerms= 0.017/ 0.000/ 0.000/-0.000, Output= 0.017(-0.500/0.500), Volt=10.6 (10.6)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  87.3, Input= 123.0, Error= -35.8, PIDTerms=-1.430/ 0.000/ 0.017/ 0.000, Output=-0.500(-0.500/0.500), Volt=10.6 (10.6)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=  57.0, Error=   3.0, PIDTerms= 0.089/ 0.000/-0.003/ 0.000, Output= 0.085(-0.500/0.500), Volt=10.6 (10.6)
+GlobalTracer.Robot_Info: [5.631] VISION_DEPLOY: xPos= -0.34,yPos=120.88,heading=  57.9/  60.0,volts=10.7(10.6)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.1, Input=  -0.2, Error=   0.2, PIDTerms= 0.025/ 0.000/ 0.000/-0.000, Output= 0.025(-0.500/0.500), Volt=10.6 (10.6)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  87.3, Input= 121.8, Error= -34.6, PIDTerms=-1.382/ 0.000/ 0.087/ 0.000, Output=-0.500(-0.500/0.500), Volt=10.6 (10.6)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=  57.2, Error=   2.8, PIDTerms= 0.084/ 0.000/-0.008/ 0.000, Output= 0.077(-0.500/0.500), Volt=10.6 (10.6)
+GlobalTracer.PixyVision_Info: null object(s) found
+GlobalTracer.startCompetition_Warn: AUTO_MODE takes too long (0.057s)
+
+GlobalTracer.Robot_Info: [5.690] VISION_DEPLOY: xPos= -0.30,yPos=119.17,heading=  58.9/  60.0,volts=10.8(10.6)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.1, Input=  -0.3, Error=   0.3, PIDTerms= 0.038/ 0.000/ 0.000/-0.000, Output= 0.038(-0.500/0.500), Volt=10.8 (10.6)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  87.3, Input= 120.9, Error= -33.6, PIDTerms=-1.344/ 0.000/ 0.068/ 0.000, Output=-0.500(-0.500/0.500), Volt=10.8 (10.6)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=  57.9, Error=   2.1, PIDTerms= 0.064/ 0.000/-0.036/ 0.000, Output= 0.029(-0.500/0.500), Volt=10.8 (10.6)
+GlobalTracer.startCompetition_Warn: AUTO_MODE takes too long (0.052s)
+
+GlobalTracer.Robot_Info: [5.745] VISION_DEPLOY: xPos= -0.13,yPos=117.11,heading=  59.8/  60.0,volts=10.8(10.6)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.1, Input=  -0.3, Error=   0.2, PIDTerms= 0.033/ 0.000/-0.000/-0.000, Output= 0.033(-0.500/0.500), Volt=10.8 (10.6)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  87.3, Input= 119.2, Error= -31.9, PIDTerms=-1.276/ 0.000/ 0.133/ 0.000, Output=-0.500(-0.500/0.500), Volt=11.0 (10.6)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=  58.9, Error=   1.1, PIDTerms= 0.033/ 0.000/-0.061/ 0.000, Output=-0.028(-0.500/0.500), Volt=11.0 (10.6)
+GlobalTracer.PixyVision_Info: null object(s) found
+GlobalTracer.startCompetition_Warn: AUTO_MODE takes too long (0.058s)
+
+GlobalTracer.Robot_Info: [5.805] VISION_DEPLOY: xPos= -0.21,yPos=115.24,heading=  60.8/  60.0,volts=11.0(10.6)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.1, Input=  -0.1, Error=   0.0, PIDTerms= 0.007/ 0.000/-0.000/-0.000, Output= 0.007(-0.500/0.500), Volt=10.9 (10.6)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  87.3, Input= 117.1, Error= -29.8, PIDTerms=-1.193/ 0.000/ 0.138/ 0.000, Output=-0.500(-0.500/0.500), Volt=10.9 (10.6)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=  59.8, Error=   0.2, PIDTerms= 0.007/ 0.000/-0.043/ 0.000, Output=-0.036(-0.500/0.500), Volt=10.9 (10.6)
+GlobalTracer.startCompetition_Warn: AUTO_MODE takes too long (0.053s)
+
+GlobalTracer.Robot_Info: [5.861] VISION_DEPLOY: xPos= -0.19,yPos=112.47,heading=  61.0/  60.0,volts=11.0(10.6)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.1, Input=  -0.2, Error=   0.1, PIDTerms= 0.019/ 0.000/ 0.000/-0.000, Output= 0.019(-0.500/0.500), Volt=11.0 (10.6)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  87.3, Input= 115.2, Error= -28.0, PIDTerms=-1.119/ 0.000/ 0.134/ 0.000, Output=-0.500(-0.500/0.500), Volt=11.0 (10.6)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=  60.8, Error=  -0.8, PIDTerms=-0.024/ 0.000/-0.056/ 0.000, Output=-0.080(-0.500/0.500), Volt=11.0 (10.6)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.startCompetition_Warn: AUTO_MODE takes too long (0.053s)
+
+GlobalTracer.Robot_Info: [5.920] VISION_DEPLOY: xPos= -0.14,yPos=109.42,heading=  61.1/  60.0,volts=11.2(10.6)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.1, Input=  -0.2, Error=   0.1, PIDTerms= 0.017/ 0.000/-0.000/-0.000, Output= 0.017(-0.500/0.500), Volt=11.2 (10.6)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  87.3, Input= 112.5, Error= -25.2, PIDTerms=-1.008/ 0.000/ 0.187/ 0.000, Output=-0.500(-0.500/0.500), Volt=11.2 (10.6)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=  61.0, Error=  -1.0, PIDTerms=-0.030/ 0.000/-0.011/ 0.000, Output=-0.041(-0.500/0.500), Volt=11.2 (10.6)
+GlobalTracer.Robot_Info: [5.969] VISION_DEPLOY: xPos=  0.38,yPos=105.51,heading=  60.7/  60.0,volts=11.1(10.6)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.1, Input=  -0.1, Error=   0.1, PIDTerms= 0.009/ 0.000/-0.000/-0.000, Output= 0.009(-0.500/0.500), Volt=11.1 (10.6)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  87.3, Input= 109.4, Error= -22.1, PIDTerms=-0.886/ 0.000/ 0.219/ 0.000, Output=-0.500(-0.500/0.500), Volt=11.1 (10.6)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=  61.1, Error=  -1.1, PIDTerms=-0.034/ 0.000/-0.007/ 0.000, Output=-0.041(-0.500/0.500), Volt=11.1 (10.6)
+GlobalTracer.PixyVision_Info: null object(s) found
+GlobalTracer.startCompetition_Warn: AUTO_MODE takes too long (0.078s)
+
+GlobalTracer.Robot_Info: [6.049] VISION_DEPLOY: xPos= -0.16,yPos=102.55,heading=  60.5/  60.0,volts=11.3(10.6)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.1, Input=   0.4, Error=  -0.5, PIDTerms=-0.069/ 0.000/-0.000/-0.000, Output=-0.069(-0.500/0.500), Volt=11.3 (10.6)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  87.3, Input= 105.5, Error= -18.2, PIDTerms=-0.729/ 0.000/ 0.202/ 0.000, Output=-0.500(-0.500/0.500), Volt=11.3 (10.6)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=  60.7, Error=  -0.7, PIDTerms=-0.020/ 0.000/ 0.018/ 0.000, Output=-0.002(-0.500/0.500), Volt=11.3 (10.6)
+GlobalTracer.startCompetition_Warn: AUTO_MODE takes too long (0.056s)
+
+GlobalTracer.Robot_Info: [6.108] VISION_DEPLOY: xPos= -0.21,yPos= 98.76,heading=  60.2/  60.0,volts=11.2(10.6)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.1, Input=  -0.2, Error=   0.1, PIDTerms= 0.013/ 0.000/ 0.000/-0.000, Output= 0.013(-0.500/0.500), Volt=11.7 (10.6)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  87.3, Input= 102.6, Error= -15.3, PIDTerms=-0.611/ 0.000/ 0.221/ 0.000, Output=-0.390(-0.500/0.500), Volt=11.7 (10.6)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=  60.5, Error=  -0.5, PIDTerms=-0.014/ 0.000/ 0.012/ 0.000, Output=-0.001(-0.500/0.500), Volt=11.7 (10.6)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.startCompetition_Warn: AUTO_MODE takes too long (0.062s)
+
+GlobalTracer.Robot_Info: [6.173] VISION_DEPLOY: xPos= -0.21,yPos= 94.94,heading=  60.2/  60.0,volts=12.0(10.6)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.1, Input=  -0.2, Error=   0.1, PIDTerms= 0.020/ 0.000/ 0.000/-0.000, Output= 0.020(-0.500/0.500), Volt=12.0 (10.6)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  87.3, Input=  98.8, Error= -11.5, PIDTerms=-0.459/ 0.000/ 0.220/ 0.000, Output=-0.240(-0.500/0.500), Volt=12.0 (10.6)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=  60.2, Error=  -0.2, PIDTerms=-0.007/ 0.000/ 0.009/ 0.000, Output= 0.002(-0.500/0.500), Volt=12.0 (10.6)
+GlobalTracer.Robot_Info: [6.223] VISION_DEPLOY: xPos= -0.24,yPos= 92.49,heading=  60.2/  60.0,volts=12.0(10.6)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.1, Input=  -0.2, Error=   0.1, PIDTerms= 0.019/ 0.000/-0.000/-0.000, Output= 0.019(-0.500/0.500), Volt=12.0 (10.6)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  87.3, Input=  94.9, Error=  -7.7, PIDTerms=-0.306/ 0.000/ 0.275/ 0.000, Output=-0.032(-0.500/0.500), Volt=12.0 (10.6)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=  60.2, Error=  -0.2, PIDTerms=-0.006/ 0.000/ 0.002/ 0.000, Output=-0.005(-0.500/0.500), Volt=12.0 (10.6)
+GlobalTracer.Robot_Info: [6.251] VISION_DEPLOY: xPos=  0.08,yPos= 90.64,heading=  60.2/  60.0,volts=12.0(10.6)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.1, Input=  -0.2, Error=   0.2, PIDTerms= 0.023/ 0.000/ 0.000/-0.000, Output= 0.023(-0.500/0.500), Volt=12.0 (10.6)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  87.3, Input=  92.5, Error=  -5.2, PIDTerms=-0.209/ 0.000/ 0.340/ 0.000, Output= 0.132(-0.500/0.500), Volt=12.0 (10.6)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=  60.2, Error=  -0.2, PIDTerms=-0.005/ 0.000/ 0.004/ 0.000, Output=-0.001(-0.500/0.500), Volt=12.0 (10.6)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.Robot_Info: [6.285] VISION_DEPLOY: xPos= -0.21,yPos= 89.73,heading=  60.2/  60.0,volts=11.8(10.6)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.1, Input=   0.1, Error=  -0.2, PIDTerms=-0.024/ 0.000/-0.000/-0.000, Output=-0.024(-0.500/0.500), Volt=11.8 (10.6)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  87.3, Input=  90.6, Error=  -3.4, PIDTerms=-0.134/ 0.000/ 0.219/ 0.000, Output= 0.084(-0.500/0.500), Volt=11.9 (10.6)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=  60.2, Error=  -0.2, PIDTerms=-0.005/ 0.000/-0.001/ 0.000, Output=-0.006(-0.500/0.500), Volt=11.9 (10.6)
+GlobalTracer.Robot_Info: [6.318] VISION_DEPLOY: xPos= -0.35,yPos= 88.37,heading=  60.2/  60.0,volts=12.0(10.6)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.1, Input=  -0.2, Error=   0.1, PIDTerms= 0.019/ 0.000/ 0.000/-0.000, Output= 0.019(-0.500/0.500), Volt=12.0 (10.6)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  87.3, Input=  89.7, Error=  -2.5, PIDTerms=-0.098/ 0.000/ 0.123/ 0.000, Output= 0.025(-0.500/0.500), Volt=12.0 (10.6)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=  60.2, Error=  -0.2, PIDTerms=-0.005/ 0.000/ 0.000/ 0.000, Output=-0.005(-0.500/0.500), Volt=12.0 (10.6)
+GlobalTracer.Robot_Info: [6.346] VISION_DEPLOY: xPos= -0.39,yPos= 87.67,heading=  60.3/  60.0,volts=12.0(10.6)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.1, Input=  -0.4, Error=   0.3, PIDTerms= 0.041/ 0.000/ 0.000/-0.000, Output= 0.041(-0.500/0.500), Volt=12.0 (10.6)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  87.3, Input=  88.4, Error=  -1.1, PIDTerms=-0.044/ 0.000/ 0.173/ 0.000, Output= 0.129(-0.500/0.500), Volt=12.0 (10.6)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=  60.2, Error=  -0.2, PIDTerms=-0.006/ 0.000/-0.003/ 0.000, Output=-0.009(-0.500/0.500), Volt=12.0 (10.6)
+GlobalTracer.Robot_Info: [6.378]       DONE: xPos= -0.21,yPos= 86.54,heading=  60.2/  60.0,volts=11.7(10.6)
+GlobalTracer.Robot_Info: [6.378] VISION_DEPLOY: xPos= -0.21,yPos= 86.54,heading=  60.2/  60.0,volts=11.7(10.6)
+GlobalTracer.PixyVision_Info: null object(s) found
+GlobalTracer.Robot_Info: [6.399] BACKUP_FROM_AIRSHIP: xPos= -0.18,yPos= 85.94,heading=  60.2/  60.0,volts=12.0(10.6)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.2, Input=  -0.4, Error=   0.0, PIDTerms= 0.047/ 0.000/ 0.000/-0.000, Output= 0.000(-0.500/0.500), Volt=12.0 (10.6)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  73.9, Input=  87.7, Error= -12.0, PIDTerms=-0.016/ 0.000/ 0.098/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.0 (10.6)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=  60.3, Error=  -0.2, PIDTerms=-0.009/ 0.000/-0.008/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.0 (10.6)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.2, Input=  -0.2, Error=   0.0, PIDTerms= 0.000/ 0.000/ 0.000/-0.000, Output= 0.000(-0.500/0.500), Volt=12.0 (10.6)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  73.9, Input=  85.9, Error= -12.0, PIDTerms=-0.480/ 0.000/ 0.000/ 0.000, Output=-0.480(-0.500/0.500), Volt=12.0 (10.6)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=  60.2, Error=  -0.2, PIDTerms=-0.005/ 0.000/ 0.000/ 0.000, Output=-0.005(-0.500/0.500), Volt=12.0 (10.6)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.2, Input=  -0.2, Error=   0.1, PIDTerms= 0.010/ 0.000/ 0.000/-0.000, Output= 0.010(-0.500/0.500), Volt=11.4 (10.6)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  73.9, Input=  85.2, Error= -11.3, PIDTerms=-0.452/ 0.000/ 0.110/ 0.000, Output=-0.342(-0.500/0.500), Volt=11.4 (10.6)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=  60.0, Error=   0.0, PIDTerms= 0.001/ 0.000/ 0.021/ 0.000, Output= 0.022(-0.500/0.500), Volt=11.4 (10.6)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.2, Input=  -0.2, Error=   0.0, PIDTerms= 0.006/ 0.000/-0.000/-0.000, Output= 0.006(-0.500/0.500), Volt=11.9 (10.6)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  73.9, Input=  84.7, Error= -10.7, PIDTerms=-0.430/ 0.000/ 0.075/ 0.000, Output=-0.355(-0.500/0.500), Volt=11.9 (10.6)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=  59.8, Error=   0.2, PIDTerms= 0.006/ 0.000/ 0.019/ 0.000, Output= 0.025(-0.500/0.500), Volt=11.9 (10.6)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.2, Input=  -0.1, Error=  -0.1, PIDTerms=-0.012/ 0.000/-0.000/-0.000, Output=-0.012(-0.500/0.500), Volt=11.5 (10.6)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  73.9, Input=  83.3, Error=  -9.3, PIDTerms=-0.373/ 0.000/ 0.204/ 0.000, Output=-0.169(-0.500/0.500), Volt=11.5 (10.6)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=  59.7, Error=   0.3, PIDTerms= 0.009/ 0.000/ 0.010/ 0.000, Output= 0.019(-0.500/0.500), Volt=12.0 (10.6)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.2, Input=  -0.2, Error=   0.0, PIDTerms= 0.005/ 0.000/ 0.000/-0.000, Output= 0.005(-0.500/0.500), Volt=12.0 (10.6)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  73.9, Input=  82.4, Error=  -8.5, PIDTerms=-0.339/ 0.000/ 0.133/ 0.000, Output=-0.206(-0.500/0.500), Volt=12.0 (10.6)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=  59.7, Error=   0.3, PIDTerms= 0.009/ 0.000/ 0.001/ 0.000, Output= 0.010(-0.500/0.500), Volt=12.0 (10.6)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.2, Input=  -0.2, Error=   0.1, PIDTerms= 0.010/ 0.000/ 0.000/-0.000, Output= 0.010(-0.500/0.500), Volt=11.9 (10.6)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  73.9, Input=  81.7, Error=  -7.8, PIDTerms=-0.311/ 0.000/ 0.095/ 0.000, Output=-0.217(-0.500/0.500), Volt=11.9 (10.6)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=  59.7, Error=   0.3, PIDTerms= 0.008/ 0.000/-0.004/ 0.000, Output= 0.004(-0.500/0.500), Volt=11.9 (10.6)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.2, Input=  -0.1, Error=  -0.1, PIDTerms=-0.008/ 0.000/-0.000/-0.000, Output=-0.008(-0.500/0.500), Volt=11.9 (10.6)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  73.9, Input=  80.6, Error=  -6.7, PIDTerms=-0.267/ 0.000/ 0.173/ 0.000, Output=-0.093(-0.500/0.500), Volt=11.9 (10.6)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=  59.8, Error=   0.2, PIDTerms= 0.007/ 0.000/-0.006/ 0.000, Output= 0.001(-0.500/0.500), Volt=11.9 (10.6)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.2, Input=  -0.3, Error=   0.1, PIDTerms= 0.012/ 0.000/ 0.000/-0.000, Output= 0.012(-0.500/0.500), Volt=12.1 (10.6)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  73.9, Input=  79.8, Error=  -5.9, PIDTerms=-0.235/ 0.000/ 0.109/ 0.000, Output=-0.126(-0.500/0.500), Volt=12.1 (10.6)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=  59.8, Error=   0.2, PIDTerms= 0.005/ 0.000/-0.004/ 0.000, Output= 0.001(-0.500/0.500), Volt=12.1 (10.6)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.2, Input=  -0.3, Error=   0.1, PIDTerms= 0.014/ 0.000/ 0.000/-0.000, Output= 0.014(-0.500/0.500), Volt=12.1 (10.6)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  73.9, Input=  79.2, Error=  -5.2, PIDTerms=-0.210/ 0.000/ 0.083/ 0.000, Output=-0.127(-0.500/0.500), Volt=12.1 (10.6)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=  59.9, Error=   0.1, PIDTerms= 0.002/ 0.000/-0.010/ 0.000, Output=-0.007(-0.500/0.500), Volt=12.1 (10.6)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.2, Input=  -0.2, Error=   0.0, PIDTerms= 0.004/ 0.000/-0.000/-0.000, Output= 0.004(-0.500/0.500), Volt=12.2 (10.6)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  73.9, Input=  78.2, Error=  -4.2, PIDTerms=-0.170/ 0.000/ 0.154/ 0.000, Output=-0.016(-0.500/0.500), Volt=12.2 (10.6)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=  59.9, Error=   0.1, PIDTerms= 0.002/ 0.000/-0.002/ 0.000, Output=-0.000(-0.500/0.500), Volt=12.2 (10.6)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.2, Input=  -0.3, Error=   0.1, PIDTerms= 0.013/ 0.000/ 0.000/-0.000, Output= 0.013(-0.500/0.500), Volt=12.1 (10.6)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  73.9, Input=  77.5, Error=  -3.6, PIDTerms=-0.144/ 0.000/ 0.084/ 0.000, Output=-0.060(-0.500/0.500), Volt=12.1 (10.6)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=  59.9, Error=   0.1, PIDTerms= 0.002/ 0.000/ 0.000/ 0.000, Output= 0.002(-0.500/0.500), Volt=12.2 (10.6)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.startCompetition_Warn: AUTO_MODE takes too long (0.141s)
+
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.2, Input=  -0.2, Error=   0.0, PIDTerms= 0.006/ 0.000/-0.000/-0.000, Output= 0.006(-0.500/0.500), Volt=12.1 (10.6)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  73.9, Input=  77.0, Error=  -3.1, PIDTerms=-0.122/ 0.000/ 0.015/ 0.000, Output=-0.107(-0.500/0.500), Volt=12.1 (10.6)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=  60.0, Input=  60.0, Error=   0.0, PIDTerms= 0.001/ 0.000/-0.000/ 0.000, Output= 0.001(-0.500/0.500), Volt=12.1 (10.6)
+GlobalTracer.Robot_Info: [6.877] TURN_TOWARDS_LOADING_STATION: xPos= -0.23,yPos= 73.35,heading=  59.8/   0.0,volts=12.1(10.6)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.2, Input=  -0.2, Error=   0.0, PIDTerms= 0.008/ 0.000/ 0.000/-0.000, Output= 0.000(-0.500/0.500), Volt=12.1 (10.6)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  73.4, Input=  73.8, Error=   0.0, PIDTerms= 0.007/ 0.000/ 0.567/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.1 (10.6)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  59.8, Error= -59.8, PIDTerms= 0.006/ 0.000/ 0.021/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.1 (10.6)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.2, Input=  -0.2, Error=   0.0, PIDTerms= 0.000/ 0.000/ 0.000/-0.000, Output= 0.000(-0.500/0.500), Volt=12.1 (10.6)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  73.4, Input=  73.4, Error=   0.0, PIDTerms= 0.000/ 0.000/ 0.000/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.1 (10.6)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  59.8, Error= -59.8, PIDTerms=-1.794/ 0.000/ 0.000/ 0.000, Output=-0.500(-0.500/0.500), Volt=10.8 (10.6)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.2, Input=  -0.2, Error=  -0.0, PIDTerms=-0.002/ 0.000/-0.000/-0.000, Output=-0.002(-0.500/0.500), Volt=10.8 (10.6)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  73.4, Input=  72.6, Error=   0.7, PIDTerms= 0.030/ 0.000/ 0.077/ 0.000, Output= 0.107(-0.500/0.500), Volt=10.8 (10.6)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  59.8, Error= -59.8, PIDTerms=-1.793/ 0.000/ 0.002/ 0.000, Output=-0.500(-0.500/0.500), Volt=10.4 (10.6)
+GlobalTracer.PixyVision_Info: null object(s) found
+GlobalTracer.startCompetition_Warn: AUTO_MODE takes too long (0.057s)
+
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.2, Input=  -0.1, Error=  -0.1, PIDTerms=-0.017/ 0.000/-0.000/-0.000, Output=-0.017(-0.500/0.500), Volt=10.6 (10.6)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  73.4, Input=  72.1, Error=   1.2, PIDTerms= 0.049/ 0.000/ 0.038/ 0.000, Output= 0.087(-0.500/0.500), Volt=10.9 (10.6)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  59.7, Error= -59.7, PIDTerms=-1.791/ 0.000/ 0.004/ 0.000, Output=-0.500(-0.500/0.500), Volt=10.9 (10.6)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.2, Input=  -0.3, Error=   0.0, PIDTerms= 0.007/ 0.000/ 0.000/-0.000, Output= 0.007(-0.500/0.500), Volt=10.9 (10.6)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  73.4, Input=  71.8, Error=   1.5, PIDTerms= 0.062/ 0.000/ 0.023/ 0.000, Output= 0.085(-0.500/0.500), Volt=11.0 (10.6)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  57.6, Error= -57.6, PIDTerms=-1.728/ 0.000/ 0.109/ 0.000, Output=-0.500(-0.500/0.500), Volt=11.0 (10.6)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.startCompetition_Warn: AUTO_MODE takes too long (0.053s)
+
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.2, Input=  -0.4, Error=   0.1, PIDTerms= 0.021/ 0.000/ 0.000/-0.000, Output= 0.021(-0.500/0.500), Volt=11.0 (10.6)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  73.4, Input=  71.2, Error=   2.2, PIDTerms= 0.087/ 0.000/ 0.046/ 0.000, Output= 0.133(-0.500/0.500), Volt=11.1 (10.6)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  53.0, Error= -53.0, PIDTerms=-1.591/ 0.000/ 0.252/ 0.000, Output=-0.500(-0.500/0.500), Volt=11.1 (10.6)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.2, Input=  -0.5, Error=   0.2, PIDTerms= 0.034/ 0.000/ 0.000/-0.000, Output= 0.034(-0.500/0.500), Volt=11.1 (10.6)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  73.4, Input=  71.1, Error=   2.2, PIDTerms= 0.089/ 0.000/ 0.005/ 0.000, Output= 0.094(-0.500/0.500), Volt=11.1 (10.6)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  48.5, Error= -48.5, PIDTerms=-1.456/ 0.000/ 0.343/ 0.000, Output=-0.500(-0.500/0.500), Volt=11.1 (10.6)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.2, Input=  -0.5, Error=   0.3, PIDTerms= 0.045/ 0.000/ 0.000/-0.000, Output= 0.045(-0.500/0.500), Volt=11.1 (10.6)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  73.4, Input=  71.3, Error=   2.1, PIDTerms= 0.083/ 0.000/-0.019/ 0.000, Output= 0.064(-0.500/0.500), Volt=11.2 (10.6)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  45.0, Error= -45.0, PIDTerms=-1.351/ 0.000/ 0.333/ 0.000, Output=-0.500(-0.500/0.500), Volt=11.2 (10.6)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.2, Input=  -0.7, Error=   0.4, PIDTerms= 0.063/ 0.000/ 0.000/-0.000, Output= 0.063(-0.500/0.500), Volt=11.2 (10.6)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  73.4, Input=  71.5, Error=   1.9, PIDTerms= 0.075/ 0.000/-0.017/ 0.000, Output= 0.057(-0.500/0.500), Volt=11.2 (10.6)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  39.4, Error= -39.4, PIDTerms=-1.181/ 0.000/ 0.349/ 0.000, Output=-0.500(-0.500/0.500), Volt=11.2 (10.6)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.2, Input=  -0.7, Error=   0.5, PIDTerms= 0.069/ 0.000/ 0.000/-0.000, Output= 0.069(-0.500/0.500), Volt=11.5 (10.6)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  73.4, Input=  71.7, Error=   1.7, PIDTerms= 0.068/ 0.000/-0.020/ 0.000, Output= 0.048(-0.500/0.500), Volt=11.5 (10.6)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  33.2, Error= -33.2, PIDTerms=-0.995/ 0.000/ 0.568/ 0.000, Output=-0.426(-0.500/0.500), Volt=11.5 (10.6)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.2, Input=  -0.7, Error=   0.4, PIDTerms= 0.066/ 0.000/-0.000/-0.000, Output= 0.066(-0.500/0.500), Volt=11.7 (10.6)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  73.4, Input=  71.9, Error=   1.5, PIDTerms= 0.059/ 0.000/-0.023/ 0.000, Output= 0.035(-0.500/0.500), Volt=11.7 (10.6)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  26.6, Error= -26.6, PIDTerms=-0.798/ 0.000/ 0.496/ 0.000, Output=-0.302(-0.500/0.500), Volt=11.7 (10.6)
+GlobalTracer.PixyVision_Info: 2 object(s) found
+GlobalTracer.PixyVision_Info: [0] sync=0xaa55, chksum=0x0091, sig=1, centerX= 62, centerY= 66, width= 13, height=  3, angle=  0
+GlobalTracer.PixyVision_Info: [1] sync=0xaa55, chksum=0x0095, sig=1, centerX=102, centerY= 26, width= 17, height=  3, angle=  0
+GlobalTracer.PixyVision_Info: Expected Target: distance=73.4, width=31.3, height=15.7
+GlobalTracer.PixyVision_Info: ===TargetRect===: x=56, y=25, w=55, h=43
+GlobalTracer.PixyVision_Info: ###TargetInfo###: xDist=-13.9, yDist=41.8, angle=-18.4
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.2, Input=  -0.7, Error=   0.5, PIDTerms= 0.069/ 0.000/ 0.000/-0.000, Output= 0.069(-0.500/0.500), Volt=11.9 (10.6)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  73.4, Input=  72.1, Error=   1.2, PIDTerms= 0.050/ 0.000/-0.018/ 0.000, Output= 0.032(-0.500/0.500), Volt=11.6 (10.6)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  22.0, Error= -22.0, PIDTerms=-0.660/ 0.000/ 0.266/ 0.000, Output=-0.394(-0.500/0.500), Volt=11.6 (10.6)
+GlobalTracer.startCompetition_Warn: AUTO_MODE takes too long (0.068s)
+
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.2, Input=  -0.7, Error=   0.4, PIDTerms= 0.064/ 0.000/-0.000/-0.000, Output= 0.064(-0.500/0.500), Volt=11.7 (10.6)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  73.4, Input=  72.3, Error=   1.0, PIDTerms= 0.042/ 0.000/-0.013/ 0.000, Output= 0.029(-0.500/0.500), Volt=11.7 (10.6)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  13.0, Error= -13.0, PIDTerms=-0.391/ 0.000/ 0.441/ 0.000, Output= 0.050(-0.500/0.500), Volt=11.7 (10.6)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.startCompetition_Warn: AUTO_MODE takes too long (0.057s)
+
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.2, Input=  -0.5, Error=   0.2, PIDTerms= 0.037/ 0.000/-0.000/-0.000, Output= 0.037(-0.500/0.500), Volt=11.7 (10.6)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target=  73.4, Input=  72.6, Error=   0.7, PIDTerms= 0.030/ 0.000/-0.020/ 0.000, Output= 0.009(-0.500/0.500), Volt=11.3 (10.6)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   4.6, Error=  -4.6, PIDTerms=-0.138/ 0.000/ 0.424/ 0.000, Output= 0.287(-0.500/0.500), Volt=11.3 (10.6)
+GlobalTracer.startCompetition_Warn: AUTO_MODE takes too long (0.052s)
+
+GlobalTracer.Robot_Info: [7.538] MOVE_TOWARDS_LOADING_STATION: xPos= -0.04,yPos= 72.92,heading=  -7.1/   0.0,volts=12.1(10.6)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.2, Error=   0.0, PIDTerms= 0.001/ 0.000/-0.000/-0.000, Output= 0.000(-0.500/0.500), Volt=12.1 (10.6)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input=  72.8, Error= 320.0, PIDTerms= 0.023/ 0.000/-0.012/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.1 (10.6)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -3.3, Error=   7.1, PIDTerms= 0.098/ 0.000/ 0.409/ 0.000, Output= 0.000(-0.500/0.500), Volt=12.1 (10.6)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.000/ 0.000/ 0.000/-0.000, Output= 0.000(-0.500/0.500), Volt=11.1 (10.6)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input=  72.9, Error= 320.0, PIDTerms=12.800/ 0.000/ 0.000/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.1 (10.6)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -7.1, Error=   7.1, PIDTerms= 0.213/ 0.000/ 0.000/ 0.000, Output= 0.213(-0.500/0.500), Volt=11.1 (10.6)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=   0.0, Error=  -0.1, PIDTerms=-0.009/ 0.000/-0.000/-0.000, Output=-0.009(-0.500/0.500), Volt=10.4 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input=  73.0, Error= 319.9, PIDTerms=12.798/ 0.000/-0.006/ 0.000, Output= 0.500(-0.500/0.500), Volt=10.4 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -6.7, Error=   6.7, PIDTerms= 0.200/ 0.000/-0.033/ 0.000, Output= 0.167(-0.500/0.500), Volt=10.4 (10.4)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.000/ 0.000/ 0.000/-0.000, Output= 0.000(-0.500/0.500), Volt=10.5 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input=  73.3, Error= 319.6, PIDTerms=12.784/ 0.000/-0.044/ 0.000, Output= 0.500(-0.500/0.500), Volt=10.5 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -6.1, Error=   6.1, PIDTerms= 0.182/ 0.000/-0.061/ 0.000, Output= 0.121(-0.500/0.500), Volt=10.5 (10.4)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.1, Error=   0.0, PIDTerms= 0.002/ 0.000/ 0.000/-0.000, Output= 0.002(-0.500/0.500), Volt=10.5 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input=  74.1, Error= 318.8, PIDTerms=12.753/ 0.000/-0.074/ 0.000, Output= 0.500(-0.500/0.500), Volt=10.5 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -5.4, Error=   5.4, PIDTerms= 0.161/ 0.000/-0.049/ 0.000, Output= 0.112(-0.500/0.500), Volt=10.7 (10.4)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=  -0.0, PIDTerms=-0.002/ 0.000/-0.000/-0.000, Output=-0.002(-0.500/0.500), Volt=10.8 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input=  74.8, Error= 318.1, PIDTerms=12.724/ 0.000/-0.074/ 0.000, Output= 0.500(-0.500/0.500), Volt=10.9 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -4.1, Error=   4.1, PIDTerms= 0.123/ 0.000/-0.097/ 0.000, Output= 0.026(-0.500/0.500), Volt=10.9 (10.4)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.startCompetition_Warn: AUTO_MODE takes too long (0.099s)
+
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.2, Error=   0.2, PIDTerms= 0.027/ 0.000/ 0.000/-0.000, Output= 0.027(-0.500/0.500), Volt=11.0 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input=  75.7, Error= 317.3, PIDTerms=12.690/ 0.000/-0.035/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.0 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -3.2, Error=   3.2, PIDTerms= 0.096/ 0.000/-0.029/ 0.000, Output= 0.067(-0.500/0.500), Volt=11.0 (10.4)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.1, Error=   0.0, PIDTerms= 0.004/ 0.000/-0.000/-0.000, Output= 0.004(-0.500/0.500), Volt=11.0 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input=  78.4, Error= 314.5, PIDTerms=12.581/ 0.000/-0.194/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.0 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -2.1, Error=   2.1, PIDTerms= 0.062/ 0.000/-0.060/ 0.000, Output= 0.002(-0.500/0.500), Volt=11.0 (10.4)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.startCompetition_Warn: AUTO_MODE takes too long (0.066s)
+
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.3, Error=   0.2, PIDTerms= 0.032/ 0.000/ 0.000/-0.000, Output= 0.032(-0.500/0.500), Volt=11.2 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input=  80.6, Error= 312.3, PIDTerms=12.494/ 0.000/-0.166/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.2 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -1.9, Error=   1.9, PIDTerms= 0.057/ 0.000/-0.010/ 0.000, Output= 0.047(-0.500/0.500), Volt=11.2 (10.4)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.1, Error=   0.1, PIDTerms= 0.013/ 0.000/-0.000/-0.000, Output= 0.013(-0.500/0.500), Volt=11.2 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input=  83.5, Error= 309.4, PIDTerms=12.375/ 0.000/-0.249/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.2 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -1.6, Error=   1.6, PIDTerms= 0.047/ 0.000/-0.021/ 0.000, Output= 0.026(-0.500/0.500), Volt=11.2 (10.4)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.startCompetition_Warn: AUTO_MODE takes too long (0.064s)
+
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=   0.1, Error=  -0.1, PIDTerms=-0.022/ 0.000/-0.000/-0.000, Output=-0.022(-0.500/0.500), Volt=11.1 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input=  84.8, Error= 308.1, PIDTerms=12.325/ 0.000/-0.092/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.1 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -1.5, Error=   1.5, PIDTerms= 0.045/ 0.000/-0.003/ 0.000, Output= 0.042(-0.500/0.500), Volt=11.1 (10.4)
+GlobalTracer.startCompetition_Warn: AUTO_MODE takes too long (0.051s)
+
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.4, Error=   0.3, PIDTerms= 0.049/ 0.000/ 0.000/-0.000, Output= 0.049(-0.500/0.500), Volt=11.1 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input=  88.5, Error= 304.4, PIDTerms=12.176/ 0.000/-0.296/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.3 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -1.2, Error=   1.2, PIDTerms= 0.037/ 0.000/-0.017/ 0.000, Output= 0.019(-0.500/0.500), Volt=11.3 (10.4)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.startCompetition_Warn: AUTO_MODE takes too long (0.056s)
+
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.2, Error=   0.1, PIDTerms= 0.017/ 0.000/-0.000/-0.000, Output= 0.017(-0.500/0.500), Volt=11.3 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input=  91.1, Error= 301.8, PIDTerms=12.073/ 0.000/-0.163/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.3 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -1.2, Error=   1.2, PIDTerms= 0.036/ 0.000/-0.001/ 0.000, Output= 0.034(-0.500/0.500), Volt=11.3 (10.4)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.1, Error=   0.1, PIDTerms= 0.014/ 0.000/-0.000/-0.000, Output= 0.014(-0.500/0.500), Volt=11.3 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input=  94.8, Error= 298.1, PIDTerms=11.924/ 0.000/-0.268/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.3 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.9, Error=   0.9, PIDTerms= 0.028/ 0.000/-0.014/ 0.000, Output= 0.014(-0.500/0.500), Volt=11.3 (10.4)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.1, Error=   0.1, PIDTerms= 0.013/ 0.000/-0.000/-0.000, Output= 0.013(-0.500/0.500), Volt=11.3 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input=  97.4, Error= 295.5, PIDTerms=11.821/ 0.000/-0.312/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.3 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.8, Error=   0.8, PIDTerms= 0.025/ 0.000/-0.009/ 0.000, Output= 0.016(-0.500/0.500), Volt=11.3 (10.4)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.startCompetition_Warn: AUTO_MODE takes too long (0.063s)
+
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.1, Error=   0.1, PIDTerms= 0.016/ 0.000/ 0.000/-0.000, Output= 0.016(-0.500/0.500), Volt=11.3 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input=  99.4, Error= 293.5, PIDTerms=11.742/ 0.000/-0.151/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.3 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.8, Error=   0.8, PIDTerms= 0.023/ 0.000/-0.003/ 0.000, Output= 0.020(-0.500/0.500), Volt=11.3 (10.4)
+GlobalTracer.startCompetition_Warn: AUTO_MODE takes too long (0.062s)
+
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.4, Error=   0.4, PIDTerms= 0.061/ 0.000/ 0.000/-0.000, Output= 0.061(-0.500/0.500), Volt=11.3 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 103.8, Error= 289.1, PIDTerms=11.564/ 0.000/-0.254/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.5 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.6, Error=   0.6, PIDTerms= 0.019/ 0.000/-0.006/ 0.000, Output= 0.012(-0.500/0.500), Volt=11.5 (10.4)
+GlobalTracer.PixyVision_Info: 2 object(s) found
+GlobalTracer.PixyVision_Info: [0] sync=0xaa55, chksum=0x01a6, sig=1, centerX=198, centerY=150, width= 69, height=  4, angle=  0
+GlobalTracer.PixyVision_Info: [1] sync=0xaa55, chksum=0x00e6, sig=1, centerX=202, centerY= 18, width=  7, height=  2, angle=  0
+GlobalTracer.PixyVision_Info: Expected Target: distance=256.5, width=9.0, height=4.5
+GlobalTracer.PixyVision_Info: ===TargetRect===: x=164, y=17, w=69, h=135
+GlobalTracer.PixyVision_Info: ###TargetInfo###: xDist=5.6, yDist=33.3, angle=9.5
+GlobalTracer.startCompetition_Warn: AUTO_MODE takes too long (0.096s)
+
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.5, Error=   0.4, PIDTerms= 0.064/ 0.000/ 0.000/-0.000, Output= 0.064(-0.500/0.500), Volt=11.5 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 108.1, Error= 284.9, PIDTerms=11.395/ 0.000/-0.190/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.5 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.6, Error=   0.6, PIDTerms= 0.017/ 0.000/-0.002/ 0.000, Output= 0.014(-0.500/0.500), Volt=11.5 (10.4)
+GlobalTracer.startCompetition_Warn: AUTO_MODE takes too long (0.058s)
+
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=   0.3, Error=  -0.3, PIDTerms=-0.050/ 0.000/-0.000/-0.000, Output=-0.050(-0.500/0.500), Volt=11.6 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 114.7, Error= 278.2, PIDTerms=11.130/ 0.000/-0.455/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.6 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.5, Error=   0.5, PIDTerms= 0.014/ 0.000/-0.004/ 0.000, Output= 0.011(-0.500/0.500), Volt=11.6 (10.4)
+GlobalTracer.PixyVision_Info: 3 object(s) found
+GlobalTracer.PixyVision_Info: [0] sync=0xaa55, chksum=0x01eb, sig=1, centerX=211, centerY=167, width=104, height=  8, angle=  0
+GlobalTracer.PixyVision_Info: [1] sync=0xaa55, chksum=0x01ca, sig=1, centerX=274, centerY=161, width= 20, height=  2, angle=  0
+GlobalTracer.PixyVision_Info: [2] sync=0xaa55, chksum=0x00e6, sig=1, centerX=202, centerY= 16, width=  9, height=  2, angle=  0
+GlobalTracer.PixyVision_Info: Expected Target: distance=256.7, width=9.0, height=4.5
+GlobalTracer.PixyVision_Info: ***TargetRect***: [0,1] x=159, y=160, w=125, h=11
+GlobalTracer.PixyVision_Info: ###TargetInfo###: xDist=4.9, yDist=18.4, angle=15.0
+GlobalTracer.startCompetition_Warn: AUTO_MODE takes too long (0.082s)
+
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=   0.1, Error=  -0.1, PIDTerms=-0.015/ 0.000/ 0.000/-0.000, Output=-0.015(-0.500/0.500), Volt=11.5 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 118.9, Error= 274.1, PIDTerms=10.962/ 0.000/-0.184/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.5 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.4, Error=   0.4, PIDTerms= 0.011/ 0.000/-0.003/ 0.000, Output= 0.008(-0.500/0.500), Volt=11.5 (10.4)
+GlobalTracer.startCompetition_Warn: AUTO_MODE takes too long (0.056s)
+
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.1, Error=   0.0, PIDTerms= 0.003/ 0.000/ 0.000/-0.000, Output= 0.003(-0.500/0.500), Volt=11.6 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 125.2, Error= 267.7, PIDTerms=10.709/ 0.000/-0.401/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.6 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.3, Error=   0.3, PIDTerms= 0.008/ 0.000/-0.005/ 0.000, Output= 0.004(-0.500/0.500), Volt=11.6 (10.4)
+GlobalTracer.PixyVision_Info: 4 object(s) found
+GlobalTracer.PixyVision_Info: [0] sync=0xaa55, chksum=0x0202, sig=1, centerX=234, centerY=194, width= 76, height=  9, angle=  0
+GlobalTracer.PixyVision_Info: [1] sync=0xaa55, chksum=0x00eb, sig=1, centerX=203, centerY= 14, width= 14, height=  3, angle=  0
+GlobalTracer.PixyVision_Info: [2] sync=0xaa55, chksum=0x01ea, sig=1, centerX=291, centerY=185, width= 11, height=  2, angle=  0
+GlobalTracer.PixyVision_Info: [3] sync=0xaa55, chksum=0x01df, sig=1, centerX=280, centerY=188, width=  8, height=  2, angle=  0
+GlobalTracer.PixyVision_Info: Expected Target: distance=256.6, width=9.0, height=4.5
+GlobalTracer.PixyVision_Info: ***TargetRect***: [0,2] x=196, y=184, w=101, h=15
+GlobalTracer.PixyVision_Info: ###TargetInfo###: xDist=8.6, yDist=22.8, angle=20.6
+GlobalTracer.startCompetition_Warn: AUTO_MODE takes too long (0.056s)
+
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.1, Error=   0.1, PIDTerms= 0.010/ 0.000/ 0.000/-0.000, Output= 0.010(-0.500/0.500), Volt=11.7 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 130.0, Error= 262.9, PIDTerms=10.516/ 0.000/-0.385/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.7 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.2, Error=   0.2, PIDTerms= 0.006/ 0.000/-0.005/ 0.000, Output= 0.001(-0.500/0.500), Volt=11.7 (10.4)
+GlobalTracer.startCompetition_Warn: AUTO_MODE takes too long (0.069s)
+
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.5, Error=   0.4, PIDTerms= 0.065/ 0.000/ 0.000/-0.000, Output= 0.065(-0.500/0.500), Volt=11.6 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 134.5, Error= 258.4, PIDTerms=10.336/ 0.000/-0.261/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.6 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.1, Error=   0.1, PIDTerms= 0.003/ 0.000/-0.005/ 0.000, Output=-0.002(-0.500/0.500), Volt=11.6 (10.4)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.1, Error=   0.1, PIDTerms= 0.009/ 0.000/-0.000/-0.000, Output= 0.009(-0.500/0.500), Volt=11.7 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 139.9, Error= 253.0, PIDTerms=10.120/ 0.000/-0.436/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.7 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.1, Error=   0.1, PIDTerms= 0.003/ 0.000/ 0.001/ 0.000, Output= 0.005(-0.500/0.500), Volt=11.7 (10.4)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.002/ 0.000/-0.000/-0.000, Output= 0.002(-0.500/0.500), Volt=11.7 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 143.3, Error= 249.6, PIDTerms= 9.985/ 0.000/-0.270/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.7 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.1, Error=   0.1, PIDTerms= 0.004/ 0.000/ 0.001/ 0.000, Output= 0.004(-0.500/0.500), Volt=11.7 (10.4)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=   0.3, Error=  -0.4, PIDTerms=-0.055/ 0.000/-0.000/-0.000, Output=-0.055(-0.500/0.500), Volt=11.7 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 147.1, Error= 245.8, PIDTerms= 9.832/ 0.000/-0.344/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.7 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.1, Error=   0.1, PIDTerms= 0.004/ 0.000/ 0.001/ 0.000, Output= 0.005(-0.500/0.500), Volt=11.7 (10.4)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.4, Error=   0.4, PIDTerms= 0.055/ 0.000/ 0.000/-0.000, Output= 0.055(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 151.4, Error= 241.5, PIDTerms= 9.659/ 0.000/-0.393/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.1, Error=   0.1, PIDTerms= 0.004/ 0.000/ 0.001/ 0.000, Output= 0.005(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.startCompetition_Warn: AUTO_MODE takes too long (0.051s)
+
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.1, Error=   0.0, PIDTerms= 0.007/ 0.000/-0.000/-0.000, Output= 0.007(-0.500/0.500), Volt=11.7 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 154.4, Error= 238.5, PIDTerms= 9.539/ 0.000/-0.246/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.7 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.1, Error=   0.1, PIDTerms= 0.003/ 0.000/-0.002/ 0.000, Output= 0.001(-0.500/0.500), Volt=11.6 (10.4)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=  -0.0, PIDTerms=-0.002/ 0.000/-0.000/-0.000, Output=-0.002(-0.500/0.500), Volt=11.7 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 158.8, Error= 234.1, PIDTerms= 9.365/ 0.000/-0.400/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.7 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.001/ 0.000/-0.005/ 0.000, Output=-0.004(-0.500/0.500), Volt=11.7 (10.4)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.startCompetition_Warn: AUTO_MODE takes too long (0.054s)
+
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=   0.0, Error=  -0.0, PIDTerms=-0.006/ 0.000/-0.000/-0.000, Output=-0.006(-0.500/0.500), Volt=11.7 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 162.3, Error= 230.6, PIDTerms= 9.225/ 0.000/-0.288/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.7 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.0, Error=  -0.0, PIDTerms=-0.001/ 0.000/-0.003/ 0.000, Output=-0.004(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=   0.0, Error=  -0.1, PIDTerms=-0.008/ 0.000/-0.000/-0.000, Output=-0.008(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 166.7, Error= 226.2, PIDTerms= 9.049/ 0.000/-0.338/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.1, Error=  -0.1, PIDTerms=-0.002/ 0.000/-0.002/ 0.000, Output=-0.003(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.4, Error=   0.4, PIDTerms= 0.053/ 0.000/ 0.000/-0.000, Output= 0.053(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 170.7, Error= 222.2, PIDTerms= 8.889/ 0.000/-0.390/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.0, Error=  -0.0, PIDTerms=-0.001/ 0.000/ 0.002/ 0.000, Output= 0.002(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.startCompetition_Warn: AUTO_MODE takes too long (0.052s)
+
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.4, Error=   0.3, PIDTerms= 0.051/ 0.000/-0.000/-0.000, Output= 0.051(-0.500/0.500), Volt=11.7 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 174.3, Error= 218.6, PIDTerms= 8.746/ 0.000/-0.318/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.7 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.0, Error=   0.0, PIDTerms= 0.000/ 0.000/ 0.001/ 0.000, Output= 0.001(-0.500/0.500), Volt=11.7 (10.4)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=   0.0, Error=  -0.1, PIDTerms=-0.010/ 0.000/-0.000/-0.000, Output=-0.010(-0.500/0.500), Volt=11.7 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 178.3, Error= 214.6, PIDTerms= 8.586/ 0.000/-0.314/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.7 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.001/ 0.000/ 0.002/ 0.000, Output= 0.003(-0.500/0.500), Volt=11.7 (10.4)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=   0.1, Error=  -0.1, PIDTerms=-0.018/ 0.000/-0.000/-0.000, Output=-0.018(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 181.9, Error= 211.0, PIDTerms= 8.442/ 0.000/-0.337/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.1, Error=   0.1, PIDTerms= 0.002/ 0.000/ 0.004/ 0.000, Output= 0.006(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.startCompetition_Warn: AUTO_MODE takes too long (0.051s)
+
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=   0.5, Error=  -0.5, PIDTerms=-0.079/ 0.000/-0.000/-0.000, Output=-0.079(-0.500/0.500), Volt=11.7 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 185.9, Error= 207.0, PIDTerms= 8.280/ 0.000/-0.372/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.7 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.1, Error=   0.1, PIDTerms= 0.003/ 0.000/ 0.001/ 0.000, Output= 0.003(-0.500/0.500), Volt=11.7 (10.4)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=   0.1, Error=  -0.1, PIDTerms=-0.019/ 0.000/ 0.000/-0.000, Output=-0.019(-0.500/0.500), Volt=11.6 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 190.9, Error= 202.0, PIDTerms= 8.082/ 0.000/-0.459/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.6 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.1, Error=   0.1, PIDTerms= 0.002/ 0.000/-0.001/ 0.000, Output= 0.001(-0.500/0.500), Volt=11.6 (10.4)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=   0.0, Error=  -0.1, PIDTerms=-0.010/ 0.000/ 0.000/-0.000, Output=-0.010(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 194.5, Error= 198.4, PIDTerms= 7.936/ 0.000/-0.293/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.1, Error=   0.1, PIDTerms= 0.002/ 0.000/-0.001/ 0.000, Output= 0.001(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.startCompetition_Warn: AUTO_MODE takes too long (0.057s)
+
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=  -0.0, PIDTerms=-0.005/ 0.000/ 0.000/-0.000, Output=-0.005(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 198.2, Error= 194.8, PIDTerms= 7.790/ 0.000/-0.295/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.1, Error=   0.1, PIDTerms= 0.002/ 0.000/-0.001/ 0.000, Output= 0.001(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=  -0.0, PIDTerms=-0.001/ 0.000/ 0.000/-0.000, Output=-0.001(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 201.8, Error= 191.1, PIDTerms= 7.644/ 0.000/-0.278/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.000/ 0.000/-0.002/ 0.000, Output=-0.002(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.startCompetition_Warn: AUTO_MODE takes too long (0.095s)
+
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.1, Error=   0.0, PIDTerms= 0.003/ 0.000/ 0.000/-0.000, Output= 0.003(-0.500/0.500), Volt=11.7 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 205.5, Error= 187.4, PIDTerms= 7.498/ 0.000/-0.167/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.7 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.0, Error=  -0.0, PIDTerms=-0.001/ 0.000/-0.001/ 0.000, Output=-0.002(-0.500/0.500), Volt=11.7 (10.4)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.1, Error=   0.0, PIDTerms= 0.006/ 0.000/ 0.000/-0.000, Output= 0.006(-0.500/0.500), Volt=11.7 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 214.6, Error= 178.3, PIDTerms= 7.131/ 0.000/-0.909/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.7 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.1, Error=  -0.1, PIDTerms=-0.003/ 0.000/-0.004/ 0.000, Output=-0.007(-0.500/0.500), Volt=11.7 (10.4)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.1, Error=   0.0, PIDTerms= 0.006/ 0.000/ 0.000/-0.000, Output= 0.006(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 218.3, Error= 174.6, PIDTerms= 6.985/ 0.000/-0.365/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.1, Error=  -0.1, PIDTerms=-0.004/ 0.000/-0.002/ 0.000, Output=-0.006(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.1, Error=   0.0, PIDTerms= 0.006/ 0.000/ 0.000/-0.000, Output= 0.006(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 222.0, Error= 170.9, PIDTerms= 6.838/ 0.000/-0.304/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.2, Error=  -0.2, PIDTerms=-0.005/ 0.000/-0.002/ 0.000, Output=-0.007(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.1, Error=   0.0, PIDTerms= 0.007/ 0.000/ 0.000/-0.000, Output= 0.007(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 225.6, Error= 167.3, PIDTerms= 6.691/ 0.000/-0.357/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.2, Error=  -0.2, PIDTerms=-0.005/ 0.000/ 0.000/ 0.000, Output=-0.005(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.1, Error=   0.1, PIDTerms= 0.009/ 0.000/ 0.000/-0.000, Output= 0.009(-0.500/0.500), Volt=11.7 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 229.3, Error= 163.6, PIDTerms= 6.543/ 0.000/-0.361/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.7 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.2, Error=  -0.2, PIDTerms=-0.005/ 0.000/-0.001/ 0.000, Output=-0.006(-0.500/0.500), Volt=11.7 (10.4)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.1, Error=   0.0, PIDTerms= 0.006/ 0.000/-0.000/-0.000, Output= 0.006(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 233.0, Error= 159.9, PIDTerms= 6.395/ 0.000/-0.335/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.2, Error=  -0.2, PIDTerms=-0.006/ 0.000/-0.001/ 0.000, Output=-0.007(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.1, Error=   0.0, PIDTerms= 0.005/ 0.000/-0.000/-0.000, Output= 0.005(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 236.7, Error= 156.2, PIDTerms= 6.247/ 0.000/-0.365/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.2, Error=  -0.2, PIDTerms=-0.006/ 0.000/ 0.000/ 0.000, Output=-0.006(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.1, Error=   0.0, PIDTerms= 0.005/ 0.000/-0.000/-0.000, Output= 0.005(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 240.5, Error= 152.5, PIDTerms= 6.098/ 0.000/-0.354/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.2, Error=  -0.2, PIDTerms=-0.005/ 0.000/ 0.001/ 0.000, Output=-0.004(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.001/ 0.000/-0.000/-0.000, Output= 0.001(-0.500/0.500), Volt=11.7 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 244.2, Error= 148.7, PIDTerms= 5.949/ 0.000/-0.331/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.7 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.2, Error=  -0.2, PIDTerms=-0.005/ 0.000/ 0.001/ 0.000, Output=-0.003(-0.500/0.500), Volt=11.7 (10.4)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.002/ 0.000/ 0.000/-0.000, Output= 0.002(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 247.9, Error= 145.0, PIDTerms= 5.800/ 0.000/-0.290/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.1, Error=  -0.1, PIDTerms=-0.004/ 0.000/ 0.001/ 0.000, Output=-0.004(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.startCompetition_Warn: AUTO_MODE takes too long (0.052s)
+
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.1, Error=   0.0, PIDTerms= 0.003/ 0.000/ 0.000/-0.000, Output= 0.003(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 252.6, Error= 140.3, PIDTerms= 5.614/ 0.000/-0.430/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.1, Error=  -0.1, PIDTerms=-0.004/ 0.000/ 0.001/ 0.000, Output=-0.003(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.1, Error=   0.0, PIDTerms= 0.003/ 0.000/-0.000/-0.000, Output= 0.003(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 257.2, Error= 135.7, PIDTerms= 5.427/ 0.000/-0.422/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.1, Error=  -0.1, PIDTerms=-0.003/ 0.000/ 0.001/ 0.000, Output=-0.002(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.001/ 0.000/-0.000/-0.000, Output= 0.001(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 261.0, Error= 131.9, PIDTerms= 5.277/ 0.000/-0.366/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.1, Error=  -0.1, PIDTerms=-0.002/ 0.000/ 0.002/ 0.000, Output=-0.000(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=  -0.0, PIDTerms=-0.004/ 0.000/-0.000/-0.000, Output=-0.004(-0.500/0.500), Volt=11.7 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 264.7, Error= 128.2, PIDTerms= 5.127/ 0.000/-0.292/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.7 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.1, Error=  -0.1, PIDTerms=-0.004/ 0.000/-0.002/ 0.000, Output=-0.006(-0.500/0.500), Volt=11.7 (10.4)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.startCompetition_Warn: AUTO_MODE takes too long (0.051s)
+
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=  -0.0, PIDTerms=-0.005/ 0.000/-0.000/-0.000, Output=-0.005(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 268.5, Error= 124.4, PIDTerms= 4.978/ 0.000/-0.339/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.2, Error=  -0.2, PIDTerms=-0.005/ 0.000/-0.002/ 0.000, Output=-0.007(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=   0.0, Error=  -0.0, PIDTerms=-0.006/ 0.000/-0.000/-0.000, Output=-0.006(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 272.2, Error= 120.7, PIDTerms= 4.828/ 0.000/-0.391/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.2, Error=  -0.2, PIDTerms=-0.005/ 0.000/-0.002/ 0.000, Output=-0.008(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=  -0.0, PIDTerms=-0.005/ 0.000/ 0.000/-0.000, Output=-0.005(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 276.0, Error= 116.9, PIDTerms= 4.677/ 0.000/-0.378/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.2, Error=  -0.2, PIDTerms=-0.005/ 0.000/ 0.000/ 0.000, Output=-0.005(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.PixyVision_Info: 2 object(s) found
+GlobalTracer.PixyVision_Info: [0] sync=0xaa55, chksum=0x013d, sig=1, centerX=281, centerY= 27, width=  5, height=  3, angle=  0
+GlobalTracer.PixyVision_Info: [1] sync=0xaa55, chksum=0x014b, sig=1, centerX=287, centerY= 35, width=  5, height=  3, angle=  0
+GlobalTracer.PixyVision_Info: Expected Target: distance=181.4, width=12.7, height=6.3
+GlobalTracer.PixyVision_Info: ===TargetRect===: x=279, y=26, w=11, h=11
+GlobalTracer.PixyVision_Info: ###TargetInfo###: xDist=113.2, yDist=209.1, angle=28.4
+GlobalTracer.startCompetition_Warn: AUTO_MODE takes too long (0.238s)
+
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=  -0.0, PIDTerms=-0.004/ 0.000/ 0.000/-0.000, Output=-0.004(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 279.8, Error= 113.2, PIDTerms= 4.527/ 0.000/-0.064/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.2, Error=  -0.2, PIDTerms=-0.005/ 0.000/ 0.000/ 0.000, Output=-0.004(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.PixyVision_Info: null object(s) found
+GlobalTracer.startCompetition_Warn: AUTO_MODE takes too long (0.056s)
+
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=   0.4, Error=  -0.4, PIDTerms=-0.063/ 0.000/-0.000/-0.000, Output=-0.063(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 301.0, Error=  91.9, PIDTerms= 3.677/ 0.000/-1.454/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.001/ 0.000/ 0.009/ 0.000, Output= 0.009(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.startCompetition_Warn: AUTO_MODE takes too long (0.061s)
+
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.001/ 0.000/ 0.000/-0.000, Output= 0.001(-0.500/0.500), Volt=12.0 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 306.2, Error=  86.7, PIDTerms= 3.468/ 0.000/-0.414/ 0.000, Output= 0.500(-0.500/0.500), Volt=12.0 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.1, Error=   0.1, PIDTerms= 0.002/ 0.000/ 0.002/ 0.000, Output= 0.003(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.PixyVision_Info: null object(s) found
+GlobalTracer.startCompetition_Warn: AUTO_MODE takes too long (0.059s)
+
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.1, Error=   0.1, PIDTerms= 0.009/ 0.000/ 0.000/-0.000, Output= 0.009(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 311.9, Error=  81.0, PIDTerms= 3.240/ 0.000/-0.327/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.1, Error=   0.1, PIDTerms= 0.003/ 0.000/ 0.002/ 0.000, Output= 0.004(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.startCompetition_Warn: AUTO_MODE takes too long (0.055s)
+
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.5, Error=   0.5, PIDTerms= 0.069/ 0.000/ 0.000/-0.000, Output= 0.069(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 317.1, Error=  75.8, PIDTerms= 3.033/ 0.000/-0.433/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.1, Error=   0.1, PIDTerms= 0.002/ 0.000/-0.003/ 0.000, Output=-0.001(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.1, Error=   0.0, PIDTerms= 0.005/ 0.000/-0.000/-0.000, Output= 0.005(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 321.4, Error=  71.6, PIDTerms= 2.862/ 0.000/-0.404/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.0, Error=   0.0, PIDTerms= 0.000/ 0.000/-0.004/ 0.000, Output=-0.004(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.PixyVision_Info: null object(s) found
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.000/ 0.000/-0.000/-0.000, Output= 0.000(-0.500/0.500), Volt=12.0 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 325.2, Error=  67.7, PIDTerms= 2.709/ 0.000/-0.468/ 0.000, Output= 0.500(-0.500/0.500), Volt=12.0 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.0, Error=  -0.0, PIDTerms=-0.001/ 0.000/-0.003/ 0.000, Output=-0.004(-0.500/0.500), Volt=12.0 (10.4)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=  -0.0, PIDTerms=-0.002/ 0.000/-0.000/-0.000, Output=-0.002(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 327.1, Error=  65.8, PIDTerms= 2.634/ 0.000/-0.318/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.1, Error=  -0.1, PIDTerms=-0.002/ 0.000/-0.004/ 0.000, Output=-0.006(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.4, Error=   0.4, PIDTerms= 0.059/ 0.000/ 0.000/-0.000, Output= 0.059(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 330.4, Error=  62.5, PIDTerms= 2.501/ 0.000/-0.616/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.1, Error=  -0.1, PIDTerms=-0.003/ 0.000/-0.004/ 0.000, Output=-0.007(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.4, Error=   0.4, PIDTerms= 0.061/ 0.000/ 0.000/-0.000, Output= 0.061(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 332.3, Error=  60.7, PIDTerms= 2.426/ 0.000/-0.384/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.1, Error=  -0.1, PIDTerms=-0.003/ 0.000/-0.002/ 0.000, Output=-0.005(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.000/ 0.000/-0.000/-0.000, Output= 0.000(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 332.7, Error=  60.2, PIDTerms= 2.407/ 0.000/-0.103/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.1, Error=  -0.1, PIDTerms=-0.003/ 0.000/ 0.000/ 0.000, Output=-0.003(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.PixyVision_Info: null object(s) found
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=   0.0, Error=  -0.0, PIDTerms=-0.006/ 0.000/-0.000/-0.000, Output=-0.006(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 334.6, Error=  58.3, PIDTerms= 2.331/ 0.000/-0.383/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.1, Error=  -0.1, PIDTerms=-0.003/ 0.000/ 0.000/ 0.000, Output=-0.003(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=   0.0, Error=  -0.1, PIDTerms=-0.010/ 0.000/-0.000/-0.000, Output=-0.010(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 336.5, Error=  56.4, PIDTerms= 2.255/ 0.000/-0.425/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.1, Error=  -0.1, PIDTerms=-0.003/ 0.000/ 0.000/ 0.000, Output=-0.003(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=   0.0, Error=  -0.1, PIDTerms=-0.011/ 0.000/-0.000/-0.000, Output=-0.011(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 338.4, Error=  54.5, PIDTerms= 2.180/ 0.000/-0.393/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.1, Error=  -0.1, PIDTerms=-0.003/ 0.000/ 0.000/ 0.000, Output=-0.003(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=   0.0, Error=  -0.1, PIDTerms=-0.012/ 0.000/-0.000/-0.000, Output=-0.012(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 340.3, Error=  52.6, PIDTerms= 2.104/ 0.000/-0.426/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.1, Error=  -0.1, PIDTerms=-0.003/ 0.000/-0.002/ 0.000, Output=-0.005(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=   0.0, Error=  -0.1, PIDTerms=-0.011/ 0.000/ 0.000/-0.000, Output=-0.011(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 342.2, Error=  50.7, PIDTerms= 2.028/ 0.000/-0.400/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.1, Error=  -0.1, PIDTerms=-0.004/ 0.000/-0.002/ 0.000, Output=-0.005(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.4, Error=   0.3, PIDTerms= 0.050/ 0.000/ 0.000/-0.000, Output= 0.050(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 343.6, Error=  49.3, PIDTerms= 1.971/ 0.000/-0.302/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.1, Error=  -0.1, PIDTerms=-0.004/ 0.000/ 0.000/ 0.000, Output=-0.004(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.PixyVision_Info: null object(s) found
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=   0.0, Error=  -0.1, PIDTerms=-0.012/ 0.000/-0.000/-0.000, Output=-0.012(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 344.1, Error=  48.8, PIDTerms= 1.951/ 0.000/-0.096/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.2, Error=  -0.2, PIDTerms=-0.005/ 0.000/-0.004/ 0.000, Output=-0.009(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=   0.0, Error=  -0.1, PIDTerms=-0.013/ 0.000/-0.000/-0.000, Output=-0.013(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 346.0, Error=  46.9, PIDTerms= 1.876/ 0.000/-0.550/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.2, Error=  -0.2, PIDTerms=-0.005/ 0.000/-0.002/ 0.000, Output=-0.007(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=   0.1, Error=  -0.1, PIDTerms=-0.015/ 0.000/-0.000/-0.000, Output=-0.015(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 347.9, Error=  45.0, PIDTerms= 1.800/ 0.000/-0.388/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.2, Error=  -0.2, PIDTerms=-0.005/ 0.000/ 0.000/ 0.000, Output=-0.005(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=   0.1, Error=  -0.1, PIDTerms=-0.015/ 0.000/ 0.000/-0.000, Output=-0.015(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 349.8, Error=  43.1, PIDTerms= 1.724/ 0.000/-0.407/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.2, Error=  -0.2, PIDTerms=-0.005/ 0.000/ 0.000/ 0.000, Output=-0.005(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=   0.1, Error=  -0.1, PIDTerms=-0.014/ 0.000/ 0.000/-0.000, Output=-0.014(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 351.7, Error=  41.2, PIDTerms= 1.649/ 0.000/-0.398/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.2, Error=  -0.2, PIDTerms=-0.005/ 0.000/-0.003/ 0.000, Output=-0.009(-0.500/0.500), Volt=11.8 (10.4)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=   0.0, Error=  -0.1, PIDTerms=-0.013/ 0.000/ 0.000/-0.000, Output=-0.013(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 353.6, Error=  39.3, PIDTerms= 1.573/ 0.000/-0.410/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.2, Error=  -0.2, PIDTerms=-0.005/ 0.000/ 0.002/ 0.000, Output=-0.003(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=   0.0, Error=  -0.1, PIDTerms=-0.011/ 0.000/ 0.000/-0.000, Output=-0.011(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 355.5, Error=  37.4, PIDTerms= 1.497/ 0.000/-0.365/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.2, Error=  -0.2, PIDTerms=-0.005/ 0.000/-0.001/ 0.000, Output=-0.007(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=   0.0, Error=  -0.1, PIDTerms=-0.010/ 0.000/ 0.000/-0.000, Output=-0.010(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 357.4, Error=  35.5, PIDTerms= 1.421/ 0.000/-0.391/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.2, Error=  -0.2, PIDTerms=-0.005/ 0.000/ 0.003/ 0.000, Output=-0.002(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=   0.0, Error=  -0.1, PIDTerms=-0.009/ 0.000/ 0.000/-0.000, Output=-0.009(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 359.3, Error=  33.6, PIDTerms= 1.345/ 0.000/-0.388/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.2, Error=  -0.2, PIDTerms=-0.005/ 0.000/ 0.000/ 0.000, Output=-0.005(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=   0.0, Error=  -0.1, PIDTerms=-0.011/ 0.000/-0.000/-0.000, Output=-0.011(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 361.2, Error=  31.7, PIDTerms= 1.269/ 0.000/-0.388/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.1, Error=  -0.1, PIDTerms=-0.004/ 0.000/ 0.003/ 0.000, Output=-0.001(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.startCompetition_Warn: AUTO_MODE takes too long (0.053s)
+
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.4, Error=   0.3, PIDTerms= 0.050/ 0.000/ 0.000/-0.000, Output= 0.050(-0.500/0.500), Volt=12.0 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 362.6, Error=  30.3, PIDTerms= 1.212/ 0.000/-0.117/ 0.000, Output= 0.500(-0.500/0.500), Volt=12.0 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.1, Error=  -0.1, PIDTerms=-0.004/ 0.000/ 0.001/ 0.000, Output=-0.002(-0.500/0.500), Volt=12.0 (10.4)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=   0.0, Error=  -0.1, PIDTerms=-0.008/ 0.000/-0.000/-0.000, Output=-0.008(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 366.9, Error=  26.0, PIDTerms= 1.042/ 0.000/-0.523/ 0.000, Output= 0.500(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.1, Error=  -0.1, PIDTerms=-0.002/ 0.000/ 0.006/ 0.000, Output= 0.004(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=   0.1, Error=  -0.1, PIDTerms=-0.014/ 0.000/-0.000/-0.000, Output=-0.014(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 370.7, Error=  22.2, PIDTerms= 0.889/ 0.000/-0.427/ 0.000, Output= 0.462(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.0, Error=  -0.0, PIDTerms=-0.000/ 0.000/ 0.004/ 0.000, Output= 0.004(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=   0.1, Error=  -0.1, PIDTerms=-0.016/ 0.000/-0.000/-0.000, Output=-0.016(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 373.5, Error=  19.4, PIDTerms= 0.776/ 0.000/-0.290/ 0.000, Output= 0.486(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.000/ 0.000/ 0.002/ 0.000, Output= 0.002(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=   0.0, Error=  -0.1, PIDTerms=-0.013/ 0.000/ 0.000/-0.000, Output=-0.013(-0.500/0.500), Volt=12.0 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 376.4, Error=  16.5, PIDTerms= 0.662/ 0.000/-0.274/ 0.000, Output= 0.388(-0.500/0.500), Volt=12.0 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.001/ 0.000/ 0.001/ 0.000, Output= 0.002(-0.500/0.500), Volt=12.0 (10.4)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=   0.0, Error=  -0.1, PIDTerms=-0.010/ 0.000/ 0.000/-0.000, Output=-0.010(-0.500/0.500), Volt=12.2 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 380.1, Error=  12.8, PIDTerms= 0.512/ 0.000/-0.428/ 0.000, Output= 0.084(-0.500/0.500), Volt=12.4 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=  -0.0, Error=   0.0, PIDTerms= 0.000/ 0.000/-0.002/ 0.000, Output=-0.001(-0.500/0.500), Volt=12.4 (10.4)
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=   0.0, Error=  -0.1, PIDTerms=-0.010/ 0.000/ 0.000/-0.000, Output=-0.010(-0.500/0.500), Volt=12.3 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 383.9, Error=   9.1, PIDTerms= 0.362/ 0.000/-0.387/ 0.000, Output=-0.025(-0.500/0.500), Volt=12.3 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.0, Error=   0.0, PIDTerms= 0.000/ 0.000/-0.001/ 0.000, Output=-0.001(-0.500/0.500), Volt=12.3 (10.4)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.3, Error=   0.3, PIDTerms= 0.039/ 0.000/ 0.000/-0.000, Output= 0.039(-0.500/0.500), Volt=12.1 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 386.6, Error=   6.4, PIDTerms= 0.254/ 0.000/-0.346/ 0.000, Output=-0.092(-0.500/0.500), Volt=12.1 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.0, Error=  -0.0, PIDTerms=-0.001/ 0.000/-0.003/ 0.000, Output=-0.004(-0.500/0.500), Volt=12.0 (10.4)
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=   0.0, Error=  -0.1, PIDTerms=-0.013/ 0.000/-0.000/-0.000, Output=-0.013(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 388.3, Error=   4.6, PIDTerms= 0.184/ 0.000/-0.209/ 0.000, Output=-0.025(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.0, Error=  -0.0, PIDTerms=-0.001/ 0.000/-0.001/ 0.000, Output=-0.002(-0.500/0.500), Volt=11.9 (10.4)
+GlobalTracer.PixyVision_Info: 2 object(s) found
+GlobalTracer.PixyVision_Info: [0] sync=0xaa55, chksum=0x00c4, sig=1, centerX=113, centerY= 59, width= 13, height= 10, angle=  0
+GlobalTracer.PixyVision_Info: [1] sync=0xaa55, chksum=0x0096, sig=1, centerX= 81, centerY= 61, width=  3, height=  4, angle=  0
+GlobalTracer.PixyVision_Info: Expected Target: distance=71.8, width=32.0, height=16.0
+GlobalTracer.PixyVision_Info: ===TargetRect===: x=80, y=54, w=40, h=10
+GlobalTracer.PixyVision_Info: ###TargetInfo###: xDist=-15.0, yDist=57.5, angle=-14.6
+GlobalTracer.printPidInfo_Info: encoderXPidCtrl: Target=  -0.0, Input=  -0.2, Error=   0.2, PIDTerms= 0.028/ 0.000/ 0.000/-0.000, Output= 0.028(-0.500/0.500), Volt=12.2 (10.4)
+GlobalTracer.printPidInfo_Info: encoderYPidCtrl: Target= 392.9, Input= 390.1, Error=   2.9, PIDTerms= 0.114/ 0.000/-0.156/ 0.000, Output=-0.042(-0.500/0.500), Volt=12.1 (10.4)
+GlobalTracer.printPidInfo_Info: gyroTurnPidCtrl: Target=   0.0, Input=   0.2, Error=  -0.2, PIDTerms=-0.005/ 0.000/-0.009/ 0.000, Output=-0.015(-0.500/0.500), Volt=12.1 (10.4)
+GlobalTracer.Robot_Info: [11.749]       DONE: xPos=  0.13,yPos=393.82,heading=   0.8/   0.0,volts=12.0(10.4)
+GlobalTracer.PixyVision_Info: 3 object(s) found
+GlobalTracer.PixyVision_Info: [0] sync=0xaa55, chksum=0x0211, sig=1, centerX=121, centerY=156, width=242, height=  9, angle=  0
+GlobalTracer.PixyVision_Info: [1] sync=0xaa55, chksum=0x00c1, sig=1, centerX=106, centerY= 59, width= 15, height= 12, angle=  0
+GlobalTracer.PixyVision_Info: [2] sync=0xaa55, chksum=0x008e, sig=1, centerX= 72, centerY= 62, width=  3, height=  4, angle=  0
+GlobalTracer.PixyVision_Info: Expected Target: distance=66.4, width=34.6, height=17.3
+GlobalTracer.PixyVision_Info: ***TargetRect***: [1,2] x=71, y=53, w=43, h=12
+GlobalTracer.PixyVision_Info: ###TargetInfo###: xDist=-15.7, yDist=53.5, angle=-16.4
+GlobalTracer.PixyVision_Info: 2 object(s) found
+GlobalTracer.PixyVision_Info: [0] sync=0xaa55, chksum=0x0225, sig=1, centerX=124, centerY=165, width=248, height= 11, angle=  0
+GlobalTracer.PixyVision_Info: [1] sync=0xaa55, chksum=0x00ba, sig=1, centerX= 99, centerY= 59, width= 15, height= 12, angle=  0
+GlobalTracer.PixyVision_Info: Expected Target: distance=62.6, width=36.8, height=18.4
+GlobalTracer.PixyVision_Info: ===TargetRect===: x=0, y=53, w=248, h=118
+GlobalTracer.PixyVision_Info: ###TargetInfo###: xDist=-1.5, yDist=9.3, angle=-8.9
+GlobalTracer.PixyVision_Info: 2 object(s) found
+GlobalTracer.PixyVision_Info: [0] sync=0xaa55, chksum=0x022a, sig=1, centerX=123, centerY=171, width=246, height= 13, angle=  0
+GlobalTracer.PixyVision_Info: [1] sync=0xaa55, chksum=0x00bb, sig=1, centerX= 94, centerY= 60, width= 18, height= 14, angle=  0
+GlobalTracer.PixyVision_Info: Expected Target: distance=59.6, width=38.6, height=19.3
+GlobalTracer.PixyVision_Info: ===TargetRect===: x=0, y=53, w=246, h=125
+GlobalTracer.PixyVision_Info: ###TargetInfo###: xDist=-1.5, yDist=9.3, angle=-9.1
+GlobalTracer.PixyVision_Info: 3 object(s) found
+GlobalTracer.PixyVision_Info: [0] sync=0xaa55, chksum=0x0223, sig=1, centerX=118, centerY=177, width=236, height= 15, angle=  0
+GlobalTracer.PixyVision_Info: [1] sync=0xaa55, chksum=0x00b5, sig=1, centerX= 91, centerY= 59, width= 17, height= 13, angle=  0
+GlobalTracer.PixyVision_Info: [2] sync=0xaa55, chksum=0x007d, sig=1, centerX= 53, centerY= 63, width=  3, height=  5, angle=  0
+GlobalTracer.PixyVision_Info: Expected Target: distance=57.7, width=39.9, height=19.9
+GlobalTracer.PixyVision_Info: ***TargetRect***: [1,2] x=52, y=53, w=48, h=13
+GlobalTracer.PixyVision_Info: ###TargetInfo###: xDist=-17.5, yDist=47.9, angle=-20.1
+GlobalTracer.PixyVision_Info: 4 object(s) found
+GlobalTracer.PixyVision_Info: [0] sync=0xaa55, chksum=0x01e8, sig=1, centerX=109, centerY=182, width=184, height= 12, angle=  0
+GlobalTracer.PixyVision_Info: [1] sync=0xaa55, chksum=0x00b3, sig=1, centerX= 89, centerY= 59, width= 17, height= 13, angle=  0
+GlobalTracer.PixyVision_Info: [2] sync=0xaa55, chksum=0x00b8, sig=1, centerX=  2, centerY=174, width=  5, height=  2, angle=  0
+GlobalTracer.PixyVision_Info: [3] sync=0xaa55, chksum=0x007b, sig=1, centerX= 51, centerY= 64, width=  3, height=  4, angle=  0
+GlobalTracer.PixyVision_Info: Expected Target: distance=55.7, width=41.3, height=20.6
+GlobalTracer.PixyVision_Info: ***TargetRect***: [0,2] x=0, y=173, w=201, h=15
+GlobalTracer.PixyVision_Info: ###TargetInfo###: xDist=-3.0, yDist=11.4, angle=-14.5
+GlobalTracer.PixyVision_Info: 2 object(s) found
+GlobalTracer.PixyVision_Info: [0] sync=0xaa55, chksum=0x0198, sig=1, centerX= 81, centerY=182, width=135, height=  9, angle=  0
+GlobalTracer.PixyVision_Info: [1] sync=0xaa55, chksum=0x00b2, sig=1, centerX= 88, centerY= 59, width= 17, height= 13, angle=  0
+GlobalTracer.PixyVision_Info: Expected Target: distance=55.6, width=41.4, height=20.7
+GlobalTracer.PixyVision_Info: ===TargetRect===: x=14, y=53, w=135, h=134
+GlobalTracer.PixyVision_Info: ###TargetInfo###: xDist=-5.8, yDist=17.0, angle=-18.8
+GlobalTracer.startCompetition_Warn: AUTO_MODE takes too long (0.050s)
+
+GlobalTracer.PixyVision_Info: 2 object(s) found
+GlobalTracer.PixyVision_Info: [0] sync=0xaa55, chksum=0x00b2, sig=1, centerX= 88, centerY= 59, width= 17, height= 13, angle=  0
+GlobalTracer.PixyVision_Info: [1] sync=0xaa55, chksum=0x0079, sig=1, centerX= 49, centerY= 64, width=  3, height=  4, angle=  0
+GlobalTracer.PixyVision_Info: Expected Target: distance=54.6, width=42.1, height=21.1
+GlobalTracer.PixyVision_Info: ===TargetRect===: x=48, y=53, w=49, h=13
+GlobalTracer.PixyVision_Info: ###TargetInfo###: xDist=-17.9, yDist=46.9, angle=-20.8
+GlobalTracer.PixyVision_Info: 3 object(s) found
+GlobalTracer.PixyVision_Info: [0] sync=0xaa55, chksum=0x00b2, sig=1, centerX= 88, centerY= 59, width= 17, height= 13, angle=  0
+GlobalTracer.PixyVision_Info: [1] sync=0xaa55, chksum=0x00f4, sig=1, centerX= 47, centerY=184, width= 10, height=  2, angle=  0
+GlobalTracer.PixyVision_Info: [2] sync=0xaa55, chksum=0x0079, sig=1, centerX= 49, centerY= 64, width=  3, height=  4, angle=  0
+GlobalTracer.PixyVision_Info: Expected Target: distance=55.5, width=41.5, height=20.7
+GlobalTracer.PixyVision_Info: ***TargetRect***: [0,2] x=48, y=53, w=49, h=13
+GlobalTracer.PixyVision_Info: ###TargetInfo###: xDist=-17.9, yDist=46.9, angle=-20.8
+GlobalTracer.PixyVision_Info: 2 object(s) found
+GlobalTracer.PixyVision_Info: [0] sync=0xaa55, chksum=0x00b2, sig=1, centerX= 88, centerY= 59, width= 17, height= 13, angle=  0
+GlobalTracer.PixyVision_Info: [1] sync=0xaa55, chksum=0x00f0, sig=1, centerX= 47, centerY=183, width=  7, height=  2, angle=  0
+GlobalTracer.PixyVision_Info: Expected Target: distance=55.6, width=41.4, height=20.7
+GlobalTracer.PixyVision_Info: ===TargetRect===: x=44, y=53, w=53, h=131
+GlobalTracer.PixyVision_Info: ###TargetInfo###: xDist=-16.9, yDist=43.4, angle=-21.3
+GlobalTracer.PixyVision_Info: 2 object(s) found
+GlobalTracer.PixyVision_Info: [0] sync=0xaa55, chksum=0x00b2, sig=1, centerX= 88, centerY= 59, width= 17, height= 13, angle=  0
+GlobalTracer.PixyVision_Info: [1] sync=0xaa55, chksum=0x00f6, sig=1, centerX= 48, centerY=183, width= 11, height=  3, angle=  0
+GlobalTracer.PixyVision_Info: Expected Target: distance=55.7, width=41.3, height=20.6
+GlobalTracer.PixyVision_Info: ===TargetRect===: x=43, y=53, w=54, h=132
+GlobalTracer.PixyVision_Info: ###TargetInfo###: xDist=-16.7, yDist=42.6, angle=-21.4
+GlobalTracer.PixyVision_Info: 2 object(s) found
+GlobalTracer.PixyVision_Info: [0] sync=0xaa55, chksum=0x00b2, sig=1, centerX= 88, centerY= 59, width= 17, height= 13, angle=  0
+GlobalTracer.PixyVision_Info: [1] sync=0xaa55, chksum=0x007a, sig=1, centerX= 50, centerY= 63, width=  3, height=  5, angle=  0
+GlobalTracer.PixyVision_Info: Expected Target: distance=55.5, width=41.5, height=20.7
+GlobalTracer.PixyVision_Info: ===TargetRect===: x=49, y=53, w=48, h=13
+GlobalTracer.PixyVision_Info: ###TargetInfo###: xDist=-18.1, yDist=47.9, angle=-20.7
+GlobalTracer.PixyVision_Info: 2 object(s) found
+GlobalTracer.PixyVision_Info: [0] sync=0xaa55, chksum=0x00b2, sig=1, centerX= 88, centerY= 59, width= 17, height= 13, angle=  0
+GlobalTracer.PixyVision_Info: [1] sync=0xaa55, chksum=0x007a, sig=1, centerX= 50, centerY= 63, width=  3, height=  5, angle=  0
+GlobalTracer.PixyVision_Info: Expected Target: distance=55.6, width=41.4, height=20.7
+GlobalTracer.PixyVision_Info: ===TargetRect===: x=49, y=53, w=48, h=13
+GlobalTracer.PixyVision_Info: ###TargetInfo###: xDist=-18.1, yDist=47.9, angle=-20.7
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.PixyVision_Info: 3 object(s) found
+GlobalTracer.PixyVision_Info: [0] sync=0xaa55, chksum=0x00b2, sig=1, centerX= 88, centerY= 59, width= 17, height= 13, angle=  0
+GlobalTracer.PixyVision_Info: [1] sync=0xaa55, chksum=0x00f5, sig=1, centerX= 48, centerY=183, width= 11, height=  2, angle=  0
+GlobalTracer.PixyVision_Info: [2] sync=0xaa55, chksum=0x007a, sig=1, centerX= 50, centerY= 63, width=  3, height=  5, angle=  0
+GlobalTracer.PixyVision_Info: Expected Target: distance=55.5, width=41.5, height=20.7
+GlobalTracer.PixyVision_Info: ***TargetRect***: [0,2] x=49, y=53, w=48, h=13
+GlobalTracer.PixyVision_Info: ###TargetInfo###: xDist=-18.1, yDist=47.9, angle=-20.7
+GlobalTracer.PixyVision_Info: 3 object(s) found
+GlobalTracer.PixyVision_Info: [0] sync=0xaa55, chksum=0x00b2, sig=1, centerX= 88, centerY= 59, width= 17, height= 13, angle=  0
+GlobalTracer.PixyVision_Info: [1] sync=0xaa55, chksum=0x00ed, sig=1, centerX= 45, centerY=183, width=  5, height=  3, angle=  0
+GlobalTracer.PixyVision_Info: [2] sync=0xaa55, chksum=0x007a, sig=1, centerX= 50, centerY= 63, width=  3, height=  5, angle=  0
+GlobalTracer.PixyVision_Info: Expected Target: distance=55.6, width=41.4, height=20.7
+GlobalTracer.PixyVision_Info: ***TargetRect***: [0,2] x=49, y=53, w=48, h=13
+GlobalTracer.PixyVision_Info: ###TargetInfo###: xDist=-18.1, yDist=47.9, angle=-20.7
+GlobalTracer.PixyVision_Info: 2 object(s) found
+GlobalTracer.PixyVision_Info: [0] sync=0xaa55, chksum=0x00b2, sig=1, centerX= 88, centerY= 59, width= 17, height= 13, angle=  0
+GlobalTracer.PixyVision_Info: [1] sync=0xaa55, chksum=0x00f6, sig=1, centerX= 48, centerY=183, width= 11, height=  3, angle=  0
+GlobalTracer.PixyVision_Info: Expected Target: distance=55.5, width=41.5, height=20.7
+GlobalTracer.PixyVision_Info: ===TargetRect===: x=43, y=53, w=54, h=132
+GlobalTracer.PixyVision_Info: ###TargetInfo###: xDist=-16.7, yDist=42.6, angle=-21.4
+GlobalTracer.PixyVision_Info: 3 object(s) found
+GlobalTracer.PixyVision_Info: [0] sync=0xaa55, chksum=0x00b2, sig=1, centerX= 88, centerY= 59, width= 17, height= 13, angle=  0
+GlobalTracer.PixyVision_Info: [1] sync=0xaa55, chksum=0x00f6, sig=1, centerX= 48, centerY=183, width= 11, height=  3, angle=  0
+GlobalTracer.PixyVision_Info: [2] sync=0xaa55, chksum=0x007a, sig=1, centerX= 50, centerY= 64, width=  3, height=  4, angle=  0
+GlobalTracer.PixyVision_Info: Expected Target: distance=55.6, width=41.4, height=20.7
+GlobalTracer.PixyVision_Info: ***TargetRect***: [0,2] x=49, y=53, w=48, h=13
+GlobalTracer.PixyVision_Info: ###TargetInfo###: xDist=-18.1, yDist=47.9, angle=-20.7
+GlobalTracer.PixyVision_Info: 3 object(s) found
+GlobalTracer.PixyVision_Info: [0] sync=0xaa55, chksum=0x00b2, sig=1, centerX= 88, centerY= 59, width= 17, height= 13, angle=  0
+GlobalTracer.PixyVision_Info: [1] sync=0xaa55, chksum=0x00f6, sig=1, centerX= 48, centerY=183, width= 11, height=  3, angle=  0
+GlobalTracer.PixyVision_Info: [2] sync=0xaa55, chksum=0x007a, sig=1, centerX= 50, centerY= 63, width=  3, height=  5, angle=  0
+GlobalTracer.PixyVision_Info: Expected Target: distance=55.6, width=41.4, height=20.7
+GlobalTracer.PixyVision_Info: ***TargetRect***: [0,2] x=49, y=53, w=48, h=13
+GlobalTracer.PixyVision_Info: ###TargetInfo###: xDist=-18.1, yDist=47.9, angle=-20.7
+GlobalTracer.startCompetition_Warn: AUTO_MODE takes too long (0.064s)
+
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.PixyVision_Info: 3 object(s) found
+GlobalTracer.PixyVision_Info: [0] sync=0xaa55, chksum=0x00b4, sig=1, centerX= 89, centerY= 59, width= 18, height= 13, angle=  0
+GlobalTracer.PixyVision_Info: [1] sync=0xaa55, chksum=0x00f6, sig=1, centerX= 48, centerY=183, width= 11, height=  3, angle=  0
+GlobalTracer.PixyVision_Info: [2] sync=0xaa55, chksum=0x007a, sig=1, centerX= 50, centerY= 63, width=  3, height=  5, angle=  0
+GlobalTracer.PixyVision_Info: Expected Target: distance=55.6, width=41.4, height=20.7
+GlobalTracer.PixyVision_Info: ***TargetRect***: [0,2] x=49, y=53, w=49, h=13
+GlobalTracer.PixyVision_Info: ###TargetInfo###: xDist=-17.7, yDist=46.9, angle=-20.6
+GlobalTracer.PixyVision_Info: 3 object(s) found
+GlobalTracer.PixyVision_Info: [0] sync=0xaa55, chksum=0x00b2, sig=1, centerX= 88, centerY= 59, width= 17, height= 13, angle=  0
+GlobalTracer.PixyVision_Info: [1] sync=0xaa55, chksum=0x00f6, sig=1, centerX= 48, centerY=183, width= 11, height=  3, angle=  0
+GlobalTracer.PixyVision_Info: [2] sync=0xaa55, chksum=0x007a, sig=1, centerX= 50, centerY= 63, width=  3, height=  5, angle=  0
+GlobalTracer.PixyVision_Info: Expected Target: distance=55.6, width=41.4, height=20.7
+GlobalTracer.PixyVision_Info: ***TargetRect***: [0,2] x=49, y=53, w=48, h=13
+GlobalTracer.PixyVision_Info: ###TargetInfo###: xDist=-18.1, yDist=47.9, angle=-20.7
+GlobalTracer.PixyVision_Info: 2 object(s) found
+GlobalTracer.PixyVision_Info: [0] sync=0xaa55, chksum=0x00b2, sig=1, centerX= 88, centerY= 59, width= 17, height= 13, angle=  0
+GlobalTracer.PixyVision_Info: [1] sync=0xaa55, chksum=0x00f6, sig=1, centerX= 49, centerY=183, width= 10, height=  3, angle=  0
+GlobalTracer.PixyVision_Info: Expected Target: distance=55.5, width=41.5, height=20.7
+GlobalTracer.PixyVision_Info: ===TargetRect===: x=44, y=53, w=53, h=132
+GlobalTracer.PixyVision_Info: ###TargetInfo###: xDist=-16.9, yDist=43.4, angle=-21.3
+GlobalTracer.PixyVision_Info: 2 object(s) found
+GlobalTracer.PixyVision_Info: [0] sync=0xaa55, chksum=0x00b2, sig=1, centerX= 88, centerY= 59, width= 17, height= 13, angle=  0
+GlobalTracer.PixyVision_Info: [1] sync=0xaa55, chksum=0x00f6, sig=1, centerX= 48, centerY=183, width= 11, height=  3, angle=  0
+GlobalTracer.PixyVision_Info: Expected Target: distance=55.6, width=41.4, height=20.7
+GlobalTracer.PixyVision_Info: ===TargetRect===: x=43, y=53, w=54, h=132
+GlobalTracer.PixyVision_Info: ###TargetInfo###: xDist=-16.7, yDist=42.6, angle=-21.4
+GlobalTracer.PixyVision_Info: 3 object(s) found
+GlobalTracer.PixyVision_Info: [0] sync=0xaa55, chksum=0x00b2, sig=1, centerX= 88, centerY= 59, width= 17, height= 13, angle=  0
+GlobalTracer.PixyVision_Info: [1] sync=0xaa55, chksum=0x00f2, sig=1, centerX= 47, centerY=183, width=  8, height=  3, angle=  0
+GlobalTracer.PixyVision_Info: [2] sync=0xaa55, chksum=0x007a, sig=1, centerX= 50, centerY= 63, width=  3, height=  5, angle=  0
+GlobalTracer.PixyVision_Info: Expected Target: distance=55.5, width=41.5, height=20.7
+GlobalTracer.PixyVision_Info: ***TargetRect***: [0,2] x=49, y=53, w=48, h=13
+GlobalTracer.PixyVision_Info: ###TargetInfo###: xDist=-18.1, yDist=47.9, angle=-20.7
+GlobalTracer.PixyVision_Info: 3 object(s) found
+GlobalTracer.PixyVision_Info: [0] sync=0xaa55, chksum=0x00b2, sig=1, centerX= 88, centerY= 59, width= 17, height= 13, angle=  0
+GlobalTracer.PixyVision_Info: [1] sync=0xaa55, chksum=0x00f5, sig=1, centerX= 48, centerY=183, width= 11, height=  2, angle=  0
+GlobalTracer.PixyVision_Info: [2] sync=0xaa55, chksum=0x007a, sig=1, centerX= 50, centerY= 63, width=  3, height=  5, angle=  0
+GlobalTracer.PixyVision_Info: Expected Target: distance=55.5, width=41.5, height=20.7
+GlobalTracer.PixyVision_Info: ***TargetRect***: [0,2] x=49, y=53, w=48, h=13
+GlobalTracer.PixyVision_Info: ###TargetInfo###: xDist=-18.1, yDist=47.9, angle=-20.7
+GlobalTracer.startCompetition_Warn: AUTO_MODE takes too long (0.052s)
+
+GlobalTracer.PixyVision_Info: 2 object(s) found
+GlobalTracer.PixyVision_Info: [0] sync=0xaa55, chksum=0x00b2, sig=1, centerX= 88, centerY= 59, width= 17, height= 13, angle=  0
+GlobalTracer.PixyVision_Info: [1] sync=0xaa55, chksum=0x00ed, sig=1, centerX= 45, centerY=184, width=  5, height=  2, angle=  0
+GlobalTracer.PixyVision_Info: Expected Target: distance=55.6, width=41.4, height=20.7
+GlobalTracer.PixyVision_Info: ===TargetRect===: x=43, y=53, w=54, h=132
+GlobalTracer.PixyVision_Info: ###TargetInfo###: xDist=-16.7, yDist=42.6, angle=-21.4
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.PixyVision_Info: 3 object(s) found
+GlobalTracer.PixyVision_Info: [0] sync=0xaa55, chksum=0x00b2, sig=1, centerX= 88, centerY= 59, width= 17, height= 13, angle=  0
+GlobalTracer.PixyVision_Info: [1] sync=0xaa55, chksum=0x00ed, sig=1, centerX= 45, centerY=183, width=  5, height=  3, angle=  0
+GlobalTracer.PixyVision_Info: [2] sync=0xaa55, chksum=0x007a, sig=1, centerX= 50, centerY= 63, width=  3, height=  5, angle=  0
+GlobalTracer.PixyVision_Info: Expected Target: distance=55.6, width=41.4, height=20.7
+GlobalTracer.PixyVision_Info: ***TargetRect***: [0,2] x=49, y=53, w=48, h=13
+GlobalTracer.PixyVision_Info: ###TargetInfo###: xDist=-18.1, yDist=47.9, angle=-20.7
+GlobalTracer.PixyVision_Info: 2 object(s) found
+GlobalTracer.PixyVision_Info: [0] sync=0xaa55, chksum=0x00b2, sig=1, centerX= 88, centerY= 59, width= 17, height= 13, angle=  0
+GlobalTracer.PixyVision_Info: [1] sync=0xaa55, chksum=0x00ed, sig=1, centerX= 45, centerY=183, width=  5, height=  3, angle=  0
+GlobalTracer.PixyVision_Info: Expected Target: distance=55.6, width=41.4, height=20.7
+GlobalTracer.PixyVision_Info: ===TargetRect===: x=43, y=53, w=54, h=132
+GlobalTracer.PixyVision_Info: ###TargetInfo###: xDist=-16.7, yDist=42.6, angle=-21.4
+GlobalTracer.PixyVision_Info: 1 object(s) found
+GlobalTracer.PixyVision_Info: 3 object(s) found
+GlobalTracer.PixyVision_Info: [0] sync=0xaa55, chksum=0x00b2, sig=1, centerX= 88, centerY= 59, width= 17, height= 13, angle=  0
+GlobalTracer.PixyVision_Info: [1] sync=0xaa55, chksum=0x00f5, sig=1, centerX= 48, centerY=183, width= 10, height=  3, angle=  0
+GlobalTracer.PixyVision_Info: [2] sync=0xaa55, chksum=0x007a, sig=1, centerX= 50, centerY= 63, width=  3, height=  5, angle=  0
+GlobalTracer.PixyVision_Info: Expected Target: distance=55.5, width=41.5, height=20.7
+GlobalTracer.PixyVision_Info: ***TargetRect***: [0,2] x=49, y=53, w=48, h=13
+GlobalTracer.PixyVision_Info: ###TargetInfo###: xDist=-18.1, yDist=47.9, angle=-20.7
+GlobalTracer.PixyVision_Info: 3 object(s) found
+GlobalTracer.PixyVision_Info: [0] sync=0xaa55, chksum=0x00b2, sig=1, centerX= 88, centerY= 59, width= 17, height= 13, angle=  0
+GlobalTracer.PixyVision_Info: [1] sync=0xaa55, chksum=0x00f2, sig=1, centerX= 47, centerY=183, width=  8, height=  3, angle=  0
+GlobalTracer.PixyVision_Info: [2] sync=0xaa55, chksum=0x007a, sig=1, centerX= 50, centerY= 63, width=  3, height=  5, angle=  0
+GlobalTracer.PixyVision_Info: Expected Target: distance=55.5, width=41.5, height=20.7
+GlobalTracer.PixyVision_Info: ***TargetRect***: [0,2] x=49, y=53, w=48, h=13
+GlobalTracer.PixyVision_Info: ###TargetInfo###: xDist=-18.1, yDist=47.9, angle=-20.7
+GlobalTracer.Vision_Info: Front pixy is disabled!
