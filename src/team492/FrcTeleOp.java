@@ -44,12 +44,15 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
     private FrcJoystick leftDriveStick;
     private FrcJoystick rightDriveStick;
     private FrcJoystick operatorStick;
+    private CmdVisionGearDeploy cmdVisionDeploy;
+    private String message = null;
 
     private boolean slowDriveOverride = false;
     private DriveMode driveMode = DriveMode.MECANUM_MODE;
 
     private boolean driveInverted = false;
     private boolean flashLightsOn = false;
+    private boolean visionAssistOn = false;
 
     public FrcTeleOp(Robot robot)
     {
@@ -65,6 +68,9 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
 
         operatorStick = new FrcJoystick("operatorStick", RobotInfo.JSPORT_OPERATORSTICK, this);
         operatorStick.setYInverted(true);
+
+        cmdVisionDeploy = new CmdVisionGearDeploy(robot);
+        message = HalDashboard.getString("Message", "Hello, Titans!");
     }   // FrcTeleOp
 
     //
@@ -90,50 +96,53 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
     @Override
     public void runPeriodic(double elapsedTime)
     {
-        //
-        // DriveBase operation.
-        //
-        switch (driveMode)
+        if (!visionAssistOn)
         {
-            case TANK_MODE:
-                double leftPower = leftDriveStick.getYWithDeadband(true);
-                double rightPower = rightDriveStick.getYWithDeadband(true);
-                if (slowDriveOverride)
-                {
-                    leftPower /= RobotInfo.DRIVE_SLOW_YSCALE;
-                    rightPower /= RobotInfo.DRIVE_SLOW_YSCALE;
-                }
-                robot.driveBase.tankDrive(leftPower, rightPower, driveInverted);
-                break;
+            //
+            // DriveBase operation.
+            //
+            switch (driveMode)
+            {
+                case TANK_MODE:
+                    double leftPower = leftDriveStick.getYWithDeadband(true);
+                    double rightPower = rightDriveStick.getYWithDeadband(true);
+                    if (slowDriveOverride)
+                    {
+                        leftPower /= RobotInfo.DRIVE_SLOW_YSCALE;
+                        rightPower /= RobotInfo.DRIVE_SLOW_YSCALE;
+                    }
+                    robot.driveBase.tankDrive(leftPower, rightPower, driveInverted);
+                    break;
 
-            case ARCADE_MODE:
-                double drivePower = rightDriveStick.getYWithDeadband(true);
-                double turnPower = rightDriveStick.getTwistWithDeadband(true);
-                if (slowDriveOverride)
-                {
-                    drivePower /= RobotInfo.DRIVE_SLOW_YSCALE;
-                    turnPower /= RobotInfo.DRIVE_SLOW_TURNSCALE;
-                }
-                robot.driveBase.arcadeDrive(drivePower, turnPower, driveInverted);
-                break;
+                case ARCADE_MODE:
+                    double drivePower = rightDriveStick.getYWithDeadband(true);
+                    double turnPower = rightDriveStick.getTwistWithDeadband(true);
+                    if (slowDriveOverride)
+                    {
+                        drivePower /= RobotInfo.DRIVE_SLOW_YSCALE;
+                        turnPower /= RobotInfo.DRIVE_SLOW_TURNSCALE;
+                    }
+                    robot.driveBase.arcadeDrive(drivePower, turnPower, driveInverted);
+                    break;
 
-            default:
-            case MECANUM_MODE:
-                double x = leftDriveStick.getXWithDeadband(true);
-                double y = rightDriveStick.getYWithDeadband(true);
-                double rot = rightDriveStick.getTwistWithDeadband(true);
-                if (slowDriveOverride)
-                {
-                    x /= RobotInfo.DRIVE_SLOW_XSCALE;
-                    y /= RobotInfo.DRIVE_SLOW_YSCALE;
-                    rot /= RobotInfo.DRIVE_SLOW_TURNSCALE;
-                }
-                robot.driveBase.mecanumDrive_Cartesian(x, y, rot, driveInverted);
-                break;
+                default:
+                case MECANUM_MODE:
+                    double x = leftDriveStick.getXWithDeadband(true);
+                    double y = rightDriveStick.getYWithDeadband(true);
+                    double rot = rightDriveStick.getTwistWithDeadband(true);
+                    if (slowDriveOverride)
+                    {
+                        x /= RobotInfo.DRIVE_SLOW_XSCALE;
+                        y /= RobotInfo.DRIVE_SLOW_YSCALE;
+                        rot /= RobotInfo.DRIVE_SLOW_TURNSCALE;
+                    }
+                    robot.driveBase.mecanumDrive_Cartesian(x, y, rot, driveInverted);
+                    break;
+            }
+
+            double winchPower = operatorStick.getYWithDeadband(true);
+            robot.winch.setPower(winchPower);
         }
-
-        double winchPower = operatorStick.getYWithDeadband(true);
-        robot.winch.setPower(winchPower);
 
         robot.updateDashboard();
     }   // runPeriodic
@@ -141,6 +150,10 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
     @Override
     public void runContinuous(double elapsedTime)
     {
+        if (visionAssistOn)
+        {
+            cmdVisionDeploy.cmdPeriodic(elapsedTime);
+        }
     }   // runContinuous
 
     //
@@ -159,42 +172,59 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
                     break;
 
                 case FrcJoystick.LOGITECH_BUTTON2:
-                    break;
-
-                case FrcJoystick.LOGITECH_BUTTON3:
-                    break;
-
-                case FrcJoystick.LOGITECH_BUTTON4:
-                    break;
-
-                case FrcJoystick.LOGITECH_BUTTON5:
-                    break;
-
-                case FrcJoystick.LOGITECH_BUTTON6:
                     if (pressed && robot.tts != null)
                     {
                         robot.tts.speak("Kevin, drop the rope!");
                     }
                     break;
 
-                case FrcJoystick.LOGITECH_BUTTON7:
+                case FrcJoystick.LOGITECH_BUTTON3:
+                    if (pressed && robot.tts != null)
+                    {
+                        robot.tts.speak("Kevin, spin the rotor!");
+                    }
+                    break;
+
+                case FrcJoystick.LOGITECH_BUTTON4:
                     if (pressed && robot.tts != null)
                     {
                         robot.tts.speak("Kevin, pick up the gear!");
                     }
                     break;
 
-                case FrcJoystick.LOGITECH_BUTTON8:
+                case FrcJoystick.LOGITECH_BUTTON5:
                     if (pressed && robot.tts != null)
                     {
                         robot.tts.speak("Kevin, pick up the free gear!");
                     }
                     break;
 
+                case FrcJoystick.LOGITECH_BUTTON6:
+                    if (pressed && robot.tts != null && message != null)
+                    {
+                        robot.tts.speak(message);
+                    }
+                    break;
+
+                case FrcJoystick.LOGITECH_BUTTON7:
+                    break;
+
+                case FrcJoystick.LOGITECH_BUTTON8:
+                    break;
+
                 case FrcJoystick.LOGITECH_BUTTON9:
                     break;
 
                 case FrcJoystick.LOGITECH_BUTTON10:
+//                    if (pressed)
+//                    {
+//                        cmdVisionDeploy.start();
+//                    }
+//                    else
+//                    {
+//                        cmdVisionDeploy.stop();
+//                    }
+//                    visionAssistOn = pressed;
                     break;
 
                 case FrcJoystick.LOGITECH_BUTTON11:
@@ -251,39 +281,51 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
                     //
                     // Arm down.
                     //
-                    robot.gearPickup.lowerArm();
+                    if (pressed && !visionAssistOn)
+                    {
+                        robot.gearPickup.lowerArm();
+                    }
                     break;
 
                 case FrcJoystick.LOGITECH_BUTTON3:
                     //
                     // Arm up.
                     //
-                    robot.gearPickup.liftArm();
+                    if (pressed && !visionAssistOn)
+                    {
+                        robot.gearPickup.liftArm();
+                    }
                     break;
 
                 case FrcJoystick.LOGITECH_BUTTON4:
                     //
                     // Claw open.
                     //
-                    robot.gearPickup.openClaw();
+                    if (pressed && !visionAssistOn)
+                    {
+                        robot.gearPickup.openClaw();
+                    }
                     break;
 
                 case FrcJoystick.LOGITECH_BUTTON5:
                     //
                     // Claw close.
                     //
-                    robot.gearPickup.closeClaw();
+                    if (pressed && !visionAssistOn)
+                    {
+                        robot.gearPickup.closeClaw();
+                    }
                     break;
 
                 case FrcJoystick.LOGITECH_BUTTON6:
-                    if (pressed)
+                    if (pressed && !visionAssistOn)
                     {
                         robot.mailbox.extend();
                     }
                     break;
 
                 case FrcJoystick.LOGITECH_BUTTON7:
-                    if (pressed)
+                    if (pressed && !visionAssistOn)
                     {
                         robot.mailbox.retract();
                     }
