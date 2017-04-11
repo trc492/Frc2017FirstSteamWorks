@@ -151,4 +151,28 @@ public class HalDashboard extends SmartDashboard
         return value;
     }   //getNumber
 
+    /**
+     * This method returns the value associated with the given key. If the key does not already exist, it will
+     * create the key and put the default value in it and also return the default value.
+     *
+     * @param key specifies the key.
+     * @param defaultValue specifies the default value if the key does not already exist.
+     * @return value associated with the key or the default value if key does not exist.
+     */
+    public static String getString(String key, String defaultValue)
+    {
+        String value = defaultValue;
+
+        if (SmartDashboard.containsKey(key))
+        {
+            value = SmartDashboard.getString(key, defaultValue);
+        }
+        else
+        {
+            SmartDashboard.putString(key, defaultValue);
+        }
+
+        return value;
+    }   //getString
+
 }   //class HalDashboard
