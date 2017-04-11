@@ -88,14 +88,17 @@
 	<widget field="SideBackupDistance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="850" y="175"/>
 	</widget>
-	<widget field="SideLoadingStationAngle" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+	<widget field="SideForwardAngle" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="850" y="200"/>
 	</widget>
-	<widget field="SideLoadingStationDistance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+	<widget field="SideLoadingStationAngle" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="850" y="225"/>
 	</widget>
-	<widget field="SideDiagonalDistance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+	<widget field="SideLoadingStationDistance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="850" y="250"/>
+	</widget>
+	<widget field="SideDiagonalDistance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="850" y="275"/>
 	</widget>
 	<widget field="Message" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="850" y="300"/>

@@ -53,6 +53,7 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
     private double sideForwardDistance;
     private double sideLiftAngle;
     private double sideBackupDistance;
+    private double sideForwardAngle;
     private double sideLoadingStationAngle;
     private double sideLoadingStationDistance;
     private double sideDiagonalDistance;
@@ -95,6 +96,7 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
         sideForwardDistance = HalDashboard.getNumber("SideForwardDistance", 85.0);
         sideLiftAngle = Math.abs(HalDashboard.getNumber("SideLiftAngle", 60.0));
         sideBackupDistance = Math.abs(HalDashboard.getNumber("SideBackupDistance", 12.0));
+        sideForwardAngle = HalDashboard.getNumber("SideForwardAngle", 0.0);
         sideLoadingStationAngle = Math.abs(HalDashboard.getNumber("SideLoadingStationAngle", 30.0));
         sideLoadingStationDistance = HalDashboard.getNumber("SideLoadingStationDistance", 320.0);
         sideDiagonalDistance = HalDashboard.getNumber("SideDiagonalDistance", 360.0);
@@ -202,7 +204,7 @@ class CmdSideGearLift implements TrcRobot.RobotCommand
                     //
                     xDistance = 0;
                     yDistance = 0;
-                    robot.targetHeading = isRed && !rightSide || !isRed && rightSide? 0.0:
+                    robot.targetHeading = isRed && !rightSide || !isRed && rightSide? sideForwardAngle:
                                           isRed? -sideLoadingStationAngle: sideLoadingStationAngle;
 
                     robot.pidDrive.setTarget(xDistance, yDistance, robot.targetHeading, false, event);
