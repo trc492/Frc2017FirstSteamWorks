@@ -266,7 +266,7 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
                 case FrcJoystick.SIDEWINDER_BUTTON3:
                     if (pressed)
                     {
-                        cmdWaltzTurn.setRightTurn(false);
+                        cmdWaltzTurn.setRightTurn(true);
                         driveInverted = !driveInverted;
                         waltzTurnOn = true;
                     }
@@ -275,7 +275,7 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
                 case FrcJoystick.SIDEWINDER_BUTTON4:
                     if (pressed)
                     {
-                        cmdWaltzTurn.setRightTurn(true);
+                        cmdWaltzTurn.setRightTurn(false);
                         driveInverted = !driveInverted;
                         waltzTurnOn = true;
                     }

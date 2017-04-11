@@ -88,7 +88,7 @@ class CmdWaltzTurn implements TrcRobot.RobotCommand
                     robot.targetHeading = robot.driveBase.getHeading();
                     robot.targetHeading += rightTurn? 180.0: -180.0;
 
-                    robot.pidDrive.setTurnMode(TurnMode.PIVOT);
+                    robot.pidDrive.setTurnMode(TurnMode.WALTZ);
                     robot.pidDrive.setTarget(0.0, 0.0, robot.targetHeading, false, event, 1.0);
                     sm.waitForSingleEvent(event, State.DONE);
                     break;
