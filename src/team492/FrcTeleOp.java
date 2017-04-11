@@ -45,6 +45,7 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
     private FrcJoystick rightDriveStick;
     private FrcJoystick operatorStick;
     private CmdVisionGearDeploy cmdVisionDeploy;
+    private CmdWaltzTurn cmdWaltzTurn;
     private String message = null;
 
     private boolean slowDriveOverride = false;
@@ -53,6 +54,7 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
     private boolean driveInverted = false;
     private boolean flashLightsOn = false;
     private boolean visionAssistOn = false;
+    private boolean waltzTurnOn = false;
 
     public FrcTeleOp(Robot robot)
     {
@@ -70,6 +72,7 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
         operatorStick.setYInverted(true);
 
         cmdVisionDeploy = new CmdVisionGearDeploy(robot);
+        cmdWaltzTurn = new CmdWaltzTurn(robot);
         message = HalDashboard.getString("Message", "Hello, Titans!");
     }   // FrcTeleOp
 
@@ -96,7 +99,7 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
     @Override
     public void runPeriodic(double elapsedTime)
     {
-        if (!visionAssistOn)
+        if (!visionAssistOn && !waltzTurnOn)
         {
             //
             // DriveBase operation.
@@ -150,7 +153,14 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
     @Override
     public void runContinuous(double elapsedTime)
     {
-        if (visionAssistOn)
+        if (waltzTurnOn)
+        {
+            if (cmdWaltzTurn.cmdPeriodic(elapsedTime))
+            {
+                waltzTurnOn = false;
+            }
+        }
+        else if (visionAssistOn)
         {
             cmdVisionDeploy.cmdPeriodic(elapsedTime);
         }
@@ -246,12 +256,29 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
                     break;
 
                 case FrcJoystick.SIDEWINDER_BUTTON2:
+                    if (pressed)
+                    {
+                        cmdWaltzTurn.cancel();
+                        waltzTurnOn = false;
+                    }
                     break;
 
                 case FrcJoystick.SIDEWINDER_BUTTON3:
+                    if (pressed)
+                    {
+                        cmdWaltzTurn.setRightTurn(false);
+                        driveInverted = !driveInverted;
+                        waltzTurnOn = true;
+                    }
                     break;
 
                 case FrcJoystick.SIDEWINDER_BUTTON4:
+                    if (pressed)
+                    {
+                        cmdWaltzTurn.setRightTurn(true);
+                        driveInverted = !driveInverted;
+                        waltzTurnOn = true;
+                    }
                     break;
 
                 case FrcJoystick.SIDEWINDER_BUTTON5:
