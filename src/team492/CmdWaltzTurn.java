@@ -38,7 +38,7 @@ class CmdWaltzTurn implements TrcRobot.RobotCommand
     private static final String moduleName = "CmdWaltzTurn";
 
     private Robot robot;
-    private boolean rightTurn = false;
+    private boolean clockwiseTurn = false;
 
     private TrcEvent event;
     private TrcStateMachine<State> sm;
@@ -52,10 +52,10 @@ class CmdWaltzTurn implements TrcRobot.RobotCommand
         sm.start(State.WALTZ_TURN);
     }   //CmdWaltzTurn
 
-    public void setRightTurn(boolean rightTurn)
+    public void setClockwiseTurn(boolean clockwiseTurn)
     {
-        this.rightTurn = rightTurn;
-    }   //setRightTurn
+        this.clockwiseTurn = clockwiseTurn;
+    }   //setClockwiseTurn
 
     public void cancel()
     {
@@ -86,7 +86,7 @@ class CmdWaltzTurn implements TrcRobot.RobotCommand
                     // Do the waltz turn.
                     //
                     robot.targetHeading = robot.driveBase.getHeading();
-                    robot.targetHeading += rightTurn? 180.0: -180.0;
+                    robot.targetHeading += clockwiseTurn? 180.0: -180.0;
 
                     robot.pidDrive.setTurnMode(TurnMode.WALTZ);
                     robot.pidDrive.setTarget(0.0, 0.0, robot.targetHeading, false, event, 1.0);

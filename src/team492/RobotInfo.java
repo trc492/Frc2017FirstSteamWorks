@@ -60,6 +60,7 @@ public class RobotInfo
     // Analog Input ports.
     //
     public static final int AIN_PRESSURE_SENSOR                 = 0;
+    public static final int AIN_ANALOG_GYRO                     = 1;
     public static final int AIN_ULTRASONIC_SENSOR               = 3;
     //
     // Digital Input ports.
