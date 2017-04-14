@@ -326,8 +326,8 @@ public class FrcTest extends FrcTeleOp
         robot.dashboard.displayPrintf(4, "Gyro: Rate=%.3f, Heading=%.1f",
             robot.gyro.getZRotationRate().value, robot.gyro.getZHeading().value);
         robot.dashboard.displayPrintf(5, "Winch: position=%.1f, touch=%s/%s",
-            robot.winch.getPosition(), Boolean.toString(robot.winch.isFwdLimitSwitchActive()),
-            Boolean.toString(robot.winch.isRevLimitSwitchActive()));
+            robot.winch.getPosition(), Boolean.toString(robot.winch.isUpperLimitSwitchActive()),
+            Boolean.toString(robot.winch.isLowerLimitSwitchActive()));
         robot.dashboard.displayPrintf(6, "GearPickup: gear=%s", robot.gearPickup.gearDetected());
         robot.dashboard.displayPrintf(7, "PressureSensor: pressure=%.1f", robot.getPressure());
         robot.dashboard.displayPrintf(8, "Ultrasonic=%.1f inches", robot.getUltrasonicDistance());

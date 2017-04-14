@@ -42,14 +42,14 @@ public class Winch
         this.manualOverride = override;
     }
 
-    public boolean isFwdLimitSwitchActive()
+    public boolean isUpperLimitSwitchActive()
     {
-        return !motor1.isFwdLimitSwitchClosed();
+        return !motor1.isUpperLimitSwitchActive();
     }
 
-    public boolean isRevLimitSwitchActive()
+    public boolean isLowerLimitSwitchActive()
     {
-        return !motor1.isRevLimitSwitchClosed();
+        return !motor1.isLowerLimitSwitchActive();
     }
 
     public double getPosition()
@@ -59,7 +59,7 @@ public class Winch
 
     public void setPower(double power)
     {
-        if (manualOverride || !isFwdLimitSwitchActive() && !isRevLimitSwitchActive())
+        if (manualOverride || !isUpperLimitSwitchActive() && !isLowerLimitSwitchActive())
         {
             motor1.setPower(power);
             motor2.setPower(power);
