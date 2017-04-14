@@ -47,8 +47,8 @@ public class TrcPidDrive implements TrcTaskMgr.Task
     public enum TurnMode
     {
         IN_PLACE,
-        PIVOT,
-        WALTZ,
+        PIVOT_FORWARD,
+        PIVOT_BACKWARD,
         CURVE
     }   //enum TurnMode
 
@@ -646,7 +646,7 @@ public class TrcPidDrive implements TrcTaskMgr.Task
                     driveBase.arcadeDrive(0.0, turnPower);
                     break;
 
-                case PIVOT:
+                case PIVOT_FORWARD:
                 case CURVE:
                     if (turnPower < 0.0)
                     {
@@ -658,7 +658,7 @@ public class TrcPidDrive implements TrcTaskMgr.Task
                     }
                     break;
 
-                case WALTZ:
+                case PIVOT_BACKWARD:
                     if (turnPower < 0.0)
                     {
                         driveBase.tankDrive(turnPower, 0.0);

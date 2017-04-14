@@ -26,13 +26,15 @@ import frclib.FrcCANTalon;
 
 public class Winch
 {
-    private FrcCANTalon motor;
+    private FrcCANTalon motor1;
+    private FrcCANTalon motor2;
     private boolean manualOverride = false;
 
     public Winch()
     {
-        motor = new FrcCANTalon("WinchMotor", RobotInfo.CANID_WINCH);
-        motor.setPositionSensorInverted(false);
+        motor1 = new FrcCANTalon("WinchMotor1", RobotInfo.CANID_WINCH1);
+        motor2 = new FrcCANTalon("WinchMotor2", RobotInfo.CANID_WINCH2);
+        motor1.setPositionSensorInverted(false);
     }
 
     public void setManualOverride(boolean override)
@@ -42,25 +44,31 @@ public class Winch
 
     public boolean isFwdLimitSwitchActive()
     {
-        return !motor.isFwdLimitSwitchClosed();
+        return !motor1.isFwdLimitSwitchClosed();
     }
 
     public boolean isRevLimitSwitchActive()
     {
-        return !motor.isRevLimitSwitchClosed();
+        return !motor1.isRevLimitSwitchClosed();
     }
 
     public double getPosition()
     {
-        return motor.getPosition()*RobotInfo.WINCH_POSITION_SCALE; 
+        return motor1.getPosition()*RobotInfo.WINCH_POSITION_SCALE; 
     }
 
     public void setPower(double power)
     {
         if (manualOverride || !isFwdLimitSwitchActive() && !isRevLimitSwitchActive())
-            motor.setPower(power);
+        {
+            motor1.setPower(power);
+            motor2.setPower(power);
+        }
         else
-            motor.setPower(0.0);
+        {
+            motor1.setPower(0.0);
+            motor2.setPower(0.0);
+        }
     }
   
 }   //class Winch
