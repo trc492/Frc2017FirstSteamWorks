@@ -162,7 +162,10 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
         }
         else if (visionAssistOn)
         {
-            cmdVisionDeploy.cmdPeriodic(elapsedTime);
+            if (cmdVisionDeploy.cmdPeriodic(elapsedTime))
+            {
+                visionAssistOn = false;
+            }
         }
     }   // runContinuous
 
