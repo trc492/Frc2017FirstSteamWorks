@@ -23,15 +23,16 @@
 package frclib;
 
 import com.ctre.CANTalon;
+import com.ctre.CANTalon.FeedbackDevice;
 
 import trclib.TrcDbgTrace;
-import trclib.TrcMotorController;
+import trclib.TrcMotor;
 
 /**
  * This class implements a platform independent CANTalon motor controller. It extends the CANTalon class and
  * implements the standard TrcMotorController interface to be compatible with the TRC library.
  */
-public class FrcCANTalon extends CANTalon implements TrcMotorController
+public class FrcCANTalon extends TrcMotor
 {
     private static final String moduleName = "FrcCANTalon";
     private static final boolean debugEnabled = false;
@@ -40,7 +41,7 @@ public class FrcCANTalon extends CANTalon implements TrcMotorController
     private static final TrcDbgTrace.MsgLevel msgLevel = TrcDbgTrace.MsgLevel.INFO;
     private TrcDbgTrace dbgTrace = null;
 
-    private String instanceName;
+    public CANTalon motor;
     private boolean feedbackDeviceIsPot = false;
     private boolean limitSwitchesSwapped = false;
     private boolean revLimitSwitchNormalOpen = false;
@@ -58,7 +59,6 @@ public class FrcCANTalon extends CANTalon implements TrcMotorController
      */
     private void commonInit(final String instanceName)
     {
-        this.instanceName = instanceName;
         resetPosition(true);
 
         if (debugEnabled)
@@ -81,7 +81,8 @@ public class FrcCANTalon extends CANTalon implements TrcMotorController
      */
     public FrcCANTalon(final String instanceName, int deviceNumber, int controlPeriodMs, int enablePeriodMs)
     {
-        super(deviceNumber, controlPeriodMs, enablePeriodMs);
+        super(instanceName);
+        motor = new CANTalon(deviceNumber, controlPeriodMs, enablePeriodMs);
         commonInit(instanceName);
     }   //FrcCANTalon
 
@@ -95,7 +96,8 @@ public class FrcCANTalon extends CANTalon implements TrcMotorController
      */
     public FrcCANTalon(final String instanceName, int deviceNumber, int controlPeriodMs)
     {
-        super(deviceNumber, controlPeriodMs);
+        super(instanceName);
+        motor = new CANTalon(deviceNumber, controlPeriodMs);
         commonInit(instanceName);
     }   //FrcCANTalon
 
@@ -107,19 +109,10 @@ public class FrcCANTalon extends CANTalon implements TrcMotorController
      */
     public FrcCANTalon(final String instanceName, int deviceNumber)
     {
-        super(deviceNumber);
+        super(instanceName);
+        motor = new CANTalon(deviceNumber);
         commonInit(instanceName);
     }   //FrcCANTalon
-
-    /**
-     * This method returns the instance name.
-     *
-     * @return instance name.
-     */
-    public String toString()
-    {
-        return instanceName;
-    }   //toString
 
     /**
      * This method swaps the forward and reverse limit switches. By default, the lower limit switch is associated
@@ -150,7 +143,6 @@ public class FrcCANTalon extends CANTalon implements TrcMotorController
      *
      * @param normalOpen specifies true for normal open, false for normal close.
      */
-    @Override
     public void ConfigFwdLimitSwitchNormallyOpen(boolean normalOpen)
     {
         final String funcName = "ConfigFwdLimitSwitchNormallyOpen";
@@ -161,7 +153,7 @@ public class FrcCANTalon extends CANTalon implements TrcMotorController
             dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.API);
         }
 
-        super.ConfigFwdLimitSwitchNormallyOpen(normalOpen);
+        motor.ConfigFwdLimitSwitchNormallyOpen(normalOpen);
         fwdLimitSwitchNormalOpen = normalOpen;
     }   //ConfigFwdLimitSwitchNormallyOpen
 
@@ -170,7 +162,6 @@ public class FrcCANTalon extends CANTalon implements TrcMotorController
      *
      * @param normalOpen specifies true for normal open, false for normal close.
      */
-    @Override
     public void ConfigRevLimitSwitchNormallyOpen(boolean normalOpen)
     {
         final String funcName = "ConfigRevLimitSwitchNormallyOpen";
@@ -181,7 +172,7 @@ public class FrcCANTalon extends CANTalon implements TrcMotorController
             dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.API);
         }
 
-        super.ConfigRevLimitSwitchNormallyOpen(normalOpen);
+        motor.ConfigRevLimitSwitchNormallyOpen(normalOpen);
         revLimitSwitchNormalOpen = normalOpen;
     }   //ConfigRevLimitSwitchNormallyOpen
 
@@ -190,7 +181,6 @@ public class FrcCANTalon extends CANTalon implements TrcMotorController
      *
      * @param devType specifies the feedback device type.
      */
-    @Override
     public void setFeedbackDevice(FeedbackDevice devType)
     {
         final String funcName = "setFeedbackDevice";
@@ -201,7 +191,7 @@ public class FrcCANTalon extends CANTalon implements TrcMotorController
             dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.API);
         }
 
-        super.setFeedbackDevice(devType);
+        motor.setFeedbackDevice(devType);
         feedbackDeviceIsPot = devType == FeedbackDevice.AnalogPot;
     }   //setFeedbackDevice
 
@@ -218,7 +208,7 @@ public class FrcCANTalon extends CANTalon implements TrcMotorController
     public boolean getInverted()
     {
         final String funcName = "getInverted";
-        boolean inverted = super.getInverted();
+        boolean inverted = motor.getInverted();
 
         if (debugEnabled)
         {
@@ -239,7 +229,7 @@ public class FrcCANTalon extends CANTalon implements TrcMotorController
     public double getPosition()
     {
         final String funcName = "getPosition";
-        double pos = super.getPosition();
+        double pos = motor.getPosition();
 
         pos -= zeroPosition;
 
@@ -261,7 +251,7 @@ public class FrcCANTalon extends CANTalon implements TrcMotorController
     public double getPower()
     {
         final String funcName = "getPower";
-        double power = super.get();
+        double power = motor.get();
 
         if (debugEnabled)
         {
@@ -281,8 +271,8 @@ public class FrcCANTalon extends CANTalon implements TrcMotorController
     public boolean isLowerLimitSwitchActive()
     {
         final String funcName = "isLowerLimitSwitchActive";
-        boolean isActive = limitSwitchesSwapped? !(fwdLimitSwitchNormalOpen^isFwdLimitSwitchClosed()):
-                                                 !(revLimitSwitchNormalOpen^isRevLimitSwitchClosed());
+        boolean isActive = limitSwitchesSwapped? !(fwdLimitSwitchNormalOpen^motor.isFwdLimitSwitchClosed()):
+                                                 !(revLimitSwitchNormalOpen^motor.isRevLimitSwitchClosed());
 
         if (debugEnabled)
         {
@@ -302,8 +292,8 @@ public class FrcCANTalon extends CANTalon implements TrcMotorController
     public boolean isUpperLimitSwitchActive()
     {
         final String funcName = "isUpperLimitSwitchActive";
-        boolean isActive = limitSwitchesSwapped? !(revLimitSwitchNormalOpen^isRevLimitSwitchClosed()):
-                                                 !(fwdLimitSwitchNormalOpen^isFwdLimitSwitchClosed());
+        boolean isActive = limitSwitchesSwapped? !(revLimitSwitchNormalOpen^motor.isRevLimitSwitchClosed()):
+                                                 !(fwdLimitSwitchNormalOpen^motor.isFwdLimitSwitchClosed());
 
         if (debugEnabled)
         {
@@ -336,12 +326,12 @@ public class FrcCANTalon extends CANTalon implements TrcMotorController
             //
             // Potentiometer has no hardware position to reset. So clear the software one.
             //
-            zeroPosition = super.getPosition();
+            zeroPosition = motor.getPosition();
         }
         else if (hardware)
         {
-            super.setPosition(0.0);
-            while (super.getPosition() != 0.0)
+            motor.setPosition(0.0);
+            while (motor.getPosition() != 0.0)
             {
                 Thread.yield();
             }
@@ -377,8 +367,27 @@ public class FrcCANTalon extends CANTalon implements TrcMotorController
             dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.API);
         }
 
-        super.enableBrakeMode(enabled);
+        motor.enableBrakeMode(enabled);
     }   //setBrakeModeEnabled
+
+    /**
+     * This method inverts the motor direction.
+     *
+     * @param inverted specifies true to invert motor direction, false otherwise.
+     */
+    @Override
+    public void setInverted(boolean inverted)
+    {
+        final String funcName = "setInverted";
+
+        if (debugEnabled)
+        {
+            dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.API, "inverted=%s", Boolean.toString(inverted));
+            dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.API);
+        }
+
+        motor.setInverted(inverted);
+    }   //setInverted
 
     /**
      * This method sets the output power of the motor controller.
@@ -401,7 +410,7 @@ public class FrcCANTalon extends CANTalon implements TrcMotorController
             power = 0.0;
         }
 
-        super.set(power);
+        motor.set(power);
 
         if (debugEnabled)
         {
@@ -428,7 +437,7 @@ public class FrcCANTalon extends CANTalon implements TrcMotorController
             dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.API);
         }
 
-        super.reverseSensor(inverted);
+        motor.reverseSensor(inverted);
     }   //setPositionSensorInverted
 
     /**

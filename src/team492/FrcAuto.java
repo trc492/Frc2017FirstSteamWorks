@@ -152,13 +152,12 @@ public class FrcAuto implements TrcRobot.RobotMode
 
         robot.driveBase.resetPosition();
         robot.targetHeading = 0.0;
+
         robot.encoderXPidCtrl.setOutputRange(-0.5, 0.5);
         robot.encoderYPidCtrl.setOutputRange(-0.5, 0.5);
         robot.gyroTurnPidCtrl.setOutputRange(-0.5, 0.5);
         robot.sonarDrivePidCtrl.setOutputRange(-0.5, 0.5);
         robot.visionTurnPidCtrl.setOutputRange(-0.5, 0.5);
-        robot.pidDrive.setStallTimeout(RobotInfo.DRIVE_STALL_TIMEOUT);
-        robot.visionPidDrive.setStallTimeout(RobotInfo.DRIVE_STALL_TIMEOUT);
     }   //startMode
 
     @Override

@@ -88,6 +88,12 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
 
         robot.driveBase.resetPosition();
         robot.targetHeading = 0.0;
+
+        robot.encoderXPidCtrl.setOutputRange(-1.0, 1.0);
+        robot.encoderYPidCtrl.setOutputRange(-1.0, 1.0);
+        robot.gyroTurnPidCtrl.setOutputRange(-1.0, 1.0);
+        robot.sonarDrivePidCtrl.setOutputRange(-1.0, 1.0);
+        robot.visionTurnPidCtrl.setOutputRange(-1.0, 1.0);
     }   // startMode
 
     @Override
