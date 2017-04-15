@@ -64,32 +64,31 @@ public class Winch
 
     public void setPower(double power)
     {
-    	double current = getCurrent();
-    	
-    	if(!offGround && current >= RobotInfo.WINCH_MOTOR_CURRENT_THRESHOLD){
+    	if(!offGround && getCurrent() >= RobotInfo.WINCH_MOTOR_CURRENT_THRESHOLD){
     		offGround = true;
     		motor1.resetPosition();
-    		motor2.resetPosition();
     	}
     	
-    	if(getPosition() >= RobotInfo.WINCH_HEIGHT_THRESHOLD && !fullyTouchingPlate() && manualOverride){
+    	if(manualOverride){
+    		motor1.setPower(power);
+    		motor2.setPower(power);
+    	}
+    	else if(touchingPlate()){
+    		motor1.setPower(0.0);
+    		motor2.setPower(0.0);
+    	}
+    	else if(offGround && getPosition() >= RobotInfo.WINCH_HEIGHT_THRESHOLD){
     		motor1.setPower(power * RobotInfo.WINCH_MOTOR_POWER_SCALE);
     		motor2.setPower(power * RobotInfo.WINCH_MOTOR_POWER_SCALE);
     	}
-    	else if (manualOverride || !fullyTouchingPlate())
-        {
-            motor1.setPower(power);
-            motor2.setPower(power);
-        }
-        else
-        {
-            motor1.setPower(0.0);
-            motor2.setPower(0.0);
-        }
+    	else{
+    		motor1.setPower(power);
+    		motor2.setPower(power);
+    	}
     }
     
-    private boolean fullyTouchingPlate(){
-    	return isUpperLimitSwitchActive() && isLowerLimitSwitchActive();
+    private boolean touchingPlate(){
+    	return isUpperLimitSwitchActive() || isLowerLimitSwitchActive();
     }
     
     private double getCurrent(){
