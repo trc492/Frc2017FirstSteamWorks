@@ -201,5 +201,8 @@ public class RobotInfo
     // Winch subsystem.
     //
     public static final double WINCH_POSITION_SCALE             = 1.0;
+    public static final double WINCH_MOTOR_CURRENT_THRESHOLD    = 30.0;
+    public static final double WINCH_MOTOR_POWER_SCALE          = 0.3;
+    public static final double WINCH_HEIGHT_THRESHOLD           = 48.0;
 
 }   // class RobotInfo

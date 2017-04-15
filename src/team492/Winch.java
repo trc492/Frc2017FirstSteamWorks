@@ -26,12 +26,17 @@ import frclib.FrcCANTalon;
 
 public class Winch
 {
+	private static final String module = "Winch";
+	
     private FrcCANTalon motor1;
     private FrcCANTalon motor2;
     private boolean manualOverride = false;
+    private boolean offGround = false;
+    private Robot robot;
 
-    public Winch()
+    public Winch(Robot robot)
     {
+    	this.robot = robot;
         motor1 = new FrcCANTalon("WinchMotor1", RobotInfo.CANID_WINCH1);
         motor2 = new FrcCANTalon("WinchMotor2", RobotInfo.CANID_WINCH2);
         motor1.setPositionSensorInverted(false);
@@ -59,7 +64,19 @@ public class Winch
 
     public void setPower(double power)
     {
-        if (manualOverride || !isUpperLimitSwitchActive() && !isLowerLimitSwitchActive())
+    	double current = getCurrent();
+    	
+    	if(!offGround && current >= RobotInfo.WINCH_MOTOR_CURRENT_THRESHOLD){
+    		offGround = true;
+    		motor1.resetPosition();
+    		motor2.resetPosition();
+    	}
+    	
+    	if(getPosition() >= RobotInfo.WINCH_HEIGHT_THRESHOLD && !fullyTouchingPlate() && manualOverride){
+    		motor1.setPower(power * RobotInfo.WINCH_MOTOR_POWER_SCALE);
+    		motor2.setPower(power * RobotInfo.WINCH_MOTOR_POWER_SCALE);
+    	}
+    	else if (manualOverride || !fullyTouchingPlate())
         {
             motor1.setPower(power);
             motor2.setPower(power);
@@ -69,6 +86,17 @@ public class Winch
             motor1.setPower(0.0);
             motor2.setPower(0.0);
         }
+    }
+    
+    private boolean fullyTouchingPlate(){
+    	return isUpperLimitSwitchActive() && isLowerLimitSwitchActive();
+    }
+    
+    private double getCurrent(){
+    	double current1 = motor1.motor.getOutputCurrent();
+    	double current2 = motor2.motor.getOutputCurrent();
+    	robot.tracer.traceInfo(module, "motor1Current=%.1f, motor2Current=%.1f", current1, current2);
+    	return Math.abs(current1) + Math.abs(current2);
     }
   
 }   //class Winch

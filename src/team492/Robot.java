@@ -392,7 +392,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         mailbox = new FrcPneumatic(
             "Mailbox", RobotInfo.CANID_PCM1, RobotInfo.SOL_MAILBOX_EXTEND, RobotInfo.SOL_MAILBOX_RETRACT);
         gearPickup = new GearPickup();
-        winch = new Winch();
+        winch = new Winch(this);
 
         //
         // Create Global Menus (can be used in all modes).
