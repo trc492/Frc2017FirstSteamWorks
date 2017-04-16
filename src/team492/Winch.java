@@ -23,7 +23,9 @@
 package team492;
 
 import frclib.FrcCANTalon;
+import hallib.HalDashboard;
 import trclib.TrcDbgTrace;
+import trclib.TrcUtil;
 
 public class Winch
 {
@@ -32,8 +34,12 @@ public class Winch
 
     private FrcCANTalon motor1;
     private FrcCANTalon motor2;
+    private double motorPower = 0.0;
     private boolean manualOverride = false;
+    private boolean motorStarted = false;
     private boolean offGround = false;
+    private double settlingTime = 0.0;
+    private double maxCurrent = 0.0;
 
     public Winch()
     {
@@ -49,12 +55,12 @@ public class Winch
 
     public boolean isUpperLimitSwitchActive()
     {
-        return !motor1.isUpperLimitSwitchActive();
+        return motor1.isUpperLimitSwitchActive();
     }
 
     public boolean isLowerLimitSwitchActive()
     {
-        return !motor1.isLowerLimitSwitchActive();
+        return motor1.isLowerLimitSwitchActive();
     }
 
     public double getPosition()
@@ -64,26 +70,42 @@ public class Winch
 
     public void setPower(double power)
     {
-        double motorPower = power;
+        double currTime = TrcUtil.getCurrentTime();
 
-        if (!offGround && getCurrent() >= RobotInfo.WINCH_MOTOR_CURRENT_THRESHOLD)
+        power = Math.abs(power);
+        if (power == 0.0)
+        {
+            motorStarted = false;
+            HalDashboard.getInstance().displayPrintf(11, "");
+            HalDashboard.getInstance().displayPrintf(12, "");
+        }
+        else if (!motorStarted)
+        {
+            motorStarted = true;
+            settlingTime = currTime + 0.5;
+        }
+
+        if (!offGround && currTime >= settlingTime && getCurrent() >= RobotInfo.WINCH_MOTOR_CURRENT_THRESHOLD)
         {
             offGround = true;
             motor1.resetPosition();
+            HalDashboard.getInstance().displayPrintf(11, "reset!!!");
         }
 
         if (!manualOverride)
         {
             if (touchingPlate())
             {
-                motorPower = 0.0;
+                power = 0.0;
             }
             else if (offGround && getPosition() >= RobotInfo.WINCH_HEIGHT_THRESHOLD)
             {
-                motorPower = power*RobotInfo.WINCH_MOTOR_POWER_SCALE;
+                power *= RobotInfo.WINCH_MOTOR_POWER_SCALE;
+                HalDashboard.getInstance().displayPrintf(12, "SLOW!!!");
             }
         }
 
+        motorPower = power;
         motor1.setPower(motorPower);
         motor2.setPower(motorPower);
     }
@@ -93,12 +115,25 @@ public class Winch
         return isUpperLimitSwitchActive() || isLowerLimitSwitchActive();
     }
 
-    private double getCurrent()
+    public double getPower()
+    {
+        return motorPower;
+    }
+
+    public double getCurrent()
     {
         double current1 = motor1.motor.getOutputCurrent();
         double current2 = motor2.motor.getOutputCurrent();
-        tracer.traceInfo(module, "motor1Current=%.1f, motor2Current=%.1f", current1, current2);
-        return Math.abs(current1) + Math.abs(current2);
+        double totalCurrent = Math.abs(current1) + Math.abs(current2);
+
+        if (totalCurrent > maxCurrent) maxCurrent = totalCurrent;
+
+        return totalCurrent;
+    }
+
+    public double getMaxCurrent()
+    {
+        return maxCurrent;
     }
 
 }   //class Winch
