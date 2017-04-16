@@ -426,7 +426,6 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     public void robotStartMode()
     {
         battery.setEnabled(true);
-        gyro.resetZIntegrator();
         //
         // Retrieve Global Choices.
         //
