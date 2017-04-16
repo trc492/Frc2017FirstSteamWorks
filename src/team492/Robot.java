@@ -57,7 +57,6 @@ import trclib.TrcEmic2TextToSpeech.Voice;
 import trclib.TrcGyro;
 import trclib.TrcPidController;
 import trclib.TrcPidDrive;
-import trclib.TrcRobot.RobotMode;
 import trclib.TrcRobotBattery;
 import trclib.TrcUtil;
 
@@ -71,7 +70,7 @@ import trclib.TrcUtil;
 public class Robot extends FrcRobotBase implements TrcPidController.PidInput
 {
     public static final String programName = "FirstSteamWorks";
-    public static final String moduleName = "Robot";
+    private static final String moduleName = "Robot";
 
     public static final boolean USE_TRACELOG = true;
     public static final boolean USE_NAV_X = true;
@@ -185,13 +184,6 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     public double tuneKp;
     public double tuneKi;
     public double tuneKd;
-
-    //
-    // Robot Modes.
-    //
-    private RobotMode teleOpMode;
-    private RobotMode autoMode;
-    private RobotMode testMode;
 
     /**
      * Constructor.
@@ -417,10 +409,10 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         //
         // Robot Modes.
         //
-        teleOpMode = new FrcTeleOp(this);
-        autoMode = new FrcAuto(this);
-        testMode = new FrcTest(this);
-        setupRobotModes(teleOpMode, autoMode, testMode, null);
+        //
+        // Robot Modes.
+        //
+        setupRobotModes(new FrcTeleOp(this), new FrcAuto(this), new FrcTest(this), null);
     }   //robotInit
 
     public void robotStartMode()
