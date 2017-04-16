@@ -74,8 +74,8 @@ public class RobotInfo
     public static final int CANID_RIGHTFRONTWHEEL               = 4;    // 40A: Yellow
     public static final int CANID_LEFTREARWHEEL                 = 5;    // 40A: Green
     public static final int CANID_RIGHTREARWHEEL                = 6;    // 40A: Blue
-    public static final int CANID_WINCH1                        = 7;    // 40A: Purple
-    public static final int CANID_WINCH2                        = 8;    // 40A: Gray
+    public static final int CANID_WINCH_MASTER                  = 7;    // 40A: Purple
+    public static final int CANID_WINCH_SLAVE                   = 8;    // 40A: Gray
 
     public static final int CANID_PDP                           = 16;
     public static final int CANID_PCM1                          = 17;

@@ -22,30 +22,33 @@
 
 package team492;
 
+import com.ctre.CANTalon.TalonControlMode;
+
 import frclib.FrcCANTalon;
-import hallib.HalDashboard;
-import trclib.TrcDbgTrace;
 import trclib.TrcUtil;
 
 public class Winch
 {
-    private static final String module = "Winch";
-    private TrcDbgTrace tracer = TrcDbgTrace.getGlobalTracer();
-
-    private FrcCANTalon motor1;
-    private FrcCANTalon motor2;
+    private FrcCANTalon mainMotor;
+    private FrcCANTalon slaveMotor;
     private double motorPower = 0.0;
     private boolean manualOverride = false;
     private boolean motorStarted = false;
     private boolean offGround = false;
+    private boolean encoderReset = false;
+    private boolean motorSlowed = false;
     private double settlingTime = 0.0;
+    private double masterCurrent = 0.0;
+    private double slaveCurrent = 0.0;
     private double maxCurrent = 0.0;
 
     public Winch()
     {
-        motor1 = new FrcCANTalon("WinchMotor1", RobotInfo.CANID_WINCH1);
-        motor2 = new FrcCANTalon("WinchMotor2", RobotInfo.CANID_WINCH2);
-        motor1.setPositionSensorInverted(false);
+        mainMotor = new FrcCANTalon("WinchMaster", RobotInfo.CANID_WINCH_MASTER);
+        slaveMotor = new FrcCANTalon("WinchSlave", RobotInfo.CANID_WINCH_SLAVE);
+        slaveMotor.motor.changeControlMode(TalonControlMode.Follower);
+        slaveMotor.motor.set(RobotInfo.CANID_WINCH_MASTER);
+        mainMotor.setPositionSensorInverted(false);
     }
 
     public void setManualOverride(boolean override)
@@ -55,17 +58,32 @@ public class Winch
 
     public boolean isUpperLimitSwitchActive()
     {
-        return motor1.isUpperLimitSwitchActive();
+        return mainMotor.isUpperLimitSwitchActive();
     }
 
     public boolean isLowerLimitSwitchActive()
     {
-        return motor1.isLowerLimitSwitchActive();
+        return mainMotor.isLowerLimitSwitchActive();
+    }
+
+    public boolean isEncoderReset()
+    {
+        return encoderReset;
+    }
+
+    public boolean isMotorSlowed()
+    {
+        return motorSlowed;
     }
 
     public double getPosition()
     {
-        return motor1.getPosition()*RobotInfo.WINCH_POSITION_SCALE; 
+        return mainMotor.getPosition()*RobotInfo.WINCH_POSITION_SCALE;
+    }
+
+    public double getPower()
+    {
+        return motorPower;
     }
 
     public void setPower(double power)
@@ -76,11 +94,12 @@ public class Winch
         if (power == 0.0)
         {
             motorStarted = false;
-            HalDashboard.getInstance().displayPrintf(11, "");
-            HalDashboard.getInstance().displayPrintf(12, "");
         }
         else if (!motorStarted)
         {
+            //
+            // Motor current spikes up when starting, so ignore the first half second to allow current to settle.
+            //
             motorStarted = true;
             settlingTime = currTime + 0.5;
         }
@@ -88,8 +107,8 @@ public class Winch
         if (!offGround && currTime >= settlingTime && getCurrent() >= RobotInfo.WINCH_MOTOR_CURRENT_THRESHOLD)
         {
             offGround = true;
-            motor1.resetPosition();
-            HalDashboard.getInstance().displayPrintf(11, "reset!!!");
+            mainMotor.resetPosition();
+            encoderReset = true;
         }
 
         if (!manualOverride)
@@ -101,39 +120,43 @@ public class Winch
             else if (offGround && getPosition() >= RobotInfo.WINCH_HEIGHT_THRESHOLD)
             {
                 power *= RobotInfo.WINCH_MOTOR_POWER_SCALE;
-                HalDashboard.getInstance().displayPrintf(12, "SLOW!!!");
+                motorSlowed = true;
             }
         }
 
         motorPower = power;
-        motor1.setPower(motorPower);
-        motor2.setPower(motorPower);
-    }
-
-    private boolean touchingPlate()
-    {
-        return isUpperLimitSwitchActive() || isLowerLimitSwitchActive();
-    }
-
-    public double getPower()
-    {
-        return motorPower;
+        mainMotor.setPower(motorPower);
     }
 
     public double getCurrent()
     {
-        double current1 = motor1.motor.getOutputCurrent();
-        double current2 = motor2.motor.getOutputCurrent();
-        double totalCurrent = Math.abs(current1) + Math.abs(current2);
+        masterCurrent = mainMotor.motor.getOutputCurrent();
+        slaveCurrent = slaveMotor.motor.getOutputCurrent();
+        double totalCurrent = Math.abs(masterCurrent) + Math.abs(slaveCurrent);
 
         if (totalCurrent > maxCurrent) maxCurrent = totalCurrent;
 
         return totalCurrent;
     }
 
+    public double getMasterCurrent()
+    {
+        return masterCurrent;
+    }
+
+    public double getSlaveCurrent()
+    {
+        return slaveCurrent;
+    }
+
     public double getMaxCurrent()
     {
         return maxCurrent;
+    }
+
+    private boolean touchingPlate()
+    {
+        return isUpperLimitSwitchActive() || isLowerLimitSwitchActive();
     }
 
 }   //class Winch

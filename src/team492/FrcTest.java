@@ -325,30 +325,9 @@ public class FrcTest extends FrcTeleOp
             robot.driveBase.getXPosition(), robot.driveBase.getYPosition(), robot.driveBase.getHeading());
         robot.dashboard.displayPrintf(4, "Gyro: Rate=%.3f, Heading=%.1f",
             robot.gyro.getZRotationRate().value, robot.gyro.getZHeading().value);
-        robot.dashboard.displayPrintf(5, "Winch: power=%.1f, position=%.1f",
-            robot.winch.getPower(), robot.winch.getPosition());
-        robot.dashboard.displayPrintf(6, "Winch: current=%.1f/%.1f, touch=%s/%s",
-            robot.winch.getCurrent(), robot.winch.getMaxCurrent(),
-            Boolean.toString(robot.winch.isUpperLimitSwitchActive()),
-            Boolean.toString(robot.winch.isLowerLimitSwitchActive()));
-        robot.dashboard.displayPrintf(7, "GearPickup: gear=%s", robot.gearPickup.gearDetected());
-        robot.dashboard.displayPrintf(8, "PressureSensor: pressure=%.1f", robot.getPressure());
-        robot.dashboard.displayPrintf(9, "Ultrasonic=%.1f inches", robot.getUltrasonicDistance());
-        if (robot.frontPixy != null && robot.frontPixy.isEnabled())
-        {
-            PixyVision.TargetInfo targetInfo = robot.frontPixy.getTargetInfo();
-            if (targetInfo == null)
-            {
-                robot.dashboard.displayPrintf(14, "Target not found!");
-            }
-            else
-            {
-                robot.dashboard.displayPrintf(14, "x=%d, y=%d, width=%d, height=%d",
-                    targetInfo.rect.x, targetInfo.rect.y, targetInfo.rect.width, targetInfo.rect.height);
-                robot.dashboard.displayPrintf(15, "xDistance=%.1f, yDistance=%.1f, angle=%.1f",
-                    targetInfo.xDistance, targetInfo.yDistance, targetInfo.angle);
-            }
-        }
+        robot.dashboard.displayPrintf(5, "GearPickup: gear=%s", robot.gearPickup.gearDetected());
+        robot.dashboard.displayPrintf(6, "PressureSensor: pressure=%.1f", robot.getPressure());
+        robot.dashboard.displayPrintf(7, "Ultrasonic=%.1f inches", robot.getUltrasonicDistance());
     }   //doSensorsTest
 
     /**

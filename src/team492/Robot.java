@@ -89,6 +89,8 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     private static final boolean DEBUG_PID_DRIVE = false;
     private static final boolean DEBUG_GRIP_VISION = false;
     private static final boolean DEBUG_FACE_DETECTION = false;
+    private static final boolean DEBUG_WINCH = true;
+    private static final boolean DEBUG_PIXY = true;
     private static final double DASHBOARD_UPDATE_INTERVAL = 0.1;
 
     public static enum MatchType
@@ -560,15 +562,34 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
                 }
             }
 
-            if (frontPixy != null && frontPixy.isEnabled())
+            if (DEBUG_WINCH)
             {
-                PixyVision.TargetInfo targetInfo = frontPixy.getTargetInfo();
-                if (targetInfo != null)
+                dashboard.displayPrintf(8, "Winch: power=%.1f, position=%.1f, touch=%s/%s",
+                    winch.getPower(), winch.getPosition(),
+                    Boolean.toString(winch.isUpperLimitSwitchActive()),
+                    Boolean.toString(winch.isLowerLimitSwitchActive()));
+                dashboard.displayPrintf(9, "Winch: current=%.1f/%.1f (%.1f)",
+                    winch.getMasterCurrent(), winch.getSlaveCurrent(), winch.getMaxCurrent());
+                dashboard.displayPrintf(10, "Winch: EncoderReset=%s", Boolean.toString(winch.isEncoderReset()));
+                dashboard.displayPrintf(11, "Winch: MotorSlowed=%s", Boolean.toString(winch.isMotorSlowed()));
+            }
+
+            if (DEBUG_PIXY)
+            {
+                if (frontPixy != null && frontPixy.isEnabled())
                 {
-                    dashboard.displayPrintf(14, "x=%d, y=%d, width=%d, height=%d",
-                        targetInfo.rect.x, targetInfo.rect.y, targetInfo.rect.width, targetInfo.rect.height);
-                    dashboard.displayPrintf(15, "xDistance=%.1f, yDistance=%.1f, angle=%.1f",
-                        targetInfo.xDistance, targetInfo.yDistance, targetInfo.angle);
+                    PixyVision.TargetInfo targetInfo = frontPixy.getTargetInfo();
+                    if (targetInfo == null)
+                    {
+                        dashboard.displayPrintf(14, "Pixy: Target not found!");
+                    }
+                    else
+                    {
+                        dashboard.displayPrintf(14, "Pixy: x=%d, y=%d, width=%d, height=%d",
+                            targetInfo.rect.x, targetInfo.rect.y, targetInfo.rect.width, targetInfo.rect.height);
+                        dashboard.displayPrintf(15, "xDistance=%.1f, yDistance=%.1f, angle=%.1f",
+                            targetInfo.xDistance, targetInfo.yDistance, targetInfo.angle);
+                    }
                 }
             }
         }
