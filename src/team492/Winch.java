@@ -35,8 +35,8 @@ public class Winch
     private boolean manualOverride = false;
     private boolean motorStarted = false;
     private boolean offGround = false;
-    private boolean encoderReset = false;
     private boolean motorSlowed = false;
+    private boolean plateTouched = false;
     private double settlingTime = 0.0;
     private double masterCurrent = 0.0;
     private double slaveCurrent = 0.0;
@@ -66,9 +66,9 @@ public class Winch
         return mainMotor.isLowerLimitSwitchActive();
     }
 
-    public boolean isEncoderReset()
+    public boolean isOffGround()
     {
-        return encoderReset;
+        return offGround;
     }
 
     public boolean isMotorSlowed()
@@ -108,7 +108,6 @@ public class Winch
         {
             offGround = true;
             mainMotor.resetPosition();
-            encoderReset = true;
         }
 
         if (!manualOverride)
@@ -154,9 +153,21 @@ public class Winch
         return maxCurrent;
     }
 
-    private boolean touchingPlate()
+    public boolean touchingPlate()
     {
-        return isUpperLimitSwitchActive() || isLowerLimitSwitchActive();
+        if (!plateTouched)
+        {
+            plateTouched = isUpperLimitSwitchActive() || isLowerLimitSwitchActive();
+        }
+
+        return plateTouched;
+    }
+
+    public void clearState()
+    {
+        offGround = false;
+        motorSlowed = false;
+        plateTouched = false;
     }
 
 }   //class Winch

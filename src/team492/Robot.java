@@ -558,8 +558,9 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
                     Boolean.toString(winch.isLowerLimitSwitchActive()));
                 dashboard.displayPrintf(9, "Winch: current=%.1f/%.1f (%.1f)",
                     winch.getMasterCurrent(), winch.getSlaveCurrent(), winch.getMaxCurrent());
-                dashboard.displayPrintf(10, "Winch: EncoderReset=%s", Boolean.toString(winch.isEncoderReset()));
+                dashboard.displayPrintf(10, "Winch: OffGround=%s", Boolean.toString(winch.isOffGround()));
                 dashboard.displayPrintf(11, "Winch: MotorSlowed=%s", Boolean.toString(winch.isMotorSlowed()));
+                dashboard.displayPrintf(12, "Winch: TouchPlate=%s", Boolean.toString(winch.touchingPlate()));
             }
 
             if (DEBUG_PIXY)
