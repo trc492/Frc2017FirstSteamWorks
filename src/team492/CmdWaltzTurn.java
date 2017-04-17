@@ -60,10 +60,12 @@ class CmdWaltzTurn implements TrcRobot.RobotCommand
 
     public void start()
     {
-        if (!robot.pidDrive.isActive())
+        if (robot.pidDrive.isActive())
         {
-            sm.start(State.WALTZ_TURN);
+            robot.pidDrive.cancel();
         }
+
+        sm.start(State.WALTZ_TURN);
     }
 
     public void stop()

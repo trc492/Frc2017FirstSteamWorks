@@ -223,6 +223,10 @@ public class FrcTest extends FrcTeleOp
     {
         switch (test)
         {
+            case SENSORS_TEST:
+                super.runContinuous(elapsedTime);
+                break;
+
             case X_TIMED_DRIVE:
             case Y_TIMED_DRIVE:
                 double lfEnc = robot.leftFrontWheel.getPosition();
