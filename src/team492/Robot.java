@@ -409,9 +409,6 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         //
         // Robot Modes.
         //
-        //
-        // Robot Modes.
-        //
         setupRobotModes(new FrcTeleOp(this), new FrcAuto(this), new FrcTest(this), null);
     }   //robotInit
 
