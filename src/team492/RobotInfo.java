@@ -204,5 +204,7 @@ public class RobotInfo
     public static final double WINCH_MOTOR_CURRENT_THRESHOLD    = 20.0;
     public static final double WINCH_MOTOR_POWER_SCALE          = 0.6;
     public static final double WINCH_HEIGHT_THRESHOLD           = 28.0;
+    public static final double WINCH_SPIKE_TIMEOUT              = 0.5;
+    public static final double WINCH_TILT_THRESHOLD             = 35.0;
 
 }   // class RobotInfo
