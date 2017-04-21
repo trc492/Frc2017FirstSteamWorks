@@ -126,7 +126,7 @@ public class TrcDriveBase implements TrcTaskMgr.Task
         yScale = 1.0;
         rotScale = 1.0;
         resetPosition(true);
-        stallStartTime = TrcUtil.getCurrentTime();
+        resetStallTimer();
 
         TrcTaskMgr taskMgr = TrcTaskMgr.getInstance();
         taskMgr.registerTask(moduleName, this, TrcTaskMgr.TaskType.STOP_TASK);
@@ -635,7 +635,7 @@ public class TrcDriveBase implements TrcTaskMgr.Task
     public boolean isStalled(double stallTime)
     {
         final String funcName = "isStalled";
-        boolean stalled = TrcUtil.getCurrentTime() - stallStartTime > stallTime;
+        boolean stalled = TrcUtil.getCurrentTime() - stallStartTime >= stallTime;
 
         if (debugEnabled)
         {
@@ -645,6 +645,14 @@ public class TrcDriveBase implements TrcTaskMgr.Task
 
         return stalled;
     }   //isStalled
+
+    /**
+     * This method resets the stall timer.
+     */
+    public void resetStallTimer()
+    {
+        stallStartTime = TrcUtil.getCurrentTime();
+    }   //resetStallTimer
 
     /**
      * This method enables/disables brake mode of the drive base.
@@ -1275,7 +1283,7 @@ public class TrcDriveBase implements TrcTaskMgr.Task
             lrEnc != prevLeftRearPos || rrEnc != prevRightRearPos ||
             lfPower == 0.0 && rfPower == 0.0 && lrPower == 0.0 && rrPower == 0.0)
         {
-            stallStartTime = TrcUtil.getCurrentTime();
+            resetStallTimer();
         }
         prevLeftFrontPos = lfEnc;
         prevRightFrontPos = rfEnc;
