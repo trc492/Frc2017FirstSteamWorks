@@ -82,7 +82,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     public static final boolean USE_FRONT_PIXY = true;
     public static final boolean USE_FRONT_PIXY_UART = false;
     public static final boolean USE_REAR_PIXY = false;
-    public static final boolean USE_TEXT_TO_SPEECH = true;
+    public static final boolean USE_TEXT_TO_SPEECH = false;
     public static final boolean USE_ACCELEROMETER = false;
 
     private static final boolean DEBUG_DRIVE_BASE = false;
