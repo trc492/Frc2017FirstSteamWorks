@@ -1185,6 +1185,7 @@ public class TrcDriveBase implements TrcTaskMgr.Task
             }
             catch (UnsupportedOperationException e)
             {
+                lfEnc = 0.0;
             }
 
             try
@@ -1193,6 +1194,7 @@ public class TrcDriveBase implements TrcTaskMgr.Task
             }
             catch (UnsupportedOperationException e)
             {
+                lfSpeed = 0.0;
             }
         }
         if (leftRearMotor != null)
@@ -1203,6 +1205,7 @@ public class TrcDriveBase implements TrcTaskMgr.Task
             }
             catch (UnsupportedOperationException e)
             {
+                lrEnc= 0.0;
             }
 
             try
@@ -1211,6 +1214,7 @@ public class TrcDriveBase implements TrcTaskMgr.Task
             }
             catch (UnsupportedOperationException e)
             {
+                lrSpeed = 0.0;
             }
         }
         if (rightFrontMotor != null)
@@ -1221,6 +1225,7 @@ public class TrcDriveBase implements TrcTaskMgr.Task
             }
             catch (UnsupportedOperationException e)
             {
+                rfEnc = 0.0;
             }
 
             try
@@ -1229,6 +1234,7 @@ public class TrcDriveBase implements TrcTaskMgr.Task
             }
             catch (UnsupportedOperationException e)
             {
+                rfSpeed = 0.0;
             }
         }
         if (rightRearMotor != null)
@@ -1239,6 +1245,7 @@ public class TrcDriveBase implements TrcTaskMgr.Task
             }
             catch (UnsupportedOperationException e)
             {
+                rrEnc = 0.0;
             }
 
             try
@@ -1247,6 +1254,7 @@ public class TrcDriveBase implements TrcTaskMgr.Task
             }
             catch (UnsupportedOperationException e)
             {
+                rrSpeed = 0.0;
             }
         }
 
