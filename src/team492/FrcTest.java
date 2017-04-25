@@ -363,7 +363,7 @@ public class FrcTest extends FrcTeleOp
                             //
                             // Run the left front wheel.
                             //
-                            robot.leftFrontWheel.setPower(0.5);
+                            robot.leftFrontWheel.setPower(robot.drivePower);
                             robot.rightFrontWheel.setPower(0.0);
                             robot.leftRearWheel.setPower(0.0);
                             robot.rightRearWheel.setPower(0.0);
@@ -374,7 +374,7 @@ public class FrcTest extends FrcTeleOp
                             // Run the right front wheel.
                             //
                             robot.leftFrontWheel.setPower(0.0);
-                            robot.rightFrontWheel.setPower(0.5);
+                            robot.rightFrontWheel.setPower(robot.drivePower);
                             robot.leftRearWheel.setPower(0.0);
                             robot.rightRearWheel.setPower(0.0);
                             break;
@@ -385,7 +385,7 @@ public class FrcTest extends FrcTeleOp
                             //
                             robot.leftFrontWheel.setPower(0.0);
                             robot.rightFrontWheel.setPower(0.0);
-                            robot.leftRearWheel.setPower(0.5);
+                            robot.leftRearWheel.setPower(robot.drivePower);
                             robot.rightRearWheel.setPower(0.0);
                             break;
 
@@ -396,7 +396,7 @@ public class FrcTest extends FrcTeleOp
                             robot.leftFrontWheel.setPower(0.0);
                             robot.rightFrontWheel.setPower(0.0);
                             robot.leftRearWheel.setPower(0.0);
-                            robot.rightRearWheel.setPower(0.5);
+                            robot.rightRearWheel.setPower(robot.drivePower);
                             break;
                     }
                     motorIndex = motorIndex + 1;
