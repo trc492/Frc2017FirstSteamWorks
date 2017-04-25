@@ -400,7 +400,7 @@ public class FrcTest extends FrcTeleOp
                             break;
                     }
                     motorIndex = motorIndex + 1;
-                    timer.set(5.0, event);
+                    timer.set(robot.driveTime, event);
                     sm.waitForSingleEvent(event, motorIndex < 4? State.START: State.DONE);
                     break;
 
