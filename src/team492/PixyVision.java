@@ -41,7 +41,7 @@ public class PixyVision
     private static final double PERCENT_TOLERANCE = 0.3;    // 30% tolerance
     private static final double PERCENT_TOLERANCE_LOWER = 1.0 - PERCENT_TOLERANCE;
     private static final double PERCENT_TOLERANCE_UPPER = 1.0 + PERCENT_TOLERANCE;
-    private static final double PERCENT_TOLERANCE_CENTERY = 0.9;
+    private static final double PERCENT_TOLERANCE_CENTER_Y = 0.9;
 
     public class TargetInfo
     {
@@ -279,7 +279,7 @@ public class PixyVision
 
                             if (widthRatio >= PERCENT_TOLERANCE_LOWER && widthRatio <= PERCENT_TOLERANCE_UPPER &&
                                 heightRatio >= PERCENT_TOLERANCE_LOWER && heightRatio <= PERCENT_TOLERANCE_UPPER ||
-                                minCenterY/maxCenterY >= PERCENT_TOLERANCE_CENTERY)
+                                minCenterY/maxCenterY >= PERCENT_TOLERANCE_CENTER_Y)
                             {
                                 targetRect = new Rect(targetX1, targetY1, targetWidth, targetHeight);
 
