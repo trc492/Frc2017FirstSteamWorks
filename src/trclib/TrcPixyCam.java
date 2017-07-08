@@ -415,7 +415,7 @@ public abstract class TrcPixyCam implements TrcSerialBusDevice.CompletionHandler
                     if (length != 1)
                     {
                         //
-                        // We should never come here. Let's throw any exception to catch this unlikely scenario.
+                        // We should never come here. Let's throw an exception to catch this unlikely scenario.
                         //
                         throw new IllegalStateException(String.format("Unexpected data length %d in %s.",
                             length, requestTag));
@@ -442,7 +442,7 @@ public abstract class TrcPixyCam implements TrcSerialBusDevice.CompletionHandler
                     if (length != 2)
                     {
                         //
-                        // We should never come here. Let's throw any exception to catch this unlikely scenario.
+                        // We should never come here. Let's throw an exception to catch this unlikely scenario.
                         //
                         throw new IllegalStateException(String.format("Unexpected data length %d in %s.",
                             length, requestTag));
@@ -497,7 +497,7 @@ public abstract class TrcPixyCam implements TrcSerialBusDevice.CompletionHandler
                             else
                             {
                                 //
-                                // We should never come here. Let's throw any exception to catch this unlikely scenario.
+                                // We should never come here. Let's throw an exception to catch this unlikely scenario.
                                 //
                                 throw new IllegalStateException(String.format("Unexpected sync word 0x%04x in %s.",
                                     currBlock.sync, requestTag));
@@ -512,7 +512,7 @@ public abstract class TrcPixyCam implements TrcSerialBusDevice.CompletionHandler
                         requestTag == RequestTag.COLOR_CODE_BLOCK && length != 12)
                     {
                         //
-                        // We should never come here. Let's throw any exception to catch this unlikely scenario.
+                        // We should never come here. Let's throw an exception to catch this unlikely scenario.
                         //
                         throw new IllegalStateException(String.format("Unexpected data length %d in %s.",
                             length, requestTag));
@@ -589,7 +589,7 @@ public abstract class TrcPixyCam implements TrcSerialBusDevice.CompletionHandler
 
                 default:
                     //
-                    // We should never come here. Let's throw any exception to catch this unlikely scenario.
+                    // We should never come here. Let's throw an exception to catch this unlikely scenario.
                     //
                     throw new IllegalStateException(String.format("Unexpected request tag %s.", requestTag));
             }
@@ -822,7 +822,7 @@ public abstract class TrcPixyCam implements TrcSerialBusDevice.CompletionHandler
 
                 default:
                     //
-                    // We should never come here. Let's throw any exception to catch this unlikely scenario.
+                    // We should never come here. Let's throw an exception to catch this unlikely scenario.
                     //
                     throw new IllegalStateException(String.format("Unexpected request tag %s.", requestTag));
             }
