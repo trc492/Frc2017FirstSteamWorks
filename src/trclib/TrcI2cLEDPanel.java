@@ -60,7 +60,7 @@ public abstract class TrcI2cLEDPanel extends TrcSerialBusDevice
     public void setTextLine(
         int index, int x, int y, int fontColor, int orientation, int fontSize, int scrollInc, String text)
     {
-        sendRequest("setTextLine " + index + " " + x + " " + y + " " + fontColor + " " + orientation + " " +
+        sendCommand("setTextLine " + index + " " + x + " " + y + " " + fontColor + " " + orientation + " " +
                     fontSize + " " + scrollInc + " " + text);
     }   //setTextLine
 
@@ -71,7 +71,7 @@ public abstract class TrcI2cLEDPanel extends TrcSerialBusDevice
      */
     public void clearTextLine(int index)
     {
-        sendRequest("clearTextLine " + index);
+        sendCommand("clearTextLine " + index);
     } //clearTextLine
 
     /**
@@ -79,7 +79,7 @@ public abstract class TrcI2cLEDPanel extends TrcSerialBusDevice
      */
     public void clearAllTextLines()
     {
-        sendRequest("clearAllTextLines");
+        sendCommand("clearAllTextLines");
     } //clearAllTextLines
 
     /**
@@ -89,7 +89,7 @@ public abstract class TrcI2cLEDPanel extends TrcSerialBusDevice
      */
     public void setDelay(int delay)
     {
-        sendRequest("setDelay " + delay);
+        sendCommand("setDelay " + delay);
     }   //setDelay
 
     /**
@@ -107,25 +107,23 @@ public abstract class TrcI2cLEDPanel extends TrcSerialBusDevice
     }   //color
 
     /**
-     * This method sends the request string to the I2C device. If the request string is longer than 32 bytes,
-     * it will break down the request string into multiple I2C requests so that they can be reassembled on the
+     * This method sends the command string to the I2C device. If the command string is longer than 32 bytes,
+     * it will break down the command string into multiple I2C requests so that they can be reassembled on the
      * device side.
      *
-     * @param request specifies the request string to be sent to the I2C device.
+     * @param command specifies the command string to be sent to the I2C device.
      */
-    private void sendRequest(String request)
+    private void sendCommand(String command)
     {
-        request += "~";
-        int requestLen = request.length();
-        TrcDbgTrace.getGlobalTracer().traceInfo("sendRequest", "Request: <%s> = %d", request, request.length());
+        command += "~";
+        int cmdLen = command.length();
 
-        for (int i = 0; i < requestLen; )
+        for (int i = 0; i < cmdLen; )
         {
-            int len = Math.min(requestLen - i, I2C_BUFF_LEN);
+            int len = Math.min(cmdLen - i, I2C_BUFF_LEN);
             if (len > 0)
             {
-                String s = request.substring(i, i + len);
-                byte[] data = s.getBytes();
+                byte[] data = command.substring(i, i + len).getBytes();
                 int n = writeData(-1, data, data.length);
 
                 if (n == 0)
@@ -135,6 +133,6 @@ public abstract class TrcI2cLEDPanel extends TrcSerialBusDevice
                 i += len;
             }
         }
-    }   //sendRequest
+    }   //sendCommand
 
 }   //class TrcI2cLEDPanel
