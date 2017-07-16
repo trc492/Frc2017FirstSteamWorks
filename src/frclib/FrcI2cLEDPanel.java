@@ -22,135 +22,73 @@
 
 package frclib;
 
-import java.util.Arrays;
-
-import edu.wpi.first.wpilibj.I2C.Port;
-import trclib.TrcDbgTrace;
+import edu.wpi.first.wpilibj.I2C;
+import trclib.TrcI2cLEDPanel;
 
 /**
- * This class implements a platform dependent I2C LED panel. It extends FrcI2cDevice to provide I2C access methods.
+ * This class implements a platform dependent I2C LED panel device. It extends the platform independent counterpart
+ * and provides platform dependent access to the I2C device.
  */
-public class FrcI2cLEDPanel extends FrcI2cDevice
+public class FrcI2cLEDPanel extends TrcI2cLEDPanel
 {
-    private final int I2C_BUFF_LEN = 32;
+    public static final I2C.Port DEF_I2C_PORT = I2C.Port.kOnboard;
+    public static final int DEF_I2C_ADDRESS = 0x8;
+
+    private FrcI2cDevice device = null;
 
     /**
-     * Constructor: Creates an instance of the object.
+     * Constructor: Create an instance of the object.
      *
      * @param instanceName specifies the instance name.
-     * @param port specifies the I2C port the device is connected to.
-     * @param devAddress specifies the address of the device on the I2C bus.
+     * @param port specifies the I2C port on the RoboRIO.
+     * @param devAddress specifies the I2C address of the device.
      */
-    public FrcI2cLEDPanel(final String instanceName, Port port, int devAddress)
+    public FrcI2cLEDPanel(final String instanceName, I2C.Port port, int devAddress)
     {
-        super(instanceName, port, devAddress);
+        super(instanceName);
+        device = new FrcI2cDevice(instanceName, port, devAddress);
     }   //FrcI2cLEDPanel
 
     /**
-     * Constructor: Creates an instance of the object.
+     * Constructor: Create an instance of the object.
      *
      * @param instanceName specifies the instance name.
-     * @param devAddress specifies the address of the device on the I2C bus.
+     * @param port specifies the I2C port on the RoboRIO.
      */
-    public FrcI2cLEDPanel(String instanceName, int devAddress)
+    public FrcI2cLEDPanel(final String instanceName, I2C.Port port)
     {
-        super(instanceName, devAddress);
+        this(instanceName, port, DEF_I2C_ADDRESS);
     }   //FrcI2cLEDPanel
 
+    //
+    // Implements TrcSerialBusDevice abstract methods.
+    //
+
     /**
-     * This method sets the specified line in the LED panel with all the text info for displaying text on the panel.
-     * Note that the (x, y) coordinates is rotation sensitive. If rotation is 0, the text orientation is normal
-     * horizontal and (0, 0) corresponds to the upper left corner of the physical panel. If rotation is 2, the
-     * text orientation is inverted horizontal and (0, 0) corresponds to the lower right corner of the physica
-     * panel.
+     * This method is called to read data from the device with the specified length.
      *
-     * @param index specifies the line index of the array.
-     * @param x specifies the x coordinate of the upper left corner of the text rectangle.
-     * @param y specifies the y coordinate of the upper left corner of the text rectangle.
-     * @param fontColor specifies the font color for displaying the text.
-     * @param orientaton specifies the text orientation (0: normal horizontal, 1: clockwise vertical, 
-     *                   2: inverted horizontal, 3: anti-clockwise vertical).
-     * @param fontSize specifies the size of the font (1: 6x8, 2: 12x16, 3: 18x24, 4: 24x32).
-     * @param scrollInc specifies the scroll increment (0: no scroll, 1: scroll to the right, -1: scroll to the left).
-     * @param text specifies the text string to be displayed.
+     * @param address specifies the I2C register address to read from if any.
+     * @param length specifies the number of bytes to read.
+     * @return a byte array containing the data read.
      */
-    public void setTextLine(
-        int index, int x, int y, int fontColor, int orientation, int fontSize, int scrollInc, String text)
+    @Override
+    public byte[] readData(int address, int length)
     {
-        sendRequest("setTextLine " + index + " " + x + " " + y + " " + fontColor + " " + orientation + " " +
-                    fontSize + " " + scrollInc + " " + text);
-    }   //setTextLine
+        return device.readData(address, length);
+    }   //readData
 
     /**
-     * This method clears the specified line in the lines array.
+     * This method is called to write data to the device with the specified data buffer and length.
      *
-     * @param index specifies the line index of the array.
+     * @param address specifies the I2C register address to write to if any.
+     * @param buffer specifies the buffer containing the data to be written to the device.
+     * @param length specifies the number of bytes to write.
+     * @return number of bytes written.
      */
-    public void clearTextLine(int index)
+    @Override
+    public int writeData(int address, byte[] buffer, int length)
     {
-        sendRequest("clearTextLine " + index);
-    } //clearTextLine
-
-    /**
-     * This method clears all text lines in the lines array.
-     */
-    public void clearAllTextLines()
-    {
-        sendRequest("clearAllTextLines");
-    } //clearAllTextLines
-
-    /**
-     * This method sets the Arduino loop delay. This effectively controls how fast the text will scroll.
-     *
-     * @param delay specifies the delay in msec.
-     */
-    public void setDelay(int delay)
-    {
-        sendRequest("setDelay " + delay);
-    }   //setDelay
-
-    /**
-     * This method converts the specified RGB values into a 16-bit color value in 565 format (5-bit R, 6-bit G and
-     * 5-bit B: RRRRRGGGGGGBBBBB).
-     *
-     * @param red specifies the red value.
-     * @param green specifies the green value.
-     * @param blue specifies the blue value.
-     * @return 16-bit color value in 565 format.
-     */
-    public int color(int red, int green, int blue)
-    {
-        return ((red & 0xff) << 11) | ((green & 0xff) << 5) | (blue & 0xff);
-    }   //color
-
-    /**
-     * This method sends the request string to the I2C device. If the request string is longer than 32 bytes,
-     * it will break down the request string into multiple I2C requests so that they can be reassembled on the
-     * device side.
-     *
-     * @param request specifies the request string to be sent to the I2C device.
-     */
-    private void sendRequest(String request)
-    {
-        request += "~";
-        int requestLen = request.length();
-
-        for (int i = 0; i < requestLen; )
-        {
-            int len = Math.min(requestLen - i, I2C_BUFF_LEN);
-            if (len > 0)
-            {
-                String s = request.substring(i, i + len);
-                byte[] data = s.getBytes();
-                TrcDbgTrace.getGlobalTracer().traceInfo("sendRequest", "Writing: <%s> = %d", Arrays.toString(data), data.length);
-                int n = writeData(-1, data, data.length);
-                if (n == 0)
-                {
-                    break;
-                }
-                i += len;
-            }
-        }
-    }   //sendRequest
+        return device.writeData(address, buffer, length);
+    }   //writeData
 
 }   //class FrcI2cLEDPanel
