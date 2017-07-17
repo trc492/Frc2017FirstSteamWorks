@@ -22,6 +22,8 @@
 
 package trclib;
 
+import java.util.Arrays;
+
 /**
  * This class implements a platform independent I2C LED panel. This class is intended to be extended by a platform
  * dependent I2C LED panel which provides the abstract methods required by this class. This class provides the APIs
@@ -167,12 +169,20 @@ public abstract class TrcI2cLEDPanel
         command += "~";
         int cmdLen = command.length();
 
+        if (debugEnabled)
+        {
+            dbgTrace.traceInfo(funcName, "sendCommand(%s)=%d", command, command.length());
+        }
         for (int i = 0; i < cmdLen; )
         {
             int len = Math.min(cmdLen - i, I2C_BUFF_LEN);
             if (len > 0)
             {
                 byte[] data = command.substring(i, i + len).getBytes();
+                if (debugEnabled)
+                {
+                    dbgTrace.traceInfo(funcName, "asyncWrite%s=%d", Arrays.toString(data), data.length);
+                }
                 asyncWriteData(data);
                 i += len;
             }
