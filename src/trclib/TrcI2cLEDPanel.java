@@ -23,12 +23,30 @@
 package trclib;
 
 /**
- * This class implements a platform independent I2C LED panel. It provides methods to display text data on the LED
- * panel.
+ * This class implements a platform independent I2C LED panel. This class is intended to be extended by a platform
+ * dependent I2C LED panel which provides the abstract methods required by this class. This class provides the APIs
+ * to assemble command requests and send them over to the panel asynchronously.
  */
-public abstract class TrcI2cLEDPanel extends TrcSerialBusDevice
+public abstract class TrcI2cLEDPanel
 {
+    private static final String moduleName = "TrcI2cLEDPanel";
+    private static final boolean debugEnabled = false;
+    private static final boolean tracingEnabled = false;
+    private static final TrcDbgTrace.TraceLevel traceLevel = TrcDbgTrace.TraceLevel.API;
+    private static final TrcDbgTrace.MsgLevel msgLevel = TrcDbgTrace.MsgLevel.INFO;
+    private TrcDbgTrace dbgTrace = null;
+
     private static final int I2C_BUFF_LEN = 32;
+
+    /**
+     * This method writes the data buffer to the device asynchronously.
+     *
+     * @param requestTag specifies the tag to identify the request. Can be null if none was provided.
+     * @param data specifies the data buffer.
+     */
+    public abstract void asyncWriteData(byte[] data);
+
+    private final String instanceName;
 
     /**
      * Constructor: Creates an instance of the object.
@@ -37,8 +55,23 @@ public abstract class TrcI2cLEDPanel extends TrcSerialBusDevice
      */
     public TrcI2cLEDPanel(final String instanceName)
     {
-        super(instanceName);
+        if (debugEnabled)
+        {
+            dbgTrace = new TrcDbgTrace(moduleName + "." + instanceName, tracingEnabled, traceLevel, msgLevel);
+        }
+
+        this.instanceName = instanceName;
     }   //TrcI2cLEDPanel
+
+    /**
+     * This method returns the instance name.
+     *
+     * @return instance name.
+     */
+    public String toString()
+    {
+        return instanceName;
+    }   //toString
 
     /**
      * This method sets the specified line in the LED panel with all the text info for displaying text on the panel.
@@ -103,7 +136,16 @@ public abstract class TrcI2cLEDPanel extends TrcSerialBusDevice
      */
     public int color(int red, int green, int blue)
     {
-        return ((red & 0xff) << 11) | ((green & 0xff) << 5) | (blue & 0xff);
+        final String funcName = "color";
+        int colorValue = ((red & 0xff) << 11) | ((green & 0xff) << 5) | (blue & 0xff);
+
+        if (debugEnabled)
+        {
+            dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.API, "red=%d,green=%d,blue=%d", red, green, blue);
+            dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.API, "=0x%x", colorValue);
+        }
+
+        return colorValue;
     }   //color
 
     /**
@@ -115,6 +157,13 @@ public abstract class TrcI2cLEDPanel extends TrcSerialBusDevice
      */
     private void sendCommand(String command)
     {
+        final String funcName = "sendCommand";
+
+        if (debugEnabled)
+        {
+            dbgTrace.traceEnter(funcName, TrcDbgTrace.TraceLevel.FUNC, "command=%s", command);
+        }
+
         command += "~";
         int cmdLen = command.length();
 
@@ -124,14 +173,14 @@ public abstract class TrcI2cLEDPanel extends TrcSerialBusDevice
             if (len > 0)
             {
                 byte[] data = command.substring(i, i + len).getBytes();
-                int n = writeData(-1, data, data.length);
-
-                if (n == 0)
-                {
-                    break;
-                }
+                asyncWriteData(data);
                 i += len;
             }
+        }
+
+        if (debugEnabled)
+        {
+            dbgTrace.traceExit(funcName, TrcDbgTrace.TraceLevel.FUNC);
         }
     }   //sendCommand
 

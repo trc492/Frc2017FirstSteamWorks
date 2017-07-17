@@ -60,35 +60,39 @@ public class FrcI2cLEDPanel extends TrcI2cLEDPanel
         this(instanceName, port, DEF_I2C_ADDRESS);
     }   //FrcI2cLEDPanel
 
+    /**
+     * This method checks if the device is enabled.
+     *
+     * @return true if the device is enabled, false otherwise.
+     */
+    public boolean isEnabled()
+    {
+        return device.isTaskEnabled();
+    }   //isEnable
+
+    /**
+     * This method enables/disables the device.
+     *
+     * @param enabled specifies true to enable the device, false to disable.
+     */
+    public void setEnabled(boolean enabled)
+    {
+        device.setTaskEnabled(enabled);
+    }   //setEnabled
+
     //
-    // Implements TrcSerialBusDevice abstract methods.
+    // Implements TrcI2cLEDPanel abstract methods.
     //
 
     /**
-     * This method is called to read data from the device with the specified length.
+     * This method writes the data buffer to the device asynchronously.
      *
-     * @param address specifies the I2C register address to read from if any.
-     * @param length specifies the number of bytes to read.
-     * @return a byte array containing the data read.
+     * @param data specifies the data buffer.
      */
     @Override
-    public byte[] readData(int address, int length)
+    public void asyncWriteData(byte[] data)
     {
-        return device.readData(address, length);
-    }   //readData
-
-    /**
-     * This method is called to write data to the device with the specified data buffer and length.
-     *
-     * @param address specifies the I2C register address to write to if any.
-     * @param buffer specifies the buffer containing the data to be written to the device.
-     * @param length specifies the number of bytes to write.
-     * @return number of bytes written.
-     */
-    @Override
-    public int writeData(int address, byte[] buffer, int length)
-    {
-        return device.writeData(address, buffer, length);
-    }   //writeData
+        device.asyncWrite(null, data, data.length, null, null);
+    }   //asyncWriteData
 
 }   //class FrcI2cLEDPanel
