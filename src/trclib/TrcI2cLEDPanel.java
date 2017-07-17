@@ -139,7 +139,7 @@ public abstract class TrcI2cLEDPanel
     public int color(int red, int green, int blue)
     {
         final String funcName = "color";
-        int colorValue = ((red & 0xff) << 11) | ((green & 0xff) << 5) | (blue & 0xff);
+        int colorValue = ((red & 0xf8) << 8) | ((green & 0xfc) << 3) | (blue >> 3);
 
         if (debugEnabled)
         {
