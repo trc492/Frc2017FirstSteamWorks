@@ -73,7 +73,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     private static final String moduleName = "Robot";
 
     public static final boolean USE_TRACELOG = true;
-    public static final boolean USE_NAV_X = true;
+    public static final boolean USE_NAV_X = false;
     public static final boolean USE_SPI_GYRO = false;
     public static final boolean USE_ANALOG_GYRO = false;
     public static final boolean USE_GRIP_VISION = false;
@@ -89,7 +89,8 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     private static final boolean DEBUG_PID_DRIVE = false;
     private static final boolean DEBUG_GRIP_VISION = false;
     private static final boolean DEBUG_FACE_DETECTION = false;
-    private static final boolean DEBUG_WINCH = true;
+    private static final boolean DEBUG_WINCH = false;
+    private static final boolean DEBUG_SHOOTER = true;
     private static final boolean DEBUG_PIXY = true;
     private static final double DASHBOARD_UPDATE_INTERVAL = 0.1;
 
@@ -165,6 +166,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     public FrcPneumatic mailbox;
     public GearPickup gearPickup;
     public Winch winch;
+    public Shooter shooter;
 
     //
     // Menus.
@@ -185,6 +187,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     public double tuneKp;
     public double tuneKi;
     public double tuneKd;
+    public double tuneKf;
 
     /**
      * Constructor.
@@ -388,6 +391,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
             "Mailbox", RobotInfo.CANID_PCM1, RobotInfo.SOL_MAILBOX_EXTEND, RobotInfo.SOL_MAILBOX_RETRACT);
         gearPickup = new GearPickup();
         winch = new Winch();
+        shooter = new Shooter();
 
         //
         // Create Global Menus (can be used in all modes).
@@ -432,6 +436,8 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         tuneKp = HalDashboard.getNumber("TuneKp", RobotInfo.GYRO_TURN_KP);
         tuneKi = HalDashboard.getNumber("TuneKi", RobotInfo.GYRO_TURN_KI);
         tuneKd = HalDashboard.getNumber("TuneKd", RobotInfo.GYRO_TURN_KD);
+        tuneKf = HalDashboard.getNumber("TuneKf", 0.05);
+        shooter.setPID(tuneKp, tuneKi, tuneKd, tuneKf, 300, 48.0, 0);
     }   //robotStartMode
 
     public void robotStopMode()
@@ -447,7 +453,7 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
 
     public double getUltrasonicDistance()
     {
-        return ultrasonicSensor.getVoltage()/0.0098;
+        return ultrasonicSensor.getVoltage()/RobotInfo.SONAR_MILLIVOLTS_PER_INCH;
     }   //getUltrasonicDistance
 
     public void setVisionEnabled(boolean enabled)
@@ -566,6 +572,12 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
                 dashboard.displayPrintf(12, "Winch: TouchPlate=%s", Boolean.toString(winch.touchingPlate()));
                 dashboard.displayPrintf(13, "Winch: tilt=%.1f, Z=%.1f", tilt, zGForce);
                 HalDashboard.putNumber("Tilt", tilt);
+            }
+
+            if (DEBUG_SHOOTER)
+            {
+                dashboard.displayPrintf(8, "Shooter: power=%.3f, speed=%.1f/%.1f, current=%.3f",
+                    shooter.getPower(), shooter.getSpeed(), shooter.getSetPoint(), shooter.getCurrent());
             }
 
             if (DEBUG_PIXY)

@@ -17,6 +17,9 @@
 	<widget field="TuneKd" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="0" y="675"/>
 	</widget>
+	<widget field="TuneKf" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="700"/>
+	</widget>
 	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.Label">
 		<location x="520" y="0"/>
 		<width>200</width>
@@ -209,5 +212,4 @@
 </dashboard>
 <live-window>
 </live-window>
-	<hidden field="Auto Selector"/>
 </xml>

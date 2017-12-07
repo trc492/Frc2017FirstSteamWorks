@@ -152,6 +152,10 @@ public class FrcTeleOp implements TrcRobot.RobotMode, FrcJoystick.ButtonHandler
 
             double winchPower = operatorStick.getYWithDeadband(true);
             robot.winch.setPower(winchPower);
+
+            double shooterValue = (operatorStick.getZ() + 1.0) / 2.0;
+//            robot.shooter.setPower(shooterValue);
+            robot.shooter.setSpeed(shooterValue*RobotInfo.SHOOTER_MAX_RPM);
         }
 
         robot.updateDashboard();

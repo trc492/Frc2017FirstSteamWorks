@@ -76,6 +76,7 @@ public class RobotInfo
     public static final int CANID_RIGHTREARWHEEL                = 6;    // 40A: Blue
     public static final int CANID_WINCH_MASTER                  = 7;    // 40A: Purple
     public static final int CANID_WINCH_SLAVE                   = 8;    // 40A: Gray
+    public static final int CANID_SHOOTER                       = 13;   // 40A (probably): Blue
 
     public static final int CANID_PDP                           = 16;
     public static final int CANID_PCM1                          = 17;
@@ -129,7 +130,7 @@ public class RobotInfo
     // 2017-03-21: 0.0171280999395813, 0.035, 0.0, 0.008
     // 2017-03-30: 0.01778656, 0.035, 0.0, 0.008
     // 2017-04-06: 0.01778656, 0.04, 0.0, 0.004
-    public static final double ENCODER_Y_INCHES_PER_COUNT       = 0.01778656;
+    public static final double ENCODER_Y_INCHES_PER_COUNT       = 0.02155312564705882352941176470588;//0.01778656;
     public static final double ENCODER_Y_KP                     = 0.04;
     public static final double ENCODER_Y_KI                     = 0.0;
     public static final double ENCODER_Y_KD                     = 0.004;
@@ -163,6 +164,7 @@ public class RobotInfo
 
     // 2017-03-12: 0.01, 0.0, 0.0
     // 2017-03-14: 0.0165, 0.0, 0.002
+    public static final double SONAR_MILLIVOLTS_PER_INCH        = 0.0098;
     public static final double SONAR_KP                         = 0.0165;
     public static final double SONAR_KI                         = 0.0;
     public static final double SONAR_KD                         = 0.002;
@@ -206,5 +208,11 @@ public class RobotInfo
     public static final double WINCH_HEIGHT_THRESHOLD           = 28.0;
     public static final double WINCH_SPIKE_TIMEOUT              = 0.5;
     public static final double WINCH_TILT_THRESHOLD             = 35.0;
+
+    //
+    // Shooter subsystem.
+    //
+    public static final int SHOOTER_COUNT_PER_REV               = 1024;
+    public static final int SHOOTER_MAX_RPM                     = 4500;
 
 }   // class RobotInfo
