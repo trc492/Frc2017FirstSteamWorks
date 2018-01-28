@@ -22,7 +22,7 @@
 
 package team492;
 
-import com.ctre.CANTalon.TalonControlMode;
+import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import frclib.FrcCANTalon;
@@ -50,8 +50,7 @@ public class Winch
     {
         mainMotor = new FrcCANTalon("WinchMaster", RobotInfo.CANID_WINCH_MASTER);
         slaveMotor = new FrcCANTalon("WinchSlave", RobotInfo.CANID_WINCH_SLAVE);
-        slaveMotor.motor.changeControlMode(TalonControlMode.Follower);
-        slaveMotor.motor.set(RobotInfo.CANID_WINCH_MASTER);
+        slaveMotor.motor.set(ControlMode.Follower, RobotInfo.CANID_WINCH_MASTER);
         mainMotor.setPositionSensorInverted(false);
         zAccel = new BuiltInAccelerometer();
         zAccelFilter = new TrcKalmanFilter("ZAccel");

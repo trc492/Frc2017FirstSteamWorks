@@ -23,6 +23,7 @@
 package team492;
 
 import trclib.TrcEvent;
+import trclib.TrcPidController.PidCoefficients;
 import trclib.TrcRobot;
 import trclib.TrcStateMachine;
 import trclib.TrcTimer;
@@ -115,15 +116,18 @@ class CmdPidDrive implements TrcRobot.RobotCommand
                     {
                         if (xDistance != 0.0)
                         {
-                            robot.encoderXPidCtrl.setPID(robot.tuneKp, robot.tuneKi, robot.tuneKd, 0.0);
+                            robot.encoderXPidCtrl.setPidCoefficients(
+                                new PidCoefficients(robot.tuneKp, robot.tuneKi, robot.tuneKd, 0.0));
                         }
                         else if (yDistance != 0.0)
                         {
-                            robot.encoderYPidCtrl.setPID(robot.tuneKp, robot.tuneKi, robot.tuneKd, 0.0);
+                            robot.encoderYPidCtrl.setPidCoefficients(
+                                new PidCoefficients(robot.tuneKp, robot.tuneKi, robot.tuneKd, 0.0));
                         }
                         else if (heading != 0.0)
                         {
-                            robot.gyroTurnPidCtrl.setPID(robot.tuneKp, robot.tuneKi, robot.tuneKd, 0.0);
+                            robot.gyroTurnPidCtrl.setPidCoefficients(
+                                new PidCoefficients(robot.tuneKp, robot.tuneKi, robot.tuneKd, 0.0));
                         }
                     }
 

@@ -25,6 +25,7 @@ package team492;
 import hallib.HalDashboard;
 import team492.PixyVision.TargetInfo;
 import trclib.TrcEvent;
+import trclib.TrcPidController.PidCoefficients;
 import trclib.TrcRobot;
 import trclib.TrcStateMachine;
 import trclib.TrcTimer;
@@ -113,9 +114,10 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
 
                     if (angle != 0.0 && Math.abs(angle) < RobotInfo.GYRO_TURN_SMALL_THRESHOLD)
                     {
-                        robot.gyroTurnPidCtrl.setPID(
-                            RobotInfo.GYRO_TURN_SMALL_KP, RobotInfo.GYRO_TURN_SMALL_KI, RobotInfo.GYRO_TURN_SMALL_KD,
-                            0.0);
+                        robot.gyroTurnPidCtrl.setPidCoefficients(
+                            new PidCoefficients(
+                                RobotInfo.GYRO_TURN_SMALL_KP, RobotInfo.GYRO_TURN_SMALL_KI,
+                                RobotInfo.GYRO_TURN_SMALL_KD, 0.0));
                     }
                     robot.tracer.traceInfo(
                         moduleName, "Target Info: %s", targetInfo != null? targetInfo.toString(): "not found");
@@ -125,8 +127,9 @@ class CmdVisionGearDeploy implements TrcRobot.RobotCommand
                     break;
 
                 case DRIVE_TOWARDS_TARGET:
-                    robot.gyroTurnPidCtrl.setPID(
-                        RobotInfo.GYRO_TURN_KP, RobotInfo.GYRO_TURN_KI, RobotInfo.GYRO_TURN_KD, 0.0);
+                    robot.gyroTurnPidCtrl.setPidCoefficients(
+                        new PidCoefficients(
+                            RobotInfo.GYRO_TURN_KP, RobotInfo.GYRO_TURN_KI, RobotInfo.GYRO_TURN_KD, 0.0));
                     robot.visionTurnPidCtrl.setNoOscillation(true);
                     robot.sonarDrivePidCtrl.setNoOscillation(true);
                     robot.encoderYPidCtrl.setNoOscillation(true);

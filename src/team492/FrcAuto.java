@@ -185,14 +185,14 @@ public class FrcAuto implements TrcRobot.RobotMode
 
             if (robot.pidDrive.isActive())
             {
-                robot.encoderXPidCtrl.printPidInfo(robot.tracer, robot.battery);
-                robot.encoderYPidCtrl.printPidInfo(robot.tracer, robot.battery);
-                robot.gyroTurnPidCtrl.printPidInfo(robot.tracer, robot.battery);
+                robot.encoderXPidCtrl.printPidInfo(robot.tracer, elapsedTime, robot.battery);
+                robot.encoderYPidCtrl.printPidInfo(robot.tracer, elapsedTime, robot.battery);
+                robot.gyroTurnPidCtrl.printPidInfo(robot.tracer, elapsedTime, robot.battery);
             }
             else if (robot.visionPidDrive.isActive())
             {
-                robot.sonarDrivePidCtrl.printPidInfo(robot.tracer, robot.battery);
-                robot.visionTurnPidCtrl.printPidInfo(robot.tracer, robot.battery);
+                robot.sonarDrivePidCtrl.printPidInfo(robot.tracer, elapsedTime, robot.battery);
+                robot.visionTurnPidCtrl.printPidInfo(robot.tracer, elapsedTime, robot.battery);
             }
 
             robot.updateDashboard();
