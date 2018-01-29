@@ -22,8 +22,8 @@
 
 package team492;
 
-import com.ctre.CANTalon.FeedbackDevice;
-import com.ctre.CANTalon.TalonControlMode;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 
 import frclib.FrcCANTalon;
 
@@ -36,16 +36,19 @@ public class Shooter
     {
         motor = new FrcCANTalon("Shooter", RobotInfo.CANID_SHOOTER);
         motor.setInverted(false);
-        motor.motor.enableLimitSwitch(false, false);
+        motor.motor.overrideLimitSwitchesEnable(false);
         motor.setPositionSensorInverted(true);
         motor.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-        motor.motor.configEncoderCodesPerRev(RobotInfo.SHOOTER_COUNT_PER_REV);
-        motor.motor.changeControlMode(TalonControlMode.Speed);
+//        motor.motor.configEncoderCodesPerRev(RobotInfo.SHOOTER_COUNT_PER_REV);
     }
 
     public void setPID(double p, double i, double d, double f, int izone, double closeLoopRampRate, int profile)
     {
-        motor.motor.setPID(p, i, d, f, izone, closeLoopRampRate, profile);
+        motor.motor.config_kP(0, p, 0);
+        motor.motor.config_kI(0, i, 0);
+        motor.motor.config_kD(0, d, 0);
+        motor.motor.config_kF(0, f, 0);
+//        motor.motor.setPID(p, i, d, f, izone, closeLoopRampRate, profile);
     }
 
     public double getSetPoint()
@@ -55,7 +58,7 @@ public class Shooter
 
     public double getSpeed()
     {
-        return motor.motor.getSpeed();
+        return motor.motor.getSelectedSensorVelocity(0);
     }
 
     public void setSpeed(double rpm)
@@ -65,7 +68,7 @@ public class Shooter
         // counts_per_10msec = rpm*counts_per_rev*100/60
         //
         setPoint = rpm*100.0/60.0;
-        motor.motor.set(setPoint);
+        motor.motor.set(ControlMode.Velocity, setPoint);
     }
 
     public double getPower()

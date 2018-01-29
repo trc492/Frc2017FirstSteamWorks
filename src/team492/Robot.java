@@ -24,7 +24,7 @@ package team492;
 
 import org.opencv.core.Rect;
 
-import com.ctre.CANTalon.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 
 import edu.wpi.cscore.AxisCamera;
 import edu.wpi.cscore.CvSink;
@@ -56,6 +56,7 @@ import trclib.TrcDriveBase;
 import trclib.TrcEmic2TextToSpeech.Voice;
 import trclib.TrcGyro;
 import trclib.TrcPidController;
+import trclib.TrcPidController.PidCoefficients;
 import trclib.TrcPidDrive;
 import trclib.TrcRobotBattery;
 import trclib.TrcUtil;
@@ -67,7 +68,7 @@ import trclib.TrcUtil;
  * creating this project, you must also update the manifest file in the
  * resource directory.
  */
-public class Robot extends FrcRobotBase implements TrcPidController.PidInput
+public class Robot extends FrcRobotBase
 {
     public static final String programName = "FirstSteamWorks";
     private static final String moduleName = "Robot";
@@ -318,10 +319,10 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         rightFrontWheel.setInverted(true);
         rightRearWheel.setInverted(true);
 
-        leftFrontWheel.motor.enableLimitSwitch(false, false);
-        leftRearWheel.motor.enableLimitSwitch(false, false);
-        rightFrontWheel.motor.enableLimitSwitch(false, false);
-        rightRearWheel.motor.enableLimitSwitch(false, false);
+        leftFrontWheel.motor.overrideLimitSwitchesEnable(false);
+        leftRearWheel.motor.overrideLimitSwitchesEnable(false);
+        rightFrontWheel.motor.overrideLimitSwitchesEnable(false);
+        rightRearWheel.motor.overrideLimitSwitchesEnable(false);
 
         leftFrontWheel.setPositionSensorInverted(false);
         leftRearWheel.setPositionSensorInverted(false);
@@ -345,16 +346,19 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         //
         encoderXPidCtrl = new TrcPidController(
             "encoderXPidCtrl",
-            RobotInfo.ENCODER_X_KP, RobotInfo.ENCODER_X_KI, RobotInfo.ENCODER_X_KD, RobotInfo.ENCODER_X_KF,
-            RobotInfo.ENCODER_X_TOLERANCE, RobotInfo.ENCODER_X_SETTLING, this);
+            new PidCoefficients(
+                RobotInfo.ENCODER_X_KP, RobotInfo.ENCODER_X_KI, RobotInfo.ENCODER_X_KD, RobotInfo.ENCODER_X_KF),
+            RobotInfo.ENCODER_X_TOLERANCE, driveBase::getXPosition);
         encoderYPidCtrl = new TrcPidController(
             "encoderYPidCtrl",
-            RobotInfo.ENCODER_Y_KP, RobotInfo.ENCODER_Y_KI, RobotInfo.ENCODER_Y_KD, RobotInfo.ENCODER_Y_KF,
-            RobotInfo.ENCODER_Y_TOLERANCE, RobotInfo.ENCODER_Y_SETTLING, this);
+            new PidCoefficients(
+                RobotInfo.ENCODER_Y_KP, RobotInfo.ENCODER_Y_KI, RobotInfo.ENCODER_Y_KD, RobotInfo.ENCODER_Y_KF),
+            RobotInfo.ENCODER_Y_TOLERANCE, driveBase::getYPosition);
         gyroTurnPidCtrl = new TrcPidController(
             "gyroTurnPidCtrl",
-            RobotInfo.GYRO_TURN_KP, RobotInfo.GYRO_TURN_KI, RobotInfo.GYRO_TURN_KD, RobotInfo.GYRO_TURN_KF,
-            RobotInfo.GYRO_TURN_TOLERANCE, RobotInfo.GYRO_TURN_SETTLING, this);
+            new PidCoefficients(
+                RobotInfo.GYRO_TURN_KP, RobotInfo.GYRO_TURN_KI, RobotInfo.GYRO_TURN_KD, RobotInfo.GYRO_TURN_KF),
+            RobotInfo.GYRO_TURN_TOLERANCE, driveBase::getHeading);
         gyroTurnPidCtrl.setAbsoluteSetPoint(true);
         pidDrive = new TrcPidDrive("pidDrive", driveBase, encoderXPidCtrl, encoderYPidCtrl, gyroTurnPidCtrl);
         pidDrive.setStallTimeout(RobotInfo.DRIVE_STALL_TIMEOUT);
@@ -362,14 +366,16 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
 
         sonarDrivePidCtrl = new TrcPidController(
             "sonarDrivePidCtrl",
-            RobotInfo.SONAR_KP, RobotInfo.SONAR_KI, RobotInfo.SONAR_KD, RobotInfo.SONAR_KF,
-            RobotInfo.SONAR_TOLERANCE, RobotInfo.SONAR_SETTLING, this);
+            new PidCoefficients(
+                RobotInfo.SONAR_KP, RobotInfo.SONAR_KI, RobotInfo.SONAR_KD, RobotInfo.SONAR_KF),
+            RobotInfo.SONAR_TOLERANCE, this::getUltrasonicDistance);
         sonarDrivePidCtrl.setAbsoluteSetPoint(true);
         sonarDrivePidCtrl.setInverted(true);
         visionTurnPidCtrl = new TrcPidController(
             "visionTurnPidCtrl",
-            RobotInfo.VISION_TURN_KP, RobotInfo.VISION_TURN_KI, RobotInfo.VISION_TURN_KD, RobotInfo.VISION_TURN_KF,
-            RobotInfo.VISION_TURN_TOLERANCE, RobotInfo.VISION_TURN_SETTLING, this);
+            new PidCoefficients(
+                RobotInfo.VISION_TURN_KP, RobotInfo.VISION_TURN_KI, RobotInfo.VISION_TURN_KD, RobotInfo.VISION_TURN_KF),
+            RobotInfo.VISION_TURN_TOLERANCE, this::getPixyTargetAngle);
         visionTurnPidCtrl.setInverted(true);
         visionTurnPidCtrl.setAbsoluteSetPoint(true);
         visionPidDrive = new TrcPidDrive("visionPidDrive", driveBase, null, sonarDrivePidCtrl, visionTurnPidCtrl);
@@ -445,16 +451,6 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
         driveBase.stop();
         battery.setEnabled(false);
     }   //robotStopMode
-
-    public double getPressure()
-    {
-        return 50.0*pressureSensor.getVoltage() - 25.0;
-    }   //getPressure
-
-    public double getUltrasonicDistance()
-    {
-        return ultrasonicSensor.getVoltage()/RobotInfo.SONAR_MILLIVOLTS_PER_INCH;
-    }   //getUltrasonicDistance
 
     public void setVisionEnabled(boolean enabled)
     {
@@ -621,9 +617,25 @@ public class Robot extends FrcRobotBase implements TrcPidController.PidInput
     }   //traceStateInfo
 
     //
-    // Implements TrcPidController.PidInput.
+    // Getters for sensor values.
     //
-    @Override
+
+    public double getPressure()
+    {
+        return 50.0*pressureSensor.getVoltage() - 25.0;
+    }   //getPressure
+
+    public double getUltrasonicDistance()
+    {
+        return ultrasonicSensor.getVoltage()/RobotInfo.SONAR_MILLIVOLTS_PER_INCH;
+    }   //getUltrasonicDistance
+
+    public double getPixyTargetAngle()
+    {
+        TargetInfo targetInfo = frontPixy.getTargetInfo();
+        return targetInfo != null? targetInfo.angle: 0.0;
+    }
+
     public double getInput(TrcPidController pidCtrl)
     {
         double value = 0.0;
